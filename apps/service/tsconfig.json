@@ -1,0 +1,13 @@
+{
+  "extends": "tsconfig/nextjs.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@sample-next-react-package/*": [
+        "../../packages/sample-next-react-package/src/*"
+      ]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

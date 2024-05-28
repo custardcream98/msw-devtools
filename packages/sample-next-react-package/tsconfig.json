@@ -1,0 +1,10 @@
+{
+  "extends": "tsconfig/next-react-library.json",
+  "compilerOptions": {
+    "paths": {
+      "@sample-next-react-package/*": ["./src/*"]
+    }
+  },
+  "exclude": ["dist", "build", "node_modules"],
+  "include": ["types.d.ts", "./src/**/*.ts", "./src/**/*.tsx"]
+}
