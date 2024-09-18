@@ -1,14 +1,16 @@
 {
-  "name": "han-type",
+  "$schema": "https://json.schemastore.org/package",
+  "name": "msw-devtool",
   "scripts": {
     "format": "prettier --write .",
-    "prepare": "husky",
+    "lint": "pnpm --filter \"./{packages,apps}/**\" lint",
+    "lint:fix": "pnpm --filter \"./{packages,apps}/**\" lint:fix",
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
-    "start:web": "pnpm --filter web dev",
-    "build:sample-react-package": "pnpm --filter sample-react-package build"
+    "prepare": "husky",
+    "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,blue\" \"pnpm --filter @custardcream/msw-devtool build:watch\" \"pnpm --filter playground dev\""
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
+    "concurrently": "^9.0.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",

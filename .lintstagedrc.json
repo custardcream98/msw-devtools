@@ -1,3 +1,7 @@
 {
-  "*.{js,jsx,ts,tsx}": ["prettier --write --cache", "eslint --fix --cache"]
+  "*.{js,jsx,ts,tsx}": ["pnpm format"],
+  "packages/msw-devtool/**/*.{js,jsx,ts,tsx}": [
+    "pnpm --filter @custardcream/msw-devtool lint"
+  ],
+  "apps/playground/**/*.{js,jsx,ts,tsx}": ["pnpm --filter playground lint"]
 }
