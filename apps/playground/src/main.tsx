@@ -12,6 +12,7 @@ const enableMocking = async () => {
   }
 
   return installMSWDevtool({
+    initialOpen: true,
     api: setupWorker(
       http.get("https://test-api.co.kr", () => {
         return HttpResponse.json({

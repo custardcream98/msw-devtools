@@ -1,11 +1,25 @@
 import "./index.css"
 
-const App = () => {
-  return (
-    <div className='fixed bottom-0 left-0 right-0 bg-black text-white'>
-      Devtool Body
-    </div>
-  )
+import { useState } from "react"
+
+import { Layout } from "~/components/Layout"
+
+const App = ({ initialOpen }: { initialOpen?: boolean }) => {
+  const [isOn, setIsOn] = useState(initialOpen)
+
+  if (!isOn) {
+    return (
+      <button
+        className='fixed bottom-2 right-2 bg-slate-600'
+        type='button'
+        onClick={() => setIsOn(true)}
+      >
+        Open MSW Devtool
+      </button>
+    )
+  }
+
+  return <Layout onClose={() => setIsOn(false)}>Devtool Body</Layout>
 }
 
 export default App

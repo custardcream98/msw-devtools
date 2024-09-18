@@ -1,7 +1,11 @@
 import type { InitializeProps } from "~/lib/initializeMsw"
 
+export type InstallProps = InitializeProps & {
+  initialOpen?: boolean
+}
+
 let isInitialized = false
-export const installMSWDevtool = async (props: InitializeProps) => {
+export const installMSWDevtool = async (props: InstallProps) => {
   if (isInitialized || process.env.NODE_ENV === "production") {
     return
   }

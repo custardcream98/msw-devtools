@@ -1,10 +1,10 @@
-import {
-  initialize,
-  type InitializeProps,
-  waitForApi
-} from "~/lib/initializeMsw"
+import { initialize, waitForApi } from "~/lib/initializeMsw"
+import type { InstallProps } from "~/lib/install"
 
-export const createDevtool = async (props: InitializeProps) => {
+export const createDevtool = async ({
+  initialOpen,
+  ...props
+}: InstallProps) => {
   initialize(props)
   await waitForApi()
 
@@ -21,5 +21,5 @@ export const createDevtool = async (props: InitializeProps) => {
         document.body.appendChild(root)
         return root
       })()
-  ).render(<App />)
+  ).render(<App initialOpen={initialOpen} />)
 }
