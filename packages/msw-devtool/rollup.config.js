@@ -30,11 +30,13 @@ export default defineConfig([
     output: [
       {
         dir: COMMON_JS_DIR,
-        format: "cjs"
+        format: "cjs",
+        sourcemap: process.env.NODE_ENV === "development"
       },
       {
         dir: ES_MODULE_DIR,
-        format: "esm"
+        format: "esm",
+        sourcemap: process.env.NODE_ENV === "development"
       }
     ],
     plugins: [
