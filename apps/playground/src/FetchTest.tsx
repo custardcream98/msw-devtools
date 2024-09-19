@@ -36,6 +36,9 @@ export default function FetchTest() {
       >
         REFETCH
       </button>
+      <div>
+        <code>https://api.sampleapis.com/switch/games</code>
+      </div>
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   )
