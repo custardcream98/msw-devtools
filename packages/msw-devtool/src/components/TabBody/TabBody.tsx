@@ -2,6 +2,8 @@ import { clsx } from "clsx"
 import { useRef } from "react"
 
 import { Tab, useTab } from "~/components/TabBar/context"
+import { ActivatedMockListTab } from "~/components/TabBody/ActivatedMockListTab/ActivatedMockListTab"
+import { ActivatedMockListProvider } from "~/components/TabBody/ActivatedMockListTab/context"
 import { AddMockTab } from "~/components/TabBody/AddMockTab"
 import { useIsIntersecting } from "~/hooks/useIsIntersecting"
 
@@ -20,7 +22,10 @@ export const TabBody = () => {
       )}
     >
       <div ref={intersectionSensorRef}></div>
-      {tab === Tab.AddMock && <AddMockTab />}
+      <ActivatedMockListProvider>
+        {tab === Tab.AddMock && <AddMockTab />}
+        {tab === Tab.ActivatedMockList && <ActivatedMockListTab />}
+      </ActivatedMockListProvider>
     </div>
   )
 }

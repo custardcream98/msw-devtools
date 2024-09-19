@@ -1,6 +1,7 @@
 import { http, HttpResponse } from "msw"
 import { useForm } from "react-hook-form"
 
+import { useActivatedMockList } from "~/components/TabBody/ActivatedMockListTab/context"
 import { getApi } from "~/lib/msw"
 
 import {
@@ -18,6 +19,7 @@ const DEFAULT_VALUES: FormFieldValues = {
 }
 
 export const AddMockForm = () => {
+  const { addActivatedMock } = useActivatedMockList()
   const method = useForm<FormFieldValues>({
     defaultValues: DEFAULT_VALUES
   })
@@ -28,13 +30,19 @@ export const AddMockForm = () => {
       onSubmit={method.handleSubmit((formData) => {
         const api = getApi()
 
-        api.use(
-          http[formData[FIELD_NAME.METHOD]](formData.url, () => {
-            return HttpResponse.json(JSON.parse(formData.response))
-          })
-        )
+        try {
+          const parsedResponse = JSON.parse(formData.response)
+          api.use(
+            http[formData[FIELD_NAME.METHOD]](formData.url, () => {
+              return HttpResponse.json(parsedResponse)
+            })
+          )
 
-        method.reset(DEFAULT_VALUES)
+          addActivatedMock(formData)
+          method.reset(DEFAULT_VALUES)
+        } catch (error) {
+          console.error(error)
+        }
       })}
     >
       <div className='msw-d-flex msw-d-items-center msw-d-rounded-md msw-d-border msw-d-border-solid msw-d-border-slate-500'>
