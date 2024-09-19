@@ -10,7 +10,7 @@ const App = ({ initialOpen }: { initialOpen?: boolean }) => {
   if (!isOn) {
     return (
       <button
-        className='fixed bottom-2 right-2 bg-slate-600'
+        className='msw-d-fixed msw-d-bottom-2 msw-d-right-2 msw-d-bg-slate-600'
         type='button'
         onClick={() => setIsOn(true)}
       >

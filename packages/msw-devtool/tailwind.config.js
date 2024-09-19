@@ -1,8 +1,18 @@
+import {
+  scopedPreflightStyles,
+  isolateInsideOfContainer
+} from "tailwindcss-scoped-preflight"
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: ["./src/**/*.{ts,tsx}"],
+  prefix: "msw-d-",
   theme: {
     extend: {}
   },
-  plugins: []
+  plugins: [
+    scopedPreflightStyles({
+      isolationStrategy: isolateInsideOfContainer("#msw-devtool")
+    })
+  ]
 }

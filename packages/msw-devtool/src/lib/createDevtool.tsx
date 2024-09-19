@@ -1,5 +1,5 @@
+import type { InstallProps } from "~/index"
 import { initialize, waitForApi } from "~/lib/initializeMsw"
-import type { InstallProps } from "~/lib/install"
 
 export const createDevtool = async ({
   initialOpen,
@@ -14,10 +14,10 @@ export const createDevtool = async ({
   const App = React.lazy(() => import("~/App"))
 
   ReactDOM.createRoot(
-    document.getElementById("root-dev") ??
+    document.getElementById("msw-devtool") ??
       (function () {
         const root = document.createElement("div")
-        root.id = "root-dev"
+        root.id = "msw-devtool"
         document.body.appendChild(root)
         return root
       })()

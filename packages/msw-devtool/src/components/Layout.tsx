@@ -17,16 +17,16 @@ export const Layout = ({
 
   return (
     <div
-      className='height fixed bottom-0 left-0 right-0 bg-black text-white'
+      className='msw-d-height msw-d-fixed msw-d-bottom-0 msw-d-left-0 msw-d-right-0 msw-d-bg-black msw-d-text-white'
       style={{ "--height": height }}
     >
-      <div className='flex'>
+      <div className='msw-d-flex'>
         <button
           type='button'
-          className='h-3 w-full bg-slate-400'
+          className='msw-d-h-3 msw-d-w-full msw-d-bg-slate-400'
           {...props}
         ></button>
-        <button type='button' className='bg-red-400' onClick={onClose}>
+        <button type='button' className='msw-d-bg-red-400' onClick={onClose}>
           close
         </button>
       </div>
