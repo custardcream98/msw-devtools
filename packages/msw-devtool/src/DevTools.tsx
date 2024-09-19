@@ -2,12 +2,14 @@ import "./index.css"
 
 import { clsx } from "clsx"
 import { useState } from "react"
-import { FaDev } from "react-icons/fa6"
+import { FaDev, FaXmark } from "react-icons/fa6"
 
-import { AddMockForm } from "~/components/AddMockForm"
 import { Layout } from "~/components/Layout"
+import { TabBar } from "~/components/TabBar"
+import { Tab, TabProvider } from "~/components/TabBar/context"
+import { TabBody } from "~/components/TabBody"
 
-const App = ({ initialOpen = false }: { initialOpen?: boolean }) => {
+const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
   const [isOpened, setIsOpened] = useState(initialOpen)
 
   return (
@@ -23,11 +25,23 @@ const App = ({ initialOpen = false }: { initialOpen?: boolean }) => {
       >
         <FaDev className='msw-d-text-gray-700' size={32} />
       </button>
-      <Layout isOpened={isOpened} onClose={() => setIsOpened(false)}>
-        <AddMockForm />
+      <Layout isOpened={isOpened}>
+        <TabProvider initialTab={Tab.AddMock}>
+          <TabBar>
+            <button
+              type='button'
+              className='msw-d-rounded-lg msw-d-bg-red-400 msw-d-p-1 msw-d-shadow-lg msw-d-transition-colors hover:msw-d-bg-red-700'
+              onClick={() => setIsOpened(false)}
+              aria-label='close button'
+            >
+              <FaXmark size={12} className='msw-d-text-background-light' />
+            </button>
+          </TabBar>
+          <TabBody />
+        </TabProvider>
       </Layout>
     </>
   )
 }
 
-export default App
+export default DevTools
