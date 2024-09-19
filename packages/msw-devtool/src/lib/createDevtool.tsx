@@ -1,13 +1,12 @@
 import type { InstallProps } from "~/index"
 
-import { initialize, waitForApi } from "./msw"
+import { initialize } from "./msw"
 
 export const createDevtool = async ({
   initialOpen,
   ...props
 }: InstallProps) => {
-  initialize(props)
-  await waitForApi()
+  await initialize(props)
 
   const React = (await import("react")).default
   const ReactDOM = (await import("react-dom/client")).default

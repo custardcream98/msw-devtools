@@ -6,15 +6,6 @@ import { type SetupServerApi } from "msw/node"
 type Api = SetupWorker | SetupServerApi | ReturnType<typeof setupServerNative>
 let _api: Api
 
-type SetupStatus = {
-  isStarted: boolean
-  startPromise: Promise<ServiceWorkerRegistration | undefined> | null
-}
-const _setupStatus: SetupStatus = {
-  isStarted: false,
-  startPromise: null
-}
-
 export type InitializeProps =
   | {
       api: SetupWorker
@@ -24,13 +15,16 @@ export type InitializeProps =
       api: SetupServerApi | ReturnType<typeof setupServerNative>
       options?: Partial<SharedOptions>
     }
-export const initialize = ({ api, options }: InitializeProps) => {
+export const initialize = async ({ api, options }: InitializeProps) => {
+  if (_api) {
+    throw new Error("[MSW] Devtool already initialized")
+  }
+
   _api = api
 
   if ("start" in api) {
-    _setupStatus.startPromise = api.start(options)
+    await api.start(options)
   } else {
-    _setupStatus.isStarted = true
     api.listen(options)
   }
 }
@@ -41,24 +35,4 @@ export const getApi = () => {
   }
 
   return _api
-}
-
-const _getSetupStatus = () => {
-  if (!_setupStatus.isStarted && !_setupStatus.startPromise) {
-    throw new Error("[MSW] Devtool not initialized")
-  }
-
-  return _setupStatus
-}
-
-export const waitForApi = async () => {
-  const setupStatus = _getSetupStatus()
-
-  if (setupStatus.isStarted) {
-    return
-  }
-
-  await setupStatus.startPromise
-
-  setupStatus.isStarted = true
 }
