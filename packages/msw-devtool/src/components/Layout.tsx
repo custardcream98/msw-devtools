@@ -17,7 +17,7 @@ export const Layout = ({
 
   return (
     <div
-      className='msw-d-height msw-d-fixed msw-d-bottom-0 msw-d-left-0 msw-d-right-0 msw-d-bg-black msw-d-text-white'
+      className='msw-d-h-[var(--height)] msw-d-fixed msw-d-bottom-0 msw-d-left-0 msw-d-right-0 msw-d-bg-black msw-d-text-white msw-d-z-msw-devtool'
       style={{ "--height": height }}
     >
       <div className='msw-d-flex'>

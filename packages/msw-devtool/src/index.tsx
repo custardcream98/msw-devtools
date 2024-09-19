@@ -1,4 +1,4 @@
-import type { InitializeProps } from "~/lib/initializeMsw"
+import type { InitializeProps } from "~/lib/msw"
 
 export type InstallProps = InitializeProps & {
   initialOpen?: boolean

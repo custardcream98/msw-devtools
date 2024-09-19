@@ -8,7 +8,11 @@ export default {
   content: ["./src/**/*.{ts,tsx}"],
   prefix: "msw-d-",
   theme: {
-    extend: {}
+    extend: {
+      zIndex: {
+        "msw-devtool": 999999
+      }
+    }
   },
   plugins: [
     scopedPreflightStyles({
