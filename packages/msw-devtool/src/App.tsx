@@ -2,6 +2,7 @@ import "./index.css"
 
 import { useState } from "react"
 
+import { AddMockForm } from "~/components/AddMockForm"
 import { Layout } from "~/components/Layout"
 
 const App = ({ initialOpen }: { initialOpen?: boolean }) => {
@@ -19,7 +20,11 @@ const App = ({ initialOpen }: { initialOpen?: boolean }) => {
     )
   }
 
-  return <Layout onClose={() => setIsOn(false)}>Devtool Body</Layout>
+  return (
+    <Layout onClose={() => setIsOn(false)}>
+      <AddMockForm />
+    </Layout>
+  )
 }
 
 export default App

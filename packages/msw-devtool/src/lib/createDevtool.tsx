@@ -1,5 +1,6 @@
 import type { InstallProps } from "~/index"
-import { initialize, waitForApi } from "~/lib/initializeMsw"
+
+import { initialize, waitForApi } from "./msw"
 
 export const createDevtool = async ({
   initialOpen,
