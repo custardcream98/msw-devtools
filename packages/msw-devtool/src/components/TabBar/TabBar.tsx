@@ -11,10 +11,10 @@ const TabButton = ({ tab }: { tab: Tab }) => {
     <button
       type='button'
       className={clsx(
+        "msw-d-button",
         isActive
           ? "msw-d-font-semibold msw-d-text-slate-700"
-          : "msw-d-font-normal msw-d-text-slate-400",
-        "msw-d-rounded-lg msw-d-px-2 msw-d-py-1 msw-d-text-sm msw-d-transition-[color,background-color,font-weight] msw-d-duration-200 hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600"
+          : "msw-d-font-normal msw-d-text-slate-400"
       )}
       onClick={() => setTab(tab)}
     >

@@ -1,8 +1,8 @@
 import { clsx } from "clsx"
 import { useRef } from "react"
 
-import { AddMockForm } from "~/components/AddMockForm"
 import { Tab, useTab } from "~/components/TabBar/context"
+import { AddMockTab } from "~/components/TabBody/AddMockTab"
 import { useIsIntersecting } from "~/hooks/useIsIntersecting"
 
 export const TabBody = () => {
@@ -20,7 +20,7 @@ export const TabBody = () => {
       )}
     >
       <div ref={intersectionSensorRef}></div>
-      {tab === Tab.AddMock && <AddMockForm />}
+      {tab === Tab.AddMock && <AddMockTab />}
     </div>
   )
 }
