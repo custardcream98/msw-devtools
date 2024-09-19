@@ -20,9 +20,6 @@ importers:
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
-      prettier-plugin-tailwindcss:
-        specifier: ^0.5.14
-        version: 0.5.14(prettier@3.2.5)
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -151,6 +148,9 @@ importers:
       postcss-import:
         specifier: ^16.1.0
         version: 16.1.0(postcss@8.4.47)
+      prettier-plugin-tailwindcss:
+        specifier: ^0.5.14
+        version: 0.5.14(prettier@3.2.5)
       rollup:
         specifier: ^4.21.3
         version: 4.21.3
