@@ -14,16 +14,20 @@ export const SettingsTab = () => {
           }
         </span>
       </header>
-      <form
-        onSubmit={(event) => {
+      <textarea
+        className='msw-d-textarea msw-d-mt-2 msw-d-h-32 msw-d-w-full'
+        value={defaultResponse ?? ""}
+        onChange={(event) => {
           event.preventDefault()
 
-          const formData = new FormData(event.currentTarget)
-          const defaultResponseBody = formData.get("defaultResponseBody")
+          const value = event.currentTarget.value
 
-          if (typeof defaultResponseBody === "string") {
-            setDefaultResponse(defaultResponseBody)
-          }
+          setDefaultResponse(value)
+        }}
+      ></textarea>
+      {/* <form
+        onSubmit={(event) => {
+          
         }}
       >
         <textarea
@@ -35,7 +39,7 @@ export const SettingsTab = () => {
         <button className='msw-d-button-lg msw-d-mt-2 msw-d-w-full msw-d-bg-blue-500 msw-d-text-white hover:msw-d-bg-blue-700 hover:msw-d-text-white disabled:msw-d-bg-slate-400'>
           Save
         </button>
-      </form>
+      </form> */}
     </ScrollList>
   )
 }
