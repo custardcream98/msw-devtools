@@ -2,6 +2,7 @@ import { http, HttpResponse } from "msw"
 import { useForm } from "react-hook-form"
 
 import { useActivatedMockList } from "~/components/TabBody/ActivatedMockListTab/context"
+import { useSettings } from "~/components/TabBody/SettingsTab/context"
 import { getApi } from "~/lib/msw"
 
 import {
@@ -12,16 +13,21 @@ import {
 } from "./form"
 
 const DEFAULT_VALUES: FormFieldValues = {
-  url: "",
-  method: METHOD_OPTION.GET,
-  status: STATUS_OPTION["200"],
-  response: ""
+  [FIELD_NAME.URL]: "",
+  [FIELD_NAME.METHOD]: METHOD_OPTION.GET,
+  [FIELD_NAME.STATUS]: STATUS_OPTION["200"],
+  [FIELD_NAME.RESPONSE]: ""
 }
 
 export const AddMockForm = () => {
   const { addActivatedMock } = useActivatedMockList()
+  const { defaultResponse } = useSettings()
   const method = useForm<FormFieldValues>({
-    defaultValues: DEFAULT_VALUES
+    defaultValues: {
+      ...DEFAULT_VALUES,
+      [FIELD_NAME.RESPONSE]:
+        defaultResponse ?? DEFAULT_VALUES[FIELD_NAME.RESPONSE]
+    }
   })
 
   return (
@@ -68,6 +74,47 @@ export const AddMockForm = () => {
         <textarea
           className='msw-d-textarea msw-d-mt-1 msw-d-h-full msw-d-w-full'
           placeholder='Type Response Here'
+          onKeyDown={(event) => {
+            if (event.key === "Tab") {
+              const textarea = event.currentTarget
+              const value = textarea.value
+              const cursorPosition = textarea.selectionEnd
+
+              const valueAfterCursor = value.slice(cursorPosition, value.length)
+              const $index = valueAfterCursor.indexOf("$")
+
+              if ($index === -1) {
+                const valueBeforeCursor = value.slice(0, cursorPosition)
+                const $index = valueBeforeCursor.indexOf("$")
+
+                if ($index === -1) {
+                  return
+                }
+
+                event.preventDefault()
+
+                textarea.selectionStart = $index
+                textarea.selectionEnd = $index + 1
+                return
+              }
+
+              event.preventDefault()
+
+              textarea.selectionStart = cursorPosition + $index
+              textarea.selectionEnd = cursorPosition + $index + 1
+            }
+          }}
+          onFocus={(event) => {
+            const value = event.currentTarget.value
+            const $index = value.indexOf("$")
+
+            if ($index === -1) {
+              return
+            }
+
+            event.currentTarget.selectionStart = $index
+            event.currentTarget.selectionEnd = $index + 1
+          }}
           {...method.register(FIELD_NAME.RESPONSE, { required: true })}
         />
       </label>

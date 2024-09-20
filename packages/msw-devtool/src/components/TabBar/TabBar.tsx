@@ -28,6 +28,7 @@ export const TabBar = ({ children }: React.PropsWithChildren) => {
     <div className='msw-d-flex msw-d-h-10 msw-d-items-center msw-d-gap-2 msw-d-border-b msw-d-border-solid msw-d-border-slate-200 msw-d-px-3 msw-d-py-1'>
       <TabButton tab={Tab.AddMock} />
       <TabButton tab={Tab.ActivatedMockList} />
+      <TabButton tab={Tab.Settings} />
       <div className='msw-d-mx-auto'></div>
       {children}
     </div>

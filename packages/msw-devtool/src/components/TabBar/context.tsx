@@ -2,7 +2,8 @@ import React, { useContext, useMemo, useState } from "react"
 
 export enum Tab {
   AddMock = "Add Mock",
-  ActivatedMockList = "Activated Mock List"
+  ActivatedMockList = "Activated Mock List",
+  Settings = "Settings"
 }
 
 type TabContextType = {
