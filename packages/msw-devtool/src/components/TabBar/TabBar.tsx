@@ -11,7 +11,7 @@ const TabButton = ({ tab }: { tab: Tab }) => {
     <button
       type='button'
       className={clsx(
-        "msw-d-button",
+        "msw-d-button hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600",
         isActive
           ? "msw-d-font-semibold msw-d-text-slate-700"
           : "msw-d-font-normal msw-d-text-slate-400"

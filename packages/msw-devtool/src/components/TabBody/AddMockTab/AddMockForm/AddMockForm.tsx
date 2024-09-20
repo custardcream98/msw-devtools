@@ -45,9 +45,9 @@ export const AddMockForm = () => {
         }
       })}
     >
-      <div className='msw-d-flex msw-d-items-center msw-d-rounded-md msw-d-border msw-d-border-solid msw-d-border-slate-500'>
+      <div className='msw-d-flex msw-d-items-center msw-d-overflow-hidden msw-d-rounded-lg msw-d-msw-border'>
         <select
-          className='msw-d-select msw-d-h-full msw-d-rounded-r-none msw-d-border-b-0 msw-d-border-l-0 msw-d-border-t-0 msw-d-uppercase'
+          className='msw-d-h-full msw-d-border-r msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-uppercase msw-d-text-slate-700'
           {...method.register(FIELD_NAME.METHOD, { required: true })}
         >
           {Object.values(METHOD_OPTION).map((method) => (
@@ -57,7 +57,7 @@ export const AddMockForm = () => {
           ))}
         </select>
         <input
-          className='msw-d-input msw-d-h-full msw-d-w-full msw-d-border-none'
+          className='msw-d-h-full msw-d-w-full msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-text-slate-700'
           type='text'
           placeholder='Type URL Here'
           {...method.register(FIELD_NAME.URL, { required: true })}
@@ -66,13 +66,13 @@ export const AddMockForm = () => {
       <label className='msw-d-mt-2 msw-d-flex msw-d-flex-1 msw-d-flex-col'>
         Response
         <textarea
-          className='msw-d-textarea msw-d-mt-1 msw-d-h-full'
+          className='msw-d-textarea msw-d-mt-1 msw-d-h-full msw-d-w-full'
           placeholder='Type Response Here'
           {...method.register(FIELD_NAME.RESPONSE, { required: true })}
         />
       </label>
       <button
-        className='msw-d-button msw-d-mt-2 msw-d-bg-blue-500 msw-d-py-3 msw-d-text-white hover:msw-d-bg-blue-700 hover:msw-d-text-white disabled:msw-d-bg-slate-400'
+        className='msw-d-button-lg msw-d-mt-2 msw-d-bg-blue-500 msw-d-text-white hover:msw-d-bg-blue-700 hover:msw-d-text-white disabled:msw-d-bg-slate-400'
         disabled={!method.formState.isValid}
       >
         Add
