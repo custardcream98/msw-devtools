@@ -38,9 +38,9 @@ export const AddMockForm = () => {
         const api = getApi()
 
         try {
-          const parsedResponse = JSON.parse(formData.response)
+          const parsedResponse = JSON.parse(formData[FIELD_NAME.RESPONSE])
           api.use(
-            http[formData[FIELD_NAME.METHOD]](formData.url, () => {
+            http[formData[FIELD_NAME.METHOD]](formData[FIELD_NAME.URL], () => {
               return HttpResponse.json(parsedResponse)
             })
           )
