@@ -21,10 +21,11 @@ const DEFAULT_VALUES: FormFieldValues = {
 
 export const AddMockForm = () => {
   const { addActivatedMock } = useActivatedMockList()
-  const { defaultResponse } = useSettings()
+  const { defaultUrl, defaultResponse } = useSettings()
   const method = useForm<FormFieldValues>({
     defaultValues: {
       ...DEFAULT_VALUES,
+      [FIELD_NAME.URL]: defaultUrl ?? DEFAULT_VALUES[FIELD_NAME.URL],
       [FIELD_NAME.RESPONSE]:
         defaultResponse ?? DEFAULT_VALUES[FIELD_NAME.RESPONSE]
     }
@@ -45,7 +46,7 @@ export const AddMockForm = () => {
           )
 
           addActivatedMock(formData)
-          method.reset(DEFAULT_VALUES)
+          method.reset()
         } catch (error) {
           console.error(error)
         }

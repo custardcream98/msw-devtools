@@ -5,6 +5,8 @@ import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 type SettingsContextType = {
   defaultResponse: string | null
   setDefaultResponse: (response: string) => void
+  defaultUrl: string | null
+  setDefaultUrl: (url: string) => void
 }
 
 export const SettingsContext = React.createContext<SettingsContextType | null>(
@@ -26,9 +28,14 @@ export const SettingsProvider = ({ children }: React.PropsWithChildren) => {
     string | null
   >("MSW_DEVTOOL_DEFAULT_RESPONSE", null)
 
+  const [defaultUrl, setDefaultUrl] = useLocalStorageState<string | null>(
+    "MSW_DEVTOOL_DEFAULT_URL",
+    null
+  )
+
   const value = React.useMemo(
-    () => ({ defaultResponse, setDefaultResponse }),
-    [defaultResponse, setDefaultResponse]
+    () => ({ defaultResponse, setDefaultResponse, defaultUrl, setDefaultUrl }),
+    [defaultResponse, setDefaultResponse, defaultUrl, setDefaultUrl]
   )
 
   return (
