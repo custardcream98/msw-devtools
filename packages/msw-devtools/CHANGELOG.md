@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.0.5
+
+### Patch Changes
+
+- 47b9066: test
+
 ## 0.0.4
 
 ### Patch Changes
