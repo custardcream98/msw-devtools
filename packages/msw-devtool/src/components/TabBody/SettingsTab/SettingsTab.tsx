@@ -1,6 +1,7 @@
 import { useId } from "react"
 
 import { ScrollList } from "~/components/ScrollList"
+import { CodeEditor } from "~/components/TabBody/AddMockTab/AddMockForm/CodeEditor"
 import { useSettings } from "~/components/TabBody/SettingsTab/context"
 
 export const SettingsTab = () => {
@@ -16,7 +17,7 @@ export const SettingsTab = () => {
       <input
         id={urlInputId}
         type='text'
-        className='msw-d-textarea msw-d-w-full'
+        className='msw-d-w-full msw-d-p-2 msw-d-font-mono msw-d-msw-round-border'
         value={defaultUrl ?? ""}
         onChange={(event) => {
           event.preventDefault()
@@ -34,18 +35,12 @@ export const SettingsTab = () => {
           }
         </span>
       </label>
-      <textarea
+      <CodeEditor
         id={responseInputId}
-        className='msw-d-textarea msw-d-mt-2 msw-d-h-32 msw-d-w-full'
+        className='msw-d-textarea msw-d-mt-2 msw-d-h-80 msw-d-w-full'
         value={defaultResponse ?? ""}
-        onChange={(event) => {
-          event.preventDefault()
-
-          const value = event.currentTarget.value
-
-          setDefaultResponse(value)
-        }}
-      ></textarea>
+        onChange={setDefaultResponse}
+      />
     </ScrollList>
   )
 }

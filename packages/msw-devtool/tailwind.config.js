@@ -20,6 +20,15 @@ export default {
         "Segoe UI Emoji",
         "Segoe UI Symbol",
         "Noto Color Emoji"
+      ],
+      mono: [
+        "SFMono-Regular",
+        "Menlo",
+        "Monaco",
+        "Consolas",
+        "Liberation Mono",
+        "Courier New",
+        "monospace"
       ]
     },
     extend: {
@@ -39,22 +48,12 @@ export default {
     }),
     plugin(function ({ addComponents, addUtilities, theme }) {
       addComponents({
-        ".textarea": {
-          resize: "none",
-          borderRadius: theme("borderRadius.lg"),
-          backgroundColor: theme("colors.slate.50"),
-          padding: theme("spacing.2"),
-          fontSize: theme("fontSize.base"),
-          lineHeight: theme("lineHeight.6"),
-          color: theme("colors.slate.700"),
-          ...MSW_BORDER(theme)
-        },
         ".button": {
           padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
           ...BUTTON(theme)
         },
         ".button-lg": {
-          padding: `${theme("spacing.3")}`,
+          padding: `${theme("spacing.2")} ${theme("spacing.3")}`,
           ...BUTTON(theme)
         },
         ".button-icon": {
@@ -64,7 +63,11 @@ export default {
       })
 
       addUtilities({
-        ".msw-border": MSW_BORDER(theme)
+        ".msw-border": MSW_BORDER(theme),
+        ".msw-round-border": {
+          borderRadius: theme("borderRadius.lg"),
+          ...MSW_BORDER(theme)
+        }
       })
     })
   ]

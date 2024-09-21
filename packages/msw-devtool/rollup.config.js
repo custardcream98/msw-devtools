@@ -12,6 +12,7 @@ import { dts } from "rollup-plugin-dts"
 import postcss from "rollup-plugin-postcss"
 import peerDepsExternal from "rollup-plugin-peer-deps-external"
 import del from "rollup-plugin-delete"
+import json from "@rollup/plugin-json"
 
 import packageJson from "./package.json"
 
@@ -46,6 +47,7 @@ export default defineConfig([
         tsconfig: "./tsconfig.json",
         exclude: [/.css$/]
       }),
+      json(),
       postcss({
         minimize: true
       }),

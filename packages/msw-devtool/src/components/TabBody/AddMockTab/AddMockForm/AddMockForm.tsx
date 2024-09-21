@@ -1,7 +1,8 @@
 import { http, HttpResponse } from "msw"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 
 import { useActivatedMockList } from "~/components/TabBody/ActivatedMockListTab/context"
+import { CodeEditor } from "~/components/TabBody/AddMockTab/AddMockForm/CodeEditor"
 import { useSettings } from "~/components/TabBody/SettingsTab/context"
 import { getApi } from "~/lib/msw"
 
@@ -53,79 +54,66 @@ export const AddMockForm = () => {
         }
       })}
     >
-      <div className='msw-d-flex msw-d-items-center msw-d-overflow-hidden msw-d-rounded-lg msw-d-msw-border'>
-        <select
-          className='msw-d-h-full msw-d-border-r msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-uppercase msw-d-text-slate-700'
-          {...method.register(FIELD_NAME.METHOD, { required: true })}
+      <div className='msw-d-flex msw-d-w-full msw-d-shrink-0 msw-d-items-center msw-d-gap-2'>
+        <div className='msw-d-flex msw-d-w-full msw-d-items-center msw-d-overflow-hidden msw-d-font-mono msw-d-msw-round-border'>
+          <select
+            className='msw-d-h-full msw-d-border-r msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-uppercase msw-d-text-slate-700'
+            {...method.register(FIELD_NAME.METHOD, { required: true })}
+          >
+            {Object.values(METHOD_OPTION).map((method) => (
+              <option key={method} value={method}>
+                {method}
+              </option>
+            ))}
+          </select>
+          <input
+            className='msw-d-h-full msw-d-w-full msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-text-slate-700'
+            type='text'
+            placeholder='Type URL Here'
+            {...method.register(FIELD_NAME.URL, { required: true })}
+          />
+        </div>
+        <button
+          className='msw-d-button-lg msw-d-h-full msw-d-bg-blue-500 msw-d-text-white hover:msw-d-bg-blue-700 hover:msw-d-text-white disabled:msw-d-bg-slate-400'
+          disabled={!method.formState.isValid}
         >
-          {Object.values(METHOD_OPTION).map((method) => (
-            <option key={method} value={method}>
-              {method}
-            </option>
-          ))}
-        </select>
-        <input
-          className='msw-d-h-full msw-d-w-full msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-text-slate-700'
-          type='text'
-          placeholder='Type URL Here'
-          {...method.register(FIELD_NAME.URL, { required: true })}
-        />
+          Add
+        </button>
       </div>
       <label className='msw-d-mt-2 msw-d-flex msw-d-flex-1 msw-d-flex-col'>
         Response
-        <textarea
-          className='msw-d-textarea msw-d-mt-1 msw-d-h-full msw-d-w-full'
-          placeholder='Type Response Here'
-          onKeyDown={(event) => {
-            if (event.key === "Tab") {
-              const textarea = event.currentTarget
-              const value = textarea.value
-              const cursorPosition = textarea.selectionEnd
+        <Controller
+          name={FIELD_NAME.RESPONSE}
+          control={method.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <CodeEditor
+              className='msw-d-mb-2 msw-d-mt-1 msw-d-h-full msw-d-w-full'
+              onFocus={(ref) => {
+                const view = ref.view
 
-              const valueAfterCursor = value.slice(cursorPosition, value.length)
-              const $index = valueAfterCursor.indexOf("$")
+                if (view) {
+                  setTimeout(() => {
+                    const doc = view.state.doc.toString()
+                    const firstDollarIndex = doc.indexOf("$")
 
-              if ($index === -1) {
-                const valueBeforeCursor = value.slice(0, cursorPosition)
-                const $index = valueBeforeCursor.indexOf("$")
-
-                if ($index === -1) {
-                  return
+                    if (firstDollarIndex !== -1) {
+                      view.dispatch({
+                        selection: {
+                          anchor: firstDollarIndex,
+                          head: firstDollarIndex + 1
+                        }
+                      })
+                      view.focus()
+                    }
+                  }, 0)
                 }
-
-                event.preventDefault()
-
-                textarea.selectionStart = $index
-                textarea.selectionEnd = $index + 1
-                return
-              }
-
-              event.preventDefault()
-
-              textarea.selectionStart = cursorPosition + $index
-              textarea.selectionEnd = cursorPosition + $index + 1
-            }
-          }}
-          onFocus={(event) => {
-            const value = event.currentTarget.value
-            const $index = value.indexOf("$")
-
-            if ($index === -1) {
-              return
-            }
-
-            event.currentTarget.selectionStart = $index
-            event.currentTarget.selectionEnd = $index + 1
-          }}
-          {...method.register(FIELD_NAME.RESPONSE, { required: true })}
+              }}
+              {...field}
+            />
+          )}
         />
       </label>
-      <button
-        className='msw-d-button-lg msw-d-mt-2 msw-d-bg-blue-500 msw-d-text-white hover:msw-d-bg-blue-700 hover:msw-d-text-white disabled:msw-d-bg-slate-400'
-        disabled={!method.formState.isValid}
-      >
-        Add
-      </button>
     </form>
   )
 }
