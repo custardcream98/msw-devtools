@@ -25,6 +25,7 @@ const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
               aria-label='close button'
             >
               <FaXmark size={12} className='text-background-light' />
+              <div></div>
             </button>
           </TabBar>
           <TabBody />
