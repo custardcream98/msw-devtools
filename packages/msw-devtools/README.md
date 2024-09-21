@@ -1,32 +1,34 @@
 # @custardcream/msw-devtools
 
-**Framework Agnostic Devtools for Managing MSW Handlers**
+[ENGLISH](./README-EN.md)
 
-Easily manage your MSW handlers with this versatile devtool, suitable for any framework.
+**프레임워크에 구애받지 않는 MSW 핸들러 관리 도구**
 
-### Key Features:
+MSW 핸들러를 손쉽게 관리하세요.
 
-- 🛠 **Add Mock Handlers On The Fly** – Instantly add new mock handlers.
-- ✏️ **Edit Mock Handler's Response** – Modify responses of mock handlers.
-- 🔄 **Export/Import Mock Handlers** – Seamlessly export and import handler configurations.
+### 주요 기능:
 
----
-
-## 📺 Demo
-
-### Add Mock Handler
-
-![Add Mock Demo](https://github.com/user-attachments/assets/32a3c68b-b58f-426b-9813-bfacbdbd843f)
-
-### Export/Import Mock Handlers
-
-![Export/Import Demo](https://github.com/user-attachments/assets/26814706-ac15-47c5-8603-f7acc14b5342)
+- 🛠 **모킹 핸들러를 런타임에 추가** – 새로운 모킹 핸들러를 앱의 동작중에 추가할 수 있습니다.
+- ✏️ **모킹 핸들러의 응답 수정** – 모킹 핸들러의 응답을 빠르게 수정할 수 있습니다.
+- 🔄 **모킹 핸들러 내보내기/가져오기** – 핸들러 구성을 손쉽게 내보내고 가져올 수 있습니다.
 
 ---
 
-## 🚀 Installation
+## 📺 데모
 
-To get started, install the package via npm:
+### 모킹 핸들러 추가
+
+https://github.com/user-attachments/assets/32a3c68b-b58f-426b-9813-bfacbdbd843f
+
+### 모킹 핸들러 내보내기/가져오기
+
+https://github.com/user-attachments/assets/26814706-ac15-47c5-8603-f7acc14b5342
+
+---
+
+## 🚀 설치 방법
+
+npm을 통해 패키지를 설치하세요.
 
 ```bash
 npm install msw-devtools
@@ -34,25 +36,23 @@ npm install msw-devtools
 
 ---
 
-## 🛠 Usage
-
-Here's how you can integrate it into your project:
+## 🛠 사용법
 
 ```jsx
 import { setupWorker } from "msw/browser"
 import { installMSWDevtool } from 'msw-devtool';
 
 const enableMocking = async () => {
-  // Exclude devtool from production builds
+  // 프로덕션 빌드에서는 Devtools를 번들에 포함시키지 않습니다.
   if (import.meta.env.DEV) {
     return await installMSWDevtool({
-      initialOpen: true, // Automatically open devtool on start
-      api: setupWorker() // Initialize MSW worker
+      initialOpen: true, // Devtools 열린 상태로 시작
+      api: setupWorker() // MSW 워커 초기화
     })
   }
 }
 
-// Render your app with any framework
+// 어떤 프레임워크를 사용해도 상관없습니다.
 enableMocking().then(() =>
   ReactDomClient.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
