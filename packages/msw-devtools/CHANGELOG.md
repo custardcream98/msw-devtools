@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.0.4
+
+### Patch Changes
+
+- 243a155: Remove tailwind prefix and scope styles using important
+
 ## 0.0.3
 
 ### Patch Changes
