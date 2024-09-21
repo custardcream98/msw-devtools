@@ -1,13 +1,11 @@
 import React, { useCallback, useMemo, useState } from "react"
 
-import {
-  FIELD_NAME,
-  FormFieldValues
-} from "~/components/TabBody/AddMockTab/AddMockForm/form"
+import { FIELD_NAME } from "~/components/TabBody/AddMockTab/AddMockForm/form"
+import { JsonMock } from "~/types"
 
 export type ActivatedMockListContextType = {
-  activatedMockList: FormFieldValues[]
-  addActivatedMock: (activatedMock: FormFieldValues) => void
+  activatedMockList: JsonMock[]
+  addActivatedMock: (activatedMock: JsonMock) => void
 }
 
 export const ActivatedMockListContext =
@@ -28,11 +26,9 @@ export const useActivatedMockList = () => {
 export const ActivatedMockListProvider = ({
   children
 }: React.PropsWithChildren) => {
-  const [activatedMockList, setActivatedMockList] = useState<FormFieldValues[]>(
-    []
-  )
+  const [activatedMockList, setActivatedMockList] = useState<JsonMock[]>([])
 
-  const addActivatedMock = useCallback((activatedMock: FormFieldValues) => {
+  const addActivatedMock = useCallback((activatedMock: JsonMock) => {
     setActivatedMockList((prev) => {
       return [
         ...prev.filter(

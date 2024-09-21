@@ -1,36 +1,10 @@
-import { http, HttpResponse } from "msw"
 import { FaFileExport, FaFileImport } from "react-icons/fa6"
 
 import { ScrollList } from "~/components/ScrollList"
-import {
-  FIELD_NAME,
-  FormFieldValues
-} from "~/components/TabBody/AddMockTab/AddMockForm/form"
-import { getApi } from "~/lib/msw"
+import { FIELD_NAME } from "~/components/TabBody/AddMockTab/AddMockForm/form"
 
 import { useActivatedMockList } from "./context"
-
-const saveJson = (data: object, filename: string) => {
-  const file = new Blob([JSON.stringify(data, null, 2)], {
-    type: "text/json"
-  })
-  const a = document.createElement("a")
-
-  a.download = filename
-  a.href = URL.createObjectURL(file)
-  a.dataset.downloadurl = ["text/json", a.download, a.href].join(":")
-
-  const event = new MouseEvent("click", {
-    view: window,
-    bubbles: true,
-    cancelable: true
-  })
-
-  a.dispatchEvent(event)
-
-  URL.revokeObjectURL(a.href)
-  a.remove()
-}
+import { loadJson, saveJson } from "./utils"
 
 export const ActivatedMockListTab = () => {
   const { activatedMockList, addActivatedMock } = useActivatedMockList()
@@ -43,15 +17,7 @@ export const ActivatedMockListTab = () => {
           type='button'
           className='msw-d-button-icon hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600'
           onClick={() => {
-            saveJson(
-              activatedMockList.map(
-                ({ [FIELD_NAME.RESPONSE]: response, ...data }) => ({
-                  ...data,
-                  [FIELD_NAME.RESPONSE]: JSON.parse(response)
-                })
-              ),
-              "mocks.json"
-            )
+            saveJson(activatedMockList, "mocks.json")
           }}
         >
           <FaFileExport />
@@ -61,60 +27,11 @@ export const ActivatedMockListTab = () => {
           type='button'
           className='msw-d-button-icon hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600'
           onClick={() => {
-            const input = document.createElement("input")
-            input.type = "file"
-            input.accept = ".json"
-            input.onchange = (e) => {
-              const file = (e.target as HTMLInputElement).files?.[0]
-
-              if (file) {
-                const reader = new FileReader()
-                reader.onload = (e) => {
-                  const data = JSON.parse(e.target?.result as string)
-
-                  data.forEach(
-                    (
-                      mock: Omit<
-                        FormFieldValues,
-                        typeof FIELD_NAME.RESPONSE
-                      > & {
-                        [FIELD_NAME.RESPONSE]: object
-                      }
-                    ) => {
-                      const api = getApi()
-
-                      try {
-                        api.use(
-                          http[mock[FIELD_NAME.METHOD]](
-                            mock[FIELD_NAME.URL],
-                            () => {
-                              return HttpResponse.json(
-                                mock[FIELD_NAME.RESPONSE]
-                              )
-                            }
-                          )
-                        )
-
-                        addActivatedMock({
-                          ...mock,
-                          [FIELD_NAME.RESPONSE]: JSON.stringify(
-                            mock[FIELD_NAME.RESPONSE]
-                          )
-                        })
-                      } catch (error) {
-                        console.error(error)
-                      }
-                    }
-                  )
-                }
-
-                reader.readAsText(file)
+            loadJson({
+              onLoad: (loadedMocks) => {
+                loadedMocks.forEach(addActivatedMock)
               }
-
-              input.remove()
-            }
-
-            input.click()
+            })
           }}
         >
           <FaFileImport />
@@ -132,7 +49,7 @@ export const ActivatedMockListTab = () => {
                 <p>{mock[FIELD_NAME.URL]}</p>
               </div>
               <pre className='msw-d-w-full'>
-                {JSON.stringify(JSON.parse(mock[FIELD_NAME.RESPONSE]), null, 2)}
+                {JSON.stringify(mock[FIELD_NAME.RESPONSE], null, 2)}
               </pre>
             </li>
           ))}

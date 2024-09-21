@@ -11,6 +11,7 @@ import {
   METHOD_OPTION,
   STATUS_OPTION
 } from "./form"
+import { formFieldValuesToJsonMock } from "./utils"
 
 const DEFAULT_VALUES: FormFieldValues = {
   [FIELD_NAME.URL]: "",
@@ -38,14 +39,14 @@ export const AddMockForm = () => {
         const api = getApi()
 
         try {
-          const parsedResponse = JSON.parse(formData[FIELD_NAME.RESPONSE])
+          const jsonMock = formFieldValuesToJsonMock(formData)
           api.use(
             http[formData[FIELD_NAME.METHOD]](formData[FIELD_NAME.URL], () => {
-              return HttpResponse.json(parsedResponse)
+              return HttpResponse.json(jsonMock)
             })
           )
 
-          addActivatedMock(formData)
+          addActivatedMock(jsonMock)
           method.reset()
         } catch (error) {
           console.error(error)
