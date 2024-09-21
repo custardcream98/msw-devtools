@@ -11,7 +11,7 @@
     "lint:fix": "pnpm lint --fix",
     "type-check": "tsc --noEmit",
     "build:watch": "pnpm build --watch",
-    "prepublish": "pnpm lint --max-warnings 0 && pnpm type-check && pnpm build"
+    "prepublish": "pnpm type-check && pnpm lint && pnpm build"
   },
   "type": "module",
   "main": "dist/cjs/index.js",

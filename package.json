@@ -7,8 +7,11 @@
     "lint:fix": "pnpm --filter \"./{packages,apps}/**\" lint:fix",
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
     "prepare": "husky",
-    "build:playground": "pnpm --filter @custardcream/msw-devtools build && pnpm --filter playground build",
-    "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,blue\" \"NODE_ENV=development pnpm --filter @custardcream/msw-devtools build:watch\" \"pnpm --filter playground dev\""
+    "build:package": "pnpm --filter @custardcream/msw-devtools build",
+    "build:package:watch": "pnpm --filter @custardcream/msw-devtools build:watch",
+    "build:playground": "pnpm build:package && pnpm --filter playground build",
+    "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm --filter playground dev\"",
+    "ci:publish": "pnpm --filter @custardcream/msw-devtools publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
