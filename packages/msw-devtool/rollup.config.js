@@ -39,8 +39,10 @@ export default defineConfig([
       del({
         targets: [COMMON_JS_DIR, ES_MODULE_DIR]
       }),
+      peerDepsExternal({
+        includeDependencies: true
+      }),
       tsConfigPaths(),
-      peerDepsExternal(),
       resolve(),
       commonjs(),
       typescript({
