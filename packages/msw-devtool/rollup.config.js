@@ -12,6 +12,7 @@ import tsConfigPaths from "rollup-plugin-tsconfig-paths"
 import { dts } from "rollup-plugin-dts"
 import postcss from "rollup-plugin-postcss"
 import peerDepsExternal from "rollup-plugin-peer-deps-external"
+import del from "rollup-plugin-delete"
 
 import packageJson from "./package.json"
 
@@ -40,6 +41,9 @@ export default defineConfig([
       }
     ],
     plugins: [
+      del({
+        targets: [COMMON_JS_DIR, ES_MODULE_DIR]
+      }),
       tsConfigPaths(),
       peerDepsExternal(),
       resolve(),
