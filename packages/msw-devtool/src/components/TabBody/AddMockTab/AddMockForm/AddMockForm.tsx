@@ -43,7 +43,7 @@ export const AddMockForm = () => {
           const jsonMock = formFieldValuesToJsonMock(formData)
           api.use(
             http[formData[FIELD_NAME.METHOD]](formData[FIELD_NAME.URL], () => {
-              return HttpResponse.json(jsonMock)
+              return HttpResponse.json(jsonMock[FIELD_NAME.RESPONSE])
             })
           )
 
