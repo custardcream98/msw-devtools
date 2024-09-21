@@ -34,16 +34,19 @@ jobs:
         run: pnpm install
 
       - name: Create and publish versions
+        id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm ci:version
           commit: "chore: update versions"
           title: "chore: update versions"
           publish: pnpm ci:publish
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push changes
-        run: git push origin main && git push origin main --tags
+      - name: Create and push tags
+        if: steps.changesets.outputs.published == 'true'
+        run: pnpm changeset tag && git push --tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
