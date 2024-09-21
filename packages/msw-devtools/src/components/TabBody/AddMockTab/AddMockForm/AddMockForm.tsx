@@ -35,7 +35,7 @@ export const AddMockForm = () => {
 
   return (
     <form
-      className='msw-d-flex msw-d-h-full msw-d-flex-col'
+      className='flex h-full flex-col'
       onSubmit={method.handleSubmit((formData) => {
         const api = getApi()
 
@@ -54,10 +54,10 @@ export const AddMockForm = () => {
         }
       })}
     >
-      <div className='msw-d-flex msw-d-w-full msw-d-shrink-0 msw-d-items-center msw-d-gap-2'>
-        <div className='msw-d-flex msw-d-w-full msw-d-items-center msw-d-overflow-hidden msw-d-font-mono msw-d-msw-round-border'>
+      <div className='flex w-full shrink-0 items-center gap-2'>
+        <div className='flex w-full items-center overflow-hidden font-mono msw-round-border'>
           <select
-            className='msw-d-h-full msw-d-border-r msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-uppercase msw-d-text-slate-700'
+            className='h-full border-r bg-slate-50 p-2 text-base uppercase text-slate-700'
             {...method.register(FIELD_NAME.METHOD, { required: true })}
           >
             {Object.values(METHOD_OPTION).map((method) => (
@@ -67,30 +67,27 @@ export const AddMockForm = () => {
             ))}
           </select>
           <input
-            className='msw-d-h-full msw-d-w-full msw-d-bg-slate-50 msw-d-p-2 msw-d-text-base msw-d-text-slate-700'
+            className='h-full w-full bg-slate-50 p-2 text-base text-slate-700'
             type='text'
             placeholder='Type URL Here'
             {...method.register(FIELD_NAME.URL, { required: true })}
           />
         </div>
         <button
-          className='msw-d-button-lg msw-d-h-full msw-d-bg-blue-500 msw-d-text-white hover:msw-d-bg-blue-700 hover:msw-d-text-white disabled:msw-d-bg-slate-400'
+          className='button-lg h-full bg-blue-500 text-white hover:bg-blue-700 hover:text-white disabled:bg-slate-400'
           disabled={!method.formState.isValid}
         >
           Add
         </button>
       </div>
-      <label className='msw-d-mt-2 msw-d-flex msw-d-flex-1 msw-d-flex-col'>
+      <label className='mt-2 flex flex-1 flex-col'>
         Response
         <Controller
           name={FIELD_NAME.RESPONSE}
           control={method.control}
           rules={{ required: true }}
           render={({ field }) => (
-            <CodeEditor
-              className='msw-d-mb-2 msw-d-mt-1 msw-d-h-full msw-d-w-full'
-              {...field}
-            />
+            <CodeEditor className='mb-2 mt-1 h-full w-full' {...field} />
           )}
         />
       </label>

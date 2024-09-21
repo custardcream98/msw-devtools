@@ -92,10 +92,10 @@ export const CodeEditor = React.forwardRef<
   useImperativeHandle(ref, () => innerRef.current!, [])
 
   return (
-    <div className={clsx(className, "msw-d-overflow-auto")}>
+    <div className={clsx(className, "overflow-auto")}>
       <ReactCodeMirror
         ref={innerRef}
-        className='msw-d-overflow-hidden msw-d-msw-round-border'
+        className='overflow-hidden msw-round-border'
         extensions={EXTENSIONS}
         basicSetup={BASIC_SETUP_OPTIONS}
         theme={vscodeDark}

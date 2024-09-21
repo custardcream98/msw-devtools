@@ -10,12 +10,12 @@ export const ActivatedMockListTab = () => {
   const { activatedMockList, addActivatedMock } = useActivatedMockList()
 
   return (
-    <div className='msw-d-flex msw-d-h-full'>
-      <div className='msw-d-flex msw-d-h-full msw-d-flex-col msw-d-gap-2 msw-d-border-r msw-d-border-solid msw-d-border-slate-200 msw-d-p-2'>
+    <div className='flex h-full'>
+      <div className='flex h-full flex-col gap-2 border-r border-solid border-slate-200 p-2'>
         <button
           title='Export Mocks'
           type='button'
-          className='msw-d-button-icon hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600'
+          className='button-icon hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
             saveJson(activatedMockList, "mocks.json")
           }}
@@ -25,7 +25,7 @@ export const ActivatedMockListTab = () => {
         <button
           title='Import Mocks'
           type='button'
-          className='msw-d-button-icon hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600'
+          className='button-icon hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
             try {
               loadJson({
@@ -41,18 +41,18 @@ export const ActivatedMockListTab = () => {
           <FaFileImport />
         </button>
       </div>
-      <ScrollList className='msw-d-w-full'>
-        <ul className='msw-d-w-full [&>li+li]:msw-d-mt-4'>
+      <ScrollList className='w-full'>
+        <ul className='w-full [&>li+li]:mt-4'>
           {activatedMockList.map((mock) => (
             <li
               key={mock[FIELD_NAME.URL]}
-              className='msw-d-flex msw-d-rounded-2xl msw-d-bg-white msw-d-p-4 msw-d-shadow-xl'
+              className='flex rounded-2xl bg-white p-4 shadow-xl'
             >
-              <div className='msw-d-w-full'>
-                <p className='msw-d-uppercase'>{mock[FIELD_NAME.METHOD]}</p>
+              <div className='w-full'>
+                <p className='uppercase'>{mock[FIELD_NAME.METHOD]}</p>
                 <p>{mock[FIELD_NAME.URL]}</p>
               </div>
-              <pre className='msw-d-w-full'>
+              <pre className='w-full'>
                 {JSON.stringify(mock[FIELD_NAME.RESPONSE], null, 2)}
               </pre>
             </li>

@@ -8,7 +8,7 @@ import plugin from "tailwindcss/plugin"
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./src/**/*.{ts,tsx}"],
-  prefix: "msw-d-",
+  important: "#msw-devtools",
   theme: {
     fontFamily: {
       sans: [
@@ -47,28 +47,38 @@ export default {
       isolationStrategy: isolateInsideOfContainer("#msw-devtools")
     }),
     plugin(function ({ addComponents, addUtilities, theme }) {
-      addComponents({
-        ".button": {
-          padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
-          ...BUTTON(theme)
+      addComponents(
+        {
+          ".button": {
+            padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
+            ...BUTTON(theme)
+          },
+          ".button-lg": {
+            padding: `${theme("spacing.2")} ${theme("spacing.3")}`,
+            ...BUTTON(theme)
+          },
+          ".button-icon": {
+            padding: `${theme("spacing.2")}`,
+            ...BUTTON(theme)
+          }
         },
-        ".button-lg": {
-          padding: `${theme("spacing.2")} ${theme("spacing.3")}`,
-          ...BUTTON(theme)
-        },
-        ".button-icon": {
-          padding: `${theme("spacing.2")}`,
-          ...BUTTON(theme)
+        {
+          respectImportant: true
         }
-      })
+      )
 
-      addUtilities({
-        ".msw-border": MSW_BORDER(theme),
-        ".msw-round-border": {
-          borderRadius: theme("borderRadius.lg"),
-          ...MSW_BORDER(theme)
+      addUtilities(
+        {
+          ".msw-border": MSW_BORDER(theme),
+          ".msw-round-border": {
+            borderRadius: theme("borderRadius.lg"),
+            ...MSW_BORDER(theme)
+          }
+        },
+        {
+          respectImportant: true
         }
-      })
+      )
     })
   ]
 }

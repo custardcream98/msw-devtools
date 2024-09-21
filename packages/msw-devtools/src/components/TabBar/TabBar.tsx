@@ -11,10 +11,8 @@ const TabButton = ({ tab }: { tab: Tab }) => {
     <button
       type='button'
       className={clsx(
-        "msw-d-button hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600",
-        isActive
-          ? "msw-d-font-semibold msw-d-text-slate-700"
-          : "msw-d-font-normal msw-d-text-slate-400"
+        "button hover:bg-slate-300 hover:text-slate-600",
+        isActive ? "font-semibold text-slate-700" : "font-normal text-slate-400"
       )}
       onClick={() => setTab(tab)}
     >
@@ -25,11 +23,11 @@ const TabButton = ({ tab }: { tab: Tab }) => {
 
 export const TabBar = ({ children }: React.PropsWithChildren) => {
   return (
-    <div className='msw-d-flex msw-d-h-10 msw-d-items-center msw-d-gap-2 msw-d-border-b msw-d-border-solid msw-d-border-slate-200 msw-d-px-3 msw-d-py-1'>
+    <div className='flex h-10 items-center gap-2 border-b border-solid border-slate-200 px-3 py-1'>
       <TabButton tab={Tab.AddMock} />
       <TabButton tab={Tab.ActivatedMockList} />
       <TabButton tab={Tab.Settings} />
-      <div className='msw-d-mx-auto'></div>
+      <div className='mx-auto'></div>
       {children}
     </div>
   )

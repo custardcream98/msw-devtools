@@ -9,7 +9,7 @@ export const TabBody = () => {
   const { tab } = useTab()
 
   return (
-    <div className='msw-d-min-h-0 msw-d-flex-1'>
+    <div className='min-h-0 flex-1'>
       <ActivatedMockListProvider>
         <SettingsProvider>
           {tab === Tab.AddMock && <AddMockTab />}

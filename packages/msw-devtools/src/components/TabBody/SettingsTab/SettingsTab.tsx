@@ -17,7 +17,7 @@ export const SettingsTab = () => {
       <input
         id={urlInputId}
         type='text'
-        className='msw-d-w-full msw-d-p-2 msw-d-font-mono msw-d-msw-round-border'
+        className='w-full p-2 font-mono msw-round-border'
         value={defaultUrl ?? ""}
         onChange={(event) => {
           event.preventDefault()
@@ -27,8 +27,8 @@ export const SettingsTab = () => {
           setDefaultUrl(value)
         }}
       />
-      <label htmlFor={responseInputId} className='msw-d-mt-2 msw-d-block'>
-        <span className='msw-d-block'>Set Default Response Body</span>
+      <label htmlFor={responseInputId} className='mt-2 block'>
+        <span className='block'>Set Default Response Body</span>
         <span>
           {
             "Tip: When editing the response body, you can automatically move the cursor using the $ (dollar sign) in the default values. When editing the response body, pressing Tab will automatically move the cursor to the next dollar sign."
@@ -37,7 +37,7 @@ export const SettingsTab = () => {
       </label>
       <CodeEditor
         id={responseInputId}
-        className='msw-d-textarea msw-d-mt-2 msw-d-h-80 msw-d-w-full'
+        className='textarea mt-2 h-80 w-full'
         value={defaultResponse ?? ""}
         onChange={setDefaultResponse}
       />

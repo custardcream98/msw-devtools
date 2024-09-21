@@ -20,11 +20,11 @@ const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
           <TabBar>
             <button
               type='button'
-              className='msw-d-rounded-lg msw-d-bg-red-400 msw-d-p-1 msw-d-shadow-lg msw-d-transition-colors hover:msw-d-bg-red-700'
+              className='rounded-lg bg-red-400 p-1 shadow-lg transition-colors hover:bg-red-700'
               onClick={() => setIsOpened(false)}
               aria-label='close button'
             >
-              <FaXmark size={12} className='msw-d-text-background-light' />
+              <FaXmark size={12} className='text-background-light' />
             </button>
           </TabBar>
           <TabBody />
