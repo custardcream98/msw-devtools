@@ -31,7 +31,7 @@ export const SettingsTab = () => {
         <span className='msw-d-block'>Set Default Response Body</span>
         <span>
           {
-            "TIP: When editing response body, you can automatically move the cursor when using the $ (dollar sign) in default values. When the cursor is focused on a $, pressing Tab will move it to the next dollar sign."
+            "Tip: When editing the response body, you can automatically move the cursor using the $ (dollar sign) in the default values. When editing the response body, pressing Tab will automatically move the cursor to the next dollar sign."
           }
         </span>
       </label>
