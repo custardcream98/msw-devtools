@@ -1,11 +1,13 @@
-import type { InstallProps } from "~/index"
+import { initialize, type InitializeProps } from "./msw"
 
-import { initialize } from "./msw"
+export type CreateDevtoolProps = InitializeProps & {
+  initialOpen?: boolean
+}
 
 export const createDevtool = async ({
   initialOpen,
   ...props
-}: InstallProps) => {
+}: CreateDevtoolProps) => {
   await initialize(props)
 
   const React = (await import("react")).default

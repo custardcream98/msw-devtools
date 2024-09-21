@@ -1,18 +1,14 @@
-import type { InitializeProps } from "~/lib/msw"
+import type { CreateDevtoolProps } from "~/lib/createDevtool"
 
-export type InstallProps = InitializeProps & {
-  initialOpen?: boolean
-}
+export type InstallProps = CreateDevtoolProps
 
 let isInitialized = false
 export const installMSWDevtool = async (props: InstallProps) => {
-  if (isInitialized || process.env.NODE_ENV === "production") {
-    return
+  if (!isInitialized) {
+    isInitialized = true
+
+    const { createDevtool } = await import("~/lib/createDevtool")
+
+    await createDevtool(props)
   }
-
-  isInitialized = true
-
-  const { createDevtool } = await import("~/lib/createDevtool")
-
-  await createDevtool(props)
 }
