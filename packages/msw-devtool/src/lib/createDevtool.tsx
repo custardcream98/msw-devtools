@@ -13,7 +13,7 @@ export const createDevtool = async ({
   const React = (await import("react")).default
   const ReactDOM = (await import("react-dom/client")).default
 
-  const App = React.lazy(() => import("~/DevTools"))
+  const DevTools = React.lazy(() => import("~/DevTools"))
 
   ReactDOM.createRoot(
     document.getElementById("msw-devtool") ??
@@ -23,5 +23,5 @@ export const createDevtool = async ({
         document.body.appendChild(root)
         return root
       })()
-  ).render(<App initialOpen={initialOpen} />)
+  ).render(<DevTools initialOpen={initialOpen} />)
 }
