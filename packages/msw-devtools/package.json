@@ -2,7 +2,9 @@
   "$schema": "https://json.schemastore.org/package",
   "name": "@custardcream/msw-devtools",
   "version": "0.0.2",
-  "sideEffects": false,
+  "sideEffects": [
+    "./src/index.css"
+  ],
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
     "lint": "eslint --cache",
