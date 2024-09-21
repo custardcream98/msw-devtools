@@ -1,7 +1,9 @@
+import { indentWithTab } from "@codemirror/commands"
 import { json } from "@codemirror/lang-json"
 import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 import ReactCodeMirror, {
   type BasicSetupOptions,
+  keymap,
   type ReactCodeMirrorProps,
   type ReactCodeMirrorRef
 } from "@uiw/react-codemirror"
@@ -9,24 +11,42 @@ import { clsx } from "clsx"
 import React, { useImperativeHandle, useRef } from "react"
 
 const EXTENSIONS = [
-  json()
-  // keymap.of([
-  //   {
-  //     key: "Tab",
-  //     run: ({ state, dispatch }) => {
-  //       if (state.readOnly) return false
-  //       dispatch({
-  //         changes: {
-  //           from: state.selection.main.head,
-  //           to: state.selection.main.head,
-  //           insert: "  "
-  //         },
-  //         selection: EditorSelection.cursor(state.selection.main.head + 2, 0)
-  //       })
-  //       return true
-  //     }
-  //   }
-  // ])
+  json(),
+  keymap.of([
+    {
+      key: "Tab",
+      run: (target) => {
+        if (target.state.readOnly) return false
+
+        const { head } = target.state.selection.main
+        const $index = target.state.doc.sliceString(head).indexOf("$")
+
+        if ($index !== -1) {
+          target.dispatch({
+            selection: {
+              anchor: head + $index,
+              head: head + $index + 1
+            }
+          })
+          return true
+        } else {
+          const $index = target.state.doc.sliceString(0, head).indexOf("$")
+
+          if ($index !== -1) {
+            target.dispatch({
+              selection: {
+                anchor: $index,
+                head: $index + 1
+              }
+            })
+            return true
+          }
+        }
+
+        return indentWithTab.run?.(target) ?? false
+      }
+    }
+  ])
 ]
 const BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   lineNumbers: false,
@@ -57,10 +77,16 @@ const BASIC_SETUP_OPTIONS: BasicSetupOptions = {
 
 export const CodeEditor = React.forwardRef<
   ReactCodeMirrorRef,
-  Omit<ReactCodeMirrorProps, "onFocus"> & {
-    onFocus?: (ref: ReactCodeMirrorRef) => void
-  }
->(({ className, onFocus, ...props }, ref) => {
+  Omit<
+    ReactCodeMirrorProps,
+    | "onFocus"
+    | "extensions"
+    | "basicSetup"
+    | "theme"
+    | "onFocus"
+    | "indentWithTab"
+  >
+>(({ className, ...props }, ref) => {
   const innerRef = useRef<ReactCodeMirrorRef>(null)
 
   useImperativeHandle(ref, () => innerRef.current!, [])
@@ -75,8 +101,26 @@ export const CodeEditor = React.forwardRef<
         theme={vscodeDark}
         minHeight='100px'
         onFocus={() => {
-          onFocus?.(innerRef.current!)
+          const view = innerRef.current?.view
+
+          if (view) {
+            setTimeout(() => {
+              const doc = view.state.doc.toString()
+              const firstDollarIndex = doc.indexOf("$")
+
+              if (firstDollarIndex !== -1) {
+                view.dispatch({
+                  selection: {
+                    anchor: firstDollarIndex,
+                    head: firstDollarIndex + 1
+                  }
+                })
+                view.focus()
+              }
+            }, 0)
+          }
         }}
+        indentWithTab={false}
         {...props}
       />
     </div>

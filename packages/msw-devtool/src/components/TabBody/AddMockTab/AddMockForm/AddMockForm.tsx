@@ -89,26 +89,6 @@ export const AddMockForm = () => {
           render={({ field }) => (
             <CodeEditor
               className='msw-d-mb-2 msw-d-mt-1 msw-d-h-full msw-d-w-full'
-              onFocus={(ref) => {
-                const view = ref.view
-
-                if (view) {
-                  setTimeout(() => {
-                    const doc = view.state.doc.toString()
-                    const firstDollarIndex = doc.indexOf("$")
-
-                    if (firstDollarIndex !== -1) {
-                      view.dispatch({
-                        selection: {
-                          anchor: firstDollarIndex,
-                          head: firstDollarIndex + 1
-                        }
-                      })
-                      view.focus()
-                    }
-                  }, 0)
-                }
-              }}
               {...field}
             />
           )}

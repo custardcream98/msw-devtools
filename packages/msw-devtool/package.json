@@ -25,6 +25,7 @@
     "dist"
   ],
   "dependencies": {
+    "@codemirror/commands": "^6.6.2",
     "@codemirror/lang-json": "^6.0.1",
     "@uiw/codemirror-theme-vscode": "^4.23.2",
     "@uiw/react-codemirror": "^4.23.2",
