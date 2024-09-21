@@ -1,5 +1,4 @@
 import path from "path"
-import fs from "fs"
 
 import { defineConfig } from "rollup"
 
@@ -19,11 +18,6 @@ import packageJson from "./package.json"
 const COMMON_JS_DIR = path.dirname(packageJson.main)
 const ES_MODULE_DIR = path.dirname(packageJson.module)
 const TYPES_FILE = packageJson.types
-
-const OUTPUT_DIR = path.resolve(COMMON_JS_DIR, "../")
-if (fs.existsSync(OUTPUT_DIR)) {
-  fs.rmdirSync(OUTPUT_DIR, { recursive: true })
-}
 
 export default defineConfig([
   {
