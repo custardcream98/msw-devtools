@@ -50,7 +50,7 @@ export const AddMockForm = () => {
           addActivatedMock(jsonMock)
           method.reset()
         } catch (error) {
-          console.error(error)
+          alert(error)
         }
       })}
     >

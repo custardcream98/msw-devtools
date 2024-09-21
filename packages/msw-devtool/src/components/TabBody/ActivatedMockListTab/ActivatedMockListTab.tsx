@@ -27,11 +27,15 @@ export const ActivatedMockListTab = () => {
           type='button'
           className='msw-d-button-icon hover:msw-d-bg-slate-300 hover:msw-d-text-slate-600'
           onClick={() => {
-            loadJson({
-              onLoad: (loadedMocks) => {
-                loadedMocks.forEach(addActivatedMock)
-              }
-            })
+            try {
+              loadJson({
+                onLoad: (loadedMocks) => {
+                  loadedMocks.forEach(addActivatedMock)
+                }
+              })
+            } catch (error) {
+              alert(error)
+            }
           }}
         >
           <FaFileImport />
