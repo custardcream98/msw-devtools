@@ -10,8 +10,7 @@
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
     "type-check": "tsc --noEmit",
-    "build:watch": "pnpm build --watch",
-    "prepublish": "pnpm type-check && pnpm lint && pnpm build"
+    "build:watch": "pnpm build --watch"
   },
   "type": "module",
   "main": "dist/cjs/index.js",
