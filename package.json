@@ -1,14 +1,14 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "msw-devtool",
+  "name": "msw-devtools",
   "scripts": {
     "format": "prettier --write .",
     "lint": "pnpm --filter \"./{packages,apps}/**\" lint",
     "lint:fix": "pnpm --filter \"./{packages,apps}/**\" lint:fix",
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
     "prepare": "husky",
-    "build:playground": "pnpm --filter @custardcream/msw-devtool build && pnpm --filter playground build",
-    "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,blue\" \"NODE_ENV=development pnpm --filter @custardcream/msw-devtool build:watch\" \"pnpm --filter playground dev\""
+    "build:playground": "pnpm --filter @custardcream/msw-devtools build && pnpm --filter playground build",
+    "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,blue\" \"NODE_ENV=development pnpm --filter @custardcream/msw-devtools build:watch\" \"pnpm --filter playground dev\""
   },
   "devDependencies": {
     "concurrently": "^9.0.1",

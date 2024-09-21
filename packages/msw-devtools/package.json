@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
-  "name": "@custardcream/msw-devtool",
+  "name": "@custardcream/msw-devtools",
   "version": "0.0.1",
   "description": "",
   "scripts": {

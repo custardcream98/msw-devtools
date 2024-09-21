@@ -26,9 +26,9 @@ importers:
 
   apps/playground:
     dependencies:
-      '@custardcream/msw-devtool':
+      '@custardcream/msw-devtools':
         specifier: workspace:*
-        version: link:../../packages/msw-devtool
+        version: link:../../packages/msw-devtools
       '@tanstack/react-query':
         specifier: ^5.56.2
         version: 5.56.2(react@18.3.1)
@@ -82,7 +82,7 @@ importers:
         specifier: ^5.4.1
         version: 5.4.6(@types/node@22.5.5)(less@4.2.0)(sass@1.77.1)(stylus@0.62.0)(terser@5.33.0)
 
-  packages/msw-devtool:
+  packages/msw-devtools:
     dependencies:
       '@codemirror/commands':
         specifier: ^6.6.2

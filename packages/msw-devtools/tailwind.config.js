@@ -33,7 +33,7 @@ export default {
     },
     extend: {
       zIndex: {
-        "msw-devtool": 999999
+        "msw-devtools": 999999
       },
       colors: {
         background: {
@@ -44,7 +44,7 @@ export default {
   },
   plugins: [
     scopedPreflightStyles({
-      isolationStrategy: isolateInsideOfContainer("#msw-devtool")
+      isolationStrategy: isolateInsideOfContainer("#msw-devtools")
     }),
     plugin(function ({ addComponents, addUtilities, theme }) {
       addComponents({

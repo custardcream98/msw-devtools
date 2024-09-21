@@ -16,10 +16,10 @@ export const createDevtool = async ({
   const DevTools = React.lazy(() => import("~/DevTools"))
 
   ReactDOM.createRoot(
-    document.getElementById("msw-devtool") ??
+    document.getElementById("msw-devtools") ??
       (function () {
         const root = document.createElement("div")
-        root.id = "msw-devtool"
+        root.id = "msw-devtools"
         document.body.appendChild(root)
         return root
       })()
