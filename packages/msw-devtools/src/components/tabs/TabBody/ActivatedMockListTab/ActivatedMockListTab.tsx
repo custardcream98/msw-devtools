@@ -5,6 +5,7 @@ import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { ScrollList } from "~/components/ScrollList"
 import { FIELD_NAME } from "~/constants"
 
+import { ActivatedMockCard } from "./ActivatedMockCard"
 import { loadJson, saveJson } from "./utils"
 
 export const ActivatedMockListTab = () => {
@@ -47,17 +48,8 @@ export const ActivatedMockListTab = () => {
       <ScrollList className='w-full'>
         <ul className='w-full [&>li+li]:mt-4'>
           {activatedMockList.map((mock) => (
-            <li
-              key={mock[FIELD_NAME.URL]}
-              className='flex rounded-2xl bg-white p-4 shadow-xl'
-            >
-              <div className='w-full'>
-                <p className='uppercase'>{mock[FIELD_NAME.METHOD]}</p>
-                <p>{mock[FIELD_NAME.URL]}</p>
-              </div>
-              <pre className='w-full'>
-                {JSON.stringify(mock[FIELD_NAME.RESPONSE], null, 2)}
-              </pre>
+            <li key={mock[FIELD_NAME.URL]}>
+              <ActivatedMockCard {...mock} />
             </li>
           ))}
         </ul>

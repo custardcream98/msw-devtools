@@ -10,6 +10,7 @@ import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import {
   FIELD_NAME,
   FormFieldValues,
+  METHOD_COLOR,
   METHOD_OPTION,
   STATUS_OPTION
 } from "~/constants"
@@ -70,15 +71,7 @@ export const AddMockForm = () => {
               <select
                 className={clsx(
                   "h-full border-r bg-slate-50 p-2 text-base font-semibold uppercase",
-                  {
-                    "text-blue-600": field.value === METHOD_OPTION.GET,
-                    "text-green-600": field.value === METHOD_OPTION.POST,
-                    "text-yellow-600": field.value === METHOD_OPTION.PUT,
-                    "text-red-600": field.value === METHOD_OPTION.DELETE,
-                    "text-teal-500": field.value === METHOD_OPTION.PATCH,
-                    "text-purple-600": field.value === METHOD_OPTION.OPTIONS,
-                    "text-gray-600": field.value === METHOD_OPTION.HEAD
-                  }
+                  METHOD_COLOR[field.value]
                 )}
                 {...field}
               >
