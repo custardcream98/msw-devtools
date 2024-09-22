@@ -1,6 +1,6 @@
 import "./index.css"
 
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { FaXmark } from "react-icons/fa6"
 
 import { FloatingButton } from "~/components/FloatingButton"
@@ -10,17 +10,19 @@ import { TabBody } from "~/components/tabs/TabBody"
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
   const [isOpened, setIsOpened] = useState(initialOpen)
+  const open = useCallback(() => setIsOpened(true), [])
+  const close = useCallback(() => setIsOpened(false), [])
 
   return (
     <>
-      <FloatingButton isOpened={isOpened} onClick={() => setIsOpened(true)} />
+      <FloatingButton isOpened={isOpened} onClick={open} />
       <Layout isOpened={isOpened}>
         <TabProvider initialTab={Tab.AddMock}>
           <TabBar>
             <button
               type='button'
               className='rounded-lg bg-red-400 p-1 shadow-lg transition-colors hover:bg-red-700'
-              onClick={() => setIsOpened(false)}
+              onClick={close}
               aria-label='close button'
             >
               <FaXmark size={12} className='text-background-light' />
