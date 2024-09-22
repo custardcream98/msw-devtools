@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/package",
   "name": "@custardcream/msw-devtools",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "sideEffects": [
     "./src/index.css"
   ],
