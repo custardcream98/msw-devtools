@@ -1,64 +1,44 @@
-import { useCallback, useRef } from "react"
+import { useCallback } from "react"
+
+import { useBoolean } from "~/hooks/useBoolean"
 
 const DEFAULT_THRESHOLD = 100
 
 export const useLongClick = ({
   onClick,
-  onLongClickStart,
-  onLongClickEnd,
   threshold = DEFAULT_THRESHOLD
 }: {
-  onClick: React.PointerEventHandler<HTMLElement>
-  onLongClickStart: React.PointerEventHandler<HTMLElement>
-  onLongClickEnd: () => void
+  onClick?: () => void
   /**
    * The duration in milliseconds that the user has to press the button
    * to trigger the `onLongClickStart` event.
    */
   threshold?: number
 }) => {
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [isLongClicking, longClickStart, longClickEnd] = useBoolean()
 
-  const start: React.PointerEventHandler<HTMLElement> = useCallback(
-    (event) => {
-      timer.current = setTimeout(() => {
-        onLongClickStart(event)
-        timer.current = null
-      }, threshold)
-    },
-    [threshold, onLongClickStart]
-  )
+  const start = useCallback(() => {
+    let timerId: number | null = window.setTimeout(() => {
+      longClickStart()
+      timerId = null
+    }, threshold)
 
-  const clear = useCallback(() => {
-    if (timer.current !== null) {
-      window.clearTimeout(timer.current)
-      timer.current = null
+    const handlePointerUp = () => {
+      window.removeEventListener("pointerup", handlePointerUp)
+
+      if (timerId !== null) {
+        window.clearTimeout(timerId)
+        onClick?.()
+      } else {
+        longClickEnd()
+      }
     }
-  }, [])
-  const handlePointerUp: React.PointerEventHandler<HTMLElement> = useCallback(
-    (event) => {
-      if (timer.current !== null) {
-        clear()
-        onClick(event)
-      } else {
-        onLongClickEnd()
-      }
-    },
-    [onClick, onLongClickEnd, clear]
-  )
 
-  const handlePointerLeave: React.PointerEventHandler<HTMLElement> =
-    useCallback(() => {
-      if (timer.current === null) {
-        onLongClickEnd()
-      } else {
-        clear()
-      }
-    }, [clear, onLongClickEnd])
+    window.addEventListener("pointerup", handlePointerUp)
+  }, [threshold, longClickStart, longClickEnd, onClick])
 
   return {
-    onPointerDown: start,
-    onPointerUp: handlePointerUp,
-    onPointerLeave: handlePointerLeave
+    isLongClicking,
+    props: { onPointerDown: start }
   }
 }

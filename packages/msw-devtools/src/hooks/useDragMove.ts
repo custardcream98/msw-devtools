@@ -1,6 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
-
-import { useDrag } from "./useDrag"
+import { useEffect, useState } from "react"
 
 type Position = {
   x: number
@@ -8,6 +6,9 @@ type Position = {
 }
 type FixedDirectionY = "top" | "bottom"
 type FixedDirectionX = "left" | "right"
+
+const between = (value: number, min: number, max: number) =>
+  Math.min(max, Math.max(min, value))
 
 export const useDragMove = ({
   isDragging,
@@ -22,23 +23,25 @@ export const useDragMove = ({
     | Readonly<[FixedDirectionY, FixedDirectionX]>
     | [FixedDirectionY, FixedDirectionX]
   defaultPosition: Position
-}): {
-  position: Position
-  props: {
-    onPointerMove: React.PointerEventHandler<HTMLElement>
-  }
-} => {
+}) => {
   const [position, setPosition] = useState<Position>(defaultPosition)
 
-  const dragProps = useDrag({
-    isDragging,
-    onDrag: useCallback((event) => {
-      setPosition({
-        x: event.clientX,
-        y: event.clientY
-      })
-    }, [])
-  })
+  useEffect(() => {
+    if (isDragging) {
+      const handlePointerMove = (event: PointerEvent) => {
+        setPosition({
+          x: between(event.clientX, 0, document.documentElement.clientWidth),
+          y: between(event.clientY, 0, document.documentElement.clientHeight)
+        })
+      }
+
+      window.addEventListener("pointermove", handlePointerMove)
+
+      return () => {
+        window.removeEventListener("pointermove", handlePointerMove)
+      }
+    }
+  }, [isDragging])
 
   useEffect(() => {
     const bottomFromBottom =
@@ -75,9 +78,6 @@ export const useDragMove = ({
   }, [defaultPosition.x, defaultPosition.y, fixedX, fixedY])
 
   return {
-    position,
-    props: {
-      ...dragProps
-    }
+    position
   }
 }

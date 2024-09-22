@@ -1,8 +1,8 @@
 import { clsx } from "clsx"
+import { useEffect } from "react"
 import { FaDev } from "react-icons/fa6"
 
 import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
-import { useBoolean } from "~/hooks/useBoolean"
 import { useDragMove } from "~/hooks/useDragMove"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { useLongClick } from "~/hooks/useLongClick"
@@ -14,30 +14,23 @@ const DEFAULT_POSITION = {
 
 const FIXED_DIRECTION = ["bottom", "right"] as const
 
-export const FloatingButton = ({
-  onClick
-}: {
-  onClick: React.PointerEventHandler<HTMLButtonElement>
-}) => {
-  const [isDragging, dragStart, dragEnd] = useBoolean()
-  const longClickProps = useLongClick({
-    onClick,
-    onLongClickStart: dragStart,
-    onLongClickEnd: () => {
-      dragEnd()
-      saveDefaultPosition(position)
-    }
+export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
+  const { isLongClicking: isDragging, props: longClickProps } = useLongClick({
+    onClick
   })
 
   const [defaultPosition, saveDefaultPosition] = useLocalStorageState(
     "MSW_DEVTOOLS_BUTTON_POSITION",
     DEFAULT_POSITION
   )
-  const { position, props: dragProps } = useDragMove({
+  const { position } = useDragMove({
     isDragging,
     defaultPosition,
     fixedDirection: FIXED_DIRECTION
   })
+  useEffect(() => {
+    saveDefaultPosition(position)
+  }, [saveDefaultPosition, position])
 
   const { floatingButtonOpacity } = useSettings()
 
@@ -45,17 +38,16 @@ export const FloatingButton = ({
     <button
       type='button'
       className={clsx(
-        "z-msw-devtool fixed left-0 top-0 rounded-full border-4 border-solid border-background-light p-2 shadow-lg",
+        "z-msw-devtool fixed left-0 top-0 rounded-full border-4 border-solid border-background-light bg-white p-2 shadow-lg",
         "translate-x-[var(--x)] translate-y-[var(--y)] transform-gpu",
         "opacity-[var(--opacity)]"
       )}
-      {...longClickProps}
-      {...dragProps}
       style={{
         "--x": `calc(${position.x}px - 50%)`,
         "--y": `calc(${position.y}px - 50%)`,
         "--opacity": floatingButtonOpacity
       }}
+      {...longClickProps}
     >
       <FaDev className='text-gray-700' size={32} />
     </button>
