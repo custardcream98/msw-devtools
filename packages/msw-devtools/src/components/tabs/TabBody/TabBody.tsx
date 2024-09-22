@@ -1,3 +1,5 @@
+import { DefaultResponseSettingsProvider } from "~/components/contexts/default-response"
+import { DefaultUrlSettingsProvider } from "~/components/contexts/default-url"
 import { Tab, useTab } from "~/components/tabs/TabBar/context"
 
 import {
@@ -12,11 +14,15 @@ export const TabBody = () => {
 
   return (
     <div className='min-h-0 flex-1'>
-      <ActivatedMockListProvider>
-        {tab === Tab.AddMock && <AddMockTab />}
-        {tab === Tab.ActivatedMockList && <ActivatedMockListTab />}
-        {tab === Tab.Settings && <SettingsTab />}
-      </ActivatedMockListProvider>
+      <DefaultUrlSettingsProvider>
+        <DefaultResponseSettingsProvider>
+          <ActivatedMockListProvider>
+            {tab === Tab.AddMock && <AddMockTab />}
+            {tab === Tab.ActivatedMockList && <ActivatedMockListTab />}
+            {tab === Tab.Settings && <SettingsTab />}
+          </ActivatedMockListProvider>
+        </DefaultResponseSettingsProvider>
+      </DefaultUrlSettingsProvider>
     </div>
   )
 }

@@ -4,8 +4,9 @@ import { Controller, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { useDefaultResponseSettings } from "~/components/contexts/default-response"
+import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import { useActivatedMockList } from "~/components/tabs/TabBody/ActivatedMockListTab"
-import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
 import {
   FIELD_NAME,
   FormFieldValues,
@@ -25,7 +26,8 @@ const DEFAULT_VALUES: FormFieldValues = {
 
 export const AddMockForm = () => {
   const { addActivatedMock } = useActivatedMockList()
-  const { defaultUrl, defaultResponse } = useSettings()
+  const { defaultUrl } = useDefaultUrlSettings()
+  const { defaultResponse } = useDefaultResponseSettings()
   const method = useForm<FormFieldValues>({
     defaultValues: {
       ...DEFAULT_VALUES,

@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { FaDev } from "react-icons/fa6"
 
-import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
+import { useFloatingButtonSettings } from "~/components/contexts/floating-button"
 import { useDragMove } from "~/hooks/useDragMove"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { useLongClick } from "~/hooks/useLongClick"
@@ -33,7 +33,7 @@ export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
     saveDefaultPosition(position)
   }, [saveDefaultPosition, position])
 
-  const { floatingButtonOpacity } = useSettings()
+  const { floatingButtonOpacity } = useFloatingButtonSettings()
   const { t } = useTranslation()
 
   return (

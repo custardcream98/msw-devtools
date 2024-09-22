@@ -2,19 +2,16 @@ import { useId } from "react"
 import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { useDefaultResponseSettings } from "~/components/contexts/default-response"
+import { useDefaultUrlSettings } from "~/components/contexts/default-url"
+import { useFloatingButtonSettings } from "~/components/contexts/floating-button"
 import { ScrollList } from "~/components/ScrollList"
 
-import { useSettings } from "./context"
-
 export const SettingsTab = () => {
-  const {
-    defaultUrl,
-    setDefaultUrl,
-    defaultResponse,
-    setDefaultResponse,
-    floatingButtonOpacity,
-    setFloatingButtonOpacity
-  } = useSettings()
+  const { defaultUrl, setDefaultUrl } = useDefaultUrlSettings()
+  const { defaultResponse, setDefaultResponse } = useDefaultResponseSettings()
+  const { floatingButtonOpacity, setFloatingButtonOpacity } =
+    useFloatingButtonSettings()
 
   const urlInputId = useId()
   const defaultResponseEditorId = useId()
