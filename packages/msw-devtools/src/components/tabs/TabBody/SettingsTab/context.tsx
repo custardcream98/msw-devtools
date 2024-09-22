@@ -26,10 +26,10 @@ export const useSettings = () => {
 export const SettingsProvider = ({ children }: React.PropsWithChildren) => {
   const [defaultResponse, setDefaultResponse] = useLocalStorageState<
     string | null
-  >("MSW_DEVTOOL_DEFAULT_RESPONSE", null)
+  >("MSW_DEVTOOLS_DEFAULT_RESPONSE", null)
 
   const [defaultUrl, setDefaultUrl] = useLocalStorageState<string | null>(
-    "MSW_DEVTOOL_DEFAULT_URL",
+    "MSW_DEVTOOLS_DEFAULT_URL",
     null
   )
 
