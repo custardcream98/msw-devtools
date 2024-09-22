@@ -33,7 +33,7 @@ https://github.com/user-attachments/assets/26814706-ac15-47c5-8603-f7acc14b5342
 npm을 통해 패키지를 설치하세요.
 
 ```bash
-npm install msw-devtools
+npm install @custardcream/msw-devtools
 ```
 
 ---
