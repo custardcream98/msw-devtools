@@ -18,7 +18,7 @@ Easily manage your MSW handlers with this versatile devtool, suitable for any fr
 
 ### Add Mock Handler
 
-https://github.com/user-attachments/assets/32a3c68b-b58f-426b-9813-bfacbdbd843f
+https://github.com/user-attachments/assets/3f5f6d2e-ead6-4632-ab6b-90275c08082d
 
 ### Export/Import Mock Handlers
 

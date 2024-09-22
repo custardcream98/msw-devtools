@@ -18,7 +18,7 @@ export const LANGUAGE_NAMES = {
   [LANGUAGE.KO]: "한국어"
 } as const
 
-export const initializeI18n = () =>
+const initializeI18n = () =>
   i18next
     .use(LanguageDetector)
     .use(initReactI18next)
@@ -45,3 +45,5 @@ export const initializeI18n = () =>
         }
       }
     })
+
+export default initializeI18n

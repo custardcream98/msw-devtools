@@ -3,7 +3,8 @@
   "name": "@custardcream/msw-devtools",
   "version": "0.2.0",
   "sideEffects": [
-    "./src/index.css"
+    "./src/index.css",
+    "./src/locales/**/*.json"
   ],
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
