@@ -1,6 +1,5 @@
+import { FIELD_NAME, type FormFieldValues } from "~/constants"
 import type { JsonMock } from "~/types"
-
-import { FIELD_NAME, type FormFieldValues } from "./constants"
 
 export const formFieldValuesToJsonMock = (
   formData: FormFieldValues

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from "react"
 
-import { FIELD_NAME } from "~/components/tabs/TabBody/AddMockTab/AddMockForm"
+import { FIELD_NAME } from "~/constants"
 import { JsonMock } from "~/types"
 
 export type ActivatedMockListContextType = {

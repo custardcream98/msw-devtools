@@ -1,8 +1,4 @@
-import type {
-  FIELD_NAME,
-  MethodOption,
-  StatusOption
-} from "~/components/tabs/TabBody/AddMockTab/AddMockForm"
+import type { FIELD_NAME, MethodOption, StatusOption } from "~/constants"
 
 export type JsonMock = {
   [FIELD_NAME.URL]: string

@@ -4,14 +4,14 @@ import { Controller, useForm } from "react-hook-form"
 import { CodeEditor } from "~/components/CodeEditor"
 import { useActivatedMockList } from "~/components/tabs/TabBody/ActivatedMockListTab"
 import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
-import { getApi } from "~/lib/msw"
-
 import {
   FIELD_NAME,
   FormFieldValues,
   METHOD_OPTION,
   STATUS_OPTION
-} from "./constants"
+} from "~/constants"
+import { getApi } from "~/lib/msw"
+
 import { formFieldValuesToJsonMock } from "./utils"
 
 const DEFAULT_VALUES: FormFieldValues = {
