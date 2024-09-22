@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.1.0
+
+### Minor Changes
+
+- 4715ada: More settings for Floating Button, little bit of style improvements
+
 ## 0.0.4
 
 ### Patch Changes
