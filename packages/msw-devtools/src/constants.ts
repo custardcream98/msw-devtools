@@ -19,6 +19,16 @@ export const METHOD_OPTION = {
 
 export type MethodOption = (typeof METHOD_OPTION)[keyof typeof METHOD_OPTION]
 
+export const METHOD_COLOR = {
+  [METHOD_OPTION.GET]: "text-blue-600",
+  [METHOD_OPTION.POST]: "text-green-600",
+  [METHOD_OPTION.PUT]: "text-yellow-600",
+  [METHOD_OPTION.DELETE]: "text-red-600",
+  [METHOD_OPTION.PATCH]: "text-teal-500",
+  [METHOD_OPTION.OPTIONS]: "text-purple-600",
+  [METHOD_OPTION.HEAD]: "text-gray-600"
+} as const
+
 export const STATUS_OPTION = {
   "200": "200",
   "201": "201",

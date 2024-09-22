@@ -1,7 +1,4 @@
-import { http, HttpResponse } from "msw"
-
 import { FIELD_NAME } from "~/constants"
-import { getApi } from "~/lib/msw"
 import { JsonMock } from "~/types"
 
 const isJsonMocks = (data: unknown): data is JsonMock[] => {
@@ -64,15 +61,6 @@ export const loadJson = ({
         if (!isJsonMocks(data)) {
           throw new Error("Invalid Mock format")
         }
-
-        data.forEach((mock) => {
-          const api = getApi()
-          api.use(
-            http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], () => {
-              return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
-            })
-          )
-        })
 
         onLoad(data)
       }
