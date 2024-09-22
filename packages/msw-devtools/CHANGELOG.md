@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.2.1
+
+### Patch Changes
+
+- 5a6c6ef: Hotfix: not loading the devtools due to a missing dependency
+
 ## 0.2.0
 
 ### Minor Changes
