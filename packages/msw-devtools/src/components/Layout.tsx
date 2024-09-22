@@ -1,7 +1,7 @@
 import { clsx } from "clsx"
 import { useState } from "react"
 
-import { useDrag } from "~/hooks/useDrag"
+import { useIsDragging } from "~/hooks/useIsDragging"
 
 export const Layout = ({
   isOpened,
@@ -10,7 +10,7 @@ export const Layout = ({
   isOpened: boolean
 }>) => {
   const [height, setHeight] = useState("50%")
-  const { props } = useDrag({
+  const { props } = useIsDragging({
     onDrag: (event) => {
       setHeight(`calc(100vh - ${event.clientY}px)`)
     }

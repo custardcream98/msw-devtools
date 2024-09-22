@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 
-export const useDrag = ({
+export const useIsDragging = ({
   onDrag
 }: {
   onDrag?: (event: PointerEvent) => void
