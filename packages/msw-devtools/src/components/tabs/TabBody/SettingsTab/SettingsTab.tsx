@@ -38,7 +38,7 @@ export const SettingsTab = () => {
       </label>
       <CodeEditor
         id={defaultResponseEditorId}
-        className='textarea mt-2 h-80 w-full'
+        className='mt-2 h-80 w-full'
         value={defaultResponse ?? ""}
         onChange={setDefaultResponse}
       />
