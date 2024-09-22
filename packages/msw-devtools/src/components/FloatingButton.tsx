@@ -1,6 +1,7 @@
 import { clsx } from "clsx"
 import { FaDev } from "react-icons/fa6"
 
+import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
 import { useBoolean } from "~/hooks/useBoolean"
 import { useDragMove } from "~/hooks/useDragMove"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
@@ -14,10 +15,8 @@ const DEFAULT_POSITION = {
 const FIXED_DIRECTION = ["bottom", "right"] as const
 
 export const FloatingButton = ({
-  isOpened,
   onClick
 }: {
-  isOpened: boolean
   onClick: React.PointerEventHandler<HTMLButtonElement>
 }) => {
   const [isDragging, dragStart, dragEnd] = useBoolean()
@@ -40,20 +39,22 @@ export const FloatingButton = ({
     fixedDirection: FIXED_DIRECTION
   })
 
+  const { floatingButtonOpacity } = useSettings()
+
   return (
     <button
       type='button'
       className={clsx(
         "z-msw-devtool fixed left-0 top-0 rounded-full border-4 border-solid border-background-light p-2 shadow-lg",
-        "transition-opacity duration-300",
         "translate-x-[var(--x)] translate-y-[var(--y)] transform-gpu",
-        isOpened ? "pointer-events-none opacity-0" : "opacity-100 delay-100"
+        "opacity-[var(--opacity)]"
       )}
       {...longClickProps}
       {...dragProps}
       style={{
         "--x": `calc(${position.x}px - 50%)`,
-        "--y": `calc(${position.y}px - 50%)`
+        "--y": `calc(${position.y}px - 50%)`,
+        "--opacity": floatingButtonOpacity
       }}
     >
       <FaDev className='text-gray-700' size={32} />

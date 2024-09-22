@@ -1,21 +1,20 @@
 import "./index.css"
 
-import { useCallback, useState } from "react"
 import { FaXmark } from "react-icons/fa6"
 
 import { FloatingButton } from "~/components/FloatingButton"
 import { Layout } from "~/components/Layout"
 import { Tab, TabBar, TabProvider } from "~/components/tabs/TabBar"
 import { TabBody } from "~/components/tabs/TabBody"
+import { SettingsProvider } from "~/components/tabs/TabBody/SettingsTab"
+import { useBoolean } from "~/hooks/useBoolean"
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
-  const [isOpened, setIsOpened] = useState(initialOpen)
-  const open = useCallback(() => setIsOpened(true), [])
-  const close = useCallback(() => setIsOpened(false), [])
+  const [isOpened, , close, toggle] = useBoolean(initialOpen)
 
   return (
-    <>
-      <FloatingButton isOpened={isOpened} onClick={open} />
+    <SettingsProvider>
+      <FloatingButton onClick={toggle} />
       <Layout isOpened={isOpened}>
         <TabProvider initialTab={Tab.AddMock}>
           <TabBar>
@@ -31,7 +30,7 @@ const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
           <TabBody />
         </TabProvider>
       </Layout>
-    </>
+    </SettingsProvider>
   )
 }
 

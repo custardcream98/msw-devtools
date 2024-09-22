@@ -6,11 +6,18 @@ import { ScrollList } from "~/components/ScrollList"
 import { useSettings } from "./context"
 
 export const SettingsTab = () => {
-  const { defaultUrl, setDefaultUrl, defaultResponse, setDefaultResponse } =
-    useSettings()
+  const {
+    defaultUrl,
+    setDefaultUrl,
+    defaultResponse,
+    setDefaultResponse,
+    floatingButtonOpacity,
+    setFloatingButtonOpacity
+  } = useSettings()
 
   const urlInputId = useId()
   const defaultResponseEditorId = useId()
+  const floatingButtonOpacityId = useId()
 
   return (
     <ScrollList>
@@ -38,10 +45,27 @@ export const SettingsTab = () => {
       </label>
       <CodeEditor
         id={defaultResponseEditorId}
-        className='mt-2 h-80 w-full'
+        className='mt-2 max-h-80 w-full'
         value={defaultResponse ?? ""}
         onChange={setDefaultResponse}
       />
+      <label htmlFor={floatingButtonOpacityId} className='mt-2 block'>
+        Set Devtools Toggle Button Opacity
+      </label>
+      <input
+        id={floatingButtonOpacityId}
+        type='range'
+        min={0}
+        max={1}
+        step={0.01}
+        value={floatingButtonOpacity}
+        onChange={(event) => {
+          const value = Number(event.currentTarget.value)
+
+          setFloatingButtonOpacity(value)
+        }}
+      />
+      <span>{floatingButtonOpacity}</span>
     </ScrollList>
   )
 }

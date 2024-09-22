@@ -7,6 +7,8 @@ type SettingsContextType = {
   setDefaultResponse: (response: string) => void
   defaultUrl: string | null
   setDefaultUrl: (url: string) => void
+  floatingButtonOpacity: number
+  setFloatingButtonOpacity: (opacity: number) => void
 }
 
 export const SettingsContext = React.createContext<SettingsContextType | null>(
@@ -33,9 +35,26 @@ export const SettingsProvider = ({ children }: React.PropsWithChildren) => {
     null
   )
 
+  const [floatingButtonOpacity, setFloatingButtonOpacity] =
+    useLocalStorageState<number>("MSW_DEVTOOLS_FLOATING_BUTTON_OPACITY", 1)
+
   const value = React.useMemo(
-    () => ({ defaultResponse, setDefaultResponse, defaultUrl, setDefaultUrl }),
-    [defaultResponse, setDefaultResponse, defaultUrl, setDefaultUrl]
+    () => ({
+      defaultResponse,
+      setDefaultResponse,
+      defaultUrl,
+      setDefaultUrl,
+      floatingButtonOpacity,
+      setFloatingButtonOpacity
+    }),
+    [
+      defaultResponse,
+      setDefaultResponse,
+      defaultUrl,
+      setDefaultUrl,
+      floatingButtonOpacity,
+      setFloatingButtonOpacity
+    ]
   )
 
   return (
