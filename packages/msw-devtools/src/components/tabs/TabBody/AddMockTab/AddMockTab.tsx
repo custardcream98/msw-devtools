@@ -1,5 +1,5 @@
 import { ScrollList } from "~/components/ScrollList"
-import { AddMockForm } from "~/components/TabBody/AddMockTab/AddMockForm"
+import { AddMockForm } from "~/components/tabs/TabBody/AddMockTab/AddMockForm"
 
 export const AddMockTab = () => {
   return (

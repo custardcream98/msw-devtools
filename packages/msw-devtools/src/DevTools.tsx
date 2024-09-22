@@ -5,9 +5,8 @@ import { FaXmark } from "react-icons/fa6"
 
 import { FloatingButton } from "~/components/FloatingButton"
 import { Layout } from "~/components/Layout"
-import { TabBar } from "~/components/TabBar"
-import { Tab, TabProvider } from "~/components/TabBar/context"
-import { TabBody } from "~/components/TabBody"
+import { Tab, TabBar, TabProvider } from "~/components/tabs/TabBar"
+import { TabBody } from "~/components/tabs/TabBody"
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
   const [isOpened, setIsOpened] = useState(initialOpen)

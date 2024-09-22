@@ -1,8 +1,9 @@
 import { useId } from "react"
 
+import { CodeEditor } from "~/components/CodeEditor"
 import { ScrollList } from "~/components/ScrollList"
-import { CodeEditor } from "~/components/TabBody/AddMockTab/AddMockForm/CodeEditor"
-import { useSettings } from "~/components/TabBody/SettingsTab/context"
+
+import { useSettings } from "./context"
 
 export const SettingsTab = () => {
   const { defaultUrl, setDefaultUrl, defaultResponse, setDefaultResponse } =

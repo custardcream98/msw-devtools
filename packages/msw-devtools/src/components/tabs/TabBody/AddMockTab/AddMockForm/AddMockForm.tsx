@@ -1,9 +1,9 @@
 import { http, HttpResponse } from "msw"
 import { Controller, useForm } from "react-hook-form"
 
-import { useActivatedMockList } from "~/components/TabBody/ActivatedMockListTab/context"
-import { CodeEditor } from "~/components/TabBody/AddMockTab/AddMockForm/CodeEditor"
-import { useSettings } from "~/components/TabBody/SettingsTab/context"
+import { CodeEditor } from "~/components/CodeEditor"
+import { useActivatedMockList } from "~/components/tabs/TabBody/ActivatedMockListTab"
+import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
 import { getApi } from "~/lib/msw"
 
 import {
@@ -11,7 +11,7 @@ import {
   FormFieldValues,
   METHOD_OPTION,
   STATUS_OPTION
-} from "./form"
+} from "./constants"
 import { formFieldValuesToJsonMock } from "./utils"
 
 const DEFAULT_VALUES: FormFieldValues = {

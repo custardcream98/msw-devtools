@@ -1,7 +1,7 @@
 import { FaFileExport, FaFileImport } from "react-icons/fa6"
 
 import { ScrollList } from "~/components/ScrollList"
-import { FIELD_NAME } from "~/components/TabBody/AddMockTab/AddMockForm/form"
+import { FIELD_NAME } from "~/components/tabs/TabBody/AddMockTab/AddMockForm"
 
 import { useActivatedMockList } from "./context"
 import { loadJson, saveJson } from "./utils"
