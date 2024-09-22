@@ -1,4 +1,5 @@
 import { useId } from "react"
+import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
 import { ScrollList } from "~/components/ScrollList"
@@ -19,14 +20,16 @@ export const SettingsTab = () => {
   const defaultResponseEditorId = useId()
   const floatingButtonOpacityId = useId()
 
+  const { t } = useTranslation()
+
   return (
     <ScrollList>
-      <label htmlFor={urlInputId}>Default URL</label>
+      <label htmlFor={urlInputId}>{t("tabs.settings.defaultURL.label")}</label>
       <input
         id={urlInputId}
         type='text'
         className='mt-2 w-full p-2 font-mono msw-round-border'
-        placeholder='Type URL Here'
+        placeholder={t("tabs.settings.defaultURL.placeholder")}
         value={defaultUrl ?? ""}
         onChange={(event) => {
           event.preventDefault()
@@ -37,11 +40,9 @@ export const SettingsTab = () => {
         }}
       />
       <label htmlFor={defaultResponseEditorId} className='mt-4 block'>
-        <span className='block'>Default Response Body</span>
+        <span className='block'>{t("tabs.settings.responseBody.label")}</span>
         <blockquote className='blockquote mt-1 text-sm'>
-          {
-            "Tip: When editing the response body, you can automatically move the cursor using the $ (dollar sign) in the default values. When editing the response body, pressing Tab will automatically move the cursor to the next dollar sign."
-          }
+          {t("tabs.settings.responseBody.description")}
         </blockquote>
       </label>
       <CodeEditor
@@ -51,7 +52,7 @@ export const SettingsTab = () => {
         onChange={setDefaultResponse}
       />
       <label htmlFor={floatingButtonOpacityId} className='mt-4 block'>
-        Devtools Toggle Button Opacity
+        {t("tabs.settings.floatingButtonOpacity.label")}
       </label>
       <input
         id={floatingButtonOpacityId}

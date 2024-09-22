@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import { FaFileExport, FaFileImport } from "react-icons/fa6"
 
 import { ScrollList } from "~/components/ScrollList"
@@ -9,11 +10,13 @@ import { loadJson, saveJson } from "./utils"
 export const ActivatedMockListTab = () => {
   const { activatedMockList, addActivatedMock } = useActivatedMockList()
 
+  const { t } = useTranslation()
+
   return (
     <div className='flex h-full'>
       <div className='flex h-full flex-col gap-2 border-r border-solid border-slate-200 p-2'>
         <button
-          title='Export Mocks'
+          title={t("tabs.activatedMockList.exportButton.title")}
           type='button'
           className='button-icon hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
@@ -23,7 +26,7 @@ export const ActivatedMockListTab = () => {
           <FaFileExport />
         </button>
         <button
-          title='Import Mocks'
+          title={t("tabs.activatedMockList.importButton.title")}
           type='button'
           className='button-icon hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {

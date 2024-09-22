@@ -1,5 +1,6 @@
 import "./index.css"
 
+import { useTranslation } from "react-i18next"
 import { FaXmark } from "react-icons/fa6"
 
 import { FloatingButton } from "~/components/FloatingButton"
@@ -11,6 +12,7 @@ import { useBoolean } from "~/hooks/useBoolean"
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
   const [isOpened, , close, toggle] = useBoolean(initialOpen)
+  const { t } = useTranslation()
 
   return (
     <SettingsProvider>
@@ -22,7 +24,7 @@ const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
               type='button'
               className='rounded-lg bg-red-400 p-1 shadow-lg transition-colors hover:bg-red-700'
               onClick={close}
-              aria-label='close button'
+              title={t("closeButton.title")}
             >
               <FaXmark size={12} className='text-background-light' />
             </button>

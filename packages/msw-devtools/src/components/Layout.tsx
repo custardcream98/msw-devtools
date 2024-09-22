@@ -28,10 +28,10 @@ export const Layout = ({
       style={{ "--height": height }}
     >
       <button
+        aria-hidden
         type='button'
         className='absolute left-0 right-0 top-0 h-[2px] cursor-row-resize'
         {...props}
-        aria-label='drag handle'
       ></button>
       {children}
     </div>

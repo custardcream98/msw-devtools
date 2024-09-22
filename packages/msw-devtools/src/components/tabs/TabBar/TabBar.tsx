@@ -1,9 +1,11 @@
 import { clsx } from "clsx"
+import { useTranslation } from "react-i18next"
 
 import { Tab, useTab } from "./context"
 
 const TabButton = ({ tab }: { tab: Tab }) => {
   const { tab: currentTab, setTab } = useTab()
+  const { t } = useTranslation()
 
   const isActive = currentTab === tab
 
@@ -16,7 +18,7 @@ const TabButton = ({ tab }: { tab: Tab }) => {
       )}
       onClick={() => setTab(tab)}
     >
-      {tab}
+      {t(tab)}
     </button>
   )
 }

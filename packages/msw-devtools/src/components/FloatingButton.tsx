@@ -1,5 +1,6 @@
 import { clsx } from "clsx"
 import { useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { FaDev } from "react-icons/fa6"
 
 import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
@@ -33,6 +34,7 @@ export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
   }, [saveDefaultPosition, position])
 
   const { floatingButtonOpacity } = useSettings()
+  const { t } = useTranslation()
 
   return (
     <button
@@ -47,6 +49,7 @@ export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
         "--y": `calc(${position.y}px - 50%)`,
         "--opacity": floatingButtonOpacity
       }}
+      title={t("floatingButton.title")}
       {...longClickProps}
     >
       <FaDev className='text-gray-700' size={32} />
