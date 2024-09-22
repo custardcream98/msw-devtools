@@ -10,7 +10,7 @@ export const SettingsTab = () => {
     useSettings()
 
   const urlInputId = useId()
-  const responseInputId = useId()
+  const defaultResponseEditorId = useId()
 
   return (
     <ScrollList>
@@ -28,7 +28,7 @@ export const SettingsTab = () => {
           setDefaultUrl(value)
         }}
       />
-      <label htmlFor={responseInputId} className='mt-2 block'>
+      <label htmlFor={defaultResponseEditorId} className='mt-2 block'>
         <span className='block'>Set Default Response Body</span>
         <span>
           {
@@ -37,7 +37,7 @@ export const SettingsTab = () => {
         </span>
       </label>
       <CodeEditor
-        id={responseInputId}
+        id={defaultResponseEditorId}
         className='textarea mt-2 h-80 w-full'
         value={defaultResponse ?? ""}
         onChange={setDefaultResponse}
