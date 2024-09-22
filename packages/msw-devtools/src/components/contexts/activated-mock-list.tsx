@@ -2,7 +2,8 @@ import React, { useCallback, useMemo } from "react"
 
 import { FIELD_NAME } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { JsonMock } from "~/types"
+import { MSW_DEVTOOLS_ACTIVATED_MOCK_LIST } from "~/lib/msw"
+import type { JsonMock } from "~/types"
 
 export type ActivatedMockListContextType = {
   activatedMockList: JsonMock[]
@@ -29,18 +30,23 @@ export const ActivatedMockListProvider = ({
 }: React.PropsWithChildren) => {
   const [activatedMockList, setActivatedMockList] = useLocalStorageState<
     JsonMock[]
-  >("MSW_DEVTOOLS_ACTIVATED_MOCK_LIST", [])
+  >(MSW_DEVTOOLS_ACTIVATED_MOCK_LIST, [])
 
   const addActivatedMock = useCallback(
-    (activatedMock: JsonMock) => {
-      setActivatedMockList((prev) => {
-        return [
-          ...prev.filter(
-            (active) => active[FIELD_NAME.URL] !== activatedMock[FIELD_NAME.URL]
-          ),
-          activatedMock
-        ]
-      })
+    (mockToActivate: JsonMock) => {
+      try {
+        setActivatedMockList((prev) => {
+          return [
+            ...prev.filter(
+              (active) =>
+                active[FIELD_NAME.URL] !== mockToActivate[FIELD_NAME.URL]
+            ),
+            mockToActivate
+          ]
+        })
+      } catch (error) {
+        alert(error)
+      }
     },
     [setActivatedMockList]
   )

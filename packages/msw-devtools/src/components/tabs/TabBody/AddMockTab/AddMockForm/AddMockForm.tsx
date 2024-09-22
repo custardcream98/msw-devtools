@@ -1,5 +1,4 @@
 import { clsx } from "clsx"
-import { http, HttpResponse } from "msw"
 import { Controller, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -14,7 +13,7 @@ import {
   METHOD_OPTION,
   STATUS_OPTION
 } from "~/constants"
-import { getApi } from "~/lib/msw"
+import { activateMock } from "~/lib/msw"
 
 import { formFieldValuesToJsonMock } from "./utils"
 
@@ -44,16 +43,9 @@ export const AddMockForm = () => {
     <form
       className='flex h-full flex-col'
       onSubmit={method.handleSubmit((formData) => {
-        const api = getApi()
-
         try {
           const jsonMock = formFieldValuesToJsonMock(formData)
-          api.use(
-            http[formData[FIELD_NAME.METHOD]](formData[FIELD_NAME.URL], () => {
-              return HttpResponse.json(jsonMock[FIELD_NAME.RESPONSE])
-            })
-          )
-
+          activateMock(jsonMock)
           addActivatedMock(jsonMock)
           method.reset()
         } catch (error) {
