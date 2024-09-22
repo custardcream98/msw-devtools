@@ -33,6 +33,9 @@
       "floatingButtonOpacity": {
         "label": "Devtools 플로팅 버튼 투명도"
       },
+      "language": {
+        "label": "언어"
+      },
       "responseBody": {
         "description": "팁: Response Body에 $(달러 기호)를 사용하여 자동으로 커서를 이동시킬 수 있습니다. Response Body를 편집할 때 Tab을 누르면 커서가 자동으로 다음 달러 기호로 이동합니다.",
         "label": "기본 Response Body"

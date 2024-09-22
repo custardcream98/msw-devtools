@@ -6,16 +6,20 @@ import { useDefaultResponseSettings } from "~/components/contexts/default-respon
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import { useFloatingButtonSettings } from "~/components/contexts/floating-button"
 import { ScrollList } from "~/components/ScrollList"
+import { useLanguage } from "~/hooks/useLanguage"
+import { type Language, LANGUAGE_NAMES } from "~/lib/i18n"
 
 export const SettingsTab = () => {
   const { defaultUrl, setDefaultUrl } = useDefaultUrlSettings()
   const { defaultResponse, setDefaultResponse } = useDefaultResponseSettings()
   const { floatingButtonOpacity, setFloatingButtonOpacity } =
     useFloatingButtonSettings()
+  const { language, setLanguage } = useLanguage()
 
   const urlInputId = useId()
   const defaultResponseEditorId = useId()
   const floatingButtonOpacityId = useId()
+  const languageId = useId()
 
   const { t } = useTranslation()
 
@@ -65,6 +69,25 @@ export const SettingsTab = () => {
           setFloatingButtonOpacity(value)
         }}
       />
+      <label htmlFor={languageId} className='mt-4 block'>
+        {t("tabs.settings.language.label")}
+      </label>
+      <select
+        id={languageId}
+        className='mt-2 p-2 msw-round-border'
+        value={language}
+        onChange={(event) => {
+          const value = event.currentTarget.value as Language
+
+          setLanguage(value)
+        }}
+      >
+        {Object.entries(LANGUAGE_NAMES).map(([lang, name]) => (
+          <option key={lang} value={lang}>
+            {name}
+          </option>
+        ))}
+      </select>
     </ScrollList>
   )
 }
