@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw"
 
-import { FIELD_NAME } from "~/components/TabBody/AddMockTab/AddMockForm/form"
+import { FIELD_NAME } from "~/components/tabs/TabBody/AddMockTab/AddMockForm"
 import { getApi } from "~/lib/msw"
 import { JsonMock } from "~/types"
 
