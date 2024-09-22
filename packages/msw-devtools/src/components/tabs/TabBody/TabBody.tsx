@@ -1,11 +1,9 @@
+import { ActivatedMockListProvider } from "~/components/contexts/activated-mock-list"
 import { DefaultResponseSettingsProvider } from "~/components/contexts/default-response"
 import { DefaultUrlSettingsProvider } from "~/components/contexts/default-url"
 import { Tab, useTab } from "~/components/tabs/TabBar/context"
 
-import {
-  ActivatedMockListProvider,
-  ActivatedMockListTab
-} from "./ActivatedMockListTab"
+import { ActivatedMockListTab } from "./ActivatedMockListTab"
 import { AddMockTab } from "./AddMockTab"
 import { SettingsTab } from "./SettingsTab"
 

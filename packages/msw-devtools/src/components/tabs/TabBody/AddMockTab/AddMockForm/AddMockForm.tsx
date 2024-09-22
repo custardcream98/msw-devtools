@@ -4,9 +4,9 @@ import { Controller, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
-import { useActivatedMockList } from "~/components/tabs/TabBody/ActivatedMockListTab"
 import {
   FIELD_NAME,
   FormFieldValues,

@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next"
 import { FaFileExport, FaFileImport } from "react-icons/fa6"
 
+import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { ScrollList } from "~/components/ScrollList"
 import { FIELD_NAME } from "~/constants"
 
-import { useActivatedMockList } from "./context"
 import { loadJson, saveJson } from "./utils"
 
 export const ActivatedMockListTab = () => {
