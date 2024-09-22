@@ -1,10 +1,12 @@
 import { clsx } from "clsx"
 import { http, HttpResponse } from "msw"
 import { Controller, useForm } from "react-hook-form"
+import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { useDefaultResponseSettings } from "~/components/contexts/default-response"
+import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import { useActivatedMockList } from "~/components/tabs/TabBody/ActivatedMockListTab"
-import { useSettings } from "~/components/tabs/TabBody/SettingsTab"
 import {
   FIELD_NAME,
   FormFieldValues,
@@ -24,7 +26,8 @@ const DEFAULT_VALUES: FormFieldValues = {
 
 export const AddMockForm = () => {
   const { addActivatedMock } = useActivatedMockList()
-  const { defaultUrl, defaultResponse } = useSettings()
+  const { defaultUrl } = useDefaultUrlSettings()
+  const { defaultResponse } = useDefaultResponseSettings()
   const method = useForm<FormFieldValues>({
     defaultValues: {
       ...DEFAULT_VALUES,
@@ -33,6 +36,8 @@ export const AddMockForm = () => {
         defaultResponse ?? DEFAULT_VALUES[FIELD_NAME.RESPONSE]
     }
   })
+
+  const { t } = useTranslation()
 
   return (
     <form
@@ -88,19 +93,19 @@ export const AddMockForm = () => {
           <input
             className='h-full w-full bg-slate-50 p-2 text-base text-slate-700'
             type='text'
-            placeholder='Type URL Here'
+            placeholder={t("tabs.addMock.url.placeholder")}
             {...method.register(FIELD_NAME.URL, { required: true })}
           />
         </div>
         <button
-          className='button-lg h-full bg-blue-600 text-white hover:bg-blue-800 hover:text-white disabled:bg-slate-400'
+          className='button-lg h-full flex-shrink-0 bg-blue-600 text-white hover:bg-blue-800 hover:text-white disabled:bg-slate-400'
           disabled={!method.formState.isValid}
         >
-          Add
+          {t("tabs.addMock.submit")}
         </button>
       </div>
       <label className='mt-4 flex flex-1 flex-col'>
-        Response
+        Response Body (JSON)
         <Controller
           name={FIELD_NAME.RESPONSE}
           control={method.control}

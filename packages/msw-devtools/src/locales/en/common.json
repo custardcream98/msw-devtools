@@ -1,0 +1,45 @@
+{
+  "closeButton": {
+    "title": "Close MSW Devtools"
+  },
+  "floatingButton": {
+    "title": "Open MSW Devtools"
+  },
+  "tab": {
+    "activatedMockList": "Activated Mock List",
+    "addMock": "Add Mock",
+    "settings": "Settings"
+  },
+  "tabs": {
+    "activatedMockList": {
+      "exportButton": {
+        "title": "Export Mocks"
+      },
+      "importButton": {
+        "title": "Import Mocks"
+      }
+    },
+    "addMock": {
+      "submit": "Add",
+      "url": {
+        "placeholder": "Type URL Here"
+      }
+    },
+    "settings": {
+      "defaultURL": {
+        "label": "Default URL",
+        "placeholder": "Type URL Here"
+      },
+      "floatingButtonOpacity": {
+        "label": "Devtools Toggle Button Opacity"
+      },
+      "language": {
+        "label": "Language"
+      },
+      "responseBody": {
+        "description": "Tip: When editing the response body, you can automatically move the cursor using the $ (dollar sign) in the default values. When editing the response body, pressing Tab will automatically move the cursor to the next dollar sign.",
+        "label": "Default Response Body"
+      }
+    }
+  }
+}

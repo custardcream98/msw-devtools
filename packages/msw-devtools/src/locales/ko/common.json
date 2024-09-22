@@ -1,0 +1,45 @@
+{
+  "closeButton": {
+    "title": "MSW Devtools 닫기"
+  },
+  "floatingButton": {
+    "title": "MSW Devtools 열기"
+  },
+  "tab": {
+    "activatedMockList": "Mock 목록",
+    "addMock": "Mock 추가하기",
+    "settings": "설정"
+  },
+  "tabs": {
+    "activatedMockList": {
+      "exportButton": {
+        "title": "Mock 내보내기"
+      },
+      "importButton": {
+        "title": "Mock 불러오기"
+      }
+    },
+    "addMock": {
+      "submit": "추가",
+      "url": {
+        "placeholder": "URL을 입력해주세요"
+      }
+    },
+    "settings": {
+      "defaultURL": {
+        "label": "기본 URL",
+        "placeholder": "URL을 입력해주세요"
+      },
+      "floatingButtonOpacity": {
+        "label": "Devtools 플로팅 버튼 투명도"
+      },
+      "language": {
+        "label": "언어"
+      },
+      "responseBody": {
+        "description": "팁: Response Body에 $(달러 기호)를 사용하여 자동으로 커서를 이동시킬 수 있습니다. Response Body를 편집할 때 Tab을 누르면 커서가 자동으로 다음 달러 기호로 이동합니다.",
+        "label": "기본 Response Body"
+      }
+    }
+  }
+}
