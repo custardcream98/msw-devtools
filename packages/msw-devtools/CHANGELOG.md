@@ -1,5 +1,16 @@
 # @custardcream/msw-devtools
 
+## 0.2.0
+
+### Minor Changes
+
+- ab487db: Save mock list localStorage
+- 37a8cee: Add i18n support
+
+### Patch Changes
+
+- 214af57: Improved Activated Mock List tab style
+
 ## 0.1.0
 
 ### Minor Changes
