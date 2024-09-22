@@ -13,8 +13,8 @@ export const METHOD_OPTION = {
   PUT: "put",
   PATCH: "patch",
   DELETE: "delete",
-  HEAD: "head",
-  OPTIONS: "options"
+  OPTIONS: "options",
+  HEAD: "head"
 } as const
 
 export type MethodOption = (typeof METHOD_OPTION)[keyof typeof METHOD_OPTION]

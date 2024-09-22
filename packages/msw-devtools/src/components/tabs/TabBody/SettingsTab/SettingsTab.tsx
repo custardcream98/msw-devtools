@@ -21,11 +21,12 @@ export const SettingsTab = () => {
 
   return (
     <ScrollList>
-      <label htmlFor={urlInputId}>Set Default URL</label>
+      <label htmlFor={urlInputId}>Default URL</label>
       <input
         id={urlInputId}
         type='text'
-        className='w-full p-2 font-mono msw-round-border'
+        className='mt-2 w-full p-2 font-mono msw-round-border'
+        placeholder='Type URL Here'
         value={defaultUrl ?? ""}
         onChange={(event) => {
           event.preventDefault()
@@ -35,13 +36,13 @@ export const SettingsTab = () => {
           setDefaultUrl(value)
         }}
       />
-      <label htmlFor={defaultResponseEditorId} className='mt-2 block'>
-        <span className='block'>Set Default Response Body</span>
-        <span>
+      <label htmlFor={defaultResponseEditorId} className='mt-4 block'>
+        <span className='block'>Default Response Body</span>
+        <blockquote className='blockquote mt-1 text-sm'>
           {
             "Tip: When editing the response body, you can automatically move the cursor using the $ (dollar sign) in the default values. When editing the response body, pressing Tab will automatically move the cursor to the next dollar sign."
           }
-        </span>
+        </blockquote>
       </label>
       <CodeEditor
         id={defaultResponseEditorId}
@@ -49,11 +50,12 @@ export const SettingsTab = () => {
         value={defaultResponse ?? ""}
         onChange={setDefaultResponse}
       />
-      <label htmlFor={floatingButtonOpacityId} className='mt-2 block'>
-        Set Devtools Toggle Button Opacity
+      <label htmlFor={floatingButtonOpacityId} className='mt-4 block'>
+        Devtools Toggle Button Opacity
       </label>
       <input
         id={floatingButtonOpacityId}
+        className='mt-2 w-1/2'
         type='range'
         min={0}
         max={1}
@@ -65,7 +67,6 @@ export const SettingsTab = () => {
           setFloatingButtonOpacity(value)
         }}
       />
-      <span>{floatingButtonOpacity}</span>
     </ScrollList>
   )
 }

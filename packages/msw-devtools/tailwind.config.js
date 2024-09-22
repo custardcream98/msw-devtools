@@ -46,7 +46,16 @@ export default {
     scopedPreflightStyles({
       isolationStrategy: isolateInsideOfContainer("#msw-devtools")
     }),
-    plugin(function ({ addComponents, addUtilities, theme }) {
+    plugin(function ({ addBase, addComponents, addUtilities, theme }) {
+      addBase(
+        {
+          input: {
+            fontSize: theme("fontSize.sm")
+          }
+        },
+        { respectImportant: true }
+      )
+
       addComponents(
         {
           ".button": {
@@ -60,6 +69,10 @@ export default {
           ".button-icon": {
             padding: `${theme("spacing.2")}`,
             ...BUTTON(theme)
+          },
+          ".blockquote": {
+            padding: `0 ${theme("spacing.3")}`,
+            borderLeft: `${theme("borderWidth.2")} solid ${theme("colors.yellow.500")}`
           }
         },
         {

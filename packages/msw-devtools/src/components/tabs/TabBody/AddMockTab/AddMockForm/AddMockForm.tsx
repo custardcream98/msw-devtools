@@ -1,3 +1,4 @@
+import { clsx } from "clsx"
 import { http, HttpResponse } from "msw"
 import { Controller, useForm } from "react-hook-form"
 
@@ -56,16 +57,34 @@ export const AddMockForm = () => {
     >
       <div className='flex w-full shrink-0 items-center gap-2'>
         <div className='flex w-full items-center overflow-hidden font-mono msw-round-border'>
-          <select
-            className='h-full border-r bg-slate-50 p-2 text-base uppercase text-slate-700'
-            {...method.register(FIELD_NAME.METHOD, { required: true })}
-          >
-            {Object.values(METHOD_OPTION).map((method) => (
-              <option key={method} value={method}>
-                {method}
-              </option>
-            ))}
-          </select>
+          <Controller
+            name={FIELD_NAME.METHOD}
+            control={method.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <select
+                className={clsx(
+                  "h-full border-r bg-slate-50 p-2 text-base font-semibold uppercase",
+                  {
+                    "text-blue-600": field.value === METHOD_OPTION.GET,
+                    "text-green-600": field.value === METHOD_OPTION.POST,
+                    "text-yellow-600": field.value === METHOD_OPTION.PUT,
+                    "text-red-600": field.value === METHOD_OPTION.DELETE,
+                    "text-teal-500": field.value === METHOD_OPTION.PATCH,
+                    "text-purple-600": field.value === METHOD_OPTION.OPTIONS,
+                    "text-gray-600": field.value === METHOD_OPTION.HEAD
+                  }
+                )}
+                {...field}
+              >
+                {Object.values(METHOD_OPTION).map((method) => (
+                  <option key={method} value={method}>
+                    {method}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
           <input
             className='h-full w-full bg-slate-50 p-2 text-base text-slate-700'
             type='text'
@@ -74,20 +93,20 @@ export const AddMockForm = () => {
           />
         </div>
         <button
-          className='button-lg h-full bg-blue-500 text-white hover:bg-blue-700 hover:text-white disabled:bg-slate-400'
+          className='button-lg h-full bg-blue-600 text-white hover:bg-blue-800 hover:text-white disabled:bg-slate-400'
           disabled={!method.formState.isValid}
         >
           Add
         </button>
       </div>
-      <label className='mt-2 flex flex-1 flex-col'>
+      <label className='mt-4 flex flex-1 flex-col'>
         Response
         <Controller
           name={FIELD_NAME.RESPONSE}
           control={method.control}
           rules={{ required: true }}
           render={({ field }) => (
-            <CodeEditor className='mb-2 mt-1 h-full w-full' {...field} />
+            <CodeEditor className='mb-2 mt-2 h-full w-full' {...field} />
           )}
         />
       </label>
