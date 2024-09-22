@@ -23,13 +23,13 @@ export const initializeI18n = () =>
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-      fallbackLng: "en",
+      fallbackLng: LANGUAGE.EN,
       interpolation: {
         escapeValue: false
       },
       resources: {
-        en,
-        ko
+        [LANGUAGE.EN]: en,
+        [LANGUAGE.KO]: ko
       },
       defaultNS: "common",
       detection: {
