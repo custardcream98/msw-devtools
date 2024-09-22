@@ -14,7 +14,7 @@ export const createDevtool = async ({
   const ReactDOM = (await import("react-dom/client")).default
   const DevTools = React.lazy(() => import("~/DevTools"))
 
-  const { initializeI18n } = await import("./i18n")
+  const initializeI18n = (await import("~/lib/i18n")).default
   await initializeI18n()
 
   ReactDOM.createRoot(
