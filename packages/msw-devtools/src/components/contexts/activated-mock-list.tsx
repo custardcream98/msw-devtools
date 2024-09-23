@@ -1,13 +1,17 @@
 import React, { useCallback, useMemo } from "react"
 
 import { FIELD_NAME } from "~/constants"
-import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import {
+  getLocalStorageItem,
+  useLocalStorageState
+} from "~/hooks/useLocalStorageState"
 import { ACTIVATED_MOCK_LIST } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 
 export type ActivatedMockListContextType = {
   activatedMockList: JsonMock[]
   addActivatedMock: (activatedMock: JsonMock) => void
+  reloadActivatedMockList: () => void
 }
 
 export const ActivatedMockListContext =
@@ -51,9 +55,21 @@ export const ActivatedMockListProvider = ({
     [setActivatedMockList]
   )
 
+  const reloadActivatedMockList = useCallback(() => {
+    const localStorageMocks =
+      getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
+
+    if (!localStorageMocks || !Array.isArray(localStorageMocks)) {
+      setActivatedMockList([])
+      return
+    }
+
+    setActivatedMockList(localStorageMocks)
+  }, [setActivatedMockList])
+
   const value = useMemo(
-    () => ({ activatedMockList, addActivatedMock }),
-    [activatedMockList, addActivatedMock]
+    () => ({ activatedMockList, addActivatedMock, reloadActivatedMockList }),
+    [activatedMockList, addActivatedMock, reloadActivatedMockList]
   )
 
   return (
