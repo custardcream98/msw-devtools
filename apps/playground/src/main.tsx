@@ -1,4 +1,4 @@
-import { installMSWDevtool } from "@custardcream/msw-devtools"
+import { installMSWDevtools } from "@custardcream/msw-devtools"
 import { setupWorker } from "msw/browser"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
@@ -8,7 +8,7 @@ import App from "./App.tsx"
 const enableMocking = async () => {
   // if (import.meta.env.DEV) {
   // commented out for demo purposes
-  return await installMSWDevtool({
+  return await installMSWDevtools({
     initialOpen: true,
     api: setupWorker()
   })

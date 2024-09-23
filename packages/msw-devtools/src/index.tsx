@@ -3,7 +3,7 @@ import type { CreateDevtoolProps } from "~/lib/createDevtool"
 export type InstallProps = CreateDevtoolProps
 
 let isInitialized = false
-export const installMSWDevtool = async (props: InstallProps) => {
+export const installMSWDevtools = async (props: InstallProps) => {
   if (!isInitialized) {
     isInitialized = true
 
@@ -12,3 +12,5 @@ export const installMSWDevtool = async (props: InstallProps) => {
     await createDevtool(props)
   }
 }
+
+export default installMSWDevtools
