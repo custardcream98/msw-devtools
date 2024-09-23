@@ -1,3 +1,4 @@
+import { BasicSetupOptions } from "@uiw/react-codemirror"
 import { clsx } from "clsx"
 import { FaChevronRight } from "react-icons/fa6"
 
@@ -10,6 +11,10 @@ import {
 } from "~/constants"
 import { useBoolean } from "~/hooks/useBoolean"
 import type { JsonMock } from "~/types"
+
+const CODE_EDITOR_BASIC_SETUP_OPTIONS: BasicSetupOptions = {
+  highlightActiveLine: false
+}
 
 export const ActivatedMockCard = (props: JsonMock) => {
   const [isOpened, , , toggle] = useBoolean()
@@ -57,6 +62,7 @@ export const ActivatedMockCard = (props: JsonMock) => {
             value={JSON.stringify(props[FIELD_NAME.RESPONSE], null, 2)}
             readOnly
             minHeight='auto'
+            basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
           />
         </div>
       </div>

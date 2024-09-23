@@ -8,7 +8,7 @@ import ReactCodeMirror, {
   type ReactCodeMirrorRef
 } from "@uiw/react-codemirror"
 import { clsx } from "clsx"
-import React, { useImperativeHandle, useRef } from "react"
+import React, { useImperativeHandle, useMemo, useRef } from "react"
 
 const EXTENSIONS = [
   json(),
@@ -79,17 +79,25 @@ export const CodeEditor = React.forwardRef<
   ReactCodeMirrorRef,
   Omit<
     ReactCodeMirrorProps,
-    | "onFocus"
-    | "extensions"
-    | "basicSetup"
-    | "theme"
-    | "onFocus"
-    | "indentWithTab"
+    "onFocus" | "extensions" | "theme" | "onFocus" | "indentWithTab"
   >
->(({ className, ...props }, ref) => {
+>(({ className, basicSetup: basicSetupProp, ...props }, ref) => {
   const innerRef = useRef<ReactCodeMirrorRef>(null)
 
   useImperativeHandle(ref, () => innerRef.current!, [])
+
+  const basicSetup = useMemo(
+    () =>
+      typeof basicSetupProp === "boolean"
+        ? basicSetupProp
+          ? BASIC_SETUP_OPTIONS
+          : undefined
+        : {
+            ...BASIC_SETUP_OPTIONS,
+            ...basicSetupProp
+          },
+    [basicSetupProp]
+  )
 
   return (
     <div className={clsx(className, "overflow-auto")}>
@@ -97,7 +105,7 @@ export const CodeEditor = React.forwardRef<
         ref={innerRef}
         className='overflow-hidden text-xs msw-round-border'
         extensions={EXTENSIONS}
-        basicSetup={BASIC_SETUP_OPTIONS}
+        basicSetup={basicSetup}
         theme={vscodeDark}
         minHeight='100px'
         onFocus={() => {
