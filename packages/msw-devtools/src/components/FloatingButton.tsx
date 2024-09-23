@@ -21,7 +21,7 @@ export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
   })
 
   const [defaultPosition, saveDefaultPosition] = useLocalStorageState(
-    "MSW_DEVTOOLS_BUTTON_POSITION",
+    "BUTTON_POSITION",
     DEFAULT_POSITION
   )
   const { position } = useDragMove({

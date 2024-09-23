@@ -41,6 +41,26 @@ export const STATUS_OPTION = {
 
 export type StatusOption = (typeof STATUS_OPTION)[keyof typeof STATUS_OPTION]
 
+export const STATUS_NAME = {
+  "200": "OK",
+  "201": "Created",
+  "400": "Bad Request",
+  "401": "Unauthorized",
+  "403": "Forbidden",
+  "404": "Not Found",
+  "500": "Server Error" // make it shorter
+} as const satisfies Record<StatusOption, string>
+
+export const STATUS_COLOR = {
+  "200": "text-green-700",
+  "201": "text-green-700",
+  "400": "text-red-700",
+  "401": "text-red-700",
+  "403": "text-red-700",
+  "404": "text-red-700",
+  "500": "text-red-700"
+} as const
+
 export type FormFieldValues = {
   [FIELD_NAME.URL]: string
   [FIELD_NAME.METHOD]: MethodOption

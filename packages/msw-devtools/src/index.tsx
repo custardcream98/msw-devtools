@@ -12,5 +12,3 @@ export const installMSWDevtools = async (props: InstallProps) => {
     await createDevtool(props)
   }
 }
-
-export default installMSWDevtools

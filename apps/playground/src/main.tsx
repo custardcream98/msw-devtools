@@ -10,7 +10,10 @@ const enableMocking = async () => {
   // commented out for demo purposes
   return await installMSWDevtools({
     initialOpen: true,
-    setupWorker: setupWorker()
+    setupWorker: setupWorker(),
+    options: {
+      onUnhandledRequest: "bypass"
+    }
   })
   // }
 }

@@ -7,15 +7,12 @@ import { FaXmark } from "react-icons/fa6"
 import { FloatingButtonSettingsProvider } from "~/components/contexts/floating-button"
 import { FloatingButton } from "~/components/FloatingButton"
 import { Layout } from "~/components/Layout"
-import { Tab, TabBar, TabProvider } from "~/components/tabs/TabBar"
+import { TabBar, TabProvider } from "~/components/tabs/TabBar"
 import { TabBody } from "~/components/tabs/TabBody"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
-  const [isOpened, setIsOpened] = useLocalStorageState(
-    "MSW_DEVTOOLS_OPEN",
-    initialOpen
-  )
+  const [isOpened, setIsOpened] = useLocalStorageState("OPEN", initialOpen)
   const { t } = useTranslation()
 
   const toggle = useCallback(() => setIsOpened((prev) => !prev), [setIsOpened])
@@ -25,7 +22,7 @@ const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
     <FloatingButtonSettingsProvider>
       <FloatingButton onClick={toggle} />
       <Layout isOpened={isOpened}>
-        <TabProvider initialTab={Tab.AddMock}>
+        <TabProvider>
           <TabBar>
             <button
               type='button'

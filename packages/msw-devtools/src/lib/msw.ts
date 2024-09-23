@@ -4,6 +4,10 @@ import { type setupServer as setupServerNative } from "msw/native"
 import { type SetupServerApi } from "msw/node"
 
 import { FIELD_NAME } from "~/constants"
+import {
+  getLocalStorageItem,
+  setLocalStorageItem
+} from "~/hooks/useLocalStorageState"
 import { JsonMock } from "~/types"
 
 type Api = SetupWorker | SetupServerApi | ReturnType<typeof setupServerNative>
@@ -31,23 +35,15 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     setupWorker.listen(options)
   }
 
-  const rawLocalStorageMocks = localStorage.getItem(
-    MSW_DEVTOOLS_ACTIVATED_MOCK_LIST
-  )
+  const localStorageMocks = getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
 
-  if (!rawLocalStorageMocks) {
+  if (!localStorageMocks) {
     return
   }
 
-  try {
-    const localStorageMocks = JSON.parse(rawLocalStorageMocks) as JsonMock[]
-
-    localStorageMocks.forEach((mock) => {
-      activateMock(mock)
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  localStorageMocks.forEach((mock) => {
+    activateMock(mock)
+  })
 }
 
 export const getApi = () => {
@@ -68,5 +64,28 @@ export const activateMock = (mock: JsonMock) => {
   )
 }
 
-export const MSW_DEVTOOLS_ACTIVATED_MOCK_LIST =
-  "MSW_DEVTOOLS_ACTIVATED_MOCK_LIST"
+export const deactivateMock = (mock: JsonMock) => {
+  const api = getApi()
+
+  const localStorageMocks = getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
+
+  if (!localStorageMocks) {
+    return
+  }
+
+  const nextLocalStorageMocks = localStorageMocks.filter(
+    (mockItem) => mock[FIELD_NAME.URL] !== mockItem[FIELD_NAME.URL]
+  )
+
+  const nextHandlers = nextLocalStorageMocks.map((mockItem) =>
+    http[mockItem[FIELD_NAME.METHOD]](mockItem[FIELD_NAME.URL], () =>
+      HttpResponse.json(mockItem[FIELD_NAME.RESPONSE])
+    )
+  )
+
+  api.resetHandlers(...nextHandlers)
+
+  setLocalStorageItem(ACTIVATED_MOCK_LIST, nextLocalStorageMocks)
+}
+
+export const ACTIVATED_MOCK_LIST = "ACTIVATED_MOCK_LIST"

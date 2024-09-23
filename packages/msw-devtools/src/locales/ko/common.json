@@ -17,6 +17,9 @@
       },
       "importButton": {
         "title": "Mock 불러오기"
+      },
+      "toggleSidebarButton": {
+        "title": "사이드 바 토글"
       }
     },
     "addMock": {

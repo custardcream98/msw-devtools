@@ -27,7 +27,7 @@ export const DefaultResponseSettingsProvider = ({
 }: React.PropsWithChildren) => {
   const [defaultResponse, setDefaultResponse] = useLocalStorageState<
     string | null
-  >("MSW_DEVTOOLS_DEFAULT_RESPONSE", null)
+  >("DEFAULT_RESPONSE", null)
 
   const value = useMemo(
     () => ({

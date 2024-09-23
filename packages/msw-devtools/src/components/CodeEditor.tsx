@@ -3,13 +3,16 @@ import { json } from "@codemirror/lang-json"
 import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 import ReactCodeMirror, {
   type BasicSetupOptions,
+  Compartment,
+  EditorView,
   keymap,
   type ReactCodeMirrorProps,
   type ReactCodeMirrorRef
 } from "@uiw/react-codemirror"
 import { clsx } from "clsx"
-import React, { useImperativeHandle, useRef } from "react"
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from "react"
 
+const editable = new Compartment()
 const EXTENSIONS = [
   json(),
   keymap.of([
@@ -48,6 +51,7 @@ const EXTENSIONS = [
     }
   ])
 ]
+
 const BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   lineNumbers: false,
   highlightActiveLineGutter: false,
@@ -79,25 +83,44 @@ export const CodeEditor = React.forwardRef<
   ReactCodeMirrorRef,
   Omit<
     ReactCodeMirrorProps,
-    | "onFocus"
-    | "extensions"
-    | "basicSetup"
-    | "theme"
-    | "onFocus"
-    | "indentWithTab"
+    "onFocus" | "extensions" | "theme" | "onFocus" | "indentWithTab"
   >
->(({ className, ...props }, ref) => {
+>(({ className, basicSetup: basicSetupProp, ...props }, ref) => {
   const innerRef = useRef<ReactCodeMirrorRef>(null)
 
   useImperativeHandle(ref, () => innerRef.current!, [])
+
+  const basicSetup = useMemo(
+    () =>
+      typeof basicSetupProp === "boolean"
+        ? basicSetupProp
+          ? BASIC_SETUP_OPTIONS
+          : undefined
+        : {
+            ...BASIC_SETUP_OPTIONS,
+            ...basicSetupProp
+          },
+    [basicSetupProp]
+  )
+
+  const extensions = useRef([
+    ...EXTENSIONS,
+    editable.of(EditorView.editable.of(!props.readOnly))
+  ]).current
+
+  useEffect(() => {
+    innerRef.current?.view?.dispatch({
+      effects: editable.reconfigure(EditorView.editable.of(!props.readOnly))
+    })
+  }, [props.readOnly])
 
   return (
     <div className={clsx(className, "overflow-auto")}>
       <ReactCodeMirror
         ref={innerRef}
-        className='overflow-hidden msw-round-border'
-        extensions={EXTENSIONS}
-        basicSetup={BASIC_SETUP_OPTIONS}
+        className='overflow-hidden text-xs msw-round-border'
+        extensions={extensions}
+        basicSetup={basicSetup}
         theme={vscodeDark}
         minHeight='100px'
         onFocus={() => {

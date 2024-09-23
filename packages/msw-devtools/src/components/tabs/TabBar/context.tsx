@@ -1,4 +1,6 @@
-import React, { useContext, useMemo, useState } from "react"
+import React, { useContext, useMemo } from "react"
+
+import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 export enum Tab {
   AddMock = "tab.addMock",
@@ -13,13 +15,10 @@ type TabContextType = {
 
 const TabContext = React.createContext<TabContextType | null>(null)
 
-export const TabProvider = ({
-  children,
-  initialTab
-}: React.PropsWithChildren<{ initialTab: Tab }>) => {
-  const [tab, setTab] = useState(initialTab)
+export const TabProvider = ({ children }: React.PropsWithChildren) => {
+  const [tab, setTab] = useLocalStorageState<Tab>("TAB", Tab.AddMock)
 
-  const value = useMemo(() => ({ tab, setTab }), [tab])
+  const value = useMemo(() => ({ tab, setTab }), [tab, setTab])
 
   return <TabContext.Provider value={value}>{children}</TabContext.Provider>
 }
