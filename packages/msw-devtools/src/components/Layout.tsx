@@ -1,5 +1,4 @@
 import { clsx } from "clsx"
-import { useState } from "react"
 
 import { useIsDragging } from "~/hooks/useIsDragging"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
@@ -15,7 +14,7 @@ export const Layout = ({
     "50%"
   )
 
-  const { props } = useIsDragging({
+  const { isDragging, props } = useIsDragging({
     onDrag: (event) => {
       setHeight(`calc(100vh - ${event.clientY}px)`)
     }
@@ -34,7 +33,10 @@ export const Layout = ({
     >
       <button
         type='button'
-        className='absolute left-0 right-0 top-0 h-[2px] cursor-row-resize'
+        className={clsx(
+          "absolute left-0 right-0 top-0 h-[3px] cursor-row-resize transition-colors hover:bg-slate-700",
+          isDragging && "bg-slate-700"
+        )}
         {...props}
       ></button>
       {children}
