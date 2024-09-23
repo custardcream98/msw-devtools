@@ -2,6 +2,7 @@ import { clsx } from "clsx"
 import { useState } from "react"
 
 import { useIsDragging } from "~/hooks/useIsDragging"
+import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 export const Layout = ({
   isOpened,
@@ -9,7 +10,11 @@ export const Layout = ({
 }: React.PropsWithChildren<{
   isOpened: boolean
 }>) => {
-  const [height, setHeight] = useState("50%")
+  const [height, setHeight] = useLocalStorageState<string>(
+    "MSW_DEVTOOLS_HEIGHT",
+    "50%"
+  )
+
   const { props } = useIsDragging({
     onDrag: (event) => {
       setHeight(`calc(100vh - ${event.clientY}px)`)
