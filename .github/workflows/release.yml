@@ -44,9 +44,3 @@ jobs:
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create and push tags
-        if: steps.changesets.outputs.published == 'true'
-        run: pnpm changeset tag && git push --tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
