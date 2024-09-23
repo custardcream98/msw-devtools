@@ -1,11 +1,12 @@
 import { clsx } from "clsx"
+import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { FaFileExport, FaFileImport } from "react-icons/fa6"
 import { HiMiniChevronDoubleRight } from "react-icons/hi2"
 
 import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { ScrollList } from "~/components/ScrollList"
-import { useBoolean } from "~/hooks/useBoolean"
+import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { activateMock } from "~/lib/msw"
 
 import { loadJson, saveJson } from "./utils"
@@ -15,7 +16,14 @@ export const ActivatedMockListFrame = ({
 }: React.PropsWithChildren) => {
   const { activatedMockList, addActivatedMock } = useActivatedMockList()
 
-  const [isSidebarOpen, , , toggleSidebar] = useBoolean()
+  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
+    "MSW_DEVTOOLS_ACTIVATED_MOCK_LIST_SIDEBAR_OPEN",
+    true
+  )
+  const toggleSidebar = useCallback(
+    () => setIsSidebarOpen((isOpen) => !isOpen),
+    [setIsSidebarOpen]
+  )
 
   const { t } = useTranslation()
 
