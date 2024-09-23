@@ -56,6 +56,7 @@ export const ActivatedMockCard = (props: JsonMock) => {
             className='mt-4'
             value={JSON.stringify(props[FIELD_NAME.RESPONSE], null, 2)}
             readOnly
+            minHeight='auto'
           />
         </div>
       </div>
