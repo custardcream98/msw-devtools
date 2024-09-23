@@ -18,7 +18,7 @@
     <strong>🔄 Export/Import Mock Request Handlers</strong>
     <br />
     <br />
-    <a href="./README/README.ko.md">한국어</a>
+    <a href="#">ENGLISH</a> | <a href="./README/README.ko.md">한국어</a>
   </p>
 </div>
 

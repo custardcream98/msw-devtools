@@ -20,7 +20,7 @@
     <strong>🇰🇷 한국어 지원</strong>
     <br />
     <br />
-    <a href="../README.md">ENGLISH</a>
+    <a href="../README.md">ENGLISH</a> | <a href="#">한국어</a>
   </p>
 </div>
 
