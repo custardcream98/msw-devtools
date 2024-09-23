@@ -12,6 +12,8 @@ import {
   FormFieldValues,
   METHOD_COLOR,
   METHOD_OPTION,
+  STATUS_COLOR,
+  STATUS_NAME,
   STATUS_OPTION
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
@@ -86,7 +88,7 @@ export const AddMockForm = () => {
             render={({ field }) => (
               <select
                 className={clsx(
-                  "h-full border-r bg-slate-50 p-2 text-base font-semibold uppercase",
+                  "h-full border-r bg-slate-50 p-2 text-xs font-semibold uppercase",
                   METHOD_COLOR[field.value]
                 )}
                 {...field}
@@ -99,8 +101,28 @@ export const AddMockForm = () => {
               </select>
             )}
           />
+          <Controller
+            name={FIELD_NAME.STATUS}
+            control={method.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <select
+                className={clsx(
+                  "h-full border-r bg-slate-50 p-2 text-xs font-semibold",
+                  STATUS_COLOR[field.value]
+                )}
+                {...field}
+              >
+                {Object.values(STATUS_OPTION).map((status) => (
+                  <option key={status} value={status}>
+                    {status} {STATUS_NAME[status]}
+                  </option>
+                ))}
+              </select>
+            )}
+          />
           <input
-            className='h-full w-full bg-slate-50 p-2 text-base text-slate-700'
+            className='h-full w-full bg-slate-50 p-2 text-xs text-slate-700'
             type='text'
             placeholder={t("tabs.addMock.url.placeholder")}
             {...method.register(FIELD_NAME.URL, { required: true })}
