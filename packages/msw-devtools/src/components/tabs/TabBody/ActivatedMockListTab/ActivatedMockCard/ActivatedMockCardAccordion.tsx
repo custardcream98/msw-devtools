@@ -1,8 +1,6 @@
-import { BasicSetupOptions } from "@uiw/react-codemirror"
 import { clsx } from "clsx"
 import { FaChevronRight } from "react-icons/fa6"
 
-import { CodeEditor } from "~/components/CodeEditor"
 import {
   FIELD_NAME,
   METHOD_COLOR,
@@ -12,11 +10,10 @@ import {
 import { useBoolean } from "~/hooks/useBoolean"
 import type { JsonMock } from "~/types"
 
-const CODE_EDITOR_BASIC_SETUP_OPTIONS: BasicSetupOptions = {
-  highlightActiveLine: false
-}
-
-export const ActivatedMockCard = (props: JsonMock) => {
+export const ActivatedMockCardAccordion = ({
+  children,
+  ...jsonMock
+}: React.PropsWithChildren<JsonMock>) => {
   const [isOpened, , , toggle] = useBoolean()
 
   return (
@@ -33,21 +30,22 @@ export const ActivatedMockCard = (props: JsonMock) => {
         <span
           className={clsx(
             "mr-2 !font-mono font-semibold uppercase",
-            METHOD_COLOR[props[FIELD_NAME.METHOD]]
+            METHOD_COLOR[jsonMock[FIELD_NAME.METHOD]]
           )}
         >
-          {props[FIELD_NAME.METHOD]}
+          {jsonMock[FIELD_NAME.METHOD]}
         </span>
         <span
           className={clsx(
             "mr-2 shrink-0 rounded-lg bg-slate-100 px-[0.3rem] py-[0.125rem] !font-mono text-[0.7rem] font-semibold uppercase",
-            STATUS_COLOR[props[FIELD_NAME.STATUS]]
+            STATUS_COLOR[jsonMock[FIELD_NAME.STATUS]]
           )}
         >
-          {props[FIELD_NAME.STATUS]} {STATUS_NAME[props[FIELD_NAME.STATUS]]}
+          {jsonMock[FIELD_NAME.STATUS]}{" "}
+          {STATUS_NAME[jsonMock[FIELD_NAME.STATUS]]}
         </span>
         <code className='mr-4 min-w-0 text-wrap break-all !font-mono'>
-          {props[FIELD_NAME.URL]}
+          {jsonMock[FIELD_NAME.URL]}
         </code>
       </div>
       <div
@@ -56,15 +54,7 @@ export const ActivatedMockCard = (props: JsonMock) => {
           isOpened ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
       >
-        <div className='w-full overflow-hidden'>
-          <CodeEditor
-            className='mt-4'
-            value={JSON.stringify(props[FIELD_NAME.RESPONSE], null, 2)}
-            basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
-            minHeight='auto'
-            readOnly
-          />
-        </div>
+        <div className='w-full overflow-hidden'>{children}</div>
       </div>
     </div>
   )
