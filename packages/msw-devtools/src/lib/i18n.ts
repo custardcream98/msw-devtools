@@ -37,7 +37,7 @@ const initializeI18n = () =>
         lookupLocalStorage: MSW_DEVTOOLS_LANG,
         caches: ["localStorage"],
         convertDetectedLanguage(language) {
-          if (language === "ko-KR") {
+          if (language === "ko-KR" || language === "ko") {
             return LANGUAGE.KO
           }
 
