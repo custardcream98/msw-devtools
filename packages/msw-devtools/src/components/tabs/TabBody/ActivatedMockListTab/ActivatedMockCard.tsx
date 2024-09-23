@@ -20,7 +20,7 @@ export const ActivatedMockCard = (props: JsonMock) => {
   const [isOpened, , , toggle] = useBoolean()
 
   return (
-    <div className='rounded-2xl bg-white p-3 text-sm'>
+    <div className='rounded-2xl bg-white p-2 text-xs'>
       <div className='flex w-full items-center'>
         <button className='mr-2 shrink-0 pr-1' onClick={toggle}>
           <FaChevronRight
@@ -38,17 +38,17 @@ export const ActivatedMockCard = (props: JsonMock) => {
         >
           {props[FIELD_NAME.METHOD]}
         </span>
-        <code className='mr-4 min-w-0 text-wrap break-all !font-mono'>
-          {props[FIELD_NAME.URL]}
-        </code>
         <span
           className={clsx(
-            "ml-auto shrink-0 !font-mono font-semibold uppercase",
+            "mr-2 shrink-0 rounded-lg bg-slate-100 px-[0.3rem] py-[0.125rem] !font-mono text-[0.7rem] font-semibold uppercase",
             STATUS_COLOR[props[FIELD_NAME.STATUS]]
           )}
         >
           {props[FIELD_NAME.STATUS]} {STATUS_NAME[props[FIELD_NAME.STATUS]]}
         </span>
+        <code className='mr-4 min-w-0 text-wrap break-all !font-mono'>
+          {props[FIELD_NAME.URL]}
+        </code>
       </div>
       <div
         className={clsx(
