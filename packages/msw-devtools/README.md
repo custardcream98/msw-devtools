@@ -45,8 +45,6 @@ Here's how you can integrate it into your project:
 ```jsx
 import { setupWorker } from "msw/browser"
 import { installMSWDevtools } from "@custardcream/msw-devtools"
-// You can also import as a default import:
-// import installMSWDevtools from "@custardcream/msw-devtools"
 
 const enableMocking = async () => {
   // Exclude devtool from production builds

@@ -44,8 +44,6 @@ npm install -D @custardcream/msw-devtools msw
 ```jsx
 import { setupWorker } from "msw/browser"
 import { installMSWDevtools } from "@custardcream/msw-devtools"
-// default import로도 사용할 수 있습니다:
-// import installMSWDevtools from "@custardcream/msw-devtools"
 
 const enableMocking = async () => {
   // 프로덕션 빌드에서는 Devtools를 번들에 포함시키지 않습니다.
