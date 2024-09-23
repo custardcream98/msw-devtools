@@ -1,5 +1,18 @@
 # @custardcream/msw-devtools
 
+## 0.3.0
+
+### Minor Changes
+
+- 17ca9ae: Feature: Mock Edit / Remove
+- 5d11ae2: Add HTTP Status Feature
+
+### Patch Changes
+
+- da51a63: Fixed issue that Korean language setting reset on refresh
+- df73113: Fix z-index
+- 64f7559: Save Edit State
+
 ## 0.2.2
 
 ### Patch Changes
