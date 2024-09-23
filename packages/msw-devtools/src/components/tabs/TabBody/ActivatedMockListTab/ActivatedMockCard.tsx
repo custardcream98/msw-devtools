@@ -60,9 +60,9 @@ export const ActivatedMockCard = (props: JsonMock) => {
           <CodeEditor
             className='mt-4'
             value={JSON.stringify(props[FIELD_NAME.RESPONSE], null, 2)}
-            readOnly
-            minHeight='auto'
             basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
+            minHeight='auto'
+            readOnly
           />
         </div>
       </div>

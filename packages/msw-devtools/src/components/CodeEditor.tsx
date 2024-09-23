@@ -3,13 +3,16 @@ import { json } from "@codemirror/lang-json"
 import { vscodeDark } from "@uiw/codemirror-theme-vscode"
 import ReactCodeMirror, {
   type BasicSetupOptions,
+  Compartment,
+  EditorView,
   keymap,
   type ReactCodeMirrorProps,
   type ReactCodeMirrorRef
 } from "@uiw/react-codemirror"
 import { clsx } from "clsx"
-import React, { useImperativeHandle, useMemo, useRef } from "react"
+import React, { useEffect, useImperativeHandle, useMemo, useRef } from "react"
 
+const editable = new Compartment()
 const EXTENSIONS = [
   json(),
   keymap.of([
@@ -48,6 +51,7 @@ const EXTENSIONS = [
     }
   ])
 ]
+
 const BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   lineNumbers: false,
   highlightActiveLineGutter: false,
@@ -99,12 +103,23 @@ export const CodeEditor = React.forwardRef<
     [basicSetupProp]
   )
 
+  const extensions = useRef([
+    ...EXTENSIONS,
+    editable.of(EditorView.editable.of(!props.readOnly))
+  ]).current
+
+  useEffect(() => {
+    innerRef.current?.view?.dispatch({
+      effects: editable.reconfigure(EditorView.editable.of(!props.readOnly))
+    })
+  }, [props.readOnly])
+
   return (
     <div className={clsx(className, "overflow-auto")}>
       <ReactCodeMirror
         ref={innerRef}
         className='overflow-hidden text-xs msw-round-border'
-        extensions={EXTENSIONS}
+        extensions={extensions}
         basicSetup={basicSetup}
         theme={vscodeDark}
         minHeight='100px'
