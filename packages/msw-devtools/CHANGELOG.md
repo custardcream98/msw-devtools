@@ -1,5 +1,13 @@
 # @custardcream/msw-devtools
 
+## 0.2.2
+
+### Patch Changes
+
+- 3e93a69: Changed Intall function prop name
+- fa45b5d: Fix dependencies
+- 4491400: Change install funcion name
+
 ## 0.2.1
 
 ### Patch Changes
