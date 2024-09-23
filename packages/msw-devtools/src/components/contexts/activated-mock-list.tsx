@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react"
 
 import { FIELD_NAME } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { MSW_DEVTOOLS_ACTIVATED_MOCK_LIST } from "~/lib/msw"
+import { ACTIVATED_MOCK_LIST } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 
 export type ActivatedMockListContextType = {
@@ -30,7 +30,7 @@ export const ActivatedMockListProvider = ({
 }: React.PropsWithChildren) => {
   const [activatedMockList, setActivatedMockList] = useLocalStorageState<
     JsonMock[]
-  >(MSW_DEVTOOLS_ACTIVATED_MOCK_LIST, [])
+  >(ACTIVATED_MOCK_LIST, [])
 
   const addActivatedMock = useCallback(
     (mockToActivate: JsonMock) => {

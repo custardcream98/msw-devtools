@@ -9,10 +9,7 @@ export const Layout = ({
 }: React.PropsWithChildren<{
   isOpened: boolean
 }>) => {
-  const [height, setHeight] = useLocalStorageState<string>(
-    "MSW_DEVTOOLS_HEIGHT",
-    "50%"
-  )
+  const [height, setHeight] = useLocalStorageState<string>("HEIGHT", "50%")
 
   const { isDragging, props } = useIsDragging({
     onDrag: (event) => {

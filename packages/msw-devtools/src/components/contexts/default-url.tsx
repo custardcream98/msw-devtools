@@ -26,7 +26,7 @@ export const DefaultUrlSettingsProvider = ({
   children
 }: React.PropsWithChildren) => {
   const [defaultUrl, setDefaultUrl] = useLocalStorageState<string | null>(
-    "MSW_DEVTOOLS_DEFAULT_URL",
+    "DEFAULT_URL",
     null
   )
 

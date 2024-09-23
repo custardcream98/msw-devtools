@@ -26,7 +26,7 @@ export const FloatingButtonSettingsProvider = ({
   children
 }: React.PropsWithChildren) => {
   const [floatingButtonOpacity, setFloatingButtonOpacity] =
-    useLocalStorageState<number>("MSW_DEVTOOLS_FLOATING_BUTTON_OPACITY", 1)
+    useLocalStorageState<number>("FLOATING_BUTTON_OPACITY", 1)
 
   const value = useMemo(
     () => ({

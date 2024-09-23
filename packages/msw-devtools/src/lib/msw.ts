@@ -4,6 +4,7 @@ import { type setupServer as setupServerNative } from "msw/native"
 import { type SetupServerApi } from "msw/node"
 
 import { FIELD_NAME } from "~/constants"
+import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
 import { JsonMock } from "~/types"
 
 type Api = SetupWorker | SetupServerApi | ReturnType<typeof setupServerNative>
@@ -31,23 +32,15 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     setupWorker.listen(options)
   }
 
-  const rawLocalStorageMocks = localStorage.getItem(
-    MSW_DEVTOOLS_ACTIVATED_MOCK_LIST
-  )
+  const localStorageMocks = getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
 
-  if (!rawLocalStorageMocks) {
+  if (!localStorageMocks) {
     return
   }
 
-  try {
-    const localStorageMocks = JSON.parse(rawLocalStorageMocks) as JsonMock[]
-
-    localStorageMocks.forEach((mock) => {
-      activateMock(mock)
-    })
-  } catch (error) {
-    console.error(error)
-  }
+  localStorageMocks.forEach((mock) => {
+    activateMock(mock)
+  })
 }
 
 export const getApi = () => {
@@ -68,5 +61,4 @@ export const activateMock = (mock: JsonMock) => {
   )
 }
 
-export const MSW_DEVTOOLS_ACTIVATED_MOCK_LIST =
-  "MSW_DEVTOOLS_ACTIVATED_MOCK_LIST"
+export const ACTIVATED_MOCK_LIST = "ACTIVATED_MOCK_LIST"

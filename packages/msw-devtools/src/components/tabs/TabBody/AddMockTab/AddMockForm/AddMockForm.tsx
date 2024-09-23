@@ -33,10 +33,7 @@ export const AddMockForm = () => {
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const [editStateLocal, setEditStateLocal] =
-    useLocalStorageState<FormFieldValues | null>(
-      "MSW_DEVTOOLS_EDIT_STATE",
-      null
-    )
+    useLocalStorageState<FormFieldValues | null>("EDIT_STATE", null)
   const method = useForm<FormFieldValues>({
     defaultValues: {
       [FIELD_NAME.URL]:

@@ -17,7 +17,7 @@ export const ActivatedMockListFrame = ({
   const { activatedMockList, addActivatedMock } = useActivatedMockList()
 
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
-    "MSW_DEVTOOLS_ACTIVATED_MOCK_LIST_SIDEBAR_OPEN",
+    "ACTIVATED_MOCK_LIST_SIDEBAR_OPEN",
     true
   )
   const toggleSidebar = useCallback(

@@ -1,4 +1,36 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
+
+const KEY = "MSW_DEVTOOLS"
+const DEFAULT_STORAGE_VALUE = "{}"
+
+export const getLocalStorageItem = <
+  T extends boolean | object | string | number | null
+>(
+  key: string
+): T | undefined => {
+  return JSON.parse(window.localStorage.getItem(KEY) ?? DEFAULT_STORAGE_VALUE)[
+    key
+  ]
+}
+
+export const setLocalStorageItem = <
+  T extends boolean | object | string | number | null
+>(
+  key: string,
+  value: T
+): void => {
+  const prevStorage = JSON.parse(
+    window.localStorage.getItem(KEY) ?? DEFAULT_STORAGE_VALUE
+  )
+
+  window.localStorage.setItem(
+    KEY,
+    JSON.stringify({
+      ...prevStorage,
+      [key]: value
+    })
+  )
+}
 
 export const useLocalStorageState = <
   T extends boolean | object | string | number | null
@@ -6,15 +38,9 @@ export const useLocalStorageState = <
   key: string,
   initialValue: T
 ): [T, React.Dispatch<React.SetStateAction<T>>] => {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    try {
-      const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
-    } catch (error) {
-      console.error(error)
-      return initialValue
-    }
-  })
+  const [storedValue, setStoredValue] = useState<T>(
+    () => getLocalStorageItem<T>(key) ?? initialValue
+  )
 
   const setValue = useCallback(
     (value: React.SetStateAction<T>) => {
@@ -22,27 +48,13 @@ export const useLocalStorageState = <
         const finalValue =
           typeof value === "function" ? value(prevValue) : value
 
-        window.localStorage.setItem(key, JSON.stringify(finalValue))
+        setLocalStorageItem(key, finalValue)
 
         return finalValue
       })
     },
     [key]
   )
-
-  useEffect(() => {
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === key) {
-        setStoredValue(JSON.parse(event.newValue ?? "null"))
-      }
-    }
-
-    window.addEventListener("storage", handleStorageChange)
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange)
-    }
-  }, [key])
 
   return [storedValue, setValue]
 }
