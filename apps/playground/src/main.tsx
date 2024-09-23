@@ -10,7 +10,7 @@ const enableMocking = async () => {
   // commented out for demo purposes
   return await installMSWDevtools({
     initialOpen: true,
-    api: setupWorker()
+    setupWorker: setupWorker()
   })
   // }
 }

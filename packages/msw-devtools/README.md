@@ -53,7 +53,7 @@ const enableMocking = async () => {
   if (import.meta.env.DEV) {
     return await installMSWDevtools({
       initialOpen: true, // Automatically open devtool on start
-      api: setupWorker() // Initialize MSW worker
+      setupWorker: setupWorker() // Initialize MSW worker
     })
   }
 }
