@@ -1,4 +1,5 @@
 import { clsx } from "clsx"
+import { useEffect } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
@@ -13,6 +14,7 @@ import {
   METHOD_OPTION,
   STATUS_OPTION
 } from "~/constants"
+import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { activateMock } from "~/lib/msw"
 
 import { formFieldValuesToJsonMock } from "./utils"
@@ -28,16 +30,37 @@ export const AddMockForm = () => {
   const { addActivatedMock } = useActivatedMockList()
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
+  const [editStateLocal, setEditStateLocal] =
+    useLocalStorageState<FormFieldValues | null>(
+      "MSW_DEVTOOLS_EDIT_STATE",
+      null
+    )
   const method = useForm<FormFieldValues>({
     defaultValues: {
-      ...DEFAULT_VALUES,
-      [FIELD_NAME.URL]: defaultUrl ?? DEFAULT_VALUES[FIELD_NAME.URL],
+      [FIELD_NAME.URL]:
+        editStateLocal?.[FIELD_NAME.URL] ??
+        defaultUrl ??
+        DEFAULT_VALUES[FIELD_NAME.URL],
+      [FIELD_NAME.METHOD]:
+        editStateLocal?.[FIELD_NAME.METHOD] ??
+        DEFAULT_VALUES[FIELD_NAME.METHOD],
+      [FIELD_NAME.STATUS]:
+        editStateLocal?.[FIELD_NAME.STATUS] ??
+        DEFAULT_VALUES[FIELD_NAME.STATUS],
       [FIELD_NAME.RESPONSE]:
-        defaultResponse ?? DEFAULT_VALUES[FIELD_NAME.RESPONSE]
+        editStateLocal?.[FIELD_NAME.RESPONSE] ??
+        defaultResponse ??
+        DEFAULT_VALUES[FIELD_NAME.RESPONSE]
     }
   })
 
   const { t } = useTranslation()
+
+  useEffect(() => {
+    return () => {
+      setEditStateLocal(method.getValues())
+    }
+  }, [setEditStateLocal, method])
 
   return (
     <form
@@ -47,6 +70,7 @@ export const AddMockForm = () => {
           const jsonMock = formFieldValuesToJsonMock(formData)
           activateMock(jsonMock)
           addActivatedMock(jsonMock)
+          setEditStateLocal(null)
           method.reset()
         } catch (error) {
           alert(error)
