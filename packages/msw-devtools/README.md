@@ -1,60 +1,64 @@
 # @custardcream/msw-devtools
 
-[ENGLISH](./README-EN.md)
+[KOREAN](./README/README.ko.md)
 
-**프레임워크에 구애받지 않는 MSW 핸들러 관리 도구**
+**Framework Agnostic Devtools for Managing MSW Handlers**
 
-MSW 핸들러를 손쉽게 관리하세요.
+Easily manage your MSW handlers with this versatile devtool, suitable for any framework.
 
-### 주요 기능:
+### Key Features:
 
-- 🛠 **모킹 핸들러를 런타임에 추가** – 새로운 모킹 핸들러를 앱의 동작중에 추가할 수 있습니다.
-- ✏️ **모킹 핸들러의 응답 수정** – 모킹 핸들러의 응답을 빠르게 수정할 수 있습니다.
-- 🔄 **모킹 핸들러 내보내기/가져오기** – 핸들러 구성을 손쉽게 내보내고 가져올 수 있습니다.
+- 🛠 **Add Mock Handlers On The Fly** – Instantly add new mock handlers.
+- ✏️ **Edit Mock Handler's Response** – Modify responses of mock handlers.
+- 🔄 **Export/Import Mock Handlers** – Seamlessly export and import handler configurations.
 
 ---
 
-## 📺 데모
+## 📺 Demo
 
-[데모 페이지](https://msw-devtools.vercel.app/)
+[Try Demo Here](https://msw-devtools.vercel.app/)
 
-### 모킹 핸들러 추가
+### Add Mock Handler
 
 https://github.com/user-attachments/assets/3f5f6d2e-ead6-4632-ab6b-90275c08082d
 
-### 모킹 핸들러 내보내기/가져오기
+### Export/Import Mock Handlers
 
 https://github.com/user-attachments/assets/26814706-ac15-47c5-8603-f7acc14b5342
 
 ---
 
-## 🚀 설치 방법
+## 🚀 Installation
 
-npm을 통해 패키지를 설치하세요.
+To get started, install the package via npm:
 
 ```bash
-npm install @custardcream/msw-devtools
+npm install -D @custardcream/msw-devtools msw
 ```
 
 ---
 
-## 🛠 사용법
+## 🛠 Usage
+
+Here's how you can integrate it into your project:
 
 ```jsx
 import { setupWorker } from "msw/browser"
-import { installMSWDevtool } from 'msw-devtool';
+import { installMSWDevtools } from "@custardcream/msw-devtools"
+// You can also import as a default import:
+// import installMSWDevtools from "@custardcream/msw-devtools"
 
 const enableMocking = async () => {
-  // 프로덕션 빌드에서는 Devtools를 번들에 포함시키지 않습니다.
+  // Exclude devtool from production builds
   if (import.meta.env.DEV) {
-    return await installMSWDevtool({
-      initialOpen: true, // Devtools 열린 상태로 시작
-      api: setupWorker() // MSW 워커 초기화
+    return await installMSWDevtools({
+      initialOpen: true, // Automatically open devtool on start
+      setupWorker: setupWorker() // Initialize MSW worker
     })
   }
 }
 
-// 어떤 프레임워크를 사용해도 상관없습니다.
+// You can use any framework you like
 enableMocking().then(() =>
   ReactDomClient.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>

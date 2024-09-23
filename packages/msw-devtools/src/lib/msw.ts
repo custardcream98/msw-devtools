@@ -11,24 +11,24 @@ let _api: Api
 
 export type InitializeProps =
   | {
-      api: SetupWorker
+      setupWorker: SetupWorker
       options?: StartOptions
     }
   | {
-      api: SetupServerApi | ReturnType<typeof setupServerNative>
+      setupWorker: SetupServerApi | ReturnType<typeof setupServerNative>
       options?: Partial<SharedOptions>
     }
-export const initialize = async ({ api, options }: InitializeProps) => {
+export const initialize = async ({ setupWorker, options }: InitializeProps) => {
   if (_api) {
     throw new Error("[MSW] Devtool already initialized")
   }
 
-  _api = api
+  _api = setupWorker
 
-  if ("start" in api) {
-    await api.start(options)
+  if ("start" in setupWorker) {
+    await setupWorker.start(options)
   } else {
-    api.listen(options)
+    setupWorker.listen(options)
   }
 
   const rawLocalStorageMocks = localStorage.getItem(
