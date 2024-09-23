@@ -78,7 +78,7 @@ export const AddMockForm = () => {
       })}
     >
       <div className='flex w-full shrink-0 items-center gap-2'>
-        <div className='flex w-full items-center overflow-hidden font-mono msw-round-border'>
+        <div className='flex w-full items-center overflow-hidden !font-mono msw-round-border'>
           <Controller
             name={FIELD_NAME.METHOD}
             control={method.control}

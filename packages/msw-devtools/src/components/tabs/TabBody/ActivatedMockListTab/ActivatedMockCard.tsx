@@ -24,13 +24,13 @@ export const ActivatedMockCard = (props: JsonMock) => {
         />
         <code
           className={clsx(
-            "mr-2 font-mono font-semibold uppercase",
+            "mr-2 !font-mono font-semibold uppercase",
             METHOD_COLOR[props[FIELD_NAME.METHOD]]
           )}
         >
           {props[FIELD_NAME.METHOD]}
         </code>
-        <code className='font-mono'>{props[FIELD_NAME.URL]}</code>
+        <code className='!font-mono'>{props[FIELD_NAME.URL]}</code>
       </button>
       <div
         className={clsx(

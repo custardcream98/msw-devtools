@@ -29,7 +29,7 @@ export const SettingsTab = () => {
       <input
         id={urlInputId}
         type='text'
-        className='mt-2 w-full p-2 font-mono msw-round-border'
+        className='mt-2 w-full p-2 !font-mono msw-round-border'
         placeholder={t("tabs.settings.defaultURL.placeholder")}
         value={defaultUrl ?? ""}
         onChange={(event) => {
