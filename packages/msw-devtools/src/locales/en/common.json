@@ -17,6 +17,9 @@
       },
       "importButton": {
         "title": "Import Mocks"
+      },
+      "toggleSidebarButton": {
+        "title": "Toggle Sidebar"
       }
     },
     "addMock": {
