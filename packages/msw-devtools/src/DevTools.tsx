@@ -1,5 +1,6 @@
 import "./index.css"
 
+import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
 import { FaXmark } from "react-icons/fa6"
 
@@ -8,11 +9,17 @@ import { FloatingButton } from "~/components/FloatingButton"
 import { Layout } from "~/components/Layout"
 import { Tab, TabBar, TabProvider } from "~/components/tabs/TabBar"
 import { TabBody } from "~/components/tabs/TabBody"
-import { useBoolean } from "~/hooks/useBoolean"
+import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
-  const [isOpened, , close, toggle] = useBoolean(initialOpen)
+  const [isOpened, setIsOpened] = useLocalStorageState(
+    "MSW_DEVTOOLS_OPEN",
+    initialOpen
+  )
   const { t } = useTranslation()
+
+  const toggle = useCallback(() => setIsOpened((prev) => !prev), [setIsOpened])
+  const close = useCallback(() => setIsOpened(false), [setIsOpened])
 
   return (
     <FloatingButtonSettingsProvider>

@@ -22,7 +22,8 @@ export const createDevtool = async ({
       (function () {
         const root = document.createElement("div")
         root.id = "msw-devtools"
-        document.body.appendChild(root)
+        root.classList.add("z-msw-devtools", "fixed")
+        document.body.insertBefore(root, document.body.firstChild)
         return root
       })()
   ).render(<DevTools initialOpen={initialOpen} />)

@@ -33,7 +33,7 @@ export default {
     },
     extend: {
       zIndex: {
-        "msw-devtools": 999999
+        "msw-devtools": 100000
       },
       colors: {
         background: {
