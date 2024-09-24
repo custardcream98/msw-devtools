@@ -1,5 +1,16 @@
 # @custardcream/msw-devtools
 
+## 0.4.0
+
+### Minor Changes
+
+- c478af2: feat: Auto Curroect JSON
+
+### Patch Changes
+
+- 536dbd9: fix: form default state bug
+- 82be607: fix: handle same url with different method differently
+
 ## 0.3.0
 
 ### Minor Changes
