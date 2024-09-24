@@ -1,13 +1,19 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 
 import { useIntersectionObserver } from "~/hooks/useIntersectionObserver"
+
+const OPTIONS = { threshold: 0.5 } as const
 
 export const useIsIntersecting = (target: React.RefObject<Element>) => {
   const [isIntersecting, setIsIntersecting] = useState(true)
 
-  useIntersectionObserver(target, { threshold: 0.5 }, ([entry]) => {
-    setIsIntersecting(entry.isIntersecting)
-  })
+  useIntersectionObserver(
+    target,
+    OPTIONS,
+    useCallback(([entry]) => {
+      setIsIntersecting(entry.isIntersecting)
+    }, [])
+  )
 
   return isIntersecting
 }
