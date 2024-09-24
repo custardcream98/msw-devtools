@@ -10,7 +10,7 @@ import {
 import { useBoolean } from "~/hooks/useBoolean"
 import type { JsonMock } from "~/types"
 
-export const ActivatedMockCardAccordion = ({
+export const MockCardAccordion = ({
   children,
   ...jsonMock
 }: React.PropsWithChildren<JsonMock>) => {

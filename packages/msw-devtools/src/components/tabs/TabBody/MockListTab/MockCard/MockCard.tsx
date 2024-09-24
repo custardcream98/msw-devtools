@@ -3,30 +3,30 @@ import { FaRegTrashCan } from "react-icons/fa6"
 import { HiMiniPencilSquare } from "react-icons/hi2"
 
 import { CodeEditor } from "~/components/CodeEditor"
-import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
+import { useMockList } from "~/components/contexts/mock-list"
 import { Tab, useTab } from "~/components/tabs/TabBar"
 import { FIELD_NAME, FormFieldValues } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { deactivateMock } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 
-import { ActivatedMockCardAccordion } from "./ActivatedMockCardAccordion"
+import { MockCardAccordion } from "./MockCardAccordion"
 
 const CODE_EDITOR_BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   highlightActiveLine: false
 }
 
-export const ActivatedMockCard = (jsonMock: JsonMock) => {
+export const MockCard = (jsonMock: JsonMock) => {
   const { setTab } = useTab()
   const [, setEditStateLocal] = useLocalStorageState<FormFieldValues | null>(
     "EDIT_STATE",
     null
   )
 
-  const { reloadActivatedMockList } = useActivatedMockList()
+  const { reloadMockList } = useMockList()
 
   return (
-    <ActivatedMockCardAccordion {...jsonMock}>
+    <MockCardAccordion {...jsonMock}>
       <CodeEditor
         className='mt-4'
         value={JSON.stringify(jsonMock[FIELD_NAME.RESPONSE], null, 2)}
@@ -59,12 +59,12 @@ export const ActivatedMockCard = (jsonMock: JsonMock) => {
           type='button'
           onClick={() => {
             deactivateMock(jsonMock)
-            reloadActivatedMockList()
+            reloadMockList()
           }}
         >
           <FaRegTrashCan size={15} className='text-gray-400' />
         </button>
       </div>
-    </ActivatedMockCardAccordion>
+    </MockCardAccordion>
   )
 }

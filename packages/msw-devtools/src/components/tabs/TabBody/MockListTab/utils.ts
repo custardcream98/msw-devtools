@@ -45,7 +45,7 @@ const isJsonMock = (data: unknown): data is JsonMock => {
 export const loadJson = ({
   onLoad
 }: {
-  onLoad: (activatedMocks: JsonMock[]) => void
+  onLoad: (mocks: JsonMock[]) => void
 }) => {
   const input = document.createElement("input")
   input.type = "file"

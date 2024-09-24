@@ -4,7 +4,7 @@ import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 export enum Tab {
   AddMock = "tab.addMock",
-  ActivatedMockList = "tab.activatedMockList",
+  MockList = "tab.mockList",
   Settings = "tab.settings"
 }
 

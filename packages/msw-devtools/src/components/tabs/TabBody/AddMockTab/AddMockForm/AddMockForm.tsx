@@ -4,12 +4,12 @@ import { useEffect, useMemo } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
+import { useMockList } from "~/components/contexts/mock-list"
 import {
   FIELD_NAME,
-  FormFieldValues,
+  type FormFieldValues,
   METHOD_COLOR,
   METHOD_OPTION,
   STATUS_COLOR,
@@ -31,7 +31,7 @@ const DEFAULT_VALUES: FormFieldValues = {
 }
 
 export const AddMockForm = () => {
-  const { addActivatedMock } = useActivatedMockList()
+  const { addMock } = useMockList()
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const [editStateLocal, setEditStateLocal] =
@@ -80,7 +80,7 @@ export const AddMockForm = () => {
   const submit = (formData: FormFieldValues) => {
     const jsonMock = formFieldValuesToJsonMock(formData)
     activateMock(jsonMock)
-    addActivatedMock(jsonMock)
+    addMock(jsonMock)
     setEditStateLocal(null)
     method.reset()
   }

@@ -6,12 +6,12 @@
     "title": "MSW Devtools 열기"
   },
   "tab": {
-    "activatedMockList": "Mock 목록",
+    "mockList": "Mock 목록",
     "addMock": "Mock 추가하기",
     "settings": "설정"
   },
   "tabs": {
-    "activatedMockList": {
+    "mockList": {
       "exportButton": {
         "title": "Mock 내보내기"
       },

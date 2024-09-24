@@ -6,12 +6,12 @@
     "title": "Open MSW Devtools"
   },
   "tab": {
-    "activatedMockList": "Activated Mock List",
+    "mockList": "Mock List",
     "addMock": "Add Mock",
     "settings": "Settings"
   },
   "tabs": {
-    "activatedMockList": {
+    "mockList": {
       "exportButton": {
         "title": "Export Mocks"
       },
