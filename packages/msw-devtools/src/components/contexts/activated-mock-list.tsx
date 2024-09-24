@@ -43,7 +43,8 @@ export const ActivatedMockListProvider = ({
           return [
             ...prev.filter(
               (active) =>
-                active[FIELD_NAME.URL] !== mockToActivate[FIELD_NAME.URL]
+                active[FIELD_NAME.URL] !== mockToActivate[FIELD_NAME.URL] &&
+                active[FIELD_NAME.METHOD] !== mockToActivate[FIELD_NAME.METHOD]
             ),
             mockToActivate
           ]
