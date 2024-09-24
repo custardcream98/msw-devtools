@@ -34,21 +34,22 @@ export const AddMockForm = () => {
   const { defaultResponse } = useDefaultResponseSettings()
   const [editStateLocal, setEditStateLocal] =
     useLocalStorageState<FormFieldValues | null>("EDIT_STATE", null)
+
   const method = useForm<FormFieldValues>({
     defaultValues: {
       [FIELD_NAME.URL]:
-        editStateLocal?.[FIELD_NAME.URL] ??
-        defaultUrl ??
+        editStateLocal?.[FIELD_NAME.URL] ||
+        defaultUrl ||
         DEFAULT_VALUES[FIELD_NAME.URL],
       [FIELD_NAME.METHOD]:
-        editStateLocal?.[FIELD_NAME.METHOD] ??
+        editStateLocal?.[FIELD_NAME.METHOD] ||
         DEFAULT_VALUES[FIELD_NAME.METHOD],
       [FIELD_NAME.STATUS]:
-        editStateLocal?.[FIELD_NAME.STATUS] ??
+        editStateLocal?.[FIELD_NAME.STATUS] ||
         DEFAULT_VALUES[FIELD_NAME.STATUS],
       [FIELD_NAME.RESPONSE]:
-        editStateLocal?.[FIELD_NAME.RESPONSE] ??
-        defaultResponse ??
+        editStateLocal?.[FIELD_NAME.RESPONSE] ||
+        defaultResponse ||
         DEFAULT_VALUES[FIELD_NAME.RESPONSE]
     }
   })
