@@ -7,12 +7,11 @@ import { HiMiniChevronDoubleRight } from "react-icons/hi2"
 import { useMockList } from "~/components/contexts/mock-list"
 import { ScrollList } from "~/components/ScrollList"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { activateMock } from "~/lib/msw"
 
 import { loadJson, saveJson } from "./utils"
 
 export const MockListFrame = ({ children }: React.PropsWithChildren) => {
-  const { mockList, addMock } = useMockList()
+  const { mockList, pushMock } = useMockList()
 
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
     "ACTIVATED_MOCK_LIST_SIDEBAR_OPEN",
@@ -73,10 +72,7 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
             try {
               loadJson({
                 onLoad: (loadedMocks) => {
-                  loadedMocks.forEach((mock) => {
-                    activateMock(mock)
-                    addMock(mock)
-                  })
+                  pushMock(...loadedMocks)
                 }
               })
             } catch (error) {

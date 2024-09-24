@@ -1,17 +1,14 @@
 import React, { useCallback, useMemo } from "react"
 
 import { FIELD_NAME } from "~/constants"
-import {
-  getLocalStorageItem,
-  useLocalStorageState
-} from "~/hooks/useLocalStorageState"
-import { ACTIVATED_MOCK_LIST } from "~/lib/msw"
+import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import { ACTIVATED_MOCK_LIST, register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 
 export type MockListContextType = {
   mockList: JsonMock[]
-  addMock: (mock: JsonMock) => void
-  reloadMockList: () => void
+  pushMock: (...mocks: JsonMock[]) => void
+  removeMock: (...mocks: JsonMock[]) => void
 }
 
 export const MockListContext = React.createContext<MockListContextType | null>(
@@ -34,42 +31,52 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     []
   )
 
-  const addMock: MockListContextType["addMock"] = useCallback(
-    (mockToActivate) => {
-      try {
-        setMockList((prev) => {
-          return [
-            ...prev.filter(
-              (active) =>
-                active[FIELD_NAME.URL] !== mockToActivate[FIELD_NAME.URL] &&
-                active[FIELD_NAME.METHOD] !== mockToActivate[FIELD_NAME.METHOD]
-            ),
-            mockToActivate
-          ]
-        })
-      } catch (error) {
-        alert(error)
-      }
+  const pushMock: MockListContextType["pushMock"] = useCallback(
+    (...mocks) => {
+      setMockList((prev) => {
+        const nextMockList = [
+          ...prev.filter((active) =>
+            mocks.every(
+              (mock) =>
+                !(
+                  active[FIELD_NAME.URL] === mock[FIELD_NAME.URL] &&
+                  active[FIELD_NAME.METHOD] === mock[FIELD_NAME.METHOD]
+                )
+            )
+          ),
+          ...mocks
+        ]
+
+        register(...nextMockList)
+
+        return nextMockList
+      })
     },
     [setMockList]
   )
 
-  const reloadMockList: MockListContextType["reloadMockList"] =
-    useCallback(() => {
-      const localStorageMocks =
-        getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
+  const removeMock: MockListContextType["removeMock"] = useCallback(
+    (mock) => {
+      setMockList((prev) => {
+        const nextMockList = prev.filter(
+          (active) =>
+            !(
+              active[FIELD_NAME.URL] === mock[FIELD_NAME.URL] &&
+              active[FIELD_NAME.METHOD] === mock[FIELD_NAME.METHOD]
+            )
+        )
 
-      if (!localStorageMocks || !Array.isArray(localStorageMocks)) {
-        setMockList([])
-        return
-      }
+        unregister(mock)
 
-      setMockList(localStorageMocks)
-    }, [setMockList])
+        return nextMockList
+      })
+    },
+    [setMockList]
+  )
 
   const value = useMemo(
-    () => ({ mockList, addMock, reloadMockList }),
-    [mockList, addMock, reloadMockList]
+    () => ({ mockList, pushMock, removeMock }),
+    [mockList, pushMock, removeMock]
   )
 
   return (

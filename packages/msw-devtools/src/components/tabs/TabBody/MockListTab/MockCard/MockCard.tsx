@@ -7,7 +7,6 @@ import { useMockList } from "~/components/contexts/mock-list"
 import { Tab, useTab } from "~/components/tabs/TabBar"
 import { FIELD_NAME, FormFieldValues } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { deactivateMock } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 
 import { MockCardAccordion } from "./MockCardAccordion"
@@ -23,7 +22,7 @@ export const MockCard = (jsonMock: JsonMock) => {
     null
   )
 
-  const { reloadMockList } = useMockList()
+  const { removeMock } = useMockList()
 
   return (
     <MockCardAccordion {...jsonMock}>
@@ -58,8 +57,7 @@ export const MockCard = (jsonMock: JsonMock) => {
           className='mr-2'
           type='button'
           onClick={() => {
-            deactivateMock(jsonMock)
-            reloadMockList()
+            removeMock(jsonMock)
           }}
         >
           <FaRegTrashCan size={15} className='text-gray-400' />

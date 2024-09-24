@@ -18,7 +18,6 @@ import {
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
-import { activateMock } from "~/lib/msw"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 import { formFieldValuesToJsonMock } from "./utils"
@@ -31,7 +30,7 @@ const DEFAULT_VALUES: FormFieldValues = {
 }
 
 export const AddMockForm = () => {
-  const { addMock } = useMockList()
+  const { pushMock } = useMockList()
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const [editStateLocal, setEditStateLocal] =
@@ -79,8 +78,7 @@ export const AddMockForm = () => {
 
   const submit = (formData: FormFieldValues) => {
     const jsonMock = formFieldValuesToJsonMock(formData)
-    activateMock(jsonMock)
-    addMock(jsonMock)
+    pushMock(jsonMock)
     setEditStateLocal(null)
     method.reset()
   }
