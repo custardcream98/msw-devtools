@@ -74,7 +74,9 @@ export const deactivateMock = (mock: JsonMock) => {
   }
 
   const nextLocalStorageMocks = localStorageMocks.filter(
-    (mockItem) => mock[FIELD_NAME.URL] !== mockItem[FIELD_NAME.URL]
+    (mockItem) =>
+      mock[FIELD_NAME.URL] === mockItem[FIELD_NAME.URL] &&
+      mock[FIELD_NAME.METHOD] === mockItem[FIELD_NAME.METHOD]
   )
 
   const nextHandlers = nextLocalStorageMocks.map((mockItem) =>
