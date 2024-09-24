@@ -17,14 +17,17 @@ export const createDevtool = async ({
   const initializeI18n = (await import("~/lib/i18n")).default
   await initializeI18n()
 
-  ReactDOM.createRoot(
+  const root =
     document.getElementById("msw-devtools") ??
-      (function () {
-        const root = document.createElement("div")
-        root.id = "msw-devtools"
-        root.classList.add("z-msw-devtools", "fixed")
-        document.body.insertBefore(root, document.body.firstChild)
-        return root
-      })()
-  ).render(<DevTools initialOpen={initialOpen} />)
+    (function () {
+      const root = document.createElement("div")
+      root.id = "msw-devtools"
+      root.style.position = "fixed"
+      root.style.zIndex = "999999"
+      document.body.appendChild(root)
+
+      return root
+    })()
+
+  ReactDOM.createRoot(root).render(<DevTools initialOpen={initialOpen} />)
 }

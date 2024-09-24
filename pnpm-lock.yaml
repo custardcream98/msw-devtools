@@ -96,6 +96,9 @@ importers:
       i18next-browser-languagedetector:
         specifier: ^8.0.0
         version: 8.0.0
+      jsonrepair:
+        specifier: ^3.8.1
+        version: 3.8.1
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -2361,6 +2364,10 @@ packages:
 
   jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
+
+  jsonrepair@3.8.1:
+    resolution: {integrity: sha512-5wnjaO53EJOhfLFY92nvBz2B9gqF9ql/D4HKUb1WOSBaqtVcAifFfmurblnhCJn/ySqKFA8U3n7nhGMAu/hEjQ==}
+    hasBin: true
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -6086,6 +6093,8 @@ snapshots:
   jsonfile@4.0.0:
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  jsonrepair@3.8.1: {}
 
   keyv@4.5.4:
     dependencies:

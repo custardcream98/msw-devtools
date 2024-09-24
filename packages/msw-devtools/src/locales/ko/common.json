@@ -23,6 +23,7 @@
       }
     },
     "addMock": {
+      "autoFix": "JSON 자동 수정",
       "submit": "추가",
       "url": {
         "placeholder": "URL을 입력해주세요"

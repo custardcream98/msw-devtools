@@ -15,7 +15,15 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error"
+      "simple-import-sort/exports": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrors: "none"
+        }
+      ]
     }
   }
 )

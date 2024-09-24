@@ -62,10 +62,6 @@ export default {
             padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
             ...BUTTON(theme)
           },
-          ".button-lg": {
-            padding: `${theme("spacing.2")} ${theme("spacing.3")}`,
-            ...BUTTON(theme)
-          },
           ".button-icon": {
             padding: `${theme("spacing.2")}`,
             ...BUTTON(theme)

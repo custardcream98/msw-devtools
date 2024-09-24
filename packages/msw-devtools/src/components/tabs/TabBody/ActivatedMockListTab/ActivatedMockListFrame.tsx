@@ -29,7 +29,7 @@ export const ActivatedMockListFrame = ({
 
   return (
     <div className='flex h-full'>
-      <div className='flex h-full min-w-fit flex-col gap-2 border-r border-slate-200 p-2'>
+      <div className='flex h-full min-w-fit flex-col gap-2 border-r border-solid border-slate-200 p-2'>
         <button
           title={t("tabs.activatedMockList.toggleSidebarButton.title")}
           className='button-icon mb-4 ml-auto mr-[2px] hover:bg-slate-300 hover:text-slate-600'
