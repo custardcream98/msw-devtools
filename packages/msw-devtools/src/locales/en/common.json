@@ -23,6 +23,7 @@
       }
     },
     "addMock": {
+      "autoFix": "Fix JSON",
       "submit": "Add",
       "url": {
         "placeholder": "Type URL Here"

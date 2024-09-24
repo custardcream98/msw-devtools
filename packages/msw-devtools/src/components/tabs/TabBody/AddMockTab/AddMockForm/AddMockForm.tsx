@@ -1,9 +1,9 @@
 import { clsx } from "clsx"
-import { useEffect } from "react"
-import { Controller, useForm } from "react-hook-form"
+import { jsonrepair } from "jsonrepair"
+import { useEffect, useMemo } from "react"
+import { Controller, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { CodeEditor } from "~/components/CodeEditor"
 import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
@@ -17,8 +17,10 @@ import {
   STATUS_OPTION
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
 import { activateMock } from "~/lib/msw"
 
+import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 import { formFieldValuesToJsonMock } from "./utils"
 
 const DEFAULT_VALUES: FormFieldValues = {
@@ -62,20 +64,52 @@ export const AddMockForm = () => {
     }
   }, [setEditStateLocal, method])
 
+  const response = useWatch({
+    control: method.control,
+    name: FIELD_NAME.RESPONSE
+  })
+
+  // wanted to use form's error, but it's not working
+  const isFixable = useMemo(() => {
+    if (!checkJSONParsable(response) && checkJSONFixable(response)) {
+      return true
+    }
+    return false
+  }, [response])
+
+  const submit = (formData: FormFieldValues) => {
+    const jsonMock = formFieldValuesToJsonMock(formData)
+    activateMock(jsonMock)
+    addActivatedMock(jsonMock)
+    setEditStateLocal(null)
+    method.reset()
+  }
+
   return (
     <form
       className='flex h-full flex-col'
-      onSubmit={method.handleSubmit((formData) => {
-        try {
-          const jsonMock = formFieldValuesToJsonMock(formData)
-          activateMock(jsonMock)
-          addActivatedMock(jsonMock)
-          setEditStateLocal(null)
-          method.reset()
-        } catch (error) {
-          alert(error)
+      onSubmit={method.handleSubmit(
+        (formData) => {
+          try {
+            submit(formData)
+          } catch (error) {
+            alert(error)
+          }
+        },
+        (error) => {
+          if (error[FIELD_NAME.RESPONSE]?.message === "FIXABLE") {
+            method.setValue(
+              FIELD_NAME.RESPONSE,
+              jsonrepair(method.getValues().response),
+              {
+                shouldValidate: true
+              }
+            )
+
+            return
+          }
         }
-      })}
+      )}
     >
       <div className='flex w-full shrink-0 items-center gap-2'>
         <div className='flex w-full items-center overflow-hidden !font-mono msw-round-border'>
@@ -119,30 +153,30 @@ export const AddMockForm = () => {
               </select>
             )}
           />
-          <input
-            className='h-full w-full bg-slate-50 p-2 text-xs text-slate-700'
-            type='text'
-            placeholder={t("tabs.addMock.url.placeholder")}
-            {...method.register(FIELD_NAME.URL, { required: true })}
+          <Controller
+            name={FIELD_NAME.URL}
+            control={method.control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <input
+                className='h-full w-full bg-slate-50 p-2 text-xs text-slate-700'
+                type='text'
+                placeholder={t("tabs.addMock.url.placeholder")}
+                {...field}
+              />
+            )}
           />
         </div>
         <button
-          className='button-lg h-full flex-shrink-0 bg-blue-600 text-white hover:bg-blue-800 hover:text-white disabled:bg-slate-400'
-          disabled={!method.formState.isValid}
+          className='button h-full flex-shrink-0 bg-blue-600 text-xs text-white hover:bg-blue-800 hover:text-white disabled:pointer-events-none disabled:bg-slate-400'
+          disabled={!method.formState.isValid && !isFixable}
         >
-          {t("tabs.addMock.submit")}
+          {isFixable ? t("tabs.addMock.autoFix") : t("tabs.addMock.submit")}
         </button>
       </div>
       <label className='mt-4 flex flex-1 flex-col'>
-        Response Body (JSON)
-        <Controller
-          name={FIELD_NAME.RESPONSE}
-          control={method.control}
-          rules={{ required: true }}
-          render={({ field }) => (
-            <CodeEditor className='mb-2 mt-2 h-full w-full' {...field} />
-          )}
-        />
+        <span>Response Body (JSON)</span>
+        <AddMockFormCodeEditor control={method.control} />
       </label>
     </form>
   )
