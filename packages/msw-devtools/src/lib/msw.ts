@@ -39,7 +39,7 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     return
   }
 
-  register(...localStorageMocks)
+  register(...localStorageMocks.filter((mock) => mock.isActivated))
 }
 
 export const getApi = () => {

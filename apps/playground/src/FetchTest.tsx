@@ -1,36 +1,47 @@
 import { useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 
-type SwitchGame = {
-  id: string
-  name: string
-  genre: string[]
-  developers: string[]
-  publishers: string[]
-  releaseDates: {
-    Japan: string
-    NorthAmerica: string
-    Europe: string
-    Australia: string
-  }
-}
-
-export default function FetchTest() {
+export default function FetchTest({ targetUrl }: { targetUrl: string }) {
   const queryClient = useQueryClient()
-  const { data } = useSuspenseQuery<SwitchGame[]>({
-    queryKey: ["test"],
+  const { data } = useSuspenseQuery({
+    queryKey: [targetUrl],
     queryFn: async () => {
-      const response = await fetch("https://api.sampleapis.com/switch/games")
+      const response = await fetch(targetUrl)
       return await response.json()
     }
   })
 
   return (
-    <div>
+    <div
+      style={{
+        width: "33%",
+        padding: "1rem"
+      }}
+    >
+      <span
+        style={{
+          display: "block"
+        }}
+      >
+        URL:{" "}
+      </span>
+      <span
+        style={{
+          display: "block",
+          fontFamily:
+            "'Courier New', Courier, 'Lucida Console', 'Lucida Sans Typewriter', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Andale Mono', 'Nimbus Mono L', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+          wordBreak: "break-all"
+        }}
+      >
+        {targetUrl}
+      </span>
       <button
+        style={{
+          marginTop: "1rem"
+        }}
         type='button'
         onClick={() =>
           queryClient.resetQueries({
-            queryKey: ["test"]
+            queryKey: [targetUrl]
           })
         }
       >
@@ -43,7 +54,13 @@ export default function FetchTest() {
       >
         Response:{" "}
       </div>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      <pre
+        style={{
+          overflow: "auto"
+        }}
+      >
+        {JSON.stringify(data, null, 2)}
+      </pre>
     </div>
   )
 }
