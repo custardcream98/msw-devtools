@@ -9,7 +9,11 @@ export const QuerySuspenseBoundary = ({
       {({ reset }) => (
         <React.Suspense
           fallback={
-            <div>
+            <div
+              style={{
+                width: "33%"
+              }}
+            >
               <button onClick={reset}>Reset</button>
               <div>Loading...</div>
             </div>
