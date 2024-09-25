@@ -1,5 +1,15 @@
 # @custardcream/msw-devtools
 
+## 0.5.0
+
+### Minor Changes
+
+- f5e16b0: feat: Add setting for delay
+
+### Patch Changes
+
+- b05ea82: feat: Add Toggle
+
 ## 0.4.0
 
 ### Minor Changes
