@@ -5,4 +5,5 @@ export type JsonMock = {
   [FIELD_NAME.METHOD]: MethodOption
   [FIELD_NAME.STATUS]: StatusOption
   [FIELD_NAME.RESPONSE]: object
+  isActivated: boolean
 }

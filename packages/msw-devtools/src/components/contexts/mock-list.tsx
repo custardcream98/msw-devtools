@@ -1,14 +1,16 @@
 import React, { useCallback, useMemo } from "react"
 
-import { FIELD_NAME } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { ACTIVATED_MOCK_LIST, register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
+import { isSameMockJson } from "~/utils/isSameMockJson"
 
 export type MockListContextType = {
   mockList: JsonMock[]
   pushMock: (...mocks: JsonMock[]) => void
   removeMock: (...mocks: JsonMock[]) => void
+  activateMock: (...mocks: JsonMock[]) => void
+  deactivateMock: (...mocks: JsonMock[]) => void
 }
 
 export const MockListContext = React.createContext<MockListContextType | null>(
@@ -36,13 +38,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
       setMockList((prev) => {
         const nextMockList = [
           ...prev.filter((active) =>
-            mocks.every(
-              (mock) =>
-                !(
-                  active[FIELD_NAME.URL] === mock[FIELD_NAME.URL] &&
-                  active[FIELD_NAME.METHOD] === mock[FIELD_NAME.METHOD]
-                )
-            )
+            mocks.every((mock) => !isSameMockJson(active, mock))
           ),
           ...mocks
         ]
@@ -56,17 +52,59 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   )
 
   const removeMock: MockListContextType["removeMock"] = useCallback(
-    (mock) => {
+    (...mocks) => {
       setMockList((prev) => {
-        const nextMockList = prev.filter(
-          (active) =>
-            !(
-              active[FIELD_NAME.URL] === mock[FIELD_NAME.URL] &&
-              active[FIELD_NAME.METHOD] === mock[FIELD_NAME.METHOD]
-            )
+        const nextMockList = prev.filter((active) =>
+          mocks.every((mock) => !isSameMockJson(active, mock))
         )
 
-        unregister(mock)
+        unregister(...mocks)
+
+        return nextMockList
+      })
+    },
+    [setMockList]
+  )
+
+  const activateMock: MockListContextType["activateMock"] = useCallback(
+    (...mocks) => {
+      setMockList((prev) => {
+        const nextMockList = prev.map((active) => {
+          const isActivated =
+            mocks.some((mock) => isSameMockJson(active, mock)) ||
+            active.isActivated
+
+          return {
+            ...active,
+            isActivated
+          }
+        })
+
+        register(...mocks)
+
+        return nextMockList
+      })
+    },
+    [setMockList]
+  )
+
+  const deactivateMock: MockListContextType["deactivateMock"] = useCallback(
+    (...mocks) => {
+      setMockList((prev) => {
+        const nextMockList = prev.map((active) => {
+          const isMockToDeactivate = mocks.some((mock) =>
+            isSameMockJson(active, mock)
+          )
+
+          const isActivated = isMockToDeactivate ? false : active.isActivated
+
+          return {
+            ...active,
+            isActivated
+          }
+        })
+
+        unregister(...mocks)
 
         return nextMockList
       })
@@ -75,8 +113,8 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   )
 
   const value = useMemo(
-    () => ({ mockList, pushMock, removeMock }),
-    [mockList, pushMock, removeMock]
+    () => ({ mockList, pushMock, removeMock, activateMock, deactivateMock }),
+    [activateMock, deactivateMock, mockList, pushMock, removeMock]
   )
 
   return (

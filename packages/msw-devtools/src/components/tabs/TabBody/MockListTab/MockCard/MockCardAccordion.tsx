@@ -1,6 +1,8 @@
 import { clsx } from "clsx"
 import { FaChevronRight } from "react-icons/fa6"
 
+import { useMockList } from "~/components/contexts/mock-list"
+import { Toggle } from "~/components/Toggle"
 import {
   FIELD_NAME,
   METHOD_COLOR,
@@ -15,6 +17,7 @@ export const MockCardAccordion = ({
   ...jsonMock
 }: React.PropsWithChildren<JsonMock>) => {
   const [isOpened, , , toggle] = useBoolean()
+  const { activateMock, deactivateMock } = useMockList()
 
   return (
     <div className='rounded-2xl bg-white p-2 text-xs'>
@@ -47,6 +50,15 @@ export const MockCardAccordion = ({
         <code className='mr-4 min-w-0 text-wrap break-all !font-mono'>
           {jsonMock[FIELD_NAME.URL]}
         </code>
+        <Toggle
+          className='ml-auto'
+          value={jsonMock.isActivated}
+          onChange={
+            jsonMock.isActivated
+              ? () => deactivateMock(jsonMock)
+              : () => activateMock(jsonMock)
+          }
+        />
       </div>
       <div
         className={clsx(

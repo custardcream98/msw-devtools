@@ -6,6 +6,7 @@ import { type SetupServerApi } from "msw/node"
 import { FIELD_NAME } from "~/constants"
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
 import { JsonMock } from "~/types"
+import { isSameMockJson } from "~/utils/isSameMockJson"
 
 type Api = SetupWorker | SetupServerApi | ReturnType<typeof setupServerNative>
 let _api: Api
@@ -71,13 +72,7 @@ export const unregister = (...mocks: JsonMock[]) => {
   }
 
   const nextLocalStorageMocks = localStorageMocks.filter((mockItem) =>
-    mocks.every(
-      (mock) =>
-        !(
-          mock[FIELD_NAME.URL] === mockItem[FIELD_NAME.URL] &&
-          mock[FIELD_NAME.METHOD] === mockItem[FIELD_NAME.METHOD]
-        )
-    )
+    mocks.every((mock) => !isSameMockJson(mockItem, mock))
   )
 
   const nextHandlers = nextLocalStorageMocks.map((mockItem) =>
