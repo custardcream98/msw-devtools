@@ -18,15 +18,16 @@
     <strong>🔄 Export/Import Mock Request Handlers</strong>
     <br />
     <br />
-    <a href="#">ENGLISH</a> | <a href="./README/README.ko.md">한국어</a>
+    <a href="#">ENGLISH</a> | <a href="./README/KO/README.ko.md">한국어</a>
   </p>
 </div>
 
 <br />
 
 <p align="center">
-  <img width="500" src="./README/image1.png">
-  <img width="500" src="./README/image2.png">
+  <img width="500" src="./README/EN/image1.png">
+  <img width="500" src="./README/EN/image2.png">
+  <img width="500" src="./README/EN/image3.png">
 </p>
 
 <br />
@@ -36,6 +37,13 @@
 ## 📺 Demo
 
 **[Try Demo Here](https://msw-devtools.vercel.app/)**
+
+## Main Features
+
+- Add / Edit / Delete Mock Request Handlers
+- Export / Import Mock Request Handlers
+- Enable / Disable Mock Request Handlers
+- Delay Mock Request
 
 ## 🚀 Installation
 

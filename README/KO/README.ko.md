@@ -20,15 +20,16 @@
     <strong>🇰🇷 한국어 지원</strong>
     <br />
     <br />
-    <a href="../README.md">ENGLISH</a> | <a href="#">한국어</a>
+    <a href="../../README.md">ENGLISH</a> | <a href="#">한국어</a>
   </p>
 </div>
 
 <br />
 
 <p align="center">
-  <img width="500" src="./image1.ko.png">
-  <img width="500" src="./image2.ko.png">
+  <img width="500" src="./image1.png">
+  <img width="500" src="./image2.png">
+  <img width="500" src="./image3.png">
 </p>
 
 <br />
@@ -38,6 +39,13 @@
 ## 📺 데모
 
 **[데모 페이지](https://msw-devtools.vercel.app/)**
+
+## 주요 기능
+
+- Mock Request Handler를 추가/수정/삭제하기
+- Mock Request Handlers 내보내기/가져오기
+- Mock Request Handlers 활성화/비활성화하기
+- Mock Request 딜레이 넣기
 
 ## 🚀 설치 방법
 
