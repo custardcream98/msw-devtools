@@ -1,5 +1,12 @@
 # @custardcream/msw-devtools
 
+## 0.5.1
+
+### Patch Changes
+
+- d5a1e79: fix: activate / deactivate bug
+- b5ef31c: fix: respect isActivated on start devtools
+
 ## 0.5.0
 
 ### Minor Changes
