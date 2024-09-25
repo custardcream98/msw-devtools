@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
+import { useDefaultResponseDelaySettings } from "~/components/contexts/default-response-delay"
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import { useFloatingButtonSettings } from "~/components/contexts/floating-button"
 import { ScrollList } from "~/components/ScrollList"
@@ -11,12 +12,15 @@ import { type Language, LANGUAGE_NAMES } from "~/lib/i18n"
 
 export const SettingsTab = () => {
   const { defaultUrl, setDefaultUrl } = useDefaultUrlSettings()
+  const { defaultResponseDelay, setDefaultResponseDelay } =
+    useDefaultResponseDelaySettings()
   const { defaultResponse, setDefaultResponse } = useDefaultResponseSettings()
   const { floatingButtonOpacity, setFloatingButtonOpacity } =
     useFloatingButtonSettings()
   const { language, setLanguage } = useLanguage()
 
   const urlInputId = useId()
+  const defaultResponseDelayId = useId()
   const defaultResponseEditorId = useId()
   const floatingButtonOpacityId = useId()
   const languageId = useId()
@@ -38,6 +42,24 @@ export const SettingsTab = () => {
           const value = event.currentTarget.value
 
           setDefaultUrl(value)
+        }}
+      />
+      <label htmlFor={defaultResponseDelayId} className='mt-4 block'>
+        {t("tabs.settings.defaultResponseDelay.label")}
+      </label>
+      <input
+        id={defaultResponseDelayId}
+        type='number'
+        step={0.1}
+        min={0}
+        className='mt-2 w-full p-2 !font-mono msw-round-border'
+        value={defaultResponseDelay}
+        onChange={(event) => {
+          event.preventDefault()
+
+          const value = Number(event.currentTarget.value)
+
+          setDefaultResponseDelay(Math.max(value, 0))
         }}
       />
       <label htmlFor={defaultResponseEditorId} className='mt-4 block'>

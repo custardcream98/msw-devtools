@@ -5,12 +5,27 @@
   "floatingButton": {
     "title": "MSW Devtools 열기"
   },
+  "mockListTab": {
+    "mockCard": {
+      "responseDelay": "딜레이 {{delay}}초"
+    }
+  },
   "tab": {
-    "mockList": "Mock 목록",
     "addMock": "Mock 추가하기",
+    "mockList": "Mock 목록",
     "settings": "설정"
   },
   "tabs": {
+    "addMock": {
+      "autoFix": "JSON 자동 수정",
+      "responseDelay": {
+        "label": "딜레이(초)"
+      },
+      "submit": "추가",
+      "url": {
+        "placeholder": "URL을 입력해주세요"
+      }
+    },
     "mockList": {
       "exportButton": {
         "title": "Mock 내보내기"
@@ -22,14 +37,10 @@
         "title": "사이드 바 토글"
       }
     },
-    "addMock": {
-      "autoFix": "JSON 자동 수정",
-      "submit": "추가",
-      "url": {
-        "placeholder": "URL을 입력해주세요"
-      }
-    },
     "settings": {
+      "defaultResponseDelay": {
+        "label": "응답 딜레이 기본값 (초)"
+      },
       "defaultURL": {
         "label": "기본 URL",
         "placeholder": "URL을 입력해주세요"

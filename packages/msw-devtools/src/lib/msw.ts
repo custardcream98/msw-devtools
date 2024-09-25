@@ -55,7 +55,13 @@ export const register = (...mocks: JsonMock[]) => {
 
   api.use(
     ...mocks.map((mock) =>
-      http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], () => {
+      http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
+        if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, mock[FIELD_NAME.RESPONSE_DELAY] * 1000)
+          )
+        }
+
         return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
       })
     )

@@ -5,12 +5,27 @@
   "floatingButton": {
     "title": "Open MSW Devtools"
   },
+  "mockListTab": {
+    "mockCard": {
+      "responseDelay": "Delay {{delay}}s"
+    }
+  },
   "tab": {
-    "mockList": "Mock List",
     "addMock": "Add Mock",
+    "mockList": "Mock List",
     "settings": "Settings"
   },
   "tabs": {
+    "addMock": {
+      "autoFix": "Fix JSON",
+      "responseDelay": {
+        "label": "Delay(s)"
+      },
+      "submit": "Add",
+      "url": {
+        "placeholder": "Type URL Here"
+      }
+    },
     "mockList": {
       "exportButton": {
         "title": "Export Mocks"
@@ -22,14 +37,10 @@
         "title": "Toggle Sidebar"
       }
     },
-    "addMock": {
-      "autoFix": "Fix JSON",
-      "submit": "Add",
-      "url": {
-        "placeholder": "Type URL Here"
-      }
-    },
     "settings": {
+      "defaultResponseDelay": {
+        "label": "Default Response Delay (seconds)"
+      },
       "defaultURL": {
         "label": "Default URL",
         "placeholder": "Type URL Here"
