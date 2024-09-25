@@ -8,6 +8,8 @@ export const formFieldValuesToJsonMock = (
     [FIELD_NAME.URL]: formData[FIELD_NAME.URL],
     [FIELD_NAME.METHOD]: formData[FIELD_NAME.METHOD],
     [FIELD_NAME.STATUS]: formData[FIELD_NAME.STATUS],
-    [FIELD_NAME.RESPONSE]: JSON.parse(formData[FIELD_NAME.RESPONSE])
+    [FIELD_NAME.RESPONSE]: JSON.parse(formData[FIELD_NAME.RESPONSE]),
+    isActivated: true,
+    [FIELD_NAME.RESPONSE_DELAY]: formData[FIELD_NAME.RESPONSE_DELAY]
   }
 }

@@ -4,12 +4,13 @@ import { useEffect, useMemo } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
+import { useDefaultResponseDelaySettings } from "~/components/contexts/default-response-delay"
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
+import { useMockList } from "~/components/contexts/mock-list"
 import {
   FIELD_NAME,
-  FormFieldValues,
+  type FormFieldValues,
   METHOD_COLOR,
   METHOD_OPTION,
   STATUS_COLOR,
@@ -18,7 +19,6 @@ import {
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
-import { activateMock } from "~/lib/msw"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 import { formFieldValuesToJsonMock } from "./utils"
@@ -27,13 +27,15 @@ const DEFAULT_VALUES: FormFieldValues = {
   [FIELD_NAME.URL]: "",
   [FIELD_NAME.METHOD]: METHOD_OPTION.GET,
   [FIELD_NAME.STATUS]: STATUS_OPTION["200"],
-  [FIELD_NAME.RESPONSE]: ""
+  [FIELD_NAME.RESPONSE]: "",
+  [FIELD_NAME.RESPONSE_DELAY]: 0
 }
 
 export const AddMockForm = () => {
-  const { addActivatedMock } = useActivatedMockList()
+  const { pushMock } = useMockList()
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
+  const { defaultResponseDelay } = useDefaultResponseDelaySettings()
   const [editStateLocal, setEditStateLocal] =
     useLocalStorageState<FormFieldValues | null>("EDIT_STATE", null)
 
@@ -52,7 +54,11 @@ export const AddMockForm = () => {
       [FIELD_NAME.RESPONSE]:
         editStateLocal?.[FIELD_NAME.RESPONSE] ||
         defaultResponse ||
-        DEFAULT_VALUES[FIELD_NAME.RESPONSE]
+        DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+      [FIELD_NAME.RESPONSE_DELAY]:
+        editStateLocal?.[FIELD_NAME.RESPONSE_DELAY] ||
+        defaultResponseDelay ||
+        DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
     }
   })
 
@@ -79,10 +85,17 @@ export const AddMockForm = () => {
 
   const submit = (formData: FormFieldValues) => {
     const jsonMock = formFieldValuesToJsonMock(formData)
-    activateMock(jsonMock)
-    addActivatedMock(jsonMock)
+    pushMock(jsonMock)
     setEditStateLocal(null)
-    method.reset()
+    method.reset({
+      [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
+      [FIELD_NAME.METHOD]: DEFAULT_VALUES[FIELD_NAME.METHOD],
+      [FIELD_NAME.STATUS]: DEFAULT_VALUES[FIELD_NAME.STATUS],
+      [FIELD_NAME.RESPONSE]:
+        defaultResponse || DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+      [FIELD_NAME.RESPONSE_DELAY]:
+        defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
+    })
   }
 
   return (
@@ -111,7 +124,20 @@ export const AddMockForm = () => {
         }
       )}
     >
-      <div className='flex w-full shrink-0 items-center gap-2'>
+      <Controller
+        name={FIELD_NAME.URL}
+        control={method.control}
+        rules={{ required: true }}
+        render={({ field }) => (
+          <input
+            className='w-full bg-slate-50 p-2 !font-mono msw-round-border'
+            type='text'
+            placeholder={t("tabs.addMock.url.placeholder")}
+            {...field}
+          />
+        )}
+      />
+      <div className='mt-4 flex w-full shrink-0 items-center gap-2'>
         <div className='flex w-full items-center overflow-hidden !font-mono msw-round-border'>
           <Controller
             name={FIELD_NAME.METHOD}
@@ -120,7 +146,7 @@ export const AddMockForm = () => {
             render={({ field }) => (
               <select
                 className={clsx(
-                  "h-full border-r bg-slate-50 p-2 text-xs font-semibold uppercase",
+                  "h-full w-full border-r bg-slate-50 p-2 text-xs font-semibold uppercase",
                   METHOD_COLOR[field.value]
                 )}
                 {...field}
@@ -140,7 +166,7 @@ export const AddMockForm = () => {
             render={({ field }) => (
               <select
                 className={clsx(
-                  "h-full border-r bg-slate-50 p-2 text-xs font-semibold",
+                  "h-full w-full border-r bg-slate-50 p-2 text-xs font-semibold",
                   STATUS_COLOR[field.value]
                 )}
                 {...field}
@@ -154,16 +180,21 @@ export const AddMockForm = () => {
             )}
           />
           <Controller
-            name={FIELD_NAME.URL}
+            name={FIELD_NAME.RESPONSE_DELAY}
             control={method.control}
-            rules={{ required: true }}
             render={({ field }) => (
-              <input
-                className='h-full w-full bg-slate-50 p-2 text-xs text-slate-700'
-                type='text'
-                placeholder={t("tabs.addMock.url.placeholder")}
-                {...field}
-              />
+              <label className='flex h-full w-full min-w-0 items-center bg-slate-50 text-xs'>
+                <span className='ml-2 min-w-fit'>
+                  {t("tabs.addMock.responseDelay.label")}
+                </span>
+                <input
+                  className='min-w-2 flex-1 bg-transparent p-2 text-right !font-mono'
+                  type='number'
+                  step={0.1}
+                  min={0}
+                  {...field}
+                />
+              </label>
             )}
           />
         </div>

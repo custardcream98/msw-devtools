@@ -2,7 +2,8 @@ export const FIELD_NAME = {
   URL: "url",
   METHOD: "method",
   STATUS: "status",
-  RESPONSE: "response"
+  RESPONSE: "response",
+  RESPONSE_DELAY: "responseDelay"
 } as const
 
 export type FieldName = (typeof FIELD_NAME)[keyof typeof FIELD_NAME]
@@ -66,4 +67,5 @@ export type FormFieldValues = {
   [FIELD_NAME.METHOD]: MethodOption
   [FIELD_NAME.STATUS]: StatusOption
   [FIELD_NAME.RESPONSE]: string
+  [FIELD_NAME.RESPONSE_DELAY]: number
 }

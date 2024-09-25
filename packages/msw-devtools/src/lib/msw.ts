@@ -4,11 +4,9 @@ import { type setupServer as setupServerNative } from "msw/native"
 import { type SetupServerApi } from "msw/node"
 
 import { FIELD_NAME } from "~/constants"
-import {
-  getLocalStorageItem,
-  setLocalStorageItem
-} from "~/hooks/useLocalStorageState"
+import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
 import { JsonMock } from "~/types"
+import { isSameMockJson } from "~/utils/isSameMockJson"
 
 type Api = SetupWorker | SetupServerApi | ReturnType<typeof setupServerNative>
 let _api: Api
@@ -41,9 +39,7 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     return
   }
 
-  localStorageMocks.forEach((mock) => {
-    activateMock(mock)
-  })
+  register(...localStorageMocks)
 }
 
 export const getApi = () => {
@@ -54,17 +50,25 @@ export const getApi = () => {
   return _api
 }
 
-export const activateMock = (mock: JsonMock) => {
+export const register = (...mocks: JsonMock[]) => {
   const api = getApi()
 
   api.use(
-    http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], () => {
-      return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
-    })
+    ...mocks.map((mock) =>
+      http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
+        if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
+          await new Promise((resolve) =>
+            setTimeout(resolve, mock[FIELD_NAME.RESPONSE_DELAY] * 1000)
+          )
+        }
+
+        return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
+      })
+    )
   )
 }
 
-export const deactivateMock = (mock: JsonMock) => {
+export const unregister = (...mocks: JsonMock[]) => {
   const api = getApi()
 
   const localStorageMocks = getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
@@ -73,10 +77,8 @@ export const deactivateMock = (mock: JsonMock) => {
     return
   }
 
-  const nextLocalStorageMocks = localStorageMocks.filter(
-    (mockItem) =>
-      mock[FIELD_NAME.URL] === mockItem[FIELD_NAME.URL] &&
-      mock[FIELD_NAME.METHOD] === mockItem[FIELD_NAME.METHOD]
+  const nextLocalStorageMocks = localStorageMocks.filter((mockItem) =>
+    mocks.every((mock) => !isSameMockJson(mockItem, mock))
   )
 
   const nextHandlers = nextLocalStorageMocks.map((mockItem) =>
@@ -87,7 +89,7 @@ export const deactivateMock = (mock: JsonMock) => {
 
   api.resetHandlers(...nextHandlers)
 
-  setLocalStorageItem(ACTIVATED_MOCK_LIST, nextLocalStorageMocks)
+  return nextHandlers
 }
 
 export const ACTIVATED_MOCK_LIST = "ACTIVATED_MOCK_LIST"

@@ -1,32 +1,34 @@
 import { BasicSetupOptions } from "@uiw/react-codemirror"
+import { useTranslation } from "react-i18next"
 import { FaRegTrashCan } from "react-icons/fa6"
 import { HiMiniPencilSquare } from "react-icons/hi2"
 
 import { CodeEditor } from "~/components/CodeEditor"
-import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
+import { useMockList } from "~/components/contexts/mock-list"
 import { Tab, useTab } from "~/components/tabs/TabBar"
 import { FIELD_NAME, FormFieldValues } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { deactivateMock } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 
-import { ActivatedMockCardAccordion } from "./ActivatedMockCardAccordion"
+import { MockCardAccordion } from "./MockCardAccordion"
 
 const CODE_EDITOR_BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   highlightActiveLine: false
 }
 
-export const ActivatedMockCard = (jsonMock: JsonMock) => {
+export const MockCard = (jsonMock: JsonMock) => {
   const { setTab } = useTab()
   const [, setEditStateLocal] = useLocalStorageState<FormFieldValues | null>(
     "EDIT_STATE",
     null
   )
 
-  const { reloadActivatedMockList } = useActivatedMockList()
+  const { t } = useTranslation()
+
+  const { removeMock } = useMockList()
 
   return (
-    <ActivatedMockCardAccordion {...jsonMock}>
+    <MockCardAccordion {...jsonMock}>
       <CodeEditor
         className='mt-4'
         value={JSON.stringify(jsonMock[FIELD_NAME.RESPONSE], null, 2)}
@@ -35,6 +37,13 @@ export const ActivatedMockCard = (jsonMock: JsonMock) => {
         readOnly
       />
       <div className='mt-2 flex items-center gap-3'>
+        {!!jsonMock[FIELD_NAME.RESPONSE_DELAY] && (
+          <span className='font-mono! text-xs text-gray-500'>
+            {t("mockListTab.mockCard.responseDelay", {
+              delay: jsonMock[FIELD_NAME.RESPONSE_DELAY]
+            })}
+          </span>
+        )}
         <button
           className='ml-auto'
           type='button'
@@ -43,6 +52,7 @@ export const ActivatedMockCard = (jsonMock: JsonMock) => {
               [FIELD_NAME.URL]: jsonMock[FIELD_NAME.URL],
               [FIELD_NAME.METHOD]: jsonMock[FIELD_NAME.METHOD],
               [FIELD_NAME.STATUS]: jsonMock[FIELD_NAME.STATUS],
+              [FIELD_NAME.RESPONSE_DELAY]: jsonMock[FIELD_NAME.RESPONSE_DELAY],
               [FIELD_NAME.RESPONSE]: JSON.stringify(
                 jsonMock[FIELD_NAME.RESPONSE],
                 null,
@@ -58,13 +68,12 @@ export const ActivatedMockCard = (jsonMock: JsonMock) => {
           className='mr-2'
           type='button'
           onClick={() => {
-            deactivateMock(jsonMock)
-            reloadActivatedMockList()
+            removeMock(jsonMock)
           }}
         >
           <FaRegTrashCan size={15} className='text-gray-400' />
         </button>
       </div>
-    </ActivatedMockCardAccordion>
+    </MockCardAccordion>
   )
 }

@@ -4,17 +4,14 @@ import { useTranslation } from "react-i18next"
 import { FaFileExport, FaFileImport } from "react-icons/fa6"
 import { HiMiniChevronDoubleRight } from "react-icons/hi2"
 
-import { useActivatedMockList } from "~/components/contexts/activated-mock-list"
+import { useMockList } from "~/components/contexts/mock-list"
 import { ScrollList } from "~/components/ScrollList"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { activateMock } from "~/lib/msw"
 
 import { loadJson, saveJson } from "./utils"
 
-export const ActivatedMockListFrame = ({
-  children
-}: React.PropsWithChildren) => {
-  const { activatedMockList, addActivatedMock } = useActivatedMockList()
+export const MockListFrame = ({ children }: React.PropsWithChildren) => {
+  const { mockList, pushMock } = useMockList()
 
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
     "ACTIVATED_MOCK_LIST_SIDEBAR_OPEN",
@@ -31,7 +28,7 @@ export const ActivatedMockListFrame = ({
     <div className='flex h-full'>
       <div className='flex h-full min-w-fit flex-col gap-2 border-r border-solid border-slate-200 p-2'>
         <button
-          title={t("tabs.activatedMockList.toggleSidebarButton.title")}
+          title={t("tabs.mockList.toggleSidebarButton.title")}
           className='button-icon mb-4 ml-auto mr-[2px] hover:bg-slate-300 hover:text-slate-600'
           type='button'
           onClick={toggleSidebar}
@@ -45,11 +42,11 @@ export const ActivatedMockListFrame = ({
           />
         </button>
         <button
-          title={t("tabs.activatedMockList.exportButton.title")}
+          title={t("tabs.mockList.exportButton.title")}
           type='button'
           className='button-icon flex items-center hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
-            saveJson(activatedMockList, "mocks.json")
+            saveJson(mockList, "mocks.json")
           }}
         >
           <FaFileExport size={20} className='shrink-0 p-[2px]' />
@@ -62,23 +59,20 @@ export const ActivatedMockListFrame = ({
           >
             <span className='overflow-hidden'>
               <span className='whitespace-nowrap pl-2 text-xs'>
-                {t("tabs.activatedMockList.exportButton.title")}
+                {t("tabs.mockList.exportButton.title")}
               </span>
             </span>
           </span>
         </button>
         <button
-          title={t("tabs.activatedMockList.importButton.title")}
+          title={t("tabs.mockList.importButton.title")}
           type='button'
           className='button-icon flex items-center hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
             try {
               loadJson({
                 onLoad: (loadedMocks) => {
-                  loadedMocks.forEach((mock) => {
-                    activateMock(mock)
-                    addActivatedMock(mock)
-                  })
+                  pushMock(...loadedMocks)
                 }
               })
             } catch (error) {
@@ -96,7 +90,7 @@ export const ActivatedMockListFrame = ({
           >
             <span className='overflow-hidden'>
               <span className='whitespace-nowrap pl-2 text-xs'>
-                {t("tabs.activatedMockList.importButton.title")}
+                {t("tabs.mockList.importButton.title")}
               </span>
             </span>
           </span>
