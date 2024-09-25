@@ -33,7 +33,7 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     setupWorker.listen(options)
   }
 
-  const localStorageMocks = getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
+  const localStorageMocks = getLocalStorageItem<JsonMock[]>(MOCK_LIST)
 
   if (!localStorageMocks) {
     return
@@ -71,7 +71,7 @@ export const register = (...mocks: JsonMock[]) => {
 export const unregister = (...mocks: JsonMock[]) => {
   const api = getApi()
 
-  const localStorageMocks = getLocalStorageItem<JsonMock[]>(ACTIVATED_MOCK_LIST)
+  const localStorageMocks = getLocalStorageItem<JsonMock[]>(MOCK_LIST)
 
   if (!localStorageMocks) {
     return
@@ -92,4 +92,4 @@ export const unregister = (...mocks: JsonMock[]) => {
   return nextHandlers
 }
 
-export const ACTIVATED_MOCK_LIST = "ACTIVATED_MOCK_LIST"
+export const MOCK_LIST = "MOCK_LIST"

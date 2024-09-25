@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from "react"
 
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { ACTIVATED_MOCK_LIST, register, unregister } from "~/lib/msw"
+import { MOCK_LIST, register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 import { isSameMockJson } from "~/utils/isSameMockJson"
 
@@ -29,7 +29,7 @@ export const useMockList = () => {
 
 export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   const [mockList, setMockList] = useLocalStorageState<JsonMock[]>(
-    ACTIVATED_MOCK_LIST,
+    MOCK_LIST,
     []
   )
 
@@ -72,9 +72,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
         const nextMockList = prev.map((active) => {
           const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
 
-          const isActivated = foundMock
-            ? foundMock.isActivated
-            : active.isActivated
+          const isActivated = foundMock ? true : active.isActivated
 
           return {
             ...active,
