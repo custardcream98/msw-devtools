@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.5.2
+
+### Patch Changes
+
+- 9812f2f: fix: activate bug
+
 ## 0.5.1
 
 ### Patch Changes
