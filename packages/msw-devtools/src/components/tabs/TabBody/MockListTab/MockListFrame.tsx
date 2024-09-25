@@ -14,7 +14,7 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
   const { mockList, pushMock } = useMockList()
 
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
-    "ACTIVATED_MOCK_LIST_SIDEBAR_OPEN",
+    "MOCK_LIST_SIDEBAR_OPEN",
     true
   )
   const toggleSidebar = useCallback(
