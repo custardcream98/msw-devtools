@@ -70,9 +70,11 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     (...mocks) => {
       setMockList((prev) => {
         const nextMockList = prev.map((active) => {
-          const isActivated =
-            mocks.some((mock) => isSameMockJson(active, mock)) ||
-            active.isActivated
+          const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
+
+          const isActivated = foundMock
+            ? foundMock.isActivated
+            : active.isActivated
 
           return {
             ...active,
@@ -92,11 +94,9 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     (...mocks) => {
       setMockList((prev) => {
         const nextMockList = prev.map((active) => {
-          const isMockToDeactivate = mocks.some((mock) =>
-            isSameMockJson(active, mock)
-          )
+          const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
 
-          const isActivated = isMockToDeactivate ? false : active.isActivated
+          const isActivated = foundMock ? false : active.isActivated
 
           return {
             ...active,
