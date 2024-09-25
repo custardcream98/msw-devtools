@@ -72,9 +72,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
         const nextMockList = prev.map((active) => {
           const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
 
-          const isActivated = foundMock
-            ? foundMock.isActivated
-            : active.isActivated
+          const isActivated = foundMock ? true : active.isActivated
 
           return {
             ...active,
