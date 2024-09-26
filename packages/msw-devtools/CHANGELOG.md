@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.5.3
+
+### Patch Changes
+
+- cd9601d: fix: Unregister disables predefined delay bug
+
 ## 0.5.2
 
 ### Patch Changes
