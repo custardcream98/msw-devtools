@@ -6,6 +6,7 @@ import { HiMiniChevronDoubleRight } from "react-icons/hi2"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { ScrollList } from "~/components/ScrollList"
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 import { loadJson, saveJson } from "./utils"
@@ -13,8 +14,8 @@ import { loadJson, saveJson } from "./utils"
 export const MockListFrame = ({ children }: React.PropsWithChildren) => {
   const { mockList, pushMock } = useMockList()
 
-  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
-    "MOCK_LIST_SIDEBAR_OPEN",
+  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState(
+    StorageKey.MOCK_LIST_SIDEBAR_OPEN,
     true
   )
   const toggleSidebar = useCallback(

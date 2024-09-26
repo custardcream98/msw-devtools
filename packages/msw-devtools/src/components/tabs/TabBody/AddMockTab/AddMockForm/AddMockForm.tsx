@@ -15,7 +15,8 @@ import {
   METHOD_OPTION,
   STATUS_COLOR,
   STATUS_NAME,
-  STATUS_OPTION
+  STATUS_OPTION,
+  StorageKey
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
@@ -36,8 +37,10 @@ export const AddMockForm = () => {
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const { defaultResponseDelay } = useDefaultResponseDelaySettings()
-  const [editStateLocal, setEditStateLocal] =
-    useLocalStorageState<FormFieldValues | null>("EDIT_STATE", null)
+  const [editStateLocal, setEditStateLocal] = useLocalStorageState(
+    StorageKey.EDIT_STATE,
+    null
+  )
 
   const method = useForm<FormFieldValues>({
     defaultValues: {

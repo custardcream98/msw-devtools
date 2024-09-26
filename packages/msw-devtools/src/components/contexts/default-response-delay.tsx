@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react"
 
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 type DefaultResponseDelaySettingsContextType = {
@@ -25,8 +26,10 @@ export const useDefaultResponseDelaySettings = () => {
 export const DefaultResponseDelaySettingsProvider = ({
   children
 }: React.PropsWithChildren) => {
-  const [defaultResponseDelay, setDefaultResponseDelay] =
-    useLocalStorageState<number>("RESPONSE_DELAY", 0.5)
+  const [defaultResponseDelay, setDefaultResponseDelay] = useLocalStorageState(
+    StorageKey.RESPONSE_DELAY,
+    0.5
+  )
 
   const value = useMemo(
     () => ({

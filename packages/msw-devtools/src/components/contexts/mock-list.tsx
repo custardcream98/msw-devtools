@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from "react"
 
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { MOCK_LIST, register, unregister } from "~/lib/msw"
+import { register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 import { isSameMockJson } from "~/utils/isSameMockJson"
 
@@ -28,10 +29,7 @@ export const useMockList = () => {
 }
 
 export const MockListProvider = ({ children }: React.PropsWithChildren) => {
-  const [mockList, setMockList] = useLocalStorageState<JsonMock[]>(
-    MOCK_LIST,
-    []
-  )
+  const [mockList, setMockList] = useLocalStorageState(StorageKey.MOCK_LIST, [])
 
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {

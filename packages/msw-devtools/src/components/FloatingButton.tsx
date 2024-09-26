@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { FaDev } from "react-icons/fa6"
 
 import { useFloatingButtonSettings } from "~/components/contexts/floating-button"
+import { StorageKey } from "~/constants"
 import { useDragMove } from "~/hooks/useDragMove"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { useLongClick } from "~/hooks/useLongClick"
@@ -21,7 +22,7 @@ export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
   })
 
   const [defaultPosition, saveDefaultPosition] = useLocalStorageState(
-    "BUTTON_POSITION",
+    StorageKey.BUTTON_POSITION,
     DEFAULT_POSITION
   )
   const { position } = useDragMove({

@@ -1,5 +1,6 @@
 import { clsx } from "clsx"
 
+import { StorageKey } from "~/constants"
 import { useIsDragging } from "~/hooks/useIsDragging"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
@@ -9,7 +10,7 @@ export const Layout = ({
 }: React.PropsWithChildren<{
   isOpened: boolean
 }>) => {
-  const [height, setHeight] = useLocalStorageState<string>("HEIGHT", "50%")
+  const [height, setHeight] = useLocalStorageState(StorageKey.HEIGHT, "50%")
 
   const { isDragging, props } = useIsDragging({
     onDrag: (event) => {

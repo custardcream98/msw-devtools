@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react"
 
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 type DefaultUrlSettingsContextType = {
@@ -25,8 +26,8 @@ export const useDefaultUrlSettings = () => {
 export const DefaultUrlSettingsProvider = ({
   children
 }: React.PropsWithChildren) => {
-  const [defaultUrl, setDefaultUrl] = useLocalStorageState<string | null>(
-    "DEFAULT_URL",
+  const [defaultUrl, setDefaultUrl] = useLocalStorageState(
+    StorageKey.DEFAULT_URL,
     null
   )
 
