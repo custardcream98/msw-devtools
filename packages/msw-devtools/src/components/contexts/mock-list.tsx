@@ -36,16 +36,14 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {
       setMockList((prev) => {
-        const nextMockList = [
+        register(...mocks)
+
+        return [
           ...prev.filter((active) =>
             mocks.every((mock) => !isSameMockJson(active, mock))
           ),
           ...mocks
         ]
-
-        register(...nextMockList)
-
-        return nextMockList
       })
     },
     [setMockList]

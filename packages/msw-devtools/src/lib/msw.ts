@@ -50,7 +50,7 @@ export const getApi = () => {
   return _api
 }
 
-const createMockRequestHandler = (mock: JsonMock) => {
+const generateMockRequestHandler = (mock: JsonMock) => {
   return http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
     if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
       await new Promise((resolve) =>
@@ -65,7 +65,7 @@ const createMockRequestHandler = (mock: JsonMock) => {
 export const register = (...mocks: JsonMock[]) => {
   const api = getApi()
 
-  api.use(...mocks.map(createMockRequestHandler))
+  api.use(...mocks.map(generateMockRequestHandler))
 }
 
 export const unregister = (
@@ -80,7 +80,7 @@ export const unregister = (
     )
   )
 
-  api.resetHandlers(...nextLocalStorageMocks.map(createMockRequestHandler))
+  api.resetHandlers(...nextLocalStorageMocks.map(generateMockRequestHandler))
 
   return nextLocalStorageMocks
 }
