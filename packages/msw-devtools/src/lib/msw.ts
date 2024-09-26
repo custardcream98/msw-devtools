@@ -50,46 +50,39 @@ export const getApi = () => {
   return _api
 }
 
+const createMockRequestHandler = (mock: JsonMock) => {
+  return http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
+    if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, mock[FIELD_NAME.RESPONSE_DELAY] * 1000)
+      )
+    }
+
+    return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
+  })
+}
+
 export const register = (...mocks: JsonMock[]) => {
   const api = getApi()
 
-  api.use(
-    ...mocks.map((mock) =>
-      http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
-        if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
-          await new Promise((resolve) =>
-            setTimeout(resolve, mock[FIELD_NAME.RESPONSE_DELAY] * 1000)
-          )
-        }
-
-        return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
-      })
-    )
-  )
+  api.use(...mocks.map(createMockRequestHandler))
 }
 
-export const unregister = (...mocks: JsonMock[]) => {
+export const unregister = (
+  currentMocks: JsonMock[],
+  ...mocksToUnregister: JsonMock[]
+) => {
   const api = getApi()
 
-  const localStorageMocks = getLocalStorageItem<JsonMock[]>(MOCK_LIST)
-
-  if (!localStorageMocks) {
-    return
-  }
-
-  const nextLocalStorageMocks = localStorageMocks.filter((mockItem) =>
-    mocks.every((mock) => !isSameMockJson(mockItem, mock))
-  )
-
-  const nextHandlers = nextLocalStorageMocks.map((mockItem) =>
-    http[mockItem[FIELD_NAME.METHOD]](mockItem[FIELD_NAME.URL], () =>
-      HttpResponse.json(mockItem[FIELD_NAME.RESPONSE])
+  const nextLocalStorageMocks = currentMocks.filter((mockItem) =>
+    mocksToUnregister.every(
+      (mockToUnregister) => !isSameMockJson(mockItem, mockToUnregister)
     )
   )
 
-  api.resetHandlers(...nextHandlers)
+  api.resetHandlers(...nextLocalStorageMocks.map(createMockRequestHandler))
 
-  return nextHandlers
+  return nextLocalStorageMocks
 }
 
-export const MOCK_LIST = "MOCK_LIST"
+export const MOCK_LIST = "MOCK_LIST" as const
