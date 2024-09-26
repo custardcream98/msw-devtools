@@ -59,7 +59,7 @@ export const loadJson = ({
         const data = JSON.parse(e.target?.result as string)
 
         if (!isJsonMocks(data)) {
-          throw new Error("Invalid Mock format")
+          throw new Error("[MSW Devtools] Invalid Mock format")
         }
 
         onLoad(data)

@@ -22,7 +22,7 @@ export type InitializeProps =
     }
 export const initialize = async ({ setupWorker, options }: InitializeProps) => {
   if (_api) {
-    throw new Error("[MSW] Devtool already initialized")
+    throw new Error("[MSW Devtools] Devtool already initialized")
   }
 
   _api = setupWorker
@@ -44,7 +44,7 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
 
 export const getApi = () => {
   if (!_api) {
-    throw new Error("[MSW] Devtool not initialized")
+    throw new Error("[MSW Devtools] Devtool not initialized")
   }
 
   return _api

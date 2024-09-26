@@ -15,7 +15,7 @@ export const useFloatingButtonSettings = () => {
 
   if (!context) {
     throw new Error(
-      "useFloatingButtonSettings must be used within a FloatingButtonSettingsProvider"
+      "[MSW Devtools] useFloatingButtonSettings must be used within a FloatingButtonSettingsProvider"
     )
   }
 

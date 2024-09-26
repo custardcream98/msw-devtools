@@ -13,15 +13,15 @@ export type MockListContextType = {
   deactivateMock: (...mocks: JsonMock[]) => void
 }
 
-export const MockListContext = React.createContext<MockListContextType | null>(
-  null
-)
+const MockListContext = React.createContext<MockListContextType | null>(null)
 
 export const useMockList = () => {
   const context = React.useContext(MockListContext)
 
   if (!context) {
-    throw new Error("useMockList must be used within a MockListProvider")
+    throw new Error(
+      "[MSW Devtools] useMockList must be used within a MockListProvider"
+    )
   }
 
   return context

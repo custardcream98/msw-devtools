@@ -27,7 +27,7 @@ export const useTab = () => {
   const context = useContext(TabContext)
 
   if (!context) {
-    throw new Error("useTab must be used within a TabProvider")
+    throw new Error("[MSW Devtools] useTab must be used within a TabProvider")
   }
 
   return context

@@ -15,7 +15,7 @@ export const useDefaultUrlSettings = () => {
 
   if (!context) {
     throw new Error(
-      "useDefaultUrlSettings must be used within a DefaultUrlSettingsProvider"
+      "[MSW Devtools] useDefaultUrlSettings must be used within a DefaultUrlSettingsProvider"
     )
   }
 
