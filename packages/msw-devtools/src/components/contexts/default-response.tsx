@@ -15,7 +15,7 @@ export const useDefaultResponseSettings = () => {
 
   if (!context) {
     throw new Error(
-      "useDefaultResponseSettings must be used within a DefaultResponseSettingsProvider"
+      "[MSW Devtools] useDefaultResponseSettings must be used within a DefaultResponseSettingsProvider"
     )
   }
 

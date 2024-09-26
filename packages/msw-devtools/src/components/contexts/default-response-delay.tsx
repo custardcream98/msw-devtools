@@ -15,7 +15,7 @@ export const useDefaultResponseDelaySettings = () => {
 
   if (!context) {
     throw new Error(
-      "useDefaultResponseDelaySettings must be used within a DefaultResponseDelaySettingsProvider"
+      "[MSW Devtools] useDefaultResponseDelaySettings must be used within a DefaultResponseDelaySettingsProvider"
     )
   }
 
