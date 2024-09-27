@@ -4,6 +4,8 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
 jobs:
   version:
     timeout-minutes: 15
