@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm type-check
+if [ "$CI" != "true" ]; then
+  pnpm type-check
+fi
