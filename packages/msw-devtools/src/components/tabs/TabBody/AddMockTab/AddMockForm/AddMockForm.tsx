@@ -42,6 +42,7 @@ export const AddMockForm = () => {
     null
   )
 
+  const isEdit = !!editStateLocal
   const method = useForm<FormFieldValues>({
     defaultValues: {
       [FIELD_NAME.URL]:
@@ -86,9 +87,19 @@ export const AddMockForm = () => {
     return false
   }, [response])
 
-  const submit = (formData: FormFieldValues) => {
-    const jsonMock = formFieldValuesToJsonMock(formData)
-    pushMock(jsonMock)
+  const submitButtonLabel = useMemo(() => {
+    if (isFixable) {
+      return t("tabs.addMock.autoFix")
+    }
+
+    if (isEdit) {
+      return t("tabs.addMock.editSubmit")
+    }
+
+    return t("tabs.addMock.submit")
+  }, [isFixable, isEdit, t])
+
+  const reset = () => {
     setEditStateLocal(null)
     method.reset({
       [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
@@ -99,6 +110,12 @@ export const AddMockForm = () => {
       [FIELD_NAME.RESPONSE_DELAY]:
         defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
     })
+  }
+
+  const submit = (formData: FormFieldValues) => {
+    const jsonMock = formFieldValuesToJsonMock(formData)
+    pushMock(jsonMock)
+    reset()
   }
 
   return (
@@ -127,15 +144,29 @@ export const AddMockForm = () => {
         }
       )}
     >
+      <div
+        className={clsx(
+          "-mx-3 -mt-3 mb-3",
+          "grid overflow-hidden transition-[grid-template-rows] duration-300",
+          isEdit ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        )}
+      >
+        <div className='overflow-hidden'>
+          <p className='bg-green-600 py-1 text-center text-xs font-bold uppercase text-white'>
+            {t("tabs.addMock.editModeIndicator")}
+          </p>
+        </div>
+      </div>
       <Controller
         name={FIELD_NAME.URL}
         control={method.control}
         rules={{ required: true }}
         render={({ field }) => (
           <input
-            className='w-full bg-slate-50 p-2 !font-mono msw-round-border'
+            className='w-full bg-slate-50 p-2 !font-mono msw-round-border [&[readonly]]:opacity-40'
             type='text'
             placeholder={t("tabs.addMock.url.placeholder")}
+            readOnly={isEdit}
             {...field}
           />
         )}
@@ -202,11 +233,26 @@ export const AddMockForm = () => {
           />
         </div>
         <button
-          className='button h-full flex-shrink-0 bg-blue-600 text-xs text-white hover:bg-blue-800 hover:text-white disabled:pointer-events-none disabled:bg-slate-400'
+          type='submit'
+          className={clsx(
+            "button flex-shrink-0 text-xs text-white hover:text-white disabled:pointer-events-none disabled:bg-slate-400",
+            isEdit
+              ? "bg-green-600 hover:bg-green-600"
+              : "bg-blue-600 hover:bg-blue-800"
+          )}
           disabled={!method.formState.isValid && !isFixable}
         >
-          {isFixable ? t("tabs.addMock.autoFix") : t("tabs.addMock.submit")}
+          {submitButtonLabel}
         </button>
+        {isEdit && (
+          <button
+            type='button'
+            className='button flex-shrink-0 bg-red-600 text-xs text-white hover:bg-red-800 hover:text-white'
+            onClick={reset}
+          >
+            {t("tabs.addMock.cancelEdit")}
+          </button>
+        )}
       </div>
       <label className='mt-4 flex flex-1 flex-col'>
         <span>Response Body (JSON)</span>

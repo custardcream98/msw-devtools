@@ -59,10 +59,6 @@ export default {
       addComponents(
         {
           ".button": {
-            padding: `${theme("spacing.1")} ${theme("spacing.2")}`,
-            ...BUTTON(theme)
-          },
-          ".button-icon": {
             padding: `${theme("spacing.2")}`,
             ...BUTTON(theme)
           },

@@ -18,6 +18,9 @@
   "tabs": {
     "addMock": {
       "autoFix": "JSON 자동 수정",
+      "cancelEdit": "취소",
+      "editModeIndicator": "수정 모드",
+      "editSubmit": "수정",
       "responseDelay": {
         "label": "딜레이(초)"
       },
