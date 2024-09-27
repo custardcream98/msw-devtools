@@ -70,7 +70,7 @@ export const register = (...mocks: JsonMock[]) => {
 
 export const unregister = (
   currentMocks: JsonMock[],
-  ...mocksToUnregister: JsonMock[]
+  mocksToUnregister: JsonMock[]
 ) => {
   const api = getApi()
 

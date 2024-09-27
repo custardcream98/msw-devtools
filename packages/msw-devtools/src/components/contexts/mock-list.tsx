@@ -48,9 +48,9 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   )
 
   const removeMock: MockListContextType["removeMock"] = useCallback(
-    (...mocks) => {
+    (...mocksToRemove) => {
       setMockList((prev) => {
-        const nextMockList = unregister(prev, ...mocks)
+        const nextMockList = unregister(prev, mocksToRemove)
 
         return nextMockList
       })
@@ -79,12 +79,14 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   )
 
   const deactivateMock: MockListContextType["deactivateMock"] = useCallback(
-    (...mocks) => {
+    (...mocksToUnregister) => {
       setMockList((prev) => {
-        unregister(prev, ...mocks)
+        unregister(prev, mocksToUnregister)
 
         return prev.map((active) => {
-          const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
+          const foundMock = mocksToUnregister.find((mockToUnregister) =>
+            isSameMockJson(active, mockToUnregister)
+          )
 
           const isActivated = foundMock ? false : active.isActivated
 
