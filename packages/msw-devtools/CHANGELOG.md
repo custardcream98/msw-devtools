@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.5.5
+
+### Patch Changes
+
+- 9b75c18: fix: Delet edit state if target mock has deleted
+
 ## 0.5.4
 
 ### Patch Changes
