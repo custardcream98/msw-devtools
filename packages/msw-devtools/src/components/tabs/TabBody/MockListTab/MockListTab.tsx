@@ -30,10 +30,15 @@ const MockListItem = ({ mock }: { mock: JsonMock }) => {
     tabState?.prevEdited && isSameMockJson(tabState.prevEdited, mock)
 
   const item = useRef<HTMLLIElement>(null)
-
   useEffect(() => {
     if (isEdited) {
-      item.current?.scrollIntoView({ behavior: "smooth" })
+      const timeout = window.setTimeout(() => {
+        item.current?.scrollIntoView({ behavior: "smooth", block: "center" })
+      }, 100)
+
+      return () => {
+        window.clearTimeout(timeout)
+      }
     }
   }, [isEdited])
 
