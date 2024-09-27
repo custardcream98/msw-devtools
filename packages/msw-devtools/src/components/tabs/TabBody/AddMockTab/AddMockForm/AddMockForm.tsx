@@ -42,27 +42,33 @@ export const AddMockForm = () => {
     null
   )
 
+  const defaultValues = useMemo(
+    () => ({
+      [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
+      [FIELD_NAME.METHOD]: DEFAULT_VALUES[FIELD_NAME.METHOD],
+      [FIELD_NAME.STATUS]: DEFAULT_VALUES[FIELD_NAME.STATUS],
+      [FIELD_NAME.RESPONSE]:
+        defaultResponse || DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+      [FIELD_NAME.RESPONSE_DELAY]:
+        defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
+    }),
+    [defaultResponse, defaultResponseDelay, defaultUrl]
+  )
   const isEdit = !!editStateLocal
   const method = useForm<FormFieldValues>({
     defaultValues: {
       [FIELD_NAME.URL]:
-        editStateLocal?.[FIELD_NAME.URL] ||
-        defaultUrl ||
-        DEFAULT_VALUES[FIELD_NAME.URL],
+        editStateLocal?.[FIELD_NAME.URL] || defaultValues[FIELD_NAME.URL],
       [FIELD_NAME.METHOD]:
-        editStateLocal?.[FIELD_NAME.METHOD] ||
-        DEFAULT_VALUES[FIELD_NAME.METHOD],
+        editStateLocal?.[FIELD_NAME.METHOD] || defaultValues[FIELD_NAME.METHOD],
       [FIELD_NAME.STATUS]:
-        editStateLocal?.[FIELD_NAME.STATUS] ||
-        DEFAULT_VALUES[FIELD_NAME.STATUS],
+        editStateLocal?.[FIELD_NAME.STATUS] || defaultValues[FIELD_NAME.STATUS],
       [FIELD_NAME.RESPONSE]:
         editStateLocal?.[FIELD_NAME.RESPONSE] ||
-        defaultResponse ||
-        DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+        defaultValues[FIELD_NAME.RESPONSE],
       [FIELD_NAME.RESPONSE_DELAY]:
         editStateLocal?.[FIELD_NAME.RESPONSE_DELAY] ||
-        defaultResponseDelay ||
-        DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
+        defaultValues[FIELD_NAME.RESPONSE_DELAY]
     }
   })
 
@@ -70,9 +76,12 @@ export const AddMockForm = () => {
 
   useEffect(() => {
     return () => {
-      setEditStateLocal(method.getValues())
+      const isUpdated = !isSameFormValues(defaultValues, method.getValues())
+      if (isUpdated) {
+        setEditStateLocal(method.getValues())
+      }
     }
-  }, [setEditStateLocal, method])
+  }, [setEditStateLocal, method, defaultValues])
 
   const response = useWatch({
     control: method.control,
@@ -101,15 +110,7 @@ export const AddMockForm = () => {
 
   const reset = () => {
     setEditStateLocal(null)
-    method.reset({
-      [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
-      [FIELD_NAME.METHOD]: DEFAULT_VALUES[FIELD_NAME.METHOD],
-      [FIELD_NAME.STATUS]: DEFAULT_VALUES[FIELD_NAME.STATUS],
-      [FIELD_NAME.RESPONSE]:
-        defaultResponse || DEFAULT_VALUES[FIELD_NAME.RESPONSE],
-      [FIELD_NAME.RESPONSE_DELAY]:
-        defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
-    })
+    method.reset(defaultValues)
   }
 
   const submit = (formData: FormFieldValues) => {
@@ -259,5 +260,15 @@ export const AddMockForm = () => {
         <AddMockFormCodeEditor control={method.control} />
       </label>
     </form>
+  )
+}
+
+const isSameFormValues = (a: FormFieldValues, b: FormFieldValues) => {
+  return (
+    a[FIELD_NAME.URL] === b[FIELD_NAME.URL] &&
+    a[FIELD_NAME.METHOD] === b[FIELD_NAME.METHOD] &&
+    a[FIELD_NAME.STATUS] === b[FIELD_NAME.STATUS] &&
+    a[FIELD_NAME.RESPONSE] === b[FIELD_NAME.RESPONSE] &&
+    a[FIELD_NAME.RESPONSE_DELAY] === b[FIELD_NAME.RESPONSE_DELAY]
   )
 }
