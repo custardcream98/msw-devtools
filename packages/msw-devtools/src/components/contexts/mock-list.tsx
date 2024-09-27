@@ -4,6 +4,7 @@ import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
+import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameMockJson } from "~/utils/isSameMockJson"
 
 export type MockListContextType = {
@@ -30,6 +31,10 @@ export const useMockList = () => {
 
 export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   const [mockList, setMockList] = useLocalStorageState(StorageKey.MOCK_LIST, [])
+  const [editState, setEditStateLocal] = useLocalStorageState(
+    StorageKey.EDIT_STATE,
+    null
+  )
 
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {
@@ -54,8 +59,16 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
         return nextMockList
       })
+
+      const currentEditState = editState && formFieldValuesToJsonMock(editState)
+      if (
+        currentEditState &&
+        mocksToRemove.some((mock) => isSameMockJson(mock, currentEditState))
+      ) {
+        setEditStateLocal(null)
+      }
     },
-    [setMockList]
+    [setMockList, editState, setEditStateLocal]
   )
 
   const activateMock: MockListContextType["activateMock"] = useCallback(

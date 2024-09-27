@@ -22,9 +22,9 @@ import {
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
+import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
-import { formFieldValuesToJsonMock } from "./utils"
 
 const DEFAULT_VALUES: FormFieldValues = {
   [FIELD_NAME.URL]: "",
