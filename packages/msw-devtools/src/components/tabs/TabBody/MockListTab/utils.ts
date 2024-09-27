@@ -1,3 +1,5 @@
+import { jsonrepair } from "jsonrepair"
+
 import { FIELD_NAME } from "~/constants"
 import { JsonMock } from "~/types"
 
@@ -56,13 +58,17 @@ export const loadJson = ({
     if (file) {
       const reader = new FileReader()
       reader.onload = (e) => {
-        const data = JSON.parse(e.target?.result as string)
+        try {
+          const data = JSON.parse(jsonrepair(e.target?.result as string))
 
-        if (!isJsonMocks(data)) {
-          throw new Error("[MSW Devtools] Invalid Mock format")
+          if (!isJsonMocks(data)) {
+            throw new Error()
+          }
+
+          onLoad(data)
+        } catch (error) {
+          alert("[MSW Devtools] Invalid JSON file")
         }
-
-        onLoad(data)
       }
 
       reader.readAsText(file)
