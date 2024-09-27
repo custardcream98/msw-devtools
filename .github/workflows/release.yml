@@ -9,9 +9,6 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - name: Setup npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -27,6 +24,11 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
+
+      - name: Authenticate to npm
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          pnpm adduser
 
       - name: Install dependencies
         run: pnpm install
