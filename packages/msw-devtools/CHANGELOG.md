@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.5.4
+
+### Patch Changes
+
+- d7a3112: Add edit mode indicator, improved edit mode
+
 ## 0.5.3
 
 ### Patch Changes
