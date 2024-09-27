@@ -1,3 +1,5 @@
+import type { JsonMock } from "~/types"
+
 export const FIELD_NAME = {
   URL: "url",
   METHOD: "method",
@@ -68,4 +70,45 @@ export type FormFieldValues = {
   [FIELD_NAME.STATUS]: StatusOption
   [FIELD_NAME.RESPONSE]: string
   [FIELD_NAME.RESPONSE_DELAY]: number
+}
+
+/**
+ * localStorage keys
+ */
+export const StorageKey = {
+  OPEN: "OPEN",
+  BUTTON_POSITION: "BUTTON_POSITION",
+  HEIGHT: "HEIGHT",
+  RESPONSE_DELAY: "RESPONSE_DELAY",
+  DEFAULT_RESPONSE: "DEFAULT_RESPONSE",
+  DEFAULT_URL: "DEFAULT_URL",
+  FLOATING_BUTTON_OPACITY: "FLOATING_BUTTON_OPACITY",
+  MOCK_LIST: "MOCK_LIST",
+  TAB: "TAB",
+  EDIT_STATE: "EDIT_STATE",
+  MOCK_LIST_SIDEBAR_OPEN: "MOCK_LIST_SIDEBAR_OPEN"
+} as const
+
+export const Tab = {
+  AddMock: "tab.addMock",
+  MockList: "tab.mockList",
+  Settings: "tab.settings"
+} as const
+
+export type Tab = (typeof Tab)[keyof typeof Tab]
+
+export type StorageKey = (typeof StorageKey)[keyof typeof StorageKey]
+
+export type StorageValueType = {
+  [StorageKey.OPEN]: boolean
+  [StorageKey.BUTTON_POSITION]: { x: number; y: number }
+  [StorageKey.HEIGHT]: string
+  [StorageKey.RESPONSE_DELAY]: number
+  [StorageKey.DEFAULT_RESPONSE]: string | null
+  [StorageKey.DEFAULT_URL]: string | null
+  [StorageKey.FLOATING_BUTTON_OPACITY]: number
+  [StorageKey.MOCK_LIST]: JsonMock[]
+  [StorageKey.TAB]: Tab
+  [StorageKey.EDIT_STATE]: FormFieldValues | null
+  [StorageKey.MOCK_LIST_SIDEBAR_OPEN]: boolean
 }

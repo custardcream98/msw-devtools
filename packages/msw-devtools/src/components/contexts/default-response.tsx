@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react"
 
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 type DefaultResponseSettingsContextType = {
@@ -25,9 +26,10 @@ export const useDefaultResponseSettings = () => {
 export const DefaultResponseSettingsProvider = ({
   children
 }: React.PropsWithChildren) => {
-  const [defaultResponse, setDefaultResponse] = useLocalStorageState<
-    string | null
-  >("DEFAULT_RESPONSE", null)
+  const [defaultResponse, setDefaultResponse] = useLocalStorageState(
+    StorageKey.DEFAULT_RESPONSE,
+    null
+  )
 
   const value = useMemo(
     () => ({

@@ -5,8 +5,8 @@ import { HiMiniPencilSquare } from "react-icons/hi2"
 
 import { CodeEditor } from "~/components/CodeEditor"
 import { useMockList } from "~/components/contexts/mock-list"
-import { Tab, useTab } from "~/components/tabs/TabBar"
-import { FIELD_NAME, FormFieldValues } from "~/constants"
+import { useTab } from "~/components/tabs/TabBar"
+import { FIELD_NAME, StorageKey, Tab } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import type { JsonMock } from "~/types"
 
@@ -16,10 +16,15 @@ const CODE_EDITOR_BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   highlightActiveLine: false
 }
 
-export const MockCard = (jsonMock: JsonMock) => {
+export const MockCard = ({
+  isInitialOpen,
+  ...jsonMock
+}: JsonMock & {
+  isInitialOpen?: boolean
+}) => {
   const { setTab } = useTab()
-  const [, setEditStateLocal] = useLocalStorageState<FormFieldValues | null>(
-    "EDIT_STATE",
+  const [, setEditStateLocal] = useLocalStorageState(
+    StorageKey.EDIT_STATE,
     null
   )
 
@@ -28,7 +33,7 @@ export const MockCard = (jsonMock: JsonMock) => {
   const { removeMock } = useMockList()
 
   return (
-    <MockCardAccordion {...jsonMock}>
+    <MockCardAccordion isInitialOpen={isInitialOpen} {...jsonMock}>
       <CodeEditor
         className='mt-4'
         value={JSON.stringify(jsonMock[FIELD_NAME.RESPONSE], null, 2)}

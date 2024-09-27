@@ -1,7 +1,9 @@
 import { clsx } from "clsx"
 import { useTranslation } from "react-i18next"
 
-import { Tab, useTab } from "./context"
+import { Tab } from "~/constants"
+
+import { useTab } from "./context"
 
 const TabButton = ({ tab }: { tab: Tab }) => {
   const { tab: currentTab, setTab } = useTab()

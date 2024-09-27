@@ -1,5 +1,6 @@
 import React, { useContext, useMemo } from "react"
 
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 type FloatingButtonSettingsContextType = {
@@ -26,7 +27,7 @@ export const FloatingButtonSettingsProvider = ({
   children
 }: React.PropsWithChildren) => {
   const [floatingButtonOpacity, setFloatingButtonOpacity] =
-    useLocalStorageState<number>("FLOATING_BUTTON_OPACITY", 1)
+    useLocalStorageState(StorageKey.FLOATING_BUTTON_OPACITY, 1)
 
   const value = useMemo(
     () => ({

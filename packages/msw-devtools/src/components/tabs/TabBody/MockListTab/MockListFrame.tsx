@@ -6,6 +6,7 @@ import { HiMiniChevronDoubleRight } from "react-icons/hi2"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { ScrollList } from "~/components/ScrollList"
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 import { loadJson, saveJson } from "./utils"
@@ -13,8 +14,8 @@ import { loadJson, saveJson } from "./utils"
 export const MockListFrame = ({ children }: React.PropsWithChildren) => {
   const { mockList, pushMock } = useMockList()
 
-  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState<boolean>(
-    "MOCK_LIST_SIDEBAR_OPEN",
+  const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState(
+    StorageKey.MOCK_LIST_SIDEBAR_OPEN,
     true
   )
   const toggleSidebar = useCallback(
@@ -29,7 +30,7 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
       <div className='flex h-full min-w-fit flex-col gap-2 border-r border-solid border-slate-200 p-2'>
         <button
           title={t("tabs.mockList.toggleSidebarButton.title")}
-          className='button-icon mb-4 ml-auto mr-[2px] hover:bg-slate-300 hover:text-slate-600'
+          className='button mb-4 ml-auto mr-[2px] hover:bg-slate-300 hover:text-slate-600'
           type='button'
           onClick={toggleSidebar}
         >
@@ -44,7 +45,7 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
         <button
           title={t("tabs.mockList.exportButton.title")}
           type='button'
-          className='button-icon flex items-center hover:bg-slate-300 hover:text-slate-600'
+          className='button flex items-center hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
             saveJson(mockList, "mocks.json")
           }}
@@ -67,7 +68,7 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
         <button
           title={t("tabs.mockList.importButton.title")}
           type='button'
-          className='button-icon flex items-center hover:bg-slate-300 hover:text-slate-600'
+          className='button flex items-center hover:bg-slate-300 hover:text-slate-600'
           onClick={() => {
             try {
               loadJson({

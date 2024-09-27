@@ -18,6 +18,9 @@
   "tabs": {
     "addMock": {
       "autoFix": "Fix JSON",
+      "cancelEdit": "Cancel",
+      "editModeIndicator": "Edit Mode",
+      "editSubmit": "Edit",
       "responseDelay": {
         "label": "Delay(s)"
       },

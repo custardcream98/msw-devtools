@@ -2,7 +2,8 @@ import { DefaultResponseSettingsProvider } from "~/components/contexts/default-r
 import { DefaultResponseDelaySettingsProvider } from "~/components/contexts/default-response-delay"
 import { DefaultUrlSettingsProvider } from "~/components/contexts/default-url"
 import { MockListProvider } from "~/components/contexts/mock-list"
-import { Tab, useTab } from "~/components/tabs/TabBar/context"
+import { useTab } from "~/components/tabs/TabBar/context"
+import { Tab } from "~/constants"
 
 import { AddMockTab } from "./AddMockTab"
 import { MockListTab } from "./MockListTab"

@@ -3,7 +3,7 @@ import { type SetupWorker, StartOptions } from "msw/browser"
 import { type setupServer as setupServerNative } from "msw/native"
 import { type SetupServerApi } from "msw/node"
 
-import { FIELD_NAME } from "~/constants"
+import { FIELD_NAME, StorageKey } from "~/constants"
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
 import { JsonMock } from "~/types"
 import { isSameMockJson } from "~/utils/isSameMockJson"
@@ -33,7 +33,7 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     setupWorker.listen(options)
   }
 
-  const localStorageMocks = getLocalStorageItem<JsonMock[]>(MOCK_LIST)
+  const localStorageMocks = getLocalStorageItem(StorageKey.MOCK_LIST)
 
   if (!localStorageMocks) {
     return
@@ -70,7 +70,7 @@ export const register = (...mocks: JsonMock[]) => {
 
 export const unregister = (
   currentMocks: JsonMock[],
-  ...mocksToUnregister: JsonMock[]
+  mocksToUnregister: JsonMock[]
 ) => {
   const api = getApi()
 
@@ -84,5 +84,3 @@ export const unregister = (
 
   return nextLocalStorageMocks
 }
-
-export const MOCK_LIST = "MOCK_LIST" as const

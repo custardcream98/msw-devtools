@@ -1,7 +1,8 @@
 import React, { useCallback, useMemo } from "react"
 
+import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { MOCK_LIST, register, unregister } from "~/lib/msw"
+import { register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 import { isSameMockJson } from "~/utils/isSameMockJson"
 
@@ -28,10 +29,7 @@ export const useMockList = () => {
 }
 
 export const MockListProvider = ({ children }: React.PropsWithChildren) => {
-  const [mockList, setMockList] = useLocalStorageState<JsonMock[]>(
-    MOCK_LIST,
-    []
-  )
+  const [mockList, setMockList] = useLocalStorageState(StorageKey.MOCK_LIST, [])
 
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {
@@ -50,9 +48,9 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   )
 
   const removeMock: MockListContextType["removeMock"] = useCallback(
-    (...mocks) => {
+    (...mocksToRemove) => {
       setMockList((prev) => {
-        const nextMockList = unregister(prev, ...mocks)
+        const nextMockList = unregister(prev, mocksToRemove)
 
         return nextMockList
       })
@@ -81,12 +79,14 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   )
 
   const deactivateMock: MockListContextType["deactivateMock"] = useCallback(
-    (...mocks) => {
+    (...mocksToUnregister) => {
       setMockList((prev) => {
-        unregister(prev, ...mocks)
+        unregister(prev, mocksToUnregister)
 
         return prev.map((active) => {
-          const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
+          const foundMock = mocksToUnregister.find((mockToUnregister) =>
+            isSameMockJson(active, mockToUnregister)
+          )
 
           const isActivated = foundMock ? false : active.isActivated
 
