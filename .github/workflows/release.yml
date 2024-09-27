@@ -27,11 +27,6 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Authenticate to npm
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          pnpm adduser
-
       - name: Install dependencies
         run: pnpm install
 
@@ -46,3 +41,4 @@ jobs:
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
