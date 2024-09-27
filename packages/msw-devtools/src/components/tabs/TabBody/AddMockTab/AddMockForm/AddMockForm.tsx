@@ -8,6 +8,7 @@ import { useDefaultResponseSettings } from "~/components/contexts/default-respon
 import { useDefaultResponseDelaySettings } from "~/components/contexts/default-response-delay"
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import { useMockList } from "~/components/contexts/mock-list"
+import { useTab } from "~/components/tabs/TabBar"
 import {
   FIELD_NAME,
   type FormFieldValues,
@@ -16,7 +17,8 @@ import {
   STATUS_COLOR,
   STATUS_NAME,
   STATUS_OPTION,
-  StorageKey
+  StorageKey,
+  Tab
 } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
@@ -113,10 +115,15 @@ export const AddMockForm = () => {
     method.reset(defaultValues)
   }
 
+  const { setTab } = useTab()
   const submit = (formData: FormFieldValues) => {
     const jsonMock = formFieldValuesToJsonMock(formData)
     pushMock(jsonMock)
     reset()
+
+    setTab(Tab.MockList, {
+      prevEdited: jsonMock
+    })
   }
 
   return (

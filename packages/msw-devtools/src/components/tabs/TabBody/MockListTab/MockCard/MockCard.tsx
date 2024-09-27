@@ -16,7 +16,12 @@ const CODE_EDITOR_BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   highlightActiveLine: false
 }
 
-export const MockCard = (jsonMock: JsonMock) => {
+export const MockCard = ({
+  isInitialOpen,
+  ...jsonMock
+}: JsonMock & {
+  isInitialOpen?: boolean
+}) => {
   const { setTab } = useTab()
   const [, setEditStateLocal] = useLocalStorageState(
     StorageKey.EDIT_STATE,
@@ -28,7 +33,7 @@ export const MockCard = (jsonMock: JsonMock) => {
   const { removeMock } = useMockList()
 
   return (
-    <MockCardAccordion {...jsonMock}>
+    <MockCardAccordion isInitialOpen={isInitialOpen} {...jsonMock}>
       <CodeEditor
         className='mt-4'
         value={JSON.stringify(jsonMock[FIELD_NAME.RESPONSE], null, 2)}

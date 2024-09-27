@@ -14,9 +14,14 @@ import type { JsonMock } from "~/types"
 
 export const MockCardAccordion = ({
   children,
+  isInitialOpen,
   ...jsonMock
-}: React.PropsWithChildren<JsonMock>) => {
-  const [isOpened, , , toggle] = useBoolean()
+}: React.PropsWithChildren<
+  JsonMock & {
+    isInitialOpen?: boolean
+  }
+>) => {
+  const [isOpened, , , toggle] = useBoolean(isInitialOpen)
   const { activateMock, deactivateMock } = useMockList()
 
   return (
