@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.5.6
+
+### Patch Changes
+
+- 95cd0dc: fix: make MSW to respect status
+
 ## 0.5.5
 
 ### Patch Changes
