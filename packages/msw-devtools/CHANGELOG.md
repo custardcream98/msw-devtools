@@ -1,5 +1,12 @@
 # @custardcream/msw-devtools
 
+## 0.5.7
+
+### Patch Changes
+
+- 53acc7b: feat: add mock clear button
+- c78c419: feat: add searchbar
+
 ## 0.5.6
 
 ### Patch Changes
