@@ -30,6 +30,10 @@
       }
     },
     "mockList": {
+      "clearMockButton": {
+        "confirm": "Are you sure you want to clear all mocks?\nThis action cannot be undone, and all current mock data will be lost.",
+        "title": "Clear All Mocks"
+      },
       "exportButton": {
         "title": "Export Mocks"
       },

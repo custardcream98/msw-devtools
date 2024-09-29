@@ -1,7 +1,7 @@
 import { clsx } from "clsx"
 import { useCallback } from "react"
 import { useTranslation } from "react-i18next"
-import { FaFileExport, FaFileImport } from "react-icons/fa6"
+import { FaFileCircleXmark, FaFileExport, FaFileImport } from "react-icons/fa6"
 import { HiMiniChevronDoubleRight } from "react-icons/hi2"
 
 import { useMockList } from "~/components/contexts/mock-list"
@@ -12,7 +12,7 @@ import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { loadJson, saveJson } from "./utils"
 
 export const MockListFrame = ({ children }: React.PropsWithChildren) => {
-  const { mockList, pushMock } = useMockList()
+  const { mockList, pushMock, clearAllMocks } = useMockList()
 
   const [isSidebarOpen, setIsSidebarOpen] = useLocalStorageState(
     StorageKey.MOCK_LIST_SIDEBAR_OPEN,
@@ -92,6 +92,31 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
             <span className='overflow-hidden'>
               <span className='whitespace-nowrap pl-2 text-xs'>
                 {t("tabs.mockList.importButton.title")}
+              </span>
+            </span>
+          </span>
+        </button>
+        <button
+          title={t("tabs.mockList.clearMockButton.title")}
+          type='button'
+          className='button flex items-center hover:bg-slate-300 hover:text-slate-600'
+          onClick={() => {
+            if (window.confirm(t("tabs.mockList.clearMockButton.confirm"))) {
+              clearAllMocks()
+            }
+          }}
+        >
+          <FaFileCircleXmark size={20} className='shrink-0 p-[2px]' />
+          <span
+            className={clsx(
+              "shrink-0",
+              "grid overflow-hidden transition-[grid-template-columns] duration-300",
+              isSidebarOpen ? "grid-cols-[1fr]" : "grid-cols-[0fr]"
+            )}
+          >
+            <span className='overflow-hidden'>
+              <span className='whitespace-nowrap pl-2 text-xs'>
+                {t("tabs.mockList.clearMockButton.title")}
               </span>
             </span>
           </span>
