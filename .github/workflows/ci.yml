@@ -10,11 +10,6 @@ jobs:
   ci:
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        branch:
-          - ${{ github.head_ref }}
-          - "main"
 
     steps:
       - name: Checkout repository
@@ -39,26 +34,7 @@ jobs:
       - name: Check types and format
         run: pnpm ci:check
 
-      - name: "Upload Coverage"
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.branch }}
-          path: coverage
-
-  report-coverage:
-    needs: ci
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Download Coverage Artifacts"
-        uses: actions/download-artifact@v4
-        with:
-          name: coverage-${{ github.head_ref }}
-          path: coverage
-      - uses: actions/download-artifact@v4
-        with:
-          name: coverage-main
-          path: coverage-main
       - name: "Report Coverage"
         uses: davelosert/vitest-coverage-report-action@v2
         with:
-          json-summary-compare-path: coverage-main/coverage-final.json
+          working-directory: ./packages/msw-devtools
