@@ -5,7 +5,7 @@ import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, unregister } from "~/lib/msw"
 import type { JsonMock } from "~/types"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
-import { isSameMockJson } from "~/utils/isSameMockJson"
+import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 export type MockListContextType = {
   mockList: JsonMock[]
@@ -43,7 +43,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
         return [
           ...prev.filter((active) =>
-            mocks.every((mock) => !isSameMockJson(active, mock))
+            mocks.every((mock) => !isSameJsonMock(active, mock))
           ),
           ...mocks
         ]
@@ -63,7 +63,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
       const currentEditState = editState && formFieldValuesToJsonMock(editState)
       if (
         currentEditState &&
-        mocksToRemove.some((mock) => isSameMockJson(mock, currentEditState))
+        mocksToRemove.some((mock) => isSameJsonMock(mock, currentEditState))
       ) {
         setEditStateLocal(null)
       }
@@ -77,7 +77,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
         register(...mocks)
 
         return prev.map((active) => {
-          const foundMock = mocks.find((mock) => isSameMockJson(active, mock))
+          const foundMock = mocks.find((mock) => isSameJsonMock(active, mock))
 
           const isActivated = foundMock ? true : active.isActivated
 
@@ -98,7 +98,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
         return prev.map((active) => {
           const foundMock = mocksToUnregister.find((mockToUnregister) =>
-            isSameMockJson(active, mockToUnregister)
+            isSameJsonMock(active, mockToUnregister)
           )
 
           const isActivated = foundMock ? false : active.isActivated
