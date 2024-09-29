@@ -7,7 +7,7 @@ export default defineConfig({
     environment: "happy-dom",
     setupFiles: ["./vitest.setup.ts"],
     coverage: {
-      reporter: ["json"]
+      reporter: ["json-summary", "json"]
     }
   },
   resolve: {
