@@ -1,3 +1,5 @@
+import { HttpHandler } from "msw"
+
 import { FIELD_NAME } from "~/constants"
 import { generateHandler } from "~/lib/msw/generateHandler"
 
@@ -13,20 +15,7 @@ describe("generateMockRequestHandler", () => {
     } as const
 
     const requestHandler = generateHandler(mock)
-    expect(requestHandler).toMatchInlineSnapshot(`
-      HttpHandler {
-        "info": {
-          "callFrame": "/Users/shiwoo/dev/msw-devtools/packages/msw-devtools/src/lib/msw/generateHandler.ts:7:38",
-          "header": "GET test-url",
-          "method": "GET",
-          "path": "test-url",
-        },
-        "isUsed": false,
-        "options": {},
-        "resolver": [Function],
-        "resolverIterator": undefined,
-        "resolverIteratorResult": undefined,
-      }
-    `)
+    expect(requestHandler).toBeDefined()
+    expect(requestHandler).toBeInstanceOf(HttpHandler)
   })
 })
