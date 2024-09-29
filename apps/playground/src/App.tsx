@@ -18,7 +18,7 @@ function App() {
         >
           @custardcream/msw-devtools
         </a>{" "}
-        Demo
+        React.js Demo
       </h3>
       <p
         style={{

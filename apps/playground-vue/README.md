@@ -1,1 +1,1 @@
-# MSW Devtool Vue.js Playground
+# MSW Devtools Vue.js Playground

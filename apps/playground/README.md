@@ -1,1 +1,1 @@
-# MSW Devtool Playground
+# MSW Devtools React.js Playground
