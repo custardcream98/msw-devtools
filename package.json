@@ -6,6 +6,8 @@
     "lint": "pnpm --filter \"./{packages,apps}/**\" lint",
     "lint:fix": "pnpm --filter \"./{packages,apps}/**\" lint:fix",
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
+    "coverage": "pnpm --filter \"./{packages,apps}/**\" coverage",
+    "test": "pnpm --filter \"./{packages,apps}/**\" test",
     "prepare": "husky",
     "build:package": "pnpm --filter @custardcream/msw-devtools build",
     "build:package:watch": "pnpm --filter @custardcream/msw-devtools build:watch",
@@ -13,20 +15,16 @@
     "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm --filter playground dev\"",
     "ci:version": "pnpm changeset version",
     "ci:publish": "pnpm build:package && pnpm changeset publish",
-    "ci:check": "pnpm lint && pnpm type-check",
-    "sync-readme": "cp packages/msw-devtools/README.md ./README.md && cp -r packages/msw-devtools/README ./",
-    "test": "vitest",
-    "test:ui": "vitest --ui"
+    "ci:check": "pnpm lint && pnpm type-check && pnpm coverage",
+    "sync-readme": "cp packages/msw-devtools/README.md ./README.md && cp -r packages/msw-devtools/README ./"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.8",
-    "@vitest/ui": "^2.1.1",
     "concurrently": "^9.0.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.5",
-    "vitest": "^2.1.1"
+    "typescript": "^5.4.5"
   },
   "packageManager": "pnpm@9.10.0"
 }
