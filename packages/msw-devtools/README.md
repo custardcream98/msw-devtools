@@ -36,7 +36,9 @@
 
 ## 📺 Demo
 
-**[Try Demo Here](https://msw-devtools.vercel.app/)**
+**[Try Demo Here (React.js)](https://msw-devtools.vercel.app/)**
+
+**[Try Demo Here (Vue.js)](https://msw-devtools-vue.vercel.app/)**
 
 ## Main Features
 

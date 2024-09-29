@@ -38,7 +38,9 @@
 
 ## 📺 데모
 
-**[데모 페이지](https://msw-devtools.vercel.app/)**
+**[데모 페이지 (React.js)](https://msw-devtools.vercel.app/)**
+
+**[데모 페이지 (Vue.js)](https://msw-devtools-vue.vercel.app/)**
 
 ## 주요 기능
 
