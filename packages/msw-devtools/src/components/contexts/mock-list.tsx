@@ -13,6 +13,7 @@ export type MockListContextType = {
   removeMock: (...mocks: JsonMock[]) => void
   activateMock: (...mocks: JsonMock[]) => void
   deactivateMock: (...mocks: JsonMock[]) => void
+  clearAllMocks: () => void
 }
 
 const MockListContext = React.createContext<MockListContextType | null>(null)
@@ -113,9 +114,31 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     [setMockList]
   )
 
+  const clearAllMocks = useCallback(() => {
+    setMockList((prev) => {
+      unregister(prev, prev)
+
+      return []
+    })
+  }, [setMockList])
+
   const value = useMemo(
-    () => ({ mockList, pushMock, removeMock, activateMock, deactivateMock }),
-    [activateMock, deactivateMock, mockList, pushMock, removeMock]
+    () => ({
+      mockList,
+      pushMock,
+      removeMock,
+      activateMock,
+      deactivateMock,
+      clearAllMocks
+    }),
+    [
+      activateMock,
+      deactivateMock,
+      mockList,
+      pushMock,
+      removeMock,
+      clearAllMocks
+    ]
   )
 
   return (

@@ -30,11 +30,18 @@
       }
     },
     "mockList": {
+      "clearMockButton": {
+        "confirm": "Are you sure you want to clear all mocks?\nThis action cannot be undone, and all current mock data will be lost.",
+        "title": "Clear All Mocks"
+      },
       "exportButton": {
         "title": "Export Mocks"
       },
       "importButton": {
         "title": "Import Mocks"
+      },
+      "search": {
+        "placeholder": "Search by URL, Method, Status, Response"
       },
       "toggleSidebarButton": {
         "title": "Toggle Sidebar"
