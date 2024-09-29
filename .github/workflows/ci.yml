@@ -10,6 +10,7 @@ jobs:
   ci:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -32,3 +33,8 @@ jobs:
 
       - name: Check types and format
         run: pnpm ci:check
+
+      - name: "Report Coverage"
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: ./packages/msw-devtools

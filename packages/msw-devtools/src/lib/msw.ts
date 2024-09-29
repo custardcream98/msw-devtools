@@ -1,12 +1,12 @@
 import { http, HttpResponse, SharedOptions } from "msw"
-import { type SetupWorker, StartOptions } from "msw/browser"
-import { type setupServer as setupServerNative } from "msw/native"
-import { type SetupServerApi } from "msw/node"
+import type { SetupWorker, StartOptions } from "msw/browser"
+import type { setupServer as setupServerNative } from "msw/native"
+import type { SetupServerApi } from "msw/node"
 
 import { FIELD_NAME, StorageKey } from "~/constants"
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
-import { JsonMock } from "~/types"
-import { isSameMockJson } from "~/utils/isSameMockJson"
+import type { JsonMock } from "~/types"
+import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 type Api = SetupWorker | SetupServerApi | ReturnType<typeof setupServerNative>
 let _api: Api
@@ -50,7 +50,7 @@ export const getApi = () => {
   return _api
 }
 
-const generateMockRequestHandler = (mock: JsonMock) => {
+export const generateMockRequestHandler = (mock: JsonMock) => {
   return http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
     if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
       await new Promise((resolve) =>
@@ -58,7 +58,9 @@ const generateMockRequestHandler = (mock: JsonMock) => {
       )
     }
 
-    return HttpResponse.json(mock[FIELD_NAME.RESPONSE])
+    return HttpResponse.json(mock[FIELD_NAME.RESPONSE], {
+      status: Number(mock[FIELD_NAME.STATUS])
+    })
   })
 }
 
@@ -76,7 +78,7 @@ export const unregister = (
 
   const nextLocalStorageMocks = currentMocks.filter((mockItem) =>
     mocksToUnregister.every(
-      (mockToUnregister) => !isSameMockJson(mockItem, mockToUnregister)
+      (mockToUnregister) => !isSameJsonMock(mockItem, mockToUnregister)
     )
   )
 

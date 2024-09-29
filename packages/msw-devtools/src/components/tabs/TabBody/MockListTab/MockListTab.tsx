@@ -4,7 +4,7 @@ import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
 import { FIELD_NAME } from "~/constants"
 import type { JsonMock } from "~/types"
-import { isSameMockJson } from "~/utils/isSameMockJson"
+import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 import { MockCard } from "./MockCard"
 import { MockListFrame } from "./MockListFrame"
@@ -27,7 +27,7 @@ const MockListItem = ({ mock }: { mock: JsonMock }) => {
   const { tabState } = useTab()
 
   const isEdited =
-    tabState?.prevEdited && isSameMockJson(tabState.prevEdited, mock)
+    tabState?.prevEdited && isSameJsonMock(tabState.prevEdited, mock)
 
   const item = useRef<HTMLLIElement>(null)
   useEffect(() => {

@@ -13,12 +13,15 @@
       "~/*": ["src/*"]
     },
 
+    // Test
+    "types": ["vitest/globals"],
+
     // Linting
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "./vitest.setup.ts"],
   "exclude": ["node_modules", "dist"]
 }
