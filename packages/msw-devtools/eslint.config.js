@@ -1,6 +1,8 @@
 import js from "@eslint/js"
 import reactHooks from "eslint-plugin-react-hooks"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
+import testingLibrary from "eslint-plugin-testing-library"
+import { fixupPluginRules } from "@eslint/compat"
 import tseslint from "typescript-eslint"
 
 export default tseslint.config(
@@ -25,5 +27,28 @@ export default tseslint.config(
         }
       ]
     }
+  },
+  {
+    files: ["src/**/*.{spec,test}.{ts,tsx}"],
+    plugins: {
+      "testing-library": fixupPluginRules({
+        rules: testingLibrary.rules
+      })
+    },
+    rules: {
+      ...testingLibrary.configs["flat/react"].rules,
+      "testing-library/no-container": "off",
+      "testing-library/no-node-access": "off"
+    }
   }
+  // {
+  //   files: ["src/**/*.{spec,test}.{ts,tsx}"],
+  //   ...fixupPluginRules(testingLibrary.configs["flat/react"])
+  //   // plugins: {
+  //   //   "testing-library": fixupPluginRules({
+  //   //     rules: testingLibrary.rules
+  //   //   })
+  //   // },
+  //   // rules: testingLibrary.configs["flat/react"].rules
+  // }
 )
