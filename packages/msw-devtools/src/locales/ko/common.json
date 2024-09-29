@@ -36,6 +36,9 @@
       "importButton": {
         "title": "Mock 불러오기"
       },
+      "search": {
+        "placeholder": "URL, Method, Status, Response로 검색하기"
+      },
       "toggleSidebarButton": {
         "title": "사이드 바 토글"
       }

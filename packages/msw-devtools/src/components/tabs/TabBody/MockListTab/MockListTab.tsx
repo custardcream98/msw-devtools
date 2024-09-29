@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { useTranslation } from "react-i18next"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
@@ -12,10 +13,45 @@ import { MockListFrame } from "./MockListFrame"
 export const MockListTab = () => {
   const { mockList } = useMockList()
 
+  const [searchString, setSearchString] = useState("")
+  const searchedMockList = useMemo(() => {
+    if (!searchString) {
+      return mockList
+    }
+
+    return mockList.filter((mock) => {
+      return (
+        mock[FIELD_NAME.URL]
+          .toLowerCase()
+          .includes(searchString.toLowerCase()) ||
+        mock[FIELD_NAME.METHOD]
+          .toLowerCase()
+          .includes(searchString.toLowerCase()) ||
+        mock[FIELD_NAME.STATUS]
+          .toLowerCase()
+          .includes(searchString.toLowerCase()) ||
+        JSON.stringify(mock[FIELD_NAME.RESPONSE])
+          .toLowerCase()
+          .includes(searchString.toLowerCase())
+      )
+    })
+  }, [mockList, searchString])
+
+  const { t } = useTranslation()
+
   return (
     <MockListFrame>
+      <div className='sticky -top-3 left-0 right-0 z-10 -mx-3 -mt-3 bg-background-light px-2 pb-3 pt-2'>
+        <input
+          className='w-full p-2 !font-mono text-xs msw-round-border'
+          placeholder={t("tabs.mockList.search.placeholder")}
+          type='text'
+          value={searchString}
+          onChange={(e) => setSearchString(e.currentTarget.value)}
+        />
+      </div>
       <ul className='w-full [&>li+li]:mt-4'>
-        {mockList.map((mock) => (
+        {searchedMockList.map((mock) => (
           <MockListItem key={mock[FIELD_NAME.URL]} mock={mock} />
         ))}
       </ul>

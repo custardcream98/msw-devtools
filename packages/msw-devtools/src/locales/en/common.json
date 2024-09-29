@@ -36,6 +36,9 @@
       "importButton": {
         "title": "Import Mocks"
       },
+      "search": {
+        "placeholder": "Search by URL, Method, Status, Response"
+      },
       "toggleSidebarButton": {
         "title": "Toggle Sidebar"
       }
