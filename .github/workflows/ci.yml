@@ -31,10 +31,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Check types and format
+      - name: Check types and format and test
         run: pnpm ci:check
 
-      - name: "Report Coverage"
+      - name: Report coverage
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: ./packages/msw-devtools

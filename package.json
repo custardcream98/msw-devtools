@@ -6,7 +6,7 @@
     "lint": "pnpm --filter \"./{packages,apps}/**\" lint",
     "lint:fix": "pnpm --filter \"./{packages,apps}/**\" lint:fix",
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
-    "coverage": "pnpm --filter \"./{packages,apps}/**\" coverage",
+    "coverage": "pnpm --filter \"./{packages,apps}/**\" coverage --silent",
     "test": "pnpm --filter \"./{packages,apps}/**\" test",
     "prepare": "husky",
     "build:package": "pnpm --filter @custardcream/msw-devtools build",
