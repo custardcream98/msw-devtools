@@ -38,17 +38,8 @@ export default tseslint.config(
     rules: {
       ...testingLibrary.configs["flat/react"].rules,
       "testing-library/no-container": "off",
-      "testing-library/no-node-access": "off"
+      "testing-library/no-node-access": "off",
+      "@typescript-eslint/no-explicit-any": "off"
     }
   }
-  // {
-  //   files: ["src/**/*.{spec,test}.{ts,tsx}"],
-  //   ...fixupPluginRules(testingLibrary.configs["flat/react"])
-  //   // plugins: {
-  //   //   "testing-library": fixupPluginRules({
-  //   //     rules: testingLibrary.rules
-  //   //   })
-  //   // },
-  //   // rules: testingLibrary.configs["flat/react"].rules
-  // }
 )
