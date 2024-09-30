@@ -1,8 +1,6 @@
 import "server-only"
 
-export const Locales = ["en", "ko"] as const
-
-export type Locales = (typeof Locales)[number]
+import type { Locales } from "@/locales/constants"
 
 const dictionaries = {
   en: () => import("./en/common.json"),

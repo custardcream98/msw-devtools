@@ -1,4 +1,4 @@
-import type { Locales } from "@/locales/dictionaries"
+import type { Locales } from "@/locales/constants"
 
 /**
  * locale state hack for

@@ -1,3 +1,20 @@
 {
-  "title": "MSW Devtools: 프레임워크에 구애받지 않는 API Mocking"
+  "title": "@custardcream/msw-devtools: 프레임워크에 구애받지 않는 API Mocking",
+  "description": "프레임워크에 구애받지 않는 MSW 핸들러 관리 도구",
+  "sections": {
+    "screenshots": {
+      "title": "데모 스크린샷",
+      "carousel": {
+        "imageAlt": "데모 이미지",
+        "buttonImageAlt": "포커스 버튼"
+      }
+    },
+    "sitemap": {
+      "title": "사이드맵",
+      "link": {
+        "react": "데모 (React.js)",
+        "vue": "데모 (Vue.js)"
+      }
+    }
+  }
 }

@@ -1,8 +1,10 @@
-import type { RoutePageProps } from "@/app/[locale]/types"
-import { type NextPage } from "next"
+import type { SubRouteLocales } from "@/app/[locale]/layout"
+import { Docs } from "@/components/server/Docs"
 
-const Page: NextPage<RoutePageProps> = async ({ params: { locale } }) => {
-  return <div>locale: {locale}</div>
+export default async function Page({
+  params: { locale }
+}: {
+  params: { locale: SubRouteLocales }
+}) {
+  return <Docs locale={locale} />
 }
-
-export default Page

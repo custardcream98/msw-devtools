@@ -1,7 +1,10 @@
-import { getDictionary } from "@/locales/dictionaries"
 import { type Metadata } from "next"
-import type { RoutePageProps, SubRouteLocales } from "@/app/[locale]/types"
+
 import { state } from "@/app/config"
+import type { Locales } from "@/locales/constants"
+import { getDictionary } from "@/locales/dictionaries"
+
+export type SubRouteLocales = Exclude<Locales, "en">
 
 export async function generateStaticParams(): Promise<
   { locale: SubRouteLocales }[]
@@ -11,19 +14,23 @@ export async function generateStaticParams(): Promise<
 
 export const generateMetadata = async ({
   params
-}: RoutePageProps): Promise<Metadata> => {
+}: {
+  params: { locale: SubRouteLocales }
+}): Promise<Metadata> => {
   const dictionary = await getDictionary(params.locale)
 
   return {
-    title: dictionary.title
-    // description: dictionary.description
+    title: dictionary.title,
+    description: dictionary.description
   }
 }
 
 const Layout = ({
   children,
   params: { locale }
-}: React.PropsWithChildren<RoutePageProps>) => {
+}: React.PropsWithChildren<{
+  params: { locale: SubRouteLocales }
+}>) => {
   state.locale = locale
   return children
 }

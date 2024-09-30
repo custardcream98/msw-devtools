@@ -1,10 +1,8 @@
-import Link from "next/link"
+import type { RoutePageProps } from "@/app/types"
+import { Docs } from "@/components/server/Docs"
 
-export default function Home() {
-  return (
-    <div>
-      home
-      <Link href='/ko'>ko</Link>
-    </div>
-  )
+export default async function Page({
+  params: { locale = "en" } = {}
+}: RoutePageProps) {
+  return <Docs locale={locale} />
 }
