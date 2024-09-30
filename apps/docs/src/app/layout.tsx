@@ -25,7 +25,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       languages: Object.fromEntries(
         Locales.filter((locale) => locale !== "en").map((locale) => [
           locale,
-          `https://msw-devtools.shiwoo.dev${locale === "en" ? "" : `/${locale}`}`
+          `https://msw-devtools.shiwoo.dev/${locale}`
         ])
       )
     }
