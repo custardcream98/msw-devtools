@@ -8,6 +8,7 @@
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
     "coverage": "pnpm --filter \"./{packages,apps}/**\" coverage --silent",
     "test": "pnpm --filter \"./{packages,apps}/**\" test",
+    "docs:dev": "pnpm --filter docs dev",
     "prepare": "husky",
     "build:package": "pnpm --filter @custardcream/msw-devtools build",
     "build:package:watch": "pnpm --filter @custardcream/msw-devtools build:watch",
