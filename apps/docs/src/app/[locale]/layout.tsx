@@ -1,7 +1,7 @@
 import { type Metadata } from "next"
 
 import { state } from "@/app/config"
-import type { Locales } from "@/locales/constants"
+import { Locales } from "@/locales/constants"
 import { getDictionary } from "@/locales/dictionaries"
 
 export type SubRouteLocales = Exclude<Locales, "en">
@@ -21,7 +21,16 @@ export const generateMetadata = async ({
 
   return {
     title: dictionary.title,
-    description: dictionary.description
+    description: dictionary.description,
+    alternates: {
+      canonical: `https://msw-devtools.shiwoo.dev/${params.locale}`,
+      languages: Object.fromEntries(
+        Locales.filter((locale) => locale !== params.locale).map((locale) => [
+          locale,
+          `https://msw-devtools.shiwoo.dev${locale === "en" ? "" : `/${locale}`}`
+        ])
+      )
+    }
   }
 }
 

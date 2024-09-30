@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { state } from "@/app/config"
 import { LanguageSelector } from "@/components/client/LanguageSelector"
 import { pretendard } from "@/fonts"
+import { Locales } from "@/locales/constants"
 import { getDictionary } from "@/locales/dictionaries"
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -12,7 +13,22 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
   return {
     title: dictionary.title,
-    description: dictionary.description
+    description: dictionary.description,
+    authors: [
+      {
+        name: "Shi Woo, Park",
+        url: "https://github.com/custardcream98"
+      }
+    ],
+    alternates: {
+      canonical: "https://msw-devtools.shiwoo.dev",
+      languages: Object.fromEntries(
+        Locales.filter((locale) => locale !== "en").map((locale) => [
+          locale,
+          `https://msw-devtools.shiwoo.dev${locale === "en" ? "" : `/${locale}`}`
+        ])
+      )
+    }
   }
 }
 
