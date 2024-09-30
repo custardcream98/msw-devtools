@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import { getDictionary } from "@/locales/dictionaries"
+import { state } from "@/app/config"
+import { pretendard } from "@/fonts"
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const dictionary = await getDictionary("en")
@@ -17,8 +19,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='en'>
-      <body>{children}</body>
+    <html lang={state.locale}>
+      <body
+        className={`bg-background text-foreground ${pretendard.variable} font-pretendard`}
+      >
+        {children}
+      </body>
     </html>
   )
 }

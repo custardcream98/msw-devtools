@@ -1,6 +1,7 @@
 import { getDictionary } from "@/locales/dictionaries"
 import { type Metadata } from "next"
 import type { RoutePageProps, SubRouteLocales } from "@/app/[locale]/types"
+import { state } from "@/app/config"
 
 export async function generateStaticParams(): Promise<
   { locale: SubRouteLocales }[]
@@ -23,11 +24,8 @@ const Layout = ({
   children,
   params: { locale }
 }: React.PropsWithChildren<RoutePageProps>) => {
-  return (
-    <html lang={locale}>
-      <body>{children}</body>
-    </html>
-  )
+  state.locale = locale
+  return children
 }
 
 export default Layout
