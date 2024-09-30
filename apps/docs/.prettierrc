@@ -1,0 +1,11 @@
+{
+  "tailwindConfig": "./tailwind.config.ts",
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindAttributes": ["widthClassName"],
+  "tailwindFunctions": ["clsx"],
+  "jsxSingleQuote": true,
+  "printWidth": 80,
+  "semi": false,
+  "tabWidth": 2,
+  "trailingComma": "none"
+}

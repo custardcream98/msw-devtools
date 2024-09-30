@@ -1,0 +1,20 @@
+{
+  "title": "@custardcream/msw-devtools: Framework-Agnostic API Mocking",
+  "description": "Framework Agnostic Devtools for Managing MSW Handlers",
+  "sections": {
+    "screenshots": {
+      "title": "Demo Screenshots",
+      "carousel": {
+        "imageAlt": "Demo Image",
+        "buttonImageAlt": "Focus Button"
+      }
+    },
+    "sitemap": {
+      "title": "Sitemap",
+      "link": {
+        "react": "Demo (React.js)",
+        "vue": "Demo (Vue.js)"
+      }
+    }
+  }
+}
