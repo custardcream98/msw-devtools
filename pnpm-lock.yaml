@@ -29,6 +29,9 @@ importers:
 
   apps/docs:
     dependencies:
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       i18next:
         specifier: ^23.15.1
         version: 23.15.1
@@ -63,6 +66,9 @@ importers:
       eslint-config-next:
         specifier: 14.2.13
         version: 14.2.13(eslint@8.57.1)(typescript@5.6.2)
+      eslint-plugin-simple-import-sort:
+        specifier: ^12.1.1
+        version: 12.1.1(eslint@8.57.1)
       postcss:
         specifier: ^8
         version: 8.4.47
@@ -8171,6 +8177,10 @@ snapshots:
       semver: 6.3.1
       string.prototype.matchall: 4.0.11
       string.prototype.repeat: 1.0.0
+
+  eslint-plugin-simple-import-sort@12.1.1(eslint@8.57.1):
+    dependencies:
+      eslint: 8.57.1
 
   eslint-plugin-simple-import-sort@12.1.1(eslint@9.10.0(jiti@1.21.0)):
     dependencies:
