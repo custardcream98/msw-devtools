@@ -107,7 +107,12 @@ export const AddMockFormCodeEditor = ({
           <CodeEditor
             className='mb-2 mt-2 flex-1'
             value={currentResponse.response}
-            onChange={field.onChange}
+            onChange={(value) => {
+              field.onChange({
+                type: "single",
+                response: value
+              })
+            }}
             onBlur={field.onBlur}
             ref={field.ref}
           />
