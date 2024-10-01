@@ -20,7 +20,7 @@
 
 ## Features
 
-- **Framework-Agnostic.** Works with any framework, including React, Vue, Angular, Svelte, and more.
+- **Framework-Agnostic.** Works with any framework, including React, Vue, and more.
 - **Easily Manage Mock Request Handlers.** Add, edit, delete, enable, or disable mock request handlers with ease.
 - **Use Different Response Data Based on the Situation.** Change response data sequentially.
 - **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
@@ -102,8 +102,6 @@ const enableMocking = async () => {
 
 enableMocking().then(() => {
   const app = createApp(App)
-
-  app.use(VueQueryPlugin)
 
   app.mount("#app")
 })

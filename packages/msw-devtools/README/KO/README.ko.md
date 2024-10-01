@@ -17,7 +17,7 @@
 
 ## 주요 기능
 
-- **어떤 프레임워크를 사용해도 상관없습니다.** React, Vue, Angular, Svelte 등 어떤 프레임워크를 사용하더라도 사용할 수 있습니다.
+- **어떤 프레임워크를 사용해도 상관없습니다.** React, Vue 등 어떤 프레임워크를 사용하더라도 사용할 수 있습니다.
 - **Mock Request Handler를 UI로 편리하게 관리하세요.** 손쉽게 추가, 수정, 삭제하거나 활성화, 비활성화할 수 있습니다.
 - **상황에 따라 다른 응답값을 사용하세요.** 응답값이 순차적으로 바뀌게 할 수 있습니다.
 - **Mock Request Handler를 내보내거나 가져오세요.** JSON 포멧으로 손쉽게 Mock Request Handler를 공유할 수 있습니다.
@@ -100,8 +100,6 @@ const enableMocking = async () => {
 
 enableMocking().then(() => {
   const app = createApp(App)
-
-  app.use(VueQueryPlugin)
 
   app.mount("#app")
 })
