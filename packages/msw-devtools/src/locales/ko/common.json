@@ -22,6 +22,7 @@
       },
       "autoFix": "JSON 자동 수정",
       "cancelEdit": "취소",
+      "duplicateConfirmMessage": "이미 등록된 Request Handler입니다.\n덮어씌울까요?",
       "editModeIndicator": "수정 모드",
       "editSubmit": "수정",
       "responseDelay": {

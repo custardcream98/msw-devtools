@@ -41,7 +41,7 @@ const DEFAULT_VALUES = {
 } as const satisfies FormFieldValues
 
 export const AddMockForm = () => {
-  const { pushMock } = useMockList()
+  const { mockList, pushMock } = useMockList()
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const { defaultResponseDelay } = useDefaultResponseDelaySettings()
@@ -146,6 +146,21 @@ export const AddMockForm = () => {
       onSubmit={method.handleSubmit(
         (formData) => {
           try {
+            const isDuplicate = mockList.some(
+              (mock) =>
+                mock[FIELD_NAME.URL] === formData[FIELD_NAME.URL] &&
+                mock[FIELD_NAME.METHOD] === formData[FIELD_NAME.METHOD]
+            )
+
+            if (isDuplicate) {
+              const isConfirmed = confirm(
+                t("tabs.addMock.duplicateConfirmMessage")
+              )
+              if (!isConfirmed) {
+                return
+              }
+            }
+
             submit(formData)
           } catch (error) {
             alert(error)
@@ -194,7 +209,9 @@ export const AddMockForm = () => {
       <Controller
         name={FIELD_NAME.URL}
         control={method.control}
-        rules={{ required: true }}
+        rules={{
+          required: true
+        }}
         render={({ field }) => (
           <input
             className='w-full bg-slate-50 p-2 !font-mono msw-round-border [&[readonly]]:opacity-40'
@@ -210,7 +227,6 @@ export const AddMockForm = () => {
           <Controller
             name={FIELD_NAME.METHOD}
             control={method.control}
-            rules={{ required: true }}
             render={({ field }) => (
               <select
                 className={clsx(

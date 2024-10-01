@@ -22,6 +22,7 @@
       },
       "autoFix": "Fix JSON",
       "cancelEdit": "Cancel",
+      "duplicateConfirmMessage": "This Request Handler is already registered.\nWould you like to overwrite it?",
       "editModeIndicator": "Edit Mode",
       "editSubmit": "Edit",
       "responseDelay": {
