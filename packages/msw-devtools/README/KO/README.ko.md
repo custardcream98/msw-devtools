@@ -1,28 +1,26 @@
-<div align="center">
-  <h3 align="center">@custardcream/msw-devtools</h3>
+<h1 align="center">@custardcream/msw-devtools</h1>
+<p align="center">
+  <bold>프레임워크에 구애받지 않는 MSW 핸들러 관리 도구</bold>
+  <br />
+  <span>MSW 핸들러를 손쉽게 관리하세요!</span>
+</p>
 
-  <p align="center">
-    <bold>프레임워크에 구애받지 않는 MSW 핸들러 관리 도구</bold>
-    <br />
-    <span>MSW 핸들러를 손쉽게 관리하세요!</span>
-    <br />
-    <br />
-    <a href="https://www.npmjs.com/package/@custardcream/msw-devtools"><img src="https://badge.fury.io/js/@custardcream%2Fmsw-devtools.svg" alt="npm version" height="20"></a>
-    <a href='https://www.npmjs.com/package/@custardcream/msw-devtools'><img src='https://img.shields.io/npm/dt/@custardcream/msw-devtools' alt='npm downloads count badge' height='20'/></a>
-    <br />
-    <br />
-    <strong>🛠 모킹 핸들러를 런타임에 자유롭게 추가</strong>
-    <br />
-    <strong>✏️ 모킹 핸들러의 응답을 UI로 수정</strong>
-    <br />
-    <strong>🔄 모킹 핸들러 내보내기/가져오기</strong>
-    <br />
-    <strong>🇰🇷 한국어 지원</strong>
-    <br />
-    <br />
-    <a href="../../README.md">ENGLISH</a> | <a href="#">한국어</a>
-  </p>
-</div>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@custardcream/msw-devtools" target="_blank"><img src="https://img.shields.io/npm/v/@custardcream/msw-devtools.svg?style=for-the-badge&label=Latest&color=black" alt="Package version" /></a>
+  <br />
+  <a href="../../README.md">ENGLISH</a> | <a href="#">한국어</a>
+</p>
+
+<br />
+<br />
+
+## 주요 기능
+
+- **어떤 프레임워크를 사용해도 상관없습니다.** React, Vue, Angular, Svelte 등 어떤 프레임워크를 사용하더라도 사용할 수 있습니다.
+- **Mock Request Handler를 UI로 편리하게 관리하세요.** 손쉽게 추가, 수정, 삭제하거나 활성화, 비활성화할 수 있습니다.
+- **상황에 따라 다른 응답값을 사용하세요.** 응답값이 순차적으로 바뀌게 할 수 있습니다.
+- **Mock Request Handler를 내보내거나 가져오세요.** JSON 포멧으로 손쉽게 Mock Request Handler를 공유할 수 있습니다.
+- 한국어를 지원합니다.
 
 <br />
 
@@ -34,22 +32,14 @@
 
 <br />
 <br />
-<br />
 
-## 📺 데모
+## 데모
 
 **[데모 페이지 (React.js)](https://msw-devtools.vercel.app/)**
 
 **[데모 페이지 (Vue.js)](https://msw-devtools-vue.vercel.app/)**
 
-## 주요 기능
-
-- Mock Request Handler를 추가/수정/삭제하기
-- Mock Request Handlers 내보내기/가져오기
-- Mock Request Handlers 활성화/비활성화하기
-- Mock Request 딜레이 넣기
-
-## 🚀 설치 방법
+## 설치 방법
 
 npm을 통해 패키지를 설치하세요.
 
@@ -57,7 +47,7 @@ npm을 통해 패키지를 설치하세요.
 npm install -D @custardcream/msw-devtools msw
 ```
 
-## 🛠 사용법
+## 사용법
 
 ```jsx
 import { setupWorker } from "msw/browser"
@@ -85,3 +75,11 @@ enableMocking().then(() =>
   )
 )
 ```
+
+### 응답값 다이나믹하게 변경하기 (sequential response)
+
+응답값을 다이나믹하게 변경해야 할 경우, 'sequential response'를 사용하세요.
+
+<img width="500" src="./image4.png">
+
+각 요청에 대한 응닶값이 순차적으로 변경되게 됩니다.

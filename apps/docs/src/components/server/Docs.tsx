@@ -1,11 +1,13 @@
 import { Carousel } from "@/components/client/Carousel"
+import enCarouselAssets from "@/components/client/Carousel/assets/en"
+import koCarouselAssets from "@/components/client/Carousel/assets/ko"
 import { Anchor } from "@/components/server/Anchor"
 import type { Locales } from "@/locales/constants"
 import { getDictionary } from "@/locales/dictionaries"
 
 const CAROUSEL_IMAGES = {
-  en: () => import("@/components/client/Carousel/assets/en"),
-  ko: () => import("@/components/client/Carousel/assets/ko")
+  en: enCarouselAssets,
+  ko: koCarouselAssets
 }
 
 export async function Docs({ locale }: { locale: Locales }) {
@@ -25,7 +27,7 @@ export async function Docs({ locale }: { locale: Locales }) {
           <Carousel
             widthClassName='w-full sm:w-[600px]'
             className='mx-auto'
-            images={(await CAROUSEL_IMAGES[locale]()).default}
+            images={CAROUSEL_IMAGES[locale]}
             i18n={{
               locale: "en",
               ...dictionary.sections.screenshots.carousel
