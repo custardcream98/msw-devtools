@@ -96,6 +96,7 @@ export const StorageKey = {
   MOCK_LIST: "MOCK_LIST",
   TAB: "TAB",
   EDIT_STATE: "EDIT_STATE",
+  SAVED_FORM_FIELD_VALUES: "SAVED_FORM_FIELD_VALUES",
   MOCK_LIST_SIDEBAR_OPEN: "MOCK_LIST_SIDEBAR_OPEN"
 } as const
 
@@ -120,5 +121,6 @@ export type StorageValueType = {
   [StorageKey.MOCK_LIST]: JsonMock[]
   [StorageKey.TAB]: Tab
   [StorageKey.EDIT_STATE]: FormFieldValues | null
+  [StorageKey.SAVED_FORM_FIELD_VALUES]: FormFieldValues | null
   [StorageKey.MOCK_LIST_SIDEBAR_OPEN]: boolean
 }

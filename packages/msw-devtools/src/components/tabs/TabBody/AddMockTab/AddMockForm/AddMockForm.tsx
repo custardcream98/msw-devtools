@@ -22,7 +22,11 @@ import {
   StorageKey,
   Tab
 } from "~/constants"
-import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+  useLocalStorageState
+} from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameFormFieldValues } from "~/utils/isSameFormFieldValues"
@@ -50,21 +54,36 @@ export const AddMockForm = () => {
     null
   )
 
+  const savedFormFieldValues = useMemo(() => {
+    return getLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES)
+  }, [])
+
   const defaultValues: FormFieldValues = useMemo(
     () => ({
-      [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
-      [FIELD_NAME.METHOD]: DEFAULT_VALUES[FIELD_NAME.METHOD],
-      [FIELD_NAME.STATUS]: DEFAULT_VALUES[FIELD_NAME.STATUS],
-      [FIELD_NAME.RESPONSE]: defaultResponse
-        ? {
-            type: "single",
-            response: defaultResponse
-          }
-        : DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+      [FIELD_NAME.URL]:
+        savedFormFieldValues?.[FIELD_NAME.URL] ||
+        defaultUrl ||
+        DEFAULT_VALUES[FIELD_NAME.URL],
+      [FIELD_NAME.METHOD]:
+        savedFormFieldValues?.[FIELD_NAME.METHOD] ||
+        DEFAULT_VALUES[FIELD_NAME.METHOD],
+      [FIELD_NAME.STATUS]:
+        savedFormFieldValues?.[FIELD_NAME.STATUS] ||
+        DEFAULT_VALUES[FIELD_NAME.STATUS],
+      [FIELD_NAME.RESPONSE]:
+        savedFormFieldValues?.[FIELD_NAME.RESPONSE] ||
+        (defaultResponse
+          ? {
+              type: "single",
+              response: defaultResponse
+            }
+          : DEFAULT_VALUES[FIELD_NAME.RESPONSE]),
       [FIELD_NAME.RESPONSE_DELAY]:
-        defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
+        savedFormFieldValues?.[FIELD_NAME.RESPONSE_DELAY] ||
+        defaultResponseDelay ||
+        DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
     }),
-    [defaultResponse, defaultResponseDelay, defaultUrl]
+    [savedFormFieldValues, defaultResponse, defaultResponseDelay, defaultUrl]
   )
   const isEdit = !!editStateLocal
   const method = useForm<FormFieldValues>({
@@ -87,16 +106,18 @@ export const AddMockForm = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
+    // save form field values to local storage
+    // when unmounting
     return () => {
-      const isUpdated = !isSameFormFieldValues(
-        defaultValues,
-        method.getValues()
-      )
-      if (isUpdated) {
-        setEditStateLocal(method.getValues())
+      const currentValues = method.getValues()
+      if (
+        currentValues &&
+        !isSameFormFieldValues(currentValues, defaultValues)
+      ) {
+        setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, currentValues)
       }
     }
-  }, [setEditStateLocal, method, defaultValues])
+  }, [method, defaultValues])
 
   const response = useWatch({
     control: method.control,
