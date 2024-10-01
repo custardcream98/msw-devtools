@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.6.1
+
+### Patch Changes
+
+- 54b4160: fix: style fix
+
 ## 0.6.0
 
 ### Minor Changes
