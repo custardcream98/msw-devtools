@@ -5,7 +5,7 @@ import { CodeEditor } from "~/components/CodeEditor"
 import { FIELD_NAME, type FormFieldValues } from "~/constants"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
 
-const validate = (value: string) => {
+export const validate = (value: string) => {
   if (!value) {
     return false
   }
