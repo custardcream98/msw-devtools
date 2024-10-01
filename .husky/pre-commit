@@ -2,8 +2,3 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 pnpm lint-staged
-
-if [ -f README.md ] && git diff --quiet --staged -- README.md || [ -f ./README ] && git diff --quiet --staged -- ./README; then
-  pnpm sync-readme
-  git add ./README.md ./README/* || true
-fi
