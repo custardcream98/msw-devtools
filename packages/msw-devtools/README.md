@@ -1,3 +1,6 @@
+<br />
+<br />
+
 <h1 align="center">@custardcream/msw-devtools</h1>
 <p align="center">
   <bold>Framework Agnostic Devtools for Managing MSW Handlers</bold>
@@ -34,9 +37,9 @@
 
 ## Demo
 
-**[Try Demo Here (React.js)](https://msw-devtools.vercel.app/)**
+**[React.js Demo](https://msw-devtools.vercel.app/)**
 
-**[Try Demo Here (Vue.js)](https://msw-devtools-vue.vercel.app/)**
+**[Vue.js Demo](https://msw-devtools-vue.vercel.app/)**
 
 ## Installation
 
@@ -46,9 +49,13 @@ To get started, install the package via npm:
 npm install -D @custardcream/msw-devtools msw
 ```
 
-## Usage
+Before integrating, make sure you have set up MSW in your project.
 
-Here's how you can integrate it into your project:
+```bash
+npx msw init public
+```
+
+### Integrating with React.js
 
 ```jsx
 import { setupWorker } from "msw/browser"
@@ -77,7 +84,31 @@ enableMocking().then(() =>
 )
 ```
 
-### Handling Dynamic Requests (sequential response)
+### Integrating with Vue.js
+
+```js
+const enableMocking = async () => {
+  if (import.meta.env.DEV) {
+    return await installMSWDevtools({
+      initialOpen: true,
+      setupWorker: setupWorker(),
+      options: {
+        onUnhandledRequest: "bypass"
+      }
+    })
+  }
+}
+
+enableMocking().then(() => {
+  const app = createApp(App)
+
+  app.use(VueQueryPlugin)
+
+  app.mount("#app")
+})
+```
+
+## Handling Dynamic Requests (sequential response)
 
 In various cases, you may want to make response data dynamic.
 
