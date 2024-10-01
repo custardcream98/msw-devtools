@@ -40,7 +40,7 @@ export const MockCard = ({
       <div className='flex flex-1 gap-2 overflow-auto'>
         {response.type === "single" ? (
           <CodeEditor
-            className='mt-4'
+            className='mt-4 w-full'
             value={JSON.stringify(response.response, null, 2)}
             basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
             minHeight='auto'
