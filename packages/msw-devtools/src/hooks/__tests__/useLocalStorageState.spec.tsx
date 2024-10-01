@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { useEffect } from "react"
 
 import {
   getLocalStorageItem,
@@ -18,6 +19,12 @@ const TestComponent = <Key extends string>({
     storageKey as any,
     initialValue
   )
+
+  useEffect(() => {
+    return () => {
+      setValue("unmount")
+    }
+  }, [setValue])
 
   return (
     <div>
@@ -96,5 +103,29 @@ describe("useLocalStorageState", () => {
     expect(JSON.parse(localStorage.getItem("MSW_DEVTOOLS")!)).toEqual({
       count: 1
     })
+  })
+
+  it("should be able to set state on unmount", () => {
+    const { unmount } = render(
+      <TestComponent storageKey='count' initialValue={0} />
+    )
+
+    unmount()
+
+    expect(JSON.parse(localStorage.getItem("MSW_DEVTOOLS")!)).toEqual({
+      count: "unmount"
+    })
+  })
+
+  it("should persist state whether it got unmounted and remounted", async () => {
+    const { unmount } = render(
+      <TestComponent storageKey='count' initialValue={10} />
+    )
+
+    unmount()
+
+    render(<TestComponent storageKey='count' initialValue={0} />)
+
+    expect(screen.getByTestId("value")).toHaveTextContent("unmount")
   })
 })

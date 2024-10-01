@@ -45,6 +45,7 @@
 - Add / Edit / Delete Mock Request Handlers
 - Export / Import Mock Request Handlers
 - Enable / Disable Mock Request Handlers
+- Sequential Mock Response
 - Delay Mock Request
 
 ## 🚀 Installation
@@ -85,3 +86,9 @@ enableMocking().then(() =>
   )
 )
 ```
+
+## 📚 Handling Dynamic Requests
+
+In various cases, you may want to make response data dynamic.
+
+You can achieve this by using the sequential response feature.
