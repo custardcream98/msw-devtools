@@ -47,7 +47,13 @@ npm을 통해 패키지를 설치하세요.
 npm install -D @custardcream/msw-devtools msw
 ```
 
-## 사용법
+시작하기 전에 프로젝트에 MSW를 설정해주세요.
+
+```bash
+npx msw init public
+```
+
+### React.js 프로젝트에서 사용하기
 
 ```jsx
 import { setupWorker } from "msw/browser"
@@ -76,7 +82,31 @@ enableMocking().then(() =>
 )
 ```
 
-### 응답값 다이나믹하게 변경하기 (sequential response)
+### Vue.js 프로젝트에서 사용하기
+
+```js
+const enableMocking = async () => {
+  if (import.meta.env.DEV) {
+    return await installMSWDevtools({
+      initialOpen: true,
+      setupWorker: setupWorker(),
+      options: {
+        onUnhandledRequest: "bypass"
+      }
+    })
+  }
+}
+
+enableMocking().then(() => {
+  const app = createApp(App)
+
+  app.use(VueQueryPlugin)
+
+  app.mount("#app")
+})
+```
+
+## 응답값 다이나믹하게 변경하기 (sequential response)
 
 응답값을 다이나믹하게 변경해야 할 경우, 'sequential response'를 사용하세요.
 
