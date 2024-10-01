@@ -24,6 +24,7 @@ import {
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
+import { isSameFormFieldValues } from "~/utils/isSameFormFieldValues"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 
@@ -86,7 +87,10 @@ export const AddMockForm = () => {
 
   useEffect(() => {
     return () => {
-      const isUpdated = !isSameFormValues(defaultValues, method.getValues())
+      const isUpdated = !isSameFormFieldValues(
+        defaultValues,
+        method.getValues()
+      )
       if (isUpdated) {
         setEditStateLocal(method.getValues())
       }
@@ -320,16 +324,6 @@ export const AddMockForm = () => {
         <AddMockFormCodeEditor control={method.control} />
       </div>
     </form>
-  )
-}
-
-const isSameFormValues = (a: FormFieldValues, b: FormFieldValues) => {
-  return (
-    a[FIELD_NAME.URL] === b[FIELD_NAME.URL] &&
-    a[FIELD_NAME.METHOD] === b[FIELD_NAME.METHOD] &&
-    a[FIELD_NAME.STATUS] === b[FIELD_NAME.STATUS] &&
-    a[FIELD_NAME.RESPONSE] === b[FIELD_NAME.RESPONSE] &&
-    a[FIELD_NAME.RESPONSE_DELAY] === b[FIELD_NAME.RESPONSE_DELAY]
   )
 }
 
