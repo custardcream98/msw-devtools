@@ -1,5 +1,16 @@
 # @custardcream/msw-devtools
 
+## 0.6.0
+
+### Minor Changes
+
+- 6971ad8: feat: Add Sequential Response feature
+
+### Patch Changes
+
+- 4942227: fix: autosave
+- bef41c6: feat: Add warning for adding duplicated request handler
+
 ## 0.5.7
 
 ### Patch Changes
