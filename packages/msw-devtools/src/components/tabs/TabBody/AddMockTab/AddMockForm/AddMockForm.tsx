@@ -32,8 +32,8 @@ const DEFAULT_VALUES = {
   [FIELD_NAME.METHOD]: METHOD_OPTION.GET,
   [FIELD_NAME.STATUS]: STATUS_OPTION["200"],
   [FIELD_NAME.RESPONSE]: {
-    type: "sequential",
-    response: ["", ""]
+    type: "single",
+    response: ""
   },
   [FIELD_NAME.RESPONSE_DELAY]: 0
 } as const satisfies FormFieldValues
