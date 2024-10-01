@@ -17,13 +17,18 @@
   },
   "tabs": {
     "addMock": {
+      "addResponseButton": {
+        "title": "Sequential Response 추가하기"
+      },
       "autoFix": "JSON 자동 수정",
       "cancelEdit": "취소",
+      "duplicateConfirmMessage": "이미 등록된 Request Handler입니다.\n덮어씌울까요?",
       "editModeIndicator": "수정 모드",
       "editSubmit": "수정",
       "responseDelay": {
         "label": "딜레이(초)"
       },
+      "sequentialBadge": "sequential {{count}}",
       "submit": "추가",
       "url": {
         "placeholder": "URL을 입력해주세요"

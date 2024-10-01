@@ -9,6 +9,7 @@ import { useTab } from "~/components/tabs/TabBar"
 import { FIELD_NAME, StorageKey, Tab } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import type { JsonMock } from "~/types"
+import { jsonMockToFormFieldValues } from "~/utils/jsonMockToFormFieldValues"
 
 import { MockCardAccordion } from "./MockCardAccordion"
 
@@ -32,15 +33,38 @@ export const MockCard = ({
 
   const { removeMock } = useMockList()
 
+  const response = jsonMock[FIELD_NAME.RESPONSE]
+
   return (
     <MockCardAccordion isInitialOpen={isInitialOpen} {...jsonMock}>
-      <CodeEditor
-        className='mt-4'
-        value={JSON.stringify(jsonMock[FIELD_NAME.RESPONSE], null, 2)}
-        basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
-        minHeight='auto'
-        readOnly
-      />
+      <div className='flex flex-1 gap-2 overflow-auto'>
+        {response.type === "single" ? (
+          <CodeEditor
+            className='mt-4'
+            value={JSON.stringify(response.response, null, 2)}
+            basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
+            minHeight='auto'
+            readOnly
+          />
+        ) : (
+          response.response.map((response, index) => (
+            <div key={index} className='mt-4 w-full'>
+              <div className="mb-2 flex items-center gap-2 after:h-[2px] after:w-full after:bg-slate-300 after:content-['']">
+                <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-solid border-slate-400 text-xs text-slate-400'>
+                  {index + 1}
+                </span>
+              </div>
+              <CodeEditor
+                className='min-w-[400px]'
+                value={JSON.stringify(response, null, 2)}
+                basicSetup={CODE_EDITOR_BASIC_SETUP_OPTIONS}
+                minHeight='auto'
+                readOnly
+              />
+            </div>
+          ))
+        )}
+      </div>
       <div className='mt-2 flex items-center gap-3'>
         {!!jsonMock[FIELD_NAME.RESPONSE_DELAY] && (
           <span className='font-mono! text-xs text-gray-500'>
@@ -53,17 +77,7 @@ export const MockCard = ({
           className='ml-auto'
           type='button'
           onClick={() => {
-            setEditStateLocal({
-              [FIELD_NAME.URL]: jsonMock[FIELD_NAME.URL],
-              [FIELD_NAME.METHOD]: jsonMock[FIELD_NAME.METHOD],
-              [FIELD_NAME.STATUS]: jsonMock[FIELD_NAME.STATUS],
-              [FIELD_NAME.RESPONSE_DELAY]: jsonMock[FIELD_NAME.RESPONSE_DELAY],
-              [FIELD_NAME.RESPONSE]: JSON.stringify(
-                jsonMock[FIELD_NAME.RESPONSE],
-                null,
-                2
-              )
-            })
+            setEditStateLocal(jsonMockToFormFieldValues(jsonMock))
             setTab(Tab.AddMock)
           }}
         >

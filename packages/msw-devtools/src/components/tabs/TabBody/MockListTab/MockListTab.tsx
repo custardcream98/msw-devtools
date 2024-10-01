@@ -30,7 +30,7 @@ export const MockListTab = () => {
         mock[FIELD_NAME.STATUS]
           .toLowerCase()
           .includes(searchString.toLowerCase()) ||
-        JSON.stringify(mock[FIELD_NAME.RESPONSE])
+        JSON.stringify(mock[FIELD_NAME.RESPONSE].response)
           .toLowerCase()
           .includes(searchString.toLowerCase())
       )

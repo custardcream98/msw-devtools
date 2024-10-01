@@ -64,11 +64,21 @@ export const STATUS_COLOR = {
   "500": "text-red-700"
 } as const
 
+export type FormFieldResponseValue =
+  | {
+      type: "single"
+      response: string
+    }
+  | {
+      type: "sequential"
+      response: string[]
+    }
+
 export type FormFieldValues = {
   [FIELD_NAME.URL]: string
   [FIELD_NAME.METHOD]: MethodOption
   [FIELD_NAME.STATUS]: StatusOption
-  [FIELD_NAME.RESPONSE]: string
+  [FIELD_NAME.RESPONSE]: FormFieldResponseValue
   [FIELD_NAME.RESPONSE_DELAY]: number
 }
 
@@ -86,6 +96,7 @@ export const StorageKey = {
   MOCK_LIST: "MOCK_LIST",
   TAB: "TAB",
   EDIT_STATE: "EDIT_STATE",
+  SAVED_FORM_FIELD_VALUES: "SAVED_FORM_FIELD_VALUES",
   MOCK_LIST_SIDEBAR_OPEN: "MOCK_LIST_SIDEBAR_OPEN"
 } as const
 
@@ -110,5 +121,6 @@ export type StorageValueType = {
   [StorageKey.MOCK_LIST]: JsonMock[]
   [StorageKey.TAB]: Tab
   [StorageKey.EDIT_STATE]: FormFieldValues | null
+  [StorageKey.SAVED_FORM_FIELD_VALUES]: FormFieldValues | null
   [StorageKey.MOCK_LIST_SIDEBAR_OPEN]: boolean
 }

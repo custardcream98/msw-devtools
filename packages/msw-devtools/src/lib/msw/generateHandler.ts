@@ -4,6 +4,7 @@ import { FIELD_NAME } from "~/constants"
 import type { JsonMock } from "~/types"
 
 export const generateHandler = (mock: JsonMock) => {
+  let currentSequence = 0
   return http[mock[FIELD_NAME.METHOD]](mock[FIELD_NAME.URL], async () => {
     if (mock[FIELD_NAME.RESPONSE_DELAY] > 0) {
       await new Promise((resolve) =>
@@ -11,7 +12,21 @@ export const generateHandler = (mock: JsonMock) => {
       )
     }
 
-    return HttpResponse.json(mock[FIELD_NAME.RESPONSE], {
+    const response = mock[FIELD_NAME.RESPONSE]
+
+    const resolvedResponse =
+      response.type === "sequential"
+        ? response.response[currentSequence]
+        : response.response
+
+    if (response.type === "sequential") {
+      currentSequence =
+        currentSequence === response.response.length - 1
+          ? 0
+          : currentSequence + 1
+    }
+
+    return HttpResponse.json(resolvedResponse, {
       status: Number(mock[FIELD_NAME.STATUS])
     })
   })

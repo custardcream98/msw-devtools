@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["playground", "playground-vue"]
+  "ignore": ["playground", "playground-vue", "docs"]
 }

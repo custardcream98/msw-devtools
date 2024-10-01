@@ -1,26 +1,25 @@
-<div align="center">
-  <h3 align="center">@custardcream/msw-devtools</h3>
+<h1 align="center">@custardcream/msw-devtools</h1>
+<p align="center">
+  <bold>Framework Agnostic Devtools for Managing MSW Handlers</bold>
+  <br />
+  <span>Easily manage your mock request handlers</span>
+</p>
 
-  <p align="center">
-    <bold>Framework Agnostic Devtools for Managing MSW Handlers</bold>
-    <br />
-    <span>Easily manage your mock request handlers</span>
-    <br />
-    <br />
-    <a href="https://www.npmjs.com/package/@custardcream/msw-devtools"><img src="https://badge.fury.io/js/@custardcream%2Fmsw-devtools.svg" alt="npm version" height="20"></a>
-    <a href='https://www.npmjs.com/package/@custardcream/msw-devtools'><img src='https://img.shields.io/npm/dt/@custardcream/msw-devtools' alt='npm downloads count badge' height='20'/></a>
-    <br />
-    <br />
-    <strong>🛠 Add Mock Request Handlers On The Fly</strong>
-    <br />
-    <strong>✏️ Modify the Handler's Response Through the UI</strong>
-    <br />
-    <strong>🔄 Export/Import Mock Request Handlers</strong>
-    <br />
-    <br />
-    <a href="#">ENGLISH</a> | <a href="./README/KO/README.ko.md">한국어</a>
-  </p>
-</div>
+<p align="center">
+  <a href="https://www.npmjs.com/package/@custardcream/msw-devtools" target="_blank"><img src="https://img.shields.io/npm/v/@custardcream/msw-devtools.svg?style=for-the-badge&label=Latest&color=black" alt="Package version" /></a>
+  <br />
+  <a href="#">ENGLISH</a> | <a href="./README/KO/README.ko.md">한국어</a>
+</p>
+
+<br />
+<br />
+
+## Features
+
+- **Framework-Agnostic.** Works with any framework, including React, Vue, Angular, Svelte, and more.
+- **Easily Manage Mock Request Handlers.** Add, edit, delete, enable, or disable mock request handlers with ease.
+- **Use Different Response Data Based on the Situation.** Change response data sequentially.
+- **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
 
 <br />
 
@@ -32,22 +31,14 @@
 
 <br />
 <br />
-<br />
 
-## 📺 Demo
+## Demo
 
 **[Try Demo Here (React.js)](https://msw-devtools.vercel.app/)**
 
 **[Try Demo Here (Vue.js)](https://msw-devtools-vue.vercel.app/)**
 
-## Main Features
-
-- Add / Edit / Delete Mock Request Handlers
-- Export / Import Mock Request Handlers
-- Enable / Disable Mock Request Handlers
-- Delay Mock Request
-
-## 🚀 Installation
+## Installation
 
 To get started, install the package via npm:
 
@@ -55,7 +46,7 @@ To get started, install the package via npm:
 npm install -D @custardcream/msw-devtools msw
 ```
 
-## 🛠 Usage
+## Usage
 
 Here's how you can integrate it into your project:
 
@@ -85,3 +76,13 @@ enableMocking().then(() =>
   )
 )
 ```
+
+### Handling Dynamic Requests (sequential response)
+
+In various cases, you may want to make response data dynamic.
+
+You can achieve this by using the sequential response feature.
+
+<img width="500" src="./README/EN/image4.png">
+
+This feature allows you to change the response data for each request sequentially.

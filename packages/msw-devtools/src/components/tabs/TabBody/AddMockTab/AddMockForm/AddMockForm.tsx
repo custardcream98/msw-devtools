@@ -3,6 +3,7 @@ import { jsonrepair } from "jsonrepair"
 import { useEffect, useMemo } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { FaPlus } from "react-icons/fa6"
 
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
 import { useDefaultResponseDelaySettings } from "~/components/contexts/default-response-delay"
@@ -11,6 +12,7 @@ import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
 import {
   FIELD_NAME,
+  type FormFieldResponseValue,
   type FormFieldValues,
   METHOD_COLOR,
   METHOD_OPTION,
@@ -20,22 +22,30 @@ import {
   StorageKey,
   Tab
 } from "~/constants"
-import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+  useLocalStorageState
+} from "~/hooks/useLocalStorageState"
 import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
+import { isSameFormFieldValues } from "~/utils/isSameFormFieldValues"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 
-const DEFAULT_VALUES: FormFieldValues = {
+const DEFAULT_VALUES = {
   [FIELD_NAME.URL]: "",
   [FIELD_NAME.METHOD]: METHOD_OPTION.GET,
   [FIELD_NAME.STATUS]: STATUS_OPTION["200"],
-  [FIELD_NAME.RESPONSE]: "",
+  [FIELD_NAME.RESPONSE]: {
+    type: "single",
+    response: ""
+  },
   [FIELD_NAME.RESPONSE_DELAY]: 0
-}
+} as const satisfies FormFieldValues
 
 export const AddMockForm = () => {
-  const { pushMock } = useMockList()
+  const { mockList, pushMock } = useMockList()
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const { defaultResponseDelay } = useDefaultResponseDelaySettings()
@@ -44,17 +54,36 @@ export const AddMockForm = () => {
     null
   )
 
-  const defaultValues = useMemo(
+  const savedFormFieldValues = useMemo(() => {
+    return getLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES)
+  }, [])
+
+  const defaultValues: FormFieldValues = useMemo(
     () => ({
-      [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
-      [FIELD_NAME.METHOD]: DEFAULT_VALUES[FIELD_NAME.METHOD],
-      [FIELD_NAME.STATUS]: DEFAULT_VALUES[FIELD_NAME.STATUS],
+      [FIELD_NAME.URL]:
+        savedFormFieldValues?.[FIELD_NAME.URL] ||
+        defaultUrl ||
+        DEFAULT_VALUES[FIELD_NAME.URL],
+      [FIELD_NAME.METHOD]:
+        savedFormFieldValues?.[FIELD_NAME.METHOD] ||
+        DEFAULT_VALUES[FIELD_NAME.METHOD],
+      [FIELD_NAME.STATUS]:
+        savedFormFieldValues?.[FIELD_NAME.STATUS] ||
+        DEFAULT_VALUES[FIELD_NAME.STATUS],
       [FIELD_NAME.RESPONSE]:
-        defaultResponse || DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+        savedFormFieldValues?.[FIELD_NAME.RESPONSE] ||
+        (defaultResponse
+          ? {
+              type: "single",
+              response: defaultResponse
+            }
+          : DEFAULT_VALUES[FIELD_NAME.RESPONSE]),
       [FIELD_NAME.RESPONSE_DELAY]:
-        defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
+        savedFormFieldValues?.[FIELD_NAME.RESPONSE_DELAY] ||
+        defaultResponseDelay ||
+        DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
     }),
-    [defaultResponse, defaultResponseDelay, defaultUrl]
+    [savedFormFieldValues, defaultResponse, defaultResponseDelay, defaultUrl]
   )
   const isEdit = !!editStateLocal
   const method = useForm<FormFieldValues>({
@@ -77,13 +106,18 @@ export const AddMockForm = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
+    // save form field values to local storage
+    // when unmounting
     return () => {
-      const isUpdated = !isSameFormValues(defaultValues, method.getValues())
-      if (isUpdated) {
-        setEditStateLocal(method.getValues())
+      const currentValues = method.getValues()
+      if (
+        currentValues &&
+        !isSameFormFieldValues(currentValues, defaultValues)
+      ) {
+        setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, currentValues)
       }
     }
-  }, [setEditStateLocal, method, defaultValues])
+  }, [method, defaultValues])
 
   const response = useWatch({
     control: method.control,
@@ -92,10 +126,11 @@ export const AddMockForm = () => {
 
   // wanted to use form's error, but it's not working
   const isFixable = useMemo(() => {
-    if (!checkJSONParsable(response) && checkJSONFixable(response)) {
-      return true
+    if (response.type === "sequential") {
+      return response.response.some(isJSONFixable)
     }
-    return false
+
+    return isJSONFixable(response.response)
   }, [response])
 
   const submitButtonLabel = useMemo(() => {
@@ -132,6 +167,21 @@ export const AddMockForm = () => {
       onSubmit={method.handleSubmit(
         (formData) => {
           try {
+            const isDuplicate = mockList.some(
+              (mock) =>
+                mock[FIELD_NAME.URL] === formData[FIELD_NAME.URL] &&
+                mock[FIELD_NAME.METHOD] === formData[FIELD_NAME.METHOD]
+            )
+
+            if (isDuplicate) {
+              const isConfirmed = confirm(
+                t("tabs.addMock.duplicateConfirmMessage")
+              )
+              if (!isConfirmed) {
+                return
+              }
+            }
+
             submit(formData)
           } catch (error) {
             alert(error)
@@ -139,9 +189,21 @@ export const AddMockForm = () => {
         },
         (error) => {
           if (error[FIELD_NAME.RESPONSE]?.message === "FIXABLE") {
+            const response = method.getValues(FIELD_NAME.RESPONSE)
+
             method.setValue(
               FIELD_NAME.RESPONSE,
-              jsonrepair(method.getValues().response),
+              response.type === "sequential"
+                ? {
+                    type: "sequential",
+                    response: response.response.map((value) =>
+                      isJSONFixable(value) ? jsonrepair(value) : value
+                    )
+                  }
+                : {
+                    type: "single",
+                    response: jsonrepair(response.response)
+                  },
               {
                 shouldValidate: true
               }
@@ -168,7 +230,9 @@ export const AddMockForm = () => {
       <Controller
         name={FIELD_NAME.URL}
         control={method.control}
-        rules={{ required: true }}
+        rules={{
+          required: true
+        }}
         render={({ field }) => (
           <input
             className='w-full bg-slate-50 p-2 !font-mono msw-round-border [&[readonly]]:opacity-40'
@@ -184,7 +248,6 @@ export const AddMockForm = () => {
           <Controller
             name={FIELD_NAME.METHOD}
             control={method.control}
-            rules={{ required: true }}
             render={({ field }) => (
               <select
                 className={clsx(
@@ -262,20 +325,59 @@ export const AddMockForm = () => {
           </button>
         )}
       </div>
-      <label className='mt-4 flex flex-1 flex-col'>
-        <span>Response Body (JSON)</span>
+      <div className='mt-4 flex flex-1 flex-col'>
+        <span className='flex items-center justify-between'>
+          Response Body (JSON){" "}
+          {response.type === "sequential" && (
+            <span className='ml-2 mr-auto rounded-lg border-2 border-solid border-orange-500 px-2 py-1 !font-mono text-[0.65rem] font-semibold text-orange-500'>
+              {t("tabs.addMock.sequentialBadge", {
+                count: response.response.length
+              })}
+            </span>
+          )}
+          <button
+            className='button hover:bg-slate-300 hover:text-slate-600'
+            type='button'
+            title={t("tabs.addMock.addResponseButton.title")}
+            onClick={() => {
+              const normalizedPrevResponse = normalizeResponse(
+                method.getValues(FIELD_NAME.RESPONSE)
+              )
+              const normalizedDefaultResponse = normalizeResponse(
+                defaultValues[FIELD_NAME.RESPONSE]
+              )
+
+              const nextResponse = {
+                type: "sequential",
+                response: [
+                  ...normalizedPrevResponse,
+                  ...normalizedDefaultResponse
+                ]
+              } as const satisfies FormFieldResponseValue
+
+              method.setValue(FIELD_NAME.RESPONSE, nextResponse, {
+                shouldValidate: true
+              })
+            }}
+          >
+            <FaPlus size={16} />
+          </button>
+        </span>
         <AddMockFormCodeEditor control={method.control} />
-      </label>
+      </div>
     </form>
   )
 }
 
-const isSameFormValues = (a: FormFieldValues, b: FormFieldValues) => {
-  return (
-    a[FIELD_NAME.URL] === b[FIELD_NAME.URL] &&
-    a[FIELD_NAME.METHOD] === b[FIELD_NAME.METHOD] &&
-    a[FIELD_NAME.STATUS] === b[FIELD_NAME.STATUS] &&
-    a[FIELD_NAME.RESPONSE] === b[FIELD_NAME.RESPONSE] &&
-    a[FIELD_NAME.RESPONSE_DELAY] === b[FIELD_NAME.RESPONSE_DELAY]
-  )
+const isJSONFixable = (value: string) => {
+  if (!checkJSONParsable(value) && checkJSONFixable(value)) {
+    return true
+  }
+  return false
+}
+
+const normalizeResponse = (response: FormFieldResponseValue) => {
+  return response.type === "sequential"
+    ? response.response
+    : [response.response]
 }

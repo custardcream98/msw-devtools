@@ -1,27 +1,73 @@
 import { expect } from "vitest"
 
-import { FIELD_NAME } from "~/constants"
+import { FIELD_NAME, type FormFieldValues } from "~/constants"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 
 describe("formFieldValuesToJsonMock", () => {
-  it("should return a JsonMock typed object from the form field values", () => {
+  it("should return a JsonMock typed object from the form field values (single)", () => {
     const formData = {
-      [FIELD_NAME.URL]: "https://api.mswjs.io/user",
+      [FIELD_NAME.URL]: "https://test-url",
       [FIELD_NAME.METHOD]: "get",
       [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: '{"name":"John"}',
+      [FIELD_NAME.RESPONSE]: {
+        type: "single",
+        response: '{"name":"John"}'
+      },
       [FIELD_NAME.RESPONSE_DELAY]: 1000
-    } as const
-    const result = formFieldValuesToJsonMock(formData)
-    console.log("result", result)
+    } as const satisfies FormFieldValues
 
-    expect(result).toEqual({
-      [FIELD_NAME.URL]: "https://api.mswjs.io/user",
+    const result = formFieldValuesToJsonMock(formData)
+
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "isActivated": true,
+        "method": "get",
+        "response": {
+          "response": {
+            "name": "John",
+          },
+          "type": "single",
+        },
+        "responseDelay": 1000,
+        "status": "200",
+        "url": "https://test-url",
+      }
+    `)
+  })
+
+  it("should return a JsonMock typed object from the form field values (sequential)", () => {
+    const formData = {
+      [FIELD_NAME.URL]: "https://test-url",
       [FIELD_NAME.METHOD]: "get",
       [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: { name: "John" },
-      isActivated: true,
+      [FIELD_NAME.RESPONSE]: {
+        type: "sequential",
+        response: ['{"name":"John"}', '{"age":30}']
+      },
       [FIELD_NAME.RESPONSE_DELAY]: 1000
-    })
+    } as const satisfies FormFieldValues
+
+    const result = formFieldValuesToJsonMock(formData)
+
+    expect(result).toMatchInlineSnapshot(`
+      {
+        "isActivated": true,
+        "method": "get",
+        "response": {
+          "response": [
+            {
+              "name": "John",
+            },
+            {
+              "age": 30,
+            },
+          ],
+          "type": "sequential",
+        },
+        "responseDelay": 1000,
+        "status": "200",
+        "url": "https://test-url",
+      }
+    `)
   })
 })
