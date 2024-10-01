@@ -11,6 +11,7 @@ import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
 import {
   FIELD_NAME,
+  type FormFieldResponseValue,
   type FormFieldValues,
   METHOD_COLOR,
   METHOD_OPTION,
@@ -26,13 +27,16 @@ import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 
-const DEFAULT_VALUES: FormFieldValues = {
+const DEFAULT_VALUES = {
   [FIELD_NAME.URL]: "",
   [FIELD_NAME.METHOD]: METHOD_OPTION.GET,
   [FIELD_NAME.STATUS]: STATUS_OPTION["200"],
-  [FIELD_NAME.RESPONSE]: "",
+  [FIELD_NAME.RESPONSE]: {
+    type: "sequential",
+    response: ["", ""]
+  },
   [FIELD_NAME.RESPONSE_DELAY]: 0
-}
+} as const satisfies FormFieldValues
 
 export const AddMockForm = () => {
   const { pushMock } = useMockList()
@@ -44,13 +48,17 @@ export const AddMockForm = () => {
     null
   )
 
-  const defaultValues = useMemo(
+  const defaultValues: FormFieldValues = useMemo(
     () => ({
       [FIELD_NAME.URL]: defaultUrl || DEFAULT_VALUES[FIELD_NAME.URL],
       [FIELD_NAME.METHOD]: DEFAULT_VALUES[FIELD_NAME.METHOD],
       [FIELD_NAME.STATUS]: DEFAULT_VALUES[FIELD_NAME.STATUS],
-      [FIELD_NAME.RESPONSE]:
-        defaultResponse || DEFAULT_VALUES[FIELD_NAME.RESPONSE],
+      [FIELD_NAME.RESPONSE]: defaultResponse
+        ? {
+            type: "single",
+            response: defaultResponse
+          }
+        : DEFAULT_VALUES[FIELD_NAME.RESPONSE],
       [FIELD_NAME.RESPONSE_DELAY]:
         defaultResponseDelay || DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
     }),
@@ -92,10 +100,11 @@ export const AddMockForm = () => {
 
   // wanted to use form's error, but it's not working
   const isFixable = useMemo(() => {
-    if (!checkJSONParsable(response) && checkJSONFixable(response)) {
-      return true
+    if (response.type === "sequential") {
+      return response.response.some(isJSONFixable)
     }
-    return false
+
+    return isJSONFixable(response.response)
   }, [response])
 
   const submitButtonLabel = useMemo(() => {
@@ -139,9 +148,21 @@ export const AddMockForm = () => {
         },
         (error) => {
           if (error[FIELD_NAME.RESPONSE]?.message === "FIXABLE") {
+            const response = method.getValues(FIELD_NAME.RESPONSE)
+
             method.setValue(
               FIELD_NAME.RESPONSE,
-              jsonrepair(method.getValues().response),
+              response.type === "sequential"
+                ? {
+                    type: "sequential",
+                    response: response.response.map((value) =>
+                      isJSONFixable(value) ? jsonrepair(value) : value
+                    )
+                  }
+                : {
+                    type: "single",
+                    response: jsonrepair(response.response)
+                  },
               {
                 shouldValidate: true
               }
@@ -262,10 +283,42 @@ export const AddMockForm = () => {
           </button>
         )}
       </div>
-      <label className='mt-4 flex flex-1 flex-col'>
-        <span>Response Body (JSON)</span>
+      <div className='mt-4 flex flex-1 flex-col'>
+        <span className='flex items-center justify-between'>
+          Response Body (JSON){" "}
+          {Array.isArray(response) && (
+            <span className='ml-2 mr-auto rounded-lg border-2 border-solid border-orange-500 px-2 py-1 !font-mono text-[0.65rem] font-semibold text-orange-500'>
+              sequential {response.length}
+            </span>
+          )}
+          <button
+            type='button'
+            onClick={() => {
+              const normalizedPrevResponse = normalizeResponse(
+                method.getValues(FIELD_NAME.RESPONSE)
+              )
+              const normalizedDefaultResponse = normalizeResponse(
+                defaultValues[FIELD_NAME.RESPONSE]
+              )
+
+              const nextResponse = {
+                type: "sequential",
+                response: [
+                  ...normalizedPrevResponse,
+                  ...normalizedDefaultResponse
+                ]
+              } as const satisfies FormFieldResponseValue
+
+              method.setValue(FIELD_NAME.RESPONSE, nextResponse, {
+                shouldValidate: true
+              })
+            }}
+          >
+            Add
+          </button>
+        </span>
         <AddMockFormCodeEditor control={method.control} />
-      </label>
+      </div>
     </form>
   )
 }
@@ -278,4 +331,17 @@ const isSameFormValues = (a: FormFieldValues, b: FormFieldValues) => {
     a[FIELD_NAME.RESPONSE] === b[FIELD_NAME.RESPONSE] &&
     a[FIELD_NAME.RESPONSE_DELAY] === b[FIELD_NAME.RESPONSE_DELAY]
   )
+}
+
+const isJSONFixable = (value: string) => {
+  if (!checkJSONParsable(value) && checkJSONFixable(value)) {
+    return true
+  }
+  return false
+}
+
+const normalizeResponse = (response: FormFieldResponseValue) => {
+  return response.type === "sequential"
+    ? response.response
+    : [response.response]
 }

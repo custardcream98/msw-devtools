@@ -64,11 +64,21 @@ export const STATUS_COLOR = {
   "500": "text-red-700"
 } as const
 
+export type FormFieldResponseValue =
+  | {
+      type: "single"
+      response: string
+    }
+  | {
+      type: "sequential"
+      response: string[]
+    }
+
 export type FormFieldValues = {
   [FIELD_NAME.URL]: string
   [FIELD_NAME.METHOD]: MethodOption
   [FIELD_NAME.STATUS]: StatusOption
-  [FIELD_NAME.RESPONSE]: string
+  [FIELD_NAME.RESPONSE]: FormFieldResponseValue
   [FIELD_NAME.RESPONSE_DELAY]: number
 }
 
