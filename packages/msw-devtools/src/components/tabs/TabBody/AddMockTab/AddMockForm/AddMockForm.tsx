@@ -3,6 +3,7 @@ import { jsonrepair } from "jsonrepair"
 import { useEffect, useMemo } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
 import { useTranslation } from "react-i18next"
+import { FaPlus } from "react-icons/fa6"
 
 import { useDefaultResponseSettings } from "~/components/contexts/default-response"
 import { useDefaultResponseDelaySettings } from "~/components/contexts/default-response-delay"
@@ -290,13 +291,17 @@ export const AddMockForm = () => {
       <div className='mt-4 flex flex-1 flex-col'>
         <span className='flex items-center justify-between'>
           Response Body (JSON){" "}
-          {Array.isArray(response) && (
+          {response.type === "sequential" && (
             <span className='ml-2 mr-auto rounded-lg border-2 border-solid border-orange-500 px-2 py-1 !font-mono text-[0.65rem] font-semibold text-orange-500'>
-              sequential {response.length}
+              {t("tabs.addMock.sequentialBadge", {
+                count: response.response.length
+              })}
             </span>
           )}
           <button
+            className='button hover:bg-slate-300 hover:text-slate-600'
             type='button'
+            title={t("tabs.addMock.addResponseButton.title")}
             onClick={() => {
               const normalizedPrevResponse = normalizeResponse(
                 method.getValues(FIELD_NAME.RESPONSE)
@@ -318,7 +323,7 @@ export const AddMockForm = () => {
               })
             }}
           >
-            Add
+            <FaPlus size={16} />
           </button>
         </span>
         <AddMockFormCodeEditor control={method.control} />

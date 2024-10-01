@@ -17,6 +17,9 @@
   },
   "tabs": {
     "addMock": {
+      "addResponseButton": {
+        "title": "Add Sequential Response"
+      },
       "autoFix": "Fix JSON",
       "cancelEdit": "Cancel",
       "editModeIndicator": "Edit Mode",
@@ -24,6 +27,7 @@
       "responseDelay": {
         "label": "Delay(s)"
       },
+      "sequentialBadge": "sequential {{count}}",
       "submit": "Add",
       "url": {
         "placeholder": "Type URL Here"
