@@ -8,7 +8,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@custardcream/msw-devtools" target="_blank"><img src="https://img.shields.io/npm/v/@custardcream/msw-devtools.svg?style=for-the-badge&label=Latest&color=black" alt="Package version" /></a>
   <br />
-  <a href="../../README.md">ENGLISH</a> | <a href="#">한국어</a>
+  <a href="https://github.com/custardcream98/msw-devtools">ENGLISH</a> | <a href="https://github.com/custardcream98/msw-devtools/blob/main/README/KO/README.ko.md">한국어</a>
 </p>
 
 <br />
@@ -82,4 +82,4 @@ enableMocking().then(() =>
 
 <img width="500" src="./image4.png">
 
-각 요청에 대한 응닶값이 순차적으로 변경되게 됩니다.
+각 요청에 대한 응답값이 순차적으로 변경되게 됩니다.
