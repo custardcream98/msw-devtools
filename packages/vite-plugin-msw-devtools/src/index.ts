@@ -1,12 +1,8 @@
-import type {
-  InferCustomEventPayload,
-  Plugin,
-  WebSocketCustomListener
-} from "vite"
+import type { Plugin } from "vite"
 
-const ackHandler: WebSocketCustomListener<
-  InferCustomEventPayload<"msw-devtools:ack">
-> = (_, client) => {
+import type { WebSocketListener } from "~/types"
+
+const ack: WebSocketListener<"msw-devtools:ack"> = (_, client) => {
   client.send("msw-devtools:from-server", {
     msg: "Hi! I got your message!"
   })
@@ -16,7 +12,7 @@ export default function plugin(): Plugin {
   return {
     name: "vite-plugin-msw-devtools",
     configureServer(server) {
-      server.ws.on("msw-devtools:ack", ackHandler)
+      server.ws.on("msw-devtools:ack", ack)
     }
   }
 }
