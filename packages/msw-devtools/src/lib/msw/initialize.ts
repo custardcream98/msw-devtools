@@ -44,6 +44,8 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
   }
 
   register(...localStorageMocks.filter((mock) => mock.isActivated))
+
+  return localStorageMocks
 }
 
 // TODO: delete on 1.0.0 release

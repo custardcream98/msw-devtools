@@ -1,18 +1,24 @@
 import type { Plugin } from "vite"
 
-import type { WebSocketListener } from "~/types"
+import { mockList } from "~/listeners/mock-list"
+import { setPluginOptions } from "~/options"
+import type { PluginOptions } from "~/types"
 
-const ack: WebSocketListener<"msw-devtools:ack"> = (_, client) => {
-  client.send("msw-devtools:from-server", {
-    msg: "Hi! I got your message!"
-  })
-}
+export default function plugin(options: PluginOptions = {}): Plugin {
+  setPluginOptions(options)
 
-export default function plugin(): Plugin {
   return {
     name: "vite-plugin-msw-devtools",
     configureServer(server) {
-      server.ws.on("msw-devtools:ack", ack)
+      const { ws } = server
+
+      ws.on("msw-devtools:syn", (_, client) => {
+        client.send("msw-devtools:ack")
+
+        ws.on("msw-devtools:ack", () => {
+          ws.on("msw-devtools:mock-list:update", mockList(ws))
+        })
+      })
     }
   }
 }

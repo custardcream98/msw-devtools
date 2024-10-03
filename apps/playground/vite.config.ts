@@ -3,5 +3,10 @@ import mswDevtools from "@custardcream/vite-plugin-msw-devtools"
 import { defineConfig } from "vite"
 
 export default defineConfig({
-  plugins: [react(), mswDevtools()]
+  plugins: [
+    react(),
+    mswDevtools({
+      outputPath: "src/__tests__/mock/handlers.ts"
+    })
+  ]
 })

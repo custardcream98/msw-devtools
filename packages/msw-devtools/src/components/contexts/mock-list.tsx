@@ -1,9 +1,10 @@
 import type { JsonMock } from "@custardcream/msw-devtools-core"
-import React, { useCallback, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo } from "react"
 
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, unregister } from "~/lib/msw"
+import { isVitePluginEnabled, viteSendMockList } from "~/lib/vite"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
@@ -36,6 +37,12 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     StorageKey.EDIT_STATE,
     null
   )
+
+  useEffect(() => {
+    if (isVitePluginEnabled()) {
+      viteSendMockList(mockList)
+    }
+  }, [mockList])
 
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {

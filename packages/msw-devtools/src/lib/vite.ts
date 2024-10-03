@@ -1,9 +1,30 @@
-export const viteHmr = () => {
-  if (import.meta.hot) {
-    import.meta.hot.send("msw-devtools:ack")
+import { JsonMock } from "@custardcream/msw-devtools-core"
 
-    import.meta.hot.on("msw-devtools:from-server", (data) => {
-      console.log("Received message from server", data)
+let _isVitePluginEnabled = false
+
+export const isVitePluginEnabled = () => _isVitePluginEnabled
+
+export const viteSendMockList = (mockList: JsonMock[]) => {
+  if (import.meta.hot) {
+    const hot = import.meta.hot
+
+    hot.send("msw-devtools:mock-list:update", { mockList })
+  }
+}
+
+export const viteHmr = (initialMockList?: JsonMock[]) => {
+  if (import.meta.hot) {
+    const hot = import.meta.hot
+
+    hot.send("msw-devtools:syn")
+
+    hot.on("msw-devtools:ack", () => {
+      _isVitePluginEnabled = true
+      hot.send("msw-devtools:ack")
+
+      if (initialMockList) {
+        viteSendMockList(initialMockList)
+      }
     })
   }
 }
