@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "pnpm --filter @custardcream/msw-devtools build && tsc -b && vite build",
+    "build": "pnpm --filter @custardcream/msw-devtools build && pnpm --filter @custardcream/vite-plugin-msw-devtools build && tsc -b && vite build",
     "preview": "vite preview",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
