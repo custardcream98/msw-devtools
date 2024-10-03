@@ -2,19 +2,18 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "jsx": "react-jsx",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "lib": ["dom", "esnext"],
+    "lib": ["esnext"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
     },
 
     // Test
-    "types": ["vitest/globals", "vite/client"],
+    "types": ["vitest/globals"],
 
     // Linting
     "strict": true,

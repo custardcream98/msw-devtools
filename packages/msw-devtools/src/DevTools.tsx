@@ -11,6 +11,9 @@ import { TabBar, TabProvider } from "~/components/tabs/TabBar"
 import { TabBody } from "~/components/tabs/TabBody"
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import { viteHmr } from "~/lib/vite"
+
+viteHmr()
 
 const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
   const [isOpened, setIsOpened] = useLocalStorageState(
