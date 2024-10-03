@@ -2,19 +2,14 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "jsx": "react-jsx",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "lib": ["dom", "esnext"],
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    },
+    "lib": ["esnext"],
 
     // Test
-    "types": ["vitest/globals", "@custardcream/msw-devtools-core/vite/events"],
+    "types": ["vitest/globals"],
 
     // Linting
     "strict": true,
@@ -22,6 +17,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "./vitest.setup.ts"],
+  "include": ["src", "vite"],
   "exclude": ["node_modules", "dist"]
 }

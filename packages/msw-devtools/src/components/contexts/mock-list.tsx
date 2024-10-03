@@ -1,9 +1,9 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import React, { useCallback, useMemo } from "react"
 
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, unregister } from "~/lib/msw"
-import type { JsonMock } from "~/types"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 

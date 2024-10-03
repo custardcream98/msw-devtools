@@ -1,8 +1,7 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { setupServer } from "msw/node"
 
-import { FIELD_NAME } from "~/constants"
 import { generateHandler } from "~/lib/msw/generateHandler"
-import type { JsonMock } from "~/types"
 
 const server = setupServer()
 
@@ -13,16 +12,16 @@ afterAll(() => server.close())
 describe("generateMockRequestHandler", () => {
   it("should return a request handler", async () => {
     const mock = {
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.URL]: "/test-url",
-      [FIELD_NAME.RESPONSE_DELAY]: 0,
-      [FIELD_NAME.RESPONSE]: {
+      method: "get",
+      url: "/test-url",
+      responseDelay: 0,
+      response: {
         type: "single",
         response: { name: "John" }
       },
-      [FIELD_NAME.STATUS]: "200",
+      status: "200",
       isActivated: true
-    } as const
+    } as const satisfies JsonMock
 
     const requestHandler = generateHandler(mock)
     expect(requestHandler).toBeDefined()
@@ -37,14 +36,14 @@ describe("generateMockRequestHandler", () => {
 
   it("should handle sequential responses", async () => {
     const mock = {
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.URL]: "/test-sequential",
-      [FIELD_NAME.RESPONSE_DELAY]: 0,
-      [FIELD_NAME.RESPONSE]: {
+      method: "get",
+      url: "/test-sequential",
+      responseDelay: 0,
+      response: {
         type: "sequential",
         response: [{ name: "John" }, { name: "Doe" }]
       },
-      [FIELD_NAME.STATUS]: "200",
+      status: "200",
       isActivated: true
     } as const satisfies JsonMock
 
@@ -72,14 +71,14 @@ describe("generateMockRequestHandler", () => {
     vi.useFakeTimers()
 
     const mock = {
-      [FIELD_NAME.RESPONSE_DELAY]: 5,
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.URL]: "/test-delay",
-      [FIELD_NAME.RESPONSE]: {
+      responseDelay: 5,
+      method: "get",
+      url: "/test-delay",
+      response: {
         type: "single",
         response: { name: "Delayed John" }
       },
-      [FIELD_NAME.STATUS]: "200",
+      status: "200",
       isActivated: true
     } as const
 

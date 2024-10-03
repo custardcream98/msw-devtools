@@ -1,3 +1,4 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import type { SharedOptions } from "msw"
 import type { SetupWorker, StartOptions } from "msw/browser"
 import type { setupServer as setupServerNative } from "msw/native"
@@ -9,7 +10,6 @@ import {
   setLocalStorageItem
 } from "~/hooks/useLocalStorageState"
 import { register } from "~/lib/msw/register"
-import type { JsonMock } from "~/types"
 
 import { getWorkerWithoutThrow, setWorker } from "./worker"
 

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "name": "@custardcream/msw-devtools-core",
+  "sideEffects": false,
+  "version": "0.0.1",
+  "type": "module",
+  "types": "./src/index.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
+    },
+    "./vite/events": {
+      "types": "./vite/events.d.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint --cache",
+    "lint:fix": "pnpm lint --fix",
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5",
+    "@vitest/coverage-v8": "^2.1.1",
+    "@vitest/ui": "^2.1.1",
+    "@eslint/compat": "^1.1.1",
+    "eslint": "^9.9.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-testing-library": "^6.3.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.0.1",
+    "vitest": "^2.1.1",
+    "vite": "^5.4.8"
+  }
+}

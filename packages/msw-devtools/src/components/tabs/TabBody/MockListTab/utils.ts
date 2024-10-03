@@ -1,7 +1,5 @@
+import { isJsonMock, type JsonMock } from "@custardcream/msw-devtools-core"
 import { jsonrepair } from "jsonrepair"
-
-import { FIELD_NAME } from "~/constants"
-import { JsonMock } from "~/types"
 
 const isJsonMocks = (data: unknown): data is JsonMock[] => {
   return Array.isArray(data) && data.every(isJsonMock)
@@ -27,21 +25,6 @@ export const saveJson = (data: object, filename: string) => {
 
   URL.revokeObjectURL(a.href)
   a.remove()
-}
-
-const isJsonMock = (data: unknown): data is JsonMock => {
-  return (
-    typeof data === "object" &&
-    data !== null &&
-    FIELD_NAME.URL in data &&
-    FIELD_NAME.METHOD in data &&
-    FIELD_NAME.STATUS in data &&
-    FIELD_NAME.RESPONSE in data &&
-    typeof data[FIELD_NAME.URL] === "string" &&
-    typeof data[FIELD_NAME.METHOD] === "string" &&
-    typeof data[FIELD_NAME.STATUS] === "string" &&
-    typeof data[FIELD_NAME.RESPONSE] === "object"
-  )
 }
 
 export const loadJson = ({

@@ -1,8 +1,8 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import React, { useCallback, useContext, useMemo, useState } from "react"
 
 import { StorageKey, Tab } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { JsonMock } from "~/types"
 
 type TabState = {
   prevEdited?: JsonMock

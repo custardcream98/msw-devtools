@@ -13,7 +13,7 @@
     },
 
     // Test
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "@custardcream/msw-devtools-core/vite/events"],
 
     // Linting
     "strict": true,
@@ -21,6 +21,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "./vitest.setup.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

@@ -206,6 +206,9 @@ importers:
 
   packages/msw-devtools:
     dependencies:
+      '@custardcream/msw-devtools-core':
+        specifier: workspace:*
+        version: link:../msw-devtools-core
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -367,7 +370,47 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@22.5.5)(@vitest/ui@2.1.1)(happy-dom@15.7.4)(less@4.2.0)(msw@2.4.8(typescript@5.6.2))(sass@1.77.1)(stylus@0.62.0)(terser@5.33.0)
 
+  packages/msw-devtools-core:
+    devDependencies:
+      '@eslint/compat':
+        specifier: ^1.1.1
+        version: 1.1.1
+      '@types/node':
+        specifier: ^22.5.5
+        version: 22.5.5
+      '@vitest/coverage-v8':
+        specifier: ^2.1.1
+        version: 2.1.1(vitest@2.1.1(@types/node@22.5.5)(@vitest/ui@2.1.1)(happy-dom@15.7.4)(less@4.2.0)(msw@2.4.8(typescript@5.6.2))(sass@1.77.1)(stylus@0.62.0)(terser@5.33.0))
+      '@vitest/ui':
+        specifier: ^2.1.1
+        version: 2.1.1(vitest@2.1.1)
+      eslint:
+        specifier: ^9.9.0
+        version: 9.10.0(jiti@1.21.0)
+      eslint-plugin-simple-import-sort:
+        specifier: ^12.1.1
+        version: 12.1.1(eslint@9.10.0(jiti@1.21.0))
+      eslint-plugin-testing-library:
+        specifier: ^6.3.0
+        version: 6.3.0(eslint@9.10.0(jiti@1.21.0))(typescript@5.6.2)
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+      typescript-eslint:
+        specifier: ^8.0.1
+        version: 8.6.0(eslint@9.10.0(jiti@1.21.0))(typescript@5.6.2)
+      vite:
+        specifier: ^5.4.8
+        version: 5.4.8(@types/node@22.5.5)(less@4.2.0)(sass@1.77.1)(stylus@0.62.0)(terser@5.33.0)
+      vitest:
+        specifier: ^2.1.1
+        version: 2.1.1(@types/node@22.5.5)(@vitest/ui@2.1.1)(happy-dom@15.7.4)(less@4.2.0)(msw@2.4.8(typescript@5.6.2))(sass@1.77.1)(stylus@0.62.0)(terser@5.33.0)
+
   packages/vite-plugin-msw-devtools:
+    dependencies:
+      '@custardcream/msw-devtools-core':
+        specifier: workspace:*
+        version: link:../msw-devtools-core
     devDependencies:
       '@eslint/compat':
         specifier: ^1.1.1

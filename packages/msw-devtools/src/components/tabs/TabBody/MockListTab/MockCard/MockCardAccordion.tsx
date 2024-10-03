@@ -1,16 +1,11 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { clsx } from "clsx"
 import { FaChevronRight } from "react-icons/fa6"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { Toggle } from "~/components/Toggle"
-import {
-  FIELD_NAME,
-  METHOD_COLOR,
-  STATUS_COLOR,
-  STATUS_NAME
-} from "~/constants"
+import { METHOD_COLOR, STATUS_COLOR, STATUS_NAME } from "~/constants"
 import { useBoolean } from "~/hooks/useBoolean"
-import type { JsonMock } from "~/types"
 
 export const MockCardAccordion = ({
   children,
@@ -38,22 +33,21 @@ export const MockCardAccordion = ({
         <span
           className={clsx(
             "mr-2 !font-mono font-semibold uppercase",
-            METHOD_COLOR[jsonMock[FIELD_NAME.METHOD]]
+            METHOD_COLOR[jsonMock.method]
           )}
         >
-          {jsonMock[FIELD_NAME.METHOD]}
+          {jsonMock.method}
         </span>
         <span
           className={clsx(
             "mr-2 shrink-0 rounded-lg bg-slate-100 px-[0.3rem] py-[0.125rem] !font-mono text-[0.7rem] font-semibold uppercase",
-            STATUS_COLOR[jsonMock[FIELD_NAME.STATUS]]
+            STATUS_COLOR[jsonMock.status]
           )}
         >
-          {jsonMock[FIELD_NAME.STATUS]}{" "}
-          {STATUS_NAME[jsonMock[FIELD_NAME.STATUS]]}
+          {jsonMock.status} {STATUS_NAME[jsonMock.status]}
         </span>
         <code className='mr-4 min-w-0 text-wrap break-all !font-mono'>
-          {jsonMock[FIELD_NAME.URL]}
+          {jsonMock.url}
         </code>
         <Toggle
           className='ml-auto'

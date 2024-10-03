@@ -17,6 +17,6 @@ export type JsonMock = {
   method: MethodOption
   status: StatusOption
   response: JsonMockResponse
-  delay: number
+  responseDelay: number
   isActivated: boolean
 }
