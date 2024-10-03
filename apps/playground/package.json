@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint --cache",
     "lint:fix": "pnpm lint --fix",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "test": "vitest"
   },
   "dependencies": {
     "@custardcream/msw-devtools": "workspace:*",
@@ -21,7 +22,11 @@
   },
   "devDependencies": {
     "@custardcream/vite-plugin-msw-devtools": "workspace:*",
+    "@eslint/compat": "^1.1.1",
     "@eslint/js": "^9.9.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -29,11 +34,14 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-testing-library": "^6.3.0",
     "globals": "^15.9.0",
+    "happy-dom": "^15.7.4",
     "msw": "^2.4.8",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "vitest": "^2.1.1"
   },
   "msw": {
     "workerDirectory": [
