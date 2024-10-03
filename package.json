@@ -15,7 +15,7 @@
     "build:plugin": "pnpm --filter @custardcream/vite-plugin-msw-devtools build",
     "build:plugin:watch": "pnpm --filter @custardcream/vite-plugin-msw-devtools build:watch",
     "build:playground": "pnpm build:package && pnpm --filter playground build",
-    "dev": "concurrently -k -s first -n \"PACKAGE,PLUGIN,PLAYGROUND\" -c \"magenta,orange,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm build:plugin:watch\" \"pnpm --filter playground dev\"",
+    "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,orange,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm --filter playground dev\"",
     "ci:version": "pnpm changeset version",
     "ci:publish": "pnpm sync-readme && pnpm build:package && pnpm changeset publish",
     "ci:check": "pnpm lint && pnpm type-check && pnpm coverage",
