@@ -1,18 +1,18 @@
 import { http, HttpResponse } from "msw"
 
-const getRecipesRecipes = async () => {
+const getRecipesRecipes = (response = "this is aweesome!") => {
   return http["get"]("https://api.sampleapis.com/recipes/recipes", () =>
-    HttpResponse.json("this is aweesome!")
+    HttpResponse.json(response)
   )
 }
-const getSwitchGames = async () => {
+const getSwitchGames = (response = "sample") => {
   return http["get"]("https://api.sampleapis.com/switch/games", () =>
-    HttpResponse.json("sample")
+    HttpResponse.json(response)
   )
 }
-const getWinesReds = async () => {
+const getWinesReds = (response = "response 1") => {
   return http["get"]("https://api.sampleapis.com/wines/reds", () =>
-    HttpResponse.json("response 1")
+    HttpResponse.json(response)
   )
 }
 
