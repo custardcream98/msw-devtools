@@ -6,7 +6,9 @@ export default defineConfig({
   plugins: [
     react(),
     mswDevtools({
-      outputPath: "src/__tests__/mock/handlers.ts"
+      scriptOutputPath: "src/__tests__/mock/handlers.ts",
+      generateJson: true,
+      jsonOutputPath: "src/__tests__/mock/list.json"
     })
   ]
 })
