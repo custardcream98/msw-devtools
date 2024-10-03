@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json.schemastore.org/package",
+  "name": "@custardcream/vite-plugin-msw-devtools",
+  "version": "0.0.1",
+  "description": "Vite plugin for @custardcream/msw-devtools",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs",
+    "lint": "eslint --cache",
+    "lint:fix": "pnpm lint --fix",
+    "type-check": "tsc --noEmit --skipLibCheck",
+    "build:watch": "pnpm build --watch",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "devDependencies": {
+    "@custardcream/msw-devtools-core": "workspace:*",
+    "@types/node": "^22.5.5",
+    "@vitest/coverage-v8": "^2.1.1",
+    "@vitest/ui": "^2.1.1",
+    "@eslint/compat": "^1.1.1",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "eslint": "^9.9.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-testing-library": "^6.3.0",
+    "msw": "^2.4.8",
+    "prettier": "^3.2.5",
+    "rollup": "^4.21.3",
+    "rollup-plugin-delete": "^2.1.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-tsconfig-paths": "^1.5.2",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.0.1",
+    "vite": "^5.4.1",
+    "vitest": "^2.1.1"
+  },
+  "peerDependencies": {
+    "vite": "^5.0.0",
+    "prettier": "*",
+    "eslint": "*"
+  },
+  "author": "shiwoo.park <custardcream@kakao.com>",
+  "bugs": {
+    "url": "https://github.com/custardcream98/msw-devtools/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/custardcream98/msw-devtools.git"
+  },
+  "keywords": [
+    "msw",
+    "devtools",
+    "mock-service-worker",
+    "testing",
+    "development",
+    "QA",
+    "framework-agnostic",
+    "vite",
+    "vite-plugin"
+  ],
+  "license": "Apache-2.0"
+}

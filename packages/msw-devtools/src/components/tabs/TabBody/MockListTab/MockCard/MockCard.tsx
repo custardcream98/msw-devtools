@@ -1,3 +1,4 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { BasicSetupOptions } from "@uiw/react-codemirror"
 import { useTranslation } from "react-i18next"
 import { FaRegTrashCan } from "react-icons/fa6"
@@ -6,9 +7,8 @@ import { HiMiniPencilSquare } from "react-icons/hi2"
 import { CodeEditor } from "~/components/CodeEditor"
 import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
-import { FIELD_NAME, StorageKey, Tab } from "~/constants"
+import { StorageKey, Tab } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import type { JsonMock } from "~/types"
 import { jsonMockToFormFieldValues } from "~/utils/jsonMockToFormFieldValues"
 
 import { MockCardAccordion } from "./MockCardAccordion"
@@ -33,7 +33,7 @@ export const MockCard = ({
 
   const { removeMock } = useMockList()
 
-  const response = jsonMock[FIELD_NAME.RESPONSE]
+  const { response } = jsonMock
 
   return (
     <MockCardAccordion isInitialOpen={isInitialOpen} {...jsonMock}>
@@ -66,10 +66,10 @@ export const MockCard = ({
         )}
       </div>
       <div className='mt-2 flex items-center gap-3'>
-        {!!jsonMock[FIELD_NAME.RESPONSE_DELAY] && (
+        {!!jsonMock.responseDelay && (
           <span className='font-mono! text-xs text-gray-500'>
             {t("mockListTab.mockCard.responseDelay", {
-              delay: jsonMock[FIELD_NAME.RESPONSE_DELAY]
+              delay: jsonMock.responseDelay
             })}
           </span>
         )}

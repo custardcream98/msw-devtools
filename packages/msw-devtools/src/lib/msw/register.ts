@@ -1,6 +1,7 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
+
 import { generateHandler } from "~/lib/msw/generateHandler"
 import { getWorker } from "~/lib/msw/worker"
-import type { JsonMock } from "~/types"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 export const register = (...mocks: JsonMock[]) => {

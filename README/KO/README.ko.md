@@ -22,6 +22,7 @@
 - **상황에 따라 다른 응답값을 사용하세요.** 응답값이 순차적으로 바뀌게 할 수 있습니다.
 - **Mock Request Handler를 내보내거나 가져오세요.** JSON 포멧으로 손쉽게 Mock Request Handler를 공유할 수 있습니다.
 - 한국어를 지원합니다.
+- (실험적) **MSW Request Handler를 자동으로 생성하세요.** Devtools UI로 MSW Request Handler 코드를 자동으로 생성하세요. (Vite 플러그인)
 
 <br />
 
@@ -112,3 +113,9 @@ enableMocking().then(() => {
 <img width="500" src="./image4.png">
 
 각 요청에 대한 응답값이 순차적으로 변경되게 됩니다.
+
+## (실험적) MSW Request Handler 코드 자동 생성하기
+
+MSW request handler가 필요한 경우(예: 테스트 코드 작성), Devtools UI로 MSW request handler 코드를 자동으로 생성할 수 있습니다.
+
+더 자세히 알아보기: [@custardcream/vite-plugin-msw-devtools](./packages/vite-plugin-msw-devtools/README.md)

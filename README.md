@@ -24,6 +24,7 @@
 - **Easily Manage Mock Request Handlers.** Add, edit, delete, enable, or disable mock request handlers with ease.
 - **Use Different Response Data Based on the Situation.** Change response data sequentially.
 - **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
+- (experimental) **Generate MSW Request Handlers Automatically.** Automatically generate MSW request handlers code from the Devtools UI. (Vite Plugin)
 
 <br />
 
@@ -116,3 +117,11 @@ You can achieve this by using the sequential response feature.
 <img width="500" src="./README/EN/image4.png">
 
 This feature allows you to change the response data for each request sequentially.
+
+## (experimental) Generate MSW Request Handlers Code Automatically
+
+If you need MSW request handlers for your project(for example, testing), you can generate them automatically using vite plugin.
+
+Check out the plugin documentation for more information.
+
+[@custardcream/vite-plugin-msw-devtools](./packages/vite-plugin-msw-devtools/README.md)

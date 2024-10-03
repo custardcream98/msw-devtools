@@ -1,10 +1,9 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { setupServer } from "msw/node"
 
 import { MockListProvider, useMockList } from "~/components/contexts/mock-list"
-import { FIELD_NAME } from "~/constants"
-import type { JsonMock } from "~/types"
 
 const server = setupServer()
 
@@ -57,15 +56,15 @@ const setup = ({ mock }: { mock: JsonMock }) => {
 describe("mock-list", () => {
   it("should push a mock", async () => {
     const mock: JsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
       isActivated: true,
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      responseDelay: 1000
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -76,15 +75,15 @@ describe("mock-list", () => {
 
   it("should not push a mock if the same mock already exists", async () => {
     const mock: JsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
       isActivated: true,
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      responseDelay: 1000
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -96,15 +95,15 @@ describe("mock-list", () => {
 
   it("should remove a mock", async () => {
     const mock: JsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
       isActivated: true,
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      responseDelay: 1000
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -116,15 +115,15 @@ describe("mock-list", () => {
 
   it("should activate a mock", async () => {
     const mock: JsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
       isActivated: false,
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      responseDelay: 1000
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -137,15 +136,15 @@ describe("mock-list", () => {
 
   it("should deactivate a mock", async () => {
     const mock: JsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
       isActivated: true,
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      responseDelay: 1000
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -158,15 +157,15 @@ describe("mock-list", () => {
 
   it("should clear all mocks", async () => {
     const mock: JsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
       isActivated: true,
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      responseDelay: 1000
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 

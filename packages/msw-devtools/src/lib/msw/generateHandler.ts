@@ -1,7 +1,7 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { http, HttpResponse } from "msw"
 
 import { FIELD_NAME } from "~/constants"
-import type { JsonMock } from "~/types"
 
 export const generateHandler = (mock: JsonMock) => {
   let currentSequence = 0

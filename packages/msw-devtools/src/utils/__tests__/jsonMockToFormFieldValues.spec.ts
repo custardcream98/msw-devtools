@@ -1,20 +1,19 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { expect } from "vitest"
 
-import { FIELD_NAME } from "~/constants"
-import type { JsonMock } from "~/types"
 import { jsonMockToFormFieldValues } from "~/utils/jsonMockToFormFieldValues"
 
 describe("jsonMockToFormFieldValues", () => {
   it("should return a form field values typed object from the json mock (single)", () => {
     const jsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "single",
         response: { name: "John" }
       },
-      [FIELD_NAME.RESPONSE_DELAY]: 1000,
+      responseDelay: 1000,
       isActivated: true
     } as const satisfies JsonMock
 
@@ -38,14 +37,14 @@ describe("jsonMockToFormFieldValues", () => {
 
   it("should return a form field values typed object from the json mock (sequential)", () => {
     const jsonMock = {
-      [FIELD_NAME.URL]: "https://test-url",
-      [FIELD_NAME.METHOD]: "get",
-      [FIELD_NAME.STATUS]: "200",
-      [FIELD_NAME.RESPONSE]: {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
         type: "sequential",
         response: [{ name: "John" }, { age: 30 }]
       },
-      [FIELD_NAME.RESPONSE_DELAY]: 1000,
+      responseDelay: 1000,
       isActivated: true
     } as const satisfies JsonMock
 

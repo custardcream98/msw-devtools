@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://api.sampleapis.com/recipes/recipes",
+    "method": "get",
+    "status": "200",
+    "response": "this is aweesome!"
+  },
+  {
+    "url": "https://api.sampleapis.com/switch/games",
+    "method": "get",
+    "status": "200",
+    "response": "sample"
+  },
+  {
+    "url": "https://api.sampleapis.com/wines/reds",
+    "method": "get",
+    "status": "200",
+    "response": "response 1"
+  }
+]

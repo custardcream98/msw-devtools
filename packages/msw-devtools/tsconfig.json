@@ -14,7 +14,7 @@
     },
 
     // Test
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "@custardcream/msw-devtools-core/vite/events"],
 
     // Linting
     "strict": true,

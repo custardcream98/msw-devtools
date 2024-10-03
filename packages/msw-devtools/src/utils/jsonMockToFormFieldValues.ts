@@ -1,19 +1,23 @@
+import type {
+  JsonMock,
+  JsonMockResponse
+} from "@custardcream/msw-devtools-core"
+
 import {
   FIELD_NAME,
   FormFieldResponseValue,
   type FormFieldValues
 } from "~/constants"
-import type { JsonMock, JsonMockResponse } from "~/types"
 
 export const jsonMockToFormFieldValues = (
   jsonMock: JsonMock
 ): FormFieldValues => {
   return {
-    [FIELD_NAME.URL]: jsonMock[FIELD_NAME.URL],
-    [FIELD_NAME.METHOD]: jsonMock[FIELD_NAME.METHOD],
-    [FIELD_NAME.STATUS]: jsonMock[FIELD_NAME.STATUS],
-    [FIELD_NAME.RESPONSE]: resolveResponse(jsonMock[FIELD_NAME.RESPONSE]),
-    [FIELD_NAME.RESPONSE_DELAY]: jsonMock[FIELD_NAME.RESPONSE_DELAY]
+    [FIELD_NAME.URL]: jsonMock.url,
+    [FIELD_NAME.METHOD]: jsonMock.method,
+    [FIELD_NAME.STATUS]: jsonMock.status,
+    [FIELD_NAME.RESPONSE]: resolveResponse(jsonMock.response),
+    [FIELD_NAME.RESPONSE_DELAY]: jsonMock.responseDelay
   }
 }
 

@@ -1,3 +1,4 @@
+import { METHOD_OPTION, STATUS_OPTION } from "@custardcream/msw-devtools-core"
 import { clsx } from "clsx"
 import { jsonrepair } from "jsonrepair"
 import { useEffect, useMemo } from "react"
@@ -15,10 +16,8 @@ import {
   type FormFieldResponseValue,
   type FormFieldValues,
   METHOD_COLOR,
-  METHOD_OPTION,
   STATUS_COLOR,
   STATUS_NAME,
-  STATUS_OPTION,
   StorageKey,
   Tab
 } from "~/constants"

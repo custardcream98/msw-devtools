@@ -1,9 +1,9 @@
-import {
-  FIELD_NAME,
-  type FormFieldResponseValue,
-  type FormFieldValues
-} from "~/constants"
-import type { JsonMock, JsonMockResponse } from "~/types"
+import type {
+  JsonMock,
+  JsonMockResponse
+} from "@custardcream/msw-devtools-core"
+
+import { type FormFieldResponseValue, type FormFieldValues } from "~/constants"
 
 const parseResponse = (response: FormFieldResponseValue): JsonMockResponse => {
   if (response.type === "single") {
@@ -23,11 +23,11 @@ export const formFieldValuesToJsonMock = (
   formData: FormFieldValues
 ): JsonMock => {
   return {
-    [FIELD_NAME.URL]: formData[FIELD_NAME.URL],
-    [FIELD_NAME.METHOD]: formData[FIELD_NAME.METHOD],
-    [FIELD_NAME.STATUS]: formData[FIELD_NAME.STATUS],
-    [FIELD_NAME.RESPONSE]: parseResponse(formData[FIELD_NAME.RESPONSE]),
+    url: formData.url,
+    method: formData.method,
+    status: formData.status,
+    response: parseResponse(formData.response),
     isActivated: true,
-    [FIELD_NAME.RESPONSE_DELAY]: formData[FIELD_NAME.RESPONSE_DELAY]
+    responseDelay: formData.responseDelay
   }
 }

@@ -1,10 +1,9 @@
+import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
-import { FIELD_NAME } from "~/constants"
-import type { JsonMock } from "~/types"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 import { MockCard } from "./MockCard"
@@ -21,16 +20,10 @@ export const MockListTab = () => {
 
     return mockList.filter((mock) => {
       return (
-        mock[FIELD_NAME.URL]
-          .toLowerCase()
-          .includes(searchString.toLowerCase()) ||
-        mock[FIELD_NAME.METHOD]
-          .toLowerCase()
-          .includes(searchString.toLowerCase()) ||
-        mock[FIELD_NAME.STATUS]
-          .toLowerCase()
-          .includes(searchString.toLowerCase()) ||
-        JSON.stringify(mock[FIELD_NAME.RESPONSE].response)
+        mock.url.toLowerCase().includes(searchString.toLowerCase()) ||
+        mock.method.toLowerCase().includes(searchString.toLowerCase()) ||
+        mock.status.toLowerCase().includes(searchString.toLowerCase()) ||
+        JSON.stringify(mock.response.response)
           .toLowerCase()
           .includes(searchString.toLowerCase())
       )
@@ -52,7 +45,7 @@ export const MockListTab = () => {
       </div>
       <ul className='w-full [&>li+li]:mt-4'>
         {searchedMockList.map((mock) => (
-          <MockListItem key={mock[FIELD_NAME.URL]} mock={mock} />
+          <MockListItem key={mock.url} mock={mock} />
         ))}
       </ul>
     </MockListFrame>
