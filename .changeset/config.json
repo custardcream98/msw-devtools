@@ -4,15 +4,14 @@
   "commit": false,
   "fixed": [],
   "linked": [
-    ["@custardcream/msw-devtools", "@custardcream/vite-plugin-msw-devtools"]
+    [
+      "@custardcream/msw-devtools",
+      "@custardcream/vite-plugin-msw-devtools",
+      "@custardcream/msw-devtools-core"
+    ]
   ],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "playground",
-    "playground-vue",
-    "docs",
-    "@custardcream/msw-devtools-core"
-  ]
+  "ignore": ["playground", "playground-vue", "docs"]
 }
