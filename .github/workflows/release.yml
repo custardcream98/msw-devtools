@@ -19,6 +19,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Git User
+        run: |
+          git config --global user.email custardcream@kakao.com
+          git config --global user.name shiwoo.park
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -42,6 +47,7 @@ jobs:
           title: "[release]"
           publish: pnpm ci:publish
           createGithubReleases: true
+          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
