@@ -16,10 +16,16 @@ import { getWorkerWithoutThrow, setWorker } from "./worker"
 export type InitializeProps =
   | {
       setupWorker: SetupWorker
+      /**
+       * @link https://mswjs.io/docs/api/setup-worker/start/#options
+       */
       options?: StartOptions
     }
   | {
       setupWorker: SetupServerApi | ReturnType<typeof setupServerNative>
+      /**
+       * @link https://mswjs.io/docs/api/setup-server/listen/#options
+       */
       options?: Partial<SharedOptions>
     }
 export const initialize = async ({ setupWorker, options }: InitializeProps) => {

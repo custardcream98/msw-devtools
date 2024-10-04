@@ -41,11 +41,15 @@ export default defineConfig([
         includeDependencies: true
       }),
       tsConfigPaths(),
-      resolve(),
-      commonjs(),
       typescript({
-        tsconfig: "./tsconfig.json"
+        tsconfig: "./tsconfig.json",
+        exclude: [/.(test|spec).(ts|tsx)$/],
+        include: ["src/**/*", "../msw-devtools-core/src/**/*"]
       }),
+      resolve({
+        extensions: [".js", ".jsx", ".ts", ".tsx"]
+      }),
+      commonjs(),
       json(),
       terser()
     ]
