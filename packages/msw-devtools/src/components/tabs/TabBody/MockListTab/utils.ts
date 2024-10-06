@@ -1,4 +1,4 @@
-import { isJsonMock, type JsonMock } from "@custardcream/msw-devtools-core"
+import { isJsonMock, type JsonMock } from "core"
 import { jsonrepair } from "jsonrepair"
 
 const isJsonMocks = (data: unknown): data is JsonMock[] => {

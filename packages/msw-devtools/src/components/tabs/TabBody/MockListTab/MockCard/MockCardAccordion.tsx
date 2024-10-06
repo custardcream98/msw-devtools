@@ -1,5 +1,5 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { clsx } from "clsx"
+import type { JsonMock } from "core"
 import { FaChevronRight } from "react-icons/fa6"
 
 import { useMockList } from "~/components/contexts/mock-list"

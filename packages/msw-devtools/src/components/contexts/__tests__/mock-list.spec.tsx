@@ -1,6 +1,6 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import type { JsonMock } from "core"
 import { setupServer } from "msw/node"
 
 import { MockListProvider, useMockList } from "~/components/contexts/mock-list"

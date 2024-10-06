@@ -1,5 +1,5 @@
-import { METHOD_OPTION, STATUS_OPTION } from "@custardcream/msw-devtools-core"
 import { clsx } from "clsx"
+import { METHOD_OPTION, STATUS_OPTION } from "core"
 import { jsonrepair } from "jsonrepair"
 import { useEffect, useMemo } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"

@@ -1,4 +1,4 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import type { JsonMock } from "core"
 
 import { generateHandlerScript } from "./generateHandlerScript"
 

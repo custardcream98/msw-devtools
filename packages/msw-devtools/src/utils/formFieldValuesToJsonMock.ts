@@ -1,7 +1,4 @@
-import type {
-  JsonMock,
-  JsonMockResponse
-} from "@custardcream/msw-devtools-core"
+import type { JsonMock, JsonMockResponse } from "core"
 
 import { type FormFieldResponseValue, type FormFieldValues } from "~/constants"
 

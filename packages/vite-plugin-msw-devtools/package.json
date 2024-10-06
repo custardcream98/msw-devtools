@@ -28,7 +28,7 @@
     "test:ui": "vitest --ui"
   },
   "devDependencies": {
-    "@custardcream/msw-devtools-core": "workspace:*",
+    "core": "workspace:*",
     "@eslint/compat": "^1.1.1",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-json": "^6.1.0",

@@ -1,4 +1,4 @@
-import { JsonMock } from "@custardcream/msw-devtools-core"
+import { JsonMock } from "core"
 
 let _isVitePluginEnabled = false
 

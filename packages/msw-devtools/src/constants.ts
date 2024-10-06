@@ -3,7 +3,7 @@ import {
   METHOD_OPTION,
   type MethodOption,
   type StatusOption
-} from "@custardcream/msw-devtools-core"
+} from "core"
 
 export const FIELD_NAME = {
   URL: "url",
