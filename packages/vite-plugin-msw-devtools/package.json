@@ -4,16 +4,16 @@
   "version": "0.7.0",
   "description": "Vite plugin for @custardcream/msw-devtools",
   "type": "module",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/types.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js",
-      "types": "./dist/types.d.ts"
+      "require": "./dist/cjs/index.js"
     }
   },
+  "types": "dist/types.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist"
   ],
