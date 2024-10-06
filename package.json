@@ -14,6 +14,8 @@
     "build:package:watch": "pnpm --filter @custardcream/msw-devtools build:watch",
     "build:plugin": "pnpm --filter @custardcream/vite-plugin-msw-devtools build",
     "build:plugin:watch": "pnpm --filter @custardcream/vite-plugin-msw-devtools build:watch",
+    "build:webpack-plugin": "pnpm --filter @custardcream/msw-devtools-webpack-plugin build",
+    "build:webpack-plugin:watch": "pnpm --filter @custardcream/msw-devtools-webpack-plugin build:watch",
     "build:playground": "pnpm build:package && pnpm --filter playground build",
     "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,orange,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm --filter playground dev\"",
     "dev:nextjs": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,orange,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm --filter playground-next dev\"",

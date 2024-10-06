@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@custardcream/msw-devtools": "workspace:*",
+    "@custardcream/msw-devtools-webpack-plugin": "workspace:*",
     "@tanstack/react-query-devtools": "^5.59.0",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -28,7 +29,8 @@
     "postcss": "^8",
     "server-only": "^0.0.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack": "^5.95.0"
   },
   "msw": {
     "workerDirectory": [
