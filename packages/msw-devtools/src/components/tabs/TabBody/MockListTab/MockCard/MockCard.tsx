@@ -1,5 +1,5 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
 import { BasicSetupOptions } from "@uiw/react-codemirror"
+import type { JsonMock } from "core"
 import { useTranslation } from "react-i18next"
 import { FaRegTrashCan } from "react-icons/fa6"
 import { HiMiniPencilSquare } from "react-icons/hi2"

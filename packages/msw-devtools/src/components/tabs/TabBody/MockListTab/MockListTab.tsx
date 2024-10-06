@@ -1,4 +1,4 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import type { JsonMock } from "core"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 

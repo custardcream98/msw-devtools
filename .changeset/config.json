@@ -7,7 +7,7 @@
     [
       "@custardcream/msw-devtools",
       "@custardcream/vite-plugin-msw-devtools",
-      "@custardcream/msw-devtools-core"
+      "core"
     ]
   ],
   "access": "public",

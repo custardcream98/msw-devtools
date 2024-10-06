@@ -1,4 +1,4 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import type { JsonMock } from "core"
 import { setupServer } from "msw/node"
 
 import { generateHandler } from "~/lib/msw/generateHandler"

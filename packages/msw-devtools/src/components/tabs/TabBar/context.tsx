@@ -1,4 +1,4 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import type { JsonMock } from "core"
 import React, { useCallback, useContext, useMemo, useState } from "react"
 
 import { StorageKey, Tab } from "~/constants"

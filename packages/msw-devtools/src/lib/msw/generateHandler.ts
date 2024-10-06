@@ -1,4 +1,4 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import type { JsonMock } from "core"
 import { http, HttpResponse } from "msw"
 
 import { FIELD_NAME } from "~/constants"
