@@ -1,5 +1,6 @@
 node_modules/
 src/
+coverage/
 
 .eslintcache
 .gitignore
@@ -7,9 +8,11 @@ src/
 
 .prettierrc
 eslint.config.js
-postcss.config.js
+postcss.config.cjs
 rollup.config.js
 tailwind.config.js
 tsconfig.json
+vitest.config.ts
+vitest.setup.ts
 
 README/KO/
