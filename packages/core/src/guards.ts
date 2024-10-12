@@ -1,4 +1,5 @@
-import { JsonMock } from "./types"
+import { MSWDevtoolsWebsocketEventName } from "./constants"
+import { JsonMock, MSWDevtoolsWebsocketEvent } from "./types"
 
 export const isJsonMock = (data: unknown): data is JsonMock => {
   return (
@@ -22,4 +23,30 @@ export const isJsonMock = (data: unknown): data is JsonMock => {
     "isActivated" in data &&
     typeof data["isActivated"] === "boolean"
   )
+}
+
+export const isMSWDevtoolsWebsocketEvent = (
+  event: unknown
+): event is MSWDevtoolsWebsocketEvent => {
+  if (
+    typeof event !== "object" ||
+    event === null ||
+    !("name" in event) ||
+    typeof event.name !== "string"
+  ) {
+    return false
+  }
+
+  if (
+    event.name === MSWDevtoolsWebsocketEventName.SYN ||
+    event.name === MSWDevtoolsWebsocketEventName.ACK ||
+    (event.name === MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE &&
+      "payload" in event &&
+      Array.isArray(event.payload) &&
+      event.payload.every(isJsonMock))
+  ) {
+    return true
+  }
+
+  return false
 }

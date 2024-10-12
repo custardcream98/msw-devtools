@@ -1,4 +1,4 @@
-import type { MethodOption, StatusOption } from "./constants"
+import type { MethodOption, StatusOption } from "../constants"
 
 type Json = Record<string, unknown> | string | number | boolean | null | Json[]
 

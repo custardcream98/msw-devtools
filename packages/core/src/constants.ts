@@ -31,3 +31,12 @@ export const STATUS_NAME = {
   "404": "Not Found",
   "500": "Server Error"
 } as const satisfies Record<StatusOption, string>
+
+export const MSWDevtoolsWebsocketEventName = {
+  SYN: "msw-devtools:syn",
+  ACK: "msw-devtools:ack",
+  MOCK_LIST_UPDATE: "msw-devtools:mock-list:update"
+} as const
+
+export type MSWDevtoolsWebsocketEventName =
+  (typeof MSWDevtoolsWebsocketEventName)[keyof typeof MSWDevtoolsWebsocketEventName]
