@@ -4,6 +4,7 @@ import type { JsonMock } from "core"
 import { setupServer } from "msw/node"
 
 import { MockListProvider, useMockList } from "~/components/contexts/mock-list"
+import * as serverLib from "~/lib/server"
 
 const server = setupServer()
 
@@ -11,11 +12,19 @@ beforeAll(() => server.listen())
 beforeEach(() => {
   window.localStorage.clear()
 })
-afterEach(() => server.resetHandlers())
+afterEach(() => {
+  server.resetHandlers()
+  window.localStorage.clear()
+})
 afterAll(() => server.close())
 
 vi.mock("~/lib/msw/worker", () => ({
   getWorker: () => server
+}))
+
+vi.mock("~/lib/server", () => ({
+  addMockListUpdateListener: vi.fn(),
+  serverSendMockList: vi.fn()
 }))
 
 const setup = ({ mock }: { mock: JsonMock }) => {
@@ -173,5 +182,26 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("clearAllMocks"))
 
     expect(mockListWrapper).toHaveTextContent(JSON.stringify([]))
+  })
+
+  it('should send server a "mock-list:update" event on mockList change', async () => {
+    const mock: JsonMock = {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
+        type: "single",
+        response: { name: "John" }
+      },
+      isActivated: true,
+      responseDelay: 1000
+    }
+    vi.spyOn(serverLib, "serverSendMockList")
+    const { userEvent } = setup({ mock })
+
+    await userEvent.click(screen.getByText("pushMock"))
+
+    expect(serverLib.serverSendMockList).toHaveBeenCalledOnce()
+    expect(serverLib.serverSendMockList).toHaveBeenCalledWith([mock])
   })
 })

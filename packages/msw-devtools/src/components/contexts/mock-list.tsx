@@ -1,9 +1,10 @@
 import type { JsonMock } from "core"
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useRef } from "react"
 
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
-import { register, unregister } from "~/lib/msw"
+import { register, reset, unregister } from "~/lib/msw"
+import { addMockListUpdateListener, serverSendMockList } from "~/lib/server"
 import { isVitePluginEnabled, viteSendMockList } from "~/lib/vite"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
@@ -38,10 +39,16 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     null
   )
 
+  const isFirstRender = useRef(true)
   useEffect(() => {
     if (isVitePluginEnabled()) {
       viteSendMockList(mockList)
     }
+    if (!isFirstRender.current) {
+      serverSendMockList(mockList)
+    }
+
+    isFirstRender.current = false
   }, [mockList])
 
   const pushMock: MockListContextType["pushMock"] = useCallback(
@@ -127,6 +134,15 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
       return []
     })
+  }, [setMockList])
+
+  useEffect(() => {
+    const removeListener = addMockListUpdateListener((mockList) => {
+      reset(mockList)
+      setMockList(mockList)
+    })
+
+    return removeListener
   }, [setMockList])
 
   const value = useMemo(
