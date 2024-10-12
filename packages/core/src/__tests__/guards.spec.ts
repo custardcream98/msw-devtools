@@ -26,7 +26,7 @@ describe("isJsonMock", () => {
 
 describe("isMSWDevtoolsWebsocketEvent", () => {
   it("should return true if the event is a MSWDevtoolsWebsocketEvent", () => {
-    const event = { name: "msw-devtools:ack" }
+    const event = { name: "msw-devtools:syn" }
 
     expect(isMSWDevtoolsWebsocketEvent(event)).toBe(true)
 
@@ -48,6 +48,25 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
     }
 
     expect(isMSWDevtoolsWebsocketEvent(event2)).toBe(true)
+
+    const event3 = {
+      name: "msw-devtools:ack",
+      payload: [
+        {
+          url: "https://test-url",
+          method: "get",
+          status: "200",
+          response: {
+            type: "single",
+            response: { name: "John" }
+          },
+          isActivated: true,
+          responseDelay: 1000
+        }
+      ]
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(event3)).toBe(true)
   })
 
   it("should return false if the event is not a MSWDevtoolsWebsocketEvent", () => {

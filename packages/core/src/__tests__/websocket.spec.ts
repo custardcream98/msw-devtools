@@ -34,19 +34,67 @@ describe("deserializeMSWDevtoolsWebsocketEvent", () => {
 describe("serializeMSWDevtoolsWebsocketEvent", () => {
   it("should stringify the event data", () => {
     expect(
-      serializeMSWDevtoolsWebsocketEvent({ name: "msw-devtools:ack" })
-    ).toMatchInlineSnapshot(`"{"name":"msw-devtools:ack"}"`)
+      serializeMSWDevtoolsWebsocketEvent({
+        name: "msw-devtools:ack",
+        payload: [
+          {
+            url: "https://test-url",
+            method: "get",
+            status: "200",
+            response: {
+              type: "single",
+              response: { name: "John" }
+            },
+            isActivated: true,
+            responseDelay: 1000
+          }
+        ]
+      })
+    ).toMatchInlineSnapshot(
+      `"{"name":"msw-devtools:ack","payload":[{"url":"https://test-url","method":"get","status":"200","response":{"type":"single","response":{"name":"John"}},"isActivated":true,"responseDelay":1000}]}"`
+    )
   })
 })
 
 describe("eventGuard", () => {
-  it("should call the callback", () => {
+  it("should call the callback - syn", () => {
     const syn: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:syn"
     }
+
+    const callback = vi.fn()
+
+    eventGuard(JSON.stringify(syn), MSWDevtoolsWebsocketEventName.SYN, callback)
+
+    expect(callback).toHaveBeenCalledOnce()
+  })
+
+  it("should call the callback - ack", () => {
     const ack: MSWDevtoolsWebsocketEvent = {
-      name: "msw-devtools:ack"
+      name: "msw-devtools:ack",
+      payload: [
+        {
+          url: "https://test-url",
+          method: "get",
+          status: "200",
+          response: {
+            type: "single",
+            response: { name: "John" }
+          },
+          isActivated: true,
+          responseDelay: 1000
+        }
+      ]
     }
+
+    const callback = vi.fn()
+
+    eventGuard(JSON.stringify(ack), MSWDevtoolsWebsocketEventName.ACK, callback)
+
+    expect(callback).toHaveBeenCalledWith(ack.payload)
+  })
+
+  it("should call the callback - syn", () => {
     const mockListUpdate: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:mock-list:update",
       payload: [
@@ -64,33 +112,15 @@ describe("eventGuard", () => {
       ]
     }
 
-    const synCallback = vi.fn()
-    const ackCallback = vi.fn()
-    const mockListUpdateCallback = vi.fn()
-
-    eventGuard(
-      JSON.stringify(syn),
-      MSWDevtoolsWebsocketEventName.SYN,
-      synCallback
-    )
-
-    expect(synCallback).toHaveBeenCalledOnce()
-
-    eventGuard(
-      JSON.stringify(ack),
-      MSWDevtoolsWebsocketEventName.ACK,
-      ackCallback
-    )
-
-    expect(ackCallback).toHaveBeenCalledOnce()
+    const callback = vi.fn()
 
     eventGuard(
       JSON.stringify(mockListUpdate),
       MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
-      mockListUpdateCallback
+      callback
     )
 
-    expect(mockListUpdateCallback).toHaveBeenCalledWith(mockListUpdate.payload)
+    expect(callback).toHaveBeenCalledWith(mockListUpdate.payload)
   })
 
   it("should not call the callback if the message is not valid", () => {
