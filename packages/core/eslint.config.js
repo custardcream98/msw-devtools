@@ -22,7 +22,8 @@ export default tseslint.config(
           varsIgnorePattern: "^_",
           caughtErrors: "none"
         }
-      ]
+      ],
+      "no-extra-semi": "off"
     }
   },
   {
