@@ -92,6 +92,7 @@ describe("eventGuard", () => {
     eventGuard(JSON.stringify(ack), MSWDevtoolsWebsocketEventName.ACK, callback)
 
     expect(callback).toHaveBeenCalledWith(ack.payload)
+    expect(callback).toHaveBeenCalledOnce()
   })
 
   it("should call the callback - syn", () => {

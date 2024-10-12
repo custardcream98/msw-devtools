@@ -43,8 +43,8 @@ export const eventGuard = <N extends MSWDevtoolsWebsocketEventName>(
   if ("payload" in event) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     callback(event.payload as any)
+  } else {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ;(callback as any)()
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(callback as any)()
 }

@@ -67,6 +67,13 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
     }
 
     expect(isMSWDevtoolsWebsocketEvent(event3)).toBe(true)
+
+    const event4 = {
+      name: "msw-devtools:ack",
+      payload: null
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(event4)).toBe(true)
   })
 
   it("should return false if the event is not a MSWDevtoolsWebsocketEvent", () => {

@@ -1,8 +1,8 @@
-import { http, HttpResponse } from "msw"
+import { http, type HttpHandler, HttpResponse } from "msw"
 
 import type { JsonMock } from "./types"
 
-export const generateHandler = (mock: JsonMock) => {
+export const generateHandler = (mock: JsonMock): HttpHandler => {
   let currentSequence = 0
   return http[mock.method](mock.url, async () => {
     if (mock.responseDelay > 0) {
