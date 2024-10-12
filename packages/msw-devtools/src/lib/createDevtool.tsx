@@ -1,3 +1,4 @@
+import { server } from "~/lib/server"
 import { viteHmr } from "~/lib/vite"
 
 import { initialize, type InitializeProps } from "./msw"
@@ -13,6 +14,7 @@ export const createDevtool = async ({
   const loadedMocks = await initialize(props)
 
   viteHmr(loadedMocks)
+  server(loadedMocks)
 
   const React = (await import("react")).default
   const ReactDOM = (await import("react-dom/client")).default

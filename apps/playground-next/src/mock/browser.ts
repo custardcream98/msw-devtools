@@ -1,10 +1,8 @@
 import { installMSWDevtools } from "@custardcream/msw-devtools"
 import { setupWorker } from "msw/browser"
 
-import { handlers } from "./handlers"
-
 export const start = () => {
-  const worker = setupWorker(...handlers)
+  const worker = setupWorker()
 
   return installMSWDevtools({
     setupWorker: worker,

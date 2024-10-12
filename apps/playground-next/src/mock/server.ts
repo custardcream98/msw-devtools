@@ -1,7 +1,8 @@
+import { jsonMocksToHandlers } from "@custardcream/msw-devtools-server"
 import { setupServer } from "msw/node"
 
-import { handlers } from "./handlers"
+import mocks from "../../mockList.json"
 
-const server = setupServer(...handlers)
+const server = setupServer(...jsonMocksToHandlers(mocks))
 
 server.listen()
