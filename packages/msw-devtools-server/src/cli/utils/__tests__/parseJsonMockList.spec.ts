@@ -1,6 +1,6 @@
 import type { JsonMock } from "core"
 
-import { parseJsonMockList } from "~/utils/parseJsonMockList"
+import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
 
 describe("parseJsonMockList", () => {
   it("should parse the JSON mock list", () => {

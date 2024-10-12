@@ -2,8 +2,8 @@ import chokidar from "chokidar"
 import type { JsonMock } from "core"
 import fs from "fs"
 
-import { log } from "~/utils/log"
-import { parseJsonMockList } from "~/utils/parseJsonMockList"
+import { log } from "~/cli/utils/log"
+import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
 
 export const readMockListFile = (mockListJsonPath: string) => {
   try {
