@@ -43,7 +43,10 @@ export const isMSWDevtoolsWebsocketEvent = (
       event.name === MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE) &&
       "payload" in event &&
       Array.isArray(event.payload) &&
-      event.payload.every(isJsonMock))
+      event.payload.every(isJsonMock)) ||
+    (event.name === MSWDevtoolsWebsocketEventName.ACK &&
+      "payload" in event &&
+      event.payload === null)
   ) {
     return true
   }
