@@ -2,9 +2,13 @@ import chokidar from "chokidar"
 import fs from "fs"
 import type { Mock } from "vitest"
 
-import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
-import { log } from "~/utils/log"
-import { parseJsonMockList } from "~/utils/parseJsonMockList"
+import {
+  readMockListFile,
+  updateMockListFile,
+  watchMockListFile
+} from "~/cli/file"
+import { log } from "~/cli/utils/log"
+import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
 
 const mockListJsonPath = "path/to/mockList.json"
 const MOCKED_JSON_LIST_STRING = '[{"key": "value"}]'
@@ -12,13 +16,13 @@ const MOCKED_JSON_LIST = [{ key: "value" }]
 
 vi.mock("fs")
 vi.mock("chokidar")
-vi.mock("~/utils/log", () => ({
+vi.mock("~/cli/utils/log", () => ({
   log: {
     error: vi.fn()
   }
 }))
 
-vi.mock("~/utils/parseJsonMockList", () => ({
+vi.mock("~/cli/utils/parseJsonMockList", () => ({
   parseJsonMockList: vi.fn()
 }))
 

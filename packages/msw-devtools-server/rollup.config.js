@@ -1,11 +1,8 @@
-import path from "path"
-
 import { defineConfig } from "rollup"
 
 import resolve from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
 import typescript from "@rollup/plugin-typescript"
-import terser from "@rollup/plugin-terser"
 import tsConfigPaths from "rollup-plugin-tsconfig-paths"
 import { dts } from "rollup-plugin-dts"
 import peerDepsExternal from "rollup-plugin-peer-deps-external"
@@ -46,8 +43,7 @@ export default defineConfig([
         extensions: [".js", ".jsx", ".ts", ".tsx"]
       }),
       commonjs(),
-      json(),
-      terser()
+      json()
     ]
   },
   // Build Types
@@ -70,7 +66,7 @@ export default defineConfig([
     ]
   },
   {
-    input: "src/bin.ts",
+    input: "src/cli/index.ts",
     output: {
       file: packageJson.bin["msw-devtools-server"],
       format: "cjs",
@@ -93,8 +89,7 @@ export default defineConfig([
         extensions: [".js", ".jsx", ".ts", ".tsx"]
       }),
       commonjs(),
-      json(),
-      terser()
+      json()
     ]
   }
 ])

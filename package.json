@@ -6,7 +6,7 @@
     "lint": "pnpm --filter \"./{packages,apps}/**\" lint",
     "lint:fix": "pnpm --filter \"./{packages,apps}/**\" lint:fix",
     "type-check": "pnpm --filter \"./{packages,apps}/**\" type-check",
-    "coverage": "pnpm --filter \"./packages/{msw-devtools,msw-devtools-core}\" coverage --silent",
+    "coverage": "pnpm --filter \"./packages/{msw-devtools,msw-devtools-server,core}\" coverage --silent",
     "test": "pnpm --filter \"./packages/**\" test",
     "docs:dev": "pnpm --filter docs dev",
     "prepare": "husky",
