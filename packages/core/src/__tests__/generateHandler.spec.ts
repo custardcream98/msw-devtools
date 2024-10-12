@@ -1,7 +1,7 @@
-import type { JsonMock } from "core"
 import { setupServer } from "msw/node"
 
-import { generateHandler } from "~/lib/msw/generateHandler"
+import { generateHandler } from "../generateHandler"
+import type { JsonMock } from "../types"
 
 const server = setupServer()
 
@@ -9,11 +9,11 @@ beforeAll(() => server.listen())
 afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
-describe("generateMockRequestHandler", () => {
+describe("generateHandler", () => {
   it("should return a request handler", async () => {
     const mock = {
       method: "get",
-      url: "/test-url",
+      url: "https://test-url.com",
       responseDelay: 0,
       response: {
         type: "single",
@@ -28,7 +28,7 @@ describe("generateMockRequestHandler", () => {
 
     server.use(requestHandler)
 
-    const res = await fetch("/test-url")
+    const res = await fetch("https://test-url.com")
     const data = await res.json()
     expect(res.status).toBe(200)
     expect(data).toEqual({ name: "John" })
@@ -37,7 +37,7 @@ describe("generateMockRequestHandler", () => {
   it("should handle sequential responses", async () => {
     const mock = {
       method: "get",
-      url: "/test-sequential",
+      url: "https://test-sequential.com",
       responseDelay: 0,
       response: {
         type: "sequential",
@@ -51,17 +51,17 @@ describe("generateMockRequestHandler", () => {
 
     server.use(requestHandler)
 
-    const firstRes = await fetch("/test-sequential")
+    const firstRes = await fetch("https://test-sequential.com")
     const firstData = await firstRes.json()
     expect(firstRes.status).toBe(200)
     expect(firstData).toEqual({ name: "John" })
 
-    const secondRes = await fetch("/test-sequential")
+    const secondRes = await fetch("https://test-sequential.com")
     const secondData = await secondRes.json()
     expect(secondRes.status).toBe(200)
     expect(secondData).toEqual({ name: "Doe" })
 
-    const thirdRes = await fetch("/test-sequential")
+    const thirdRes = await fetch("https://test-sequential.com")
     const thirdData = await thirdRes.json()
     expect(thirdRes.status).toBe(200)
     expect(thirdData).toEqual({ name: "John" })
@@ -73,7 +73,7 @@ describe("generateMockRequestHandler", () => {
     const mock = {
       responseDelay: 5,
       method: "get",
-      url: "/test-delay",
+      url: "https://test-delay.com",
       response: {
         type: "single",
         response: { name: "Delayed John" }
@@ -85,7 +85,7 @@ describe("generateMockRequestHandler", () => {
     const requestHandler = generateHandler(mock)
     server.use(requestHandler)
 
-    const fetchPromise = fetch("/test-delay")
+    const fetchPromise = fetch("https://test-delay.com")
     await vi.advanceTimersByTimeAsync(5000)
     const res = await fetchPromise
     const data = await res.json()

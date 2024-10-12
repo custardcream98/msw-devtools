@@ -1,4 +1,5 @@
 export * from "./constants"
+export * from "./generateHandler"
 export * from "./guards"
 export * from "./logger"
 export * from "./types"
