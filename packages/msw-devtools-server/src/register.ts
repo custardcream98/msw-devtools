@@ -6,11 +6,11 @@ import {
   MSWDevtoolsWebsocketEventName,
   serializeMSWDevtoolsWebsocketEvent
 } from "core"
+import type { HttpHandler } from "msw"
 import type { SetupServerApi } from "msw/node"
 import { type RawData, WebSocket } from "ws"
 
 import { readMockListFile } from "~/file"
-import { jsonMocksToHandlers } from "~/jsonMockToHandlers"
 
 const ws = new WebSocket(
   `ws://localhost:${MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PORT}${MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PATH}`
@@ -64,6 +64,12 @@ export const register = ({ server }: { server: SetupServerApi }) => {
   })
 }
 
-export const getInitialHandlers = () => {
-  return jsonMocksToHandlers(readMockListFile("mockList.json"))
+export const getInitialHandlers = (): HttpHandler[] => {
+  const jsonMockList = readMockListFile("mockList.json")
+
+  if (jsonMockList) {
+    return jsonMockList.map(generateHandler)
+  }
+
+  return []
 }
