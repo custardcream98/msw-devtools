@@ -2,13 +2,9 @@ import chokidar from "chokidar"
 import fs from "fs"
 import type { Mock } from "vitest"
 
-import {
-  readMockListFile,
-  updateMockListFile,
-  watchMockListFile
-} from "~/cli/file"
 import { log } from "~/cli/utils/log"
 import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
+import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
 
 const mockListJsonPath = "path/to/mockList.json"
 const MOCKED_JSON_LIST_STRING = '[{"key": "value"}]'

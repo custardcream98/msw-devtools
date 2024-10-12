@@ -6,12 +6,8 @@ import {
 } from "core"
 import { type RawData, WebSocketServer } from "ws"
 
-import {
-  readMockListFile,
-  updateMockListFile,
-  watchMockListFile
-} from "~/cli/file"
 import { log } from "~/cli/utils/log"
+import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
 
 export const startServer = () => {
   const wss = new WebSocketServer({
