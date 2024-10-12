@@ -3,7 +3,7 @@ import type { JsonMock } from "./JsonMock"
 
 export type MSWDevtoolsWebsocketEventMap = {
   [MSWDevtoolsWebsocketEventName.SYN]: undefined
-  [MSWDevtoolsWebsocketEventName.ACK]: undefined
+  [MSWDevtoolsWebsocketEventName.ACK]: JsonMock[] | null
   [MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE]: JsonMock[]
 }
 
