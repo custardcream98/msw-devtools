@@ -40,3 +40,8 @@ export const MSWDevtoolsWebsocketEventName = {
 
 export type MSWDevtoolsWebsocketEventName =
   (typeof MSWDevtoolsWebsocketEventName)[keyof typeof MSWDevtoolsWebsocketEventName]
+
+export const MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG = {
+  PORT: 8080,
+  PATH: "/__msw-devtools"
+}
