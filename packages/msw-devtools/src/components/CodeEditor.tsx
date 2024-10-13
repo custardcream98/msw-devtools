@@ -88,16 +88,12 @@ export const CodeEditor = React.forwardRef<
 >(({ className, basicSetup: basicSetupProp, ...props }, ref) => {
   const innerRef = useRef<ReactCodeMirrorRef>(null)
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        focus: () => innerRef.current?.view?.focus(),
-        ...innerRef.current
-      }
-    },
-    []
-  )
+  useImperativeHandle(ref, () => {
+    return {
+      focus: () => innerRef.current?.view?.focus(),
+      ...innerRef.current
+    }
+  }, [])
 
   const basicSetup = useMemo(
     () =>
