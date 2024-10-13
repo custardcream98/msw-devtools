@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/package",
+  "private": true,
   "name": "@custardcream/vite-plugin-msw-devtools",
   "version": "0.7.0",
   "description": "Vite plugin for @custardcream/msw-devtools",
