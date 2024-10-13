@@ -9,8 +9,14 @@ import { type RawData, WebSocketServer } from "ws"
 import { log } from "~/cli/utils/log"
 import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
 
+let wss: WebSocketServer | null = null
+
 export const startServer = () => {
-  const wss = new WebSocketServer({
+  if (wss) {
+    return
+  }
+
+  wss = new WebSocketServer({
     path: MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PATH,
     port: MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PORT
   })
