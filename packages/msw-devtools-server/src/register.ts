@@ -1,20 +1,25 @@
-import { generateHandler } from "core"
+import { generateHandler, type JsonMock } from "core"
 import type { HttpHandler } from "msw"
 import type { SetupServerApi } from "msw/node"
 
 import { readMockListFile, watchMockListFile } from "~/file"
 
+export const jsonMockListToHandlers = (mockList: JsonMock[]): HttpHandler[] =>
+  mockList.filter(({ isActivated }) => isActivated).map(generateHandler)
+
 export const register = ({ server }: { server: SetupServerApi }) => {
   watchMockListFile("mockList.json", (mockList) => {
-    server.resetHandlers(...mockList.map(generateHandler))
+    server.resetHandlers(...jsonMockListToHandlers(mockList))
   })
 }
 
 export const getInitialHandlers = (): HttpHandler[] => {
-  const jsonMockList = readMockListFile("mockList.json")
+  const mockList = readMockListFile("mockList.json")
 
-  if (jsonMockList) {
-    return jsonMockList.map(generateHandler)
+  console.log("mockList initial", mockList)
+
+  if (mockList) {
+    return jsonMockListToHandlers(mockList)
   }
 
   return []
