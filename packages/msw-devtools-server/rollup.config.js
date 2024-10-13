@@ -7,6 +7,7 @@ import tsConfigPaths from "rollup-plugin-tsconfig-paths"
 import peerDepsExternal from "rollup-plugin-peer-deps-external"
 import del from "rollup-plugin-delete"
 import json from "@rollup/plugin-json"
+import terser from "@rollup/plugin-terser"
 
 import packageJson from "./package.json"
 
@@ -35,7 +36,8 @@ export default defineConfig([
         extensions: [".js", ".jsx", ".ts", ".tsx"]
       }),
       commonjs(),
-      json()
+      json(),
+      terser()
     ]
   }
 ])
