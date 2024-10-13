@@ -2,7 +2,7 @@
 
 A Vite plugin for MSW Devtools.
 
-> This plugin is still in development and may not be stable.
+> (DEPRECATED) This package has been deprecated in favor of `@custardcream/msw-devtools-server`. Please use [`@custardcream/msw-devtools-server`](../../README.md#live-json-editing-for-instant-management-of-msw-request-handlers) instead.
 
 ## Features
 

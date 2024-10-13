@@ -24,7 +24,7 @@
 - **Easily Manage Mock Request Handlers.** Add, edit, delete, enable, or disable mock request handlers with ease.
 - **Use Different Response Data Based on the Situation.** Change response data sequentially.
 - **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
-- (experimental) **Generate MSW Request Handlers Automatically.** Automatically generate MSW request handlers code from the Devtools UI. (Vite Plugin)
+- **Live JSON Editing for Instant Management of MSW Request Handlers.** Changes made in the Devtools UI are instantly synced with your JSON file. ([🔗](#live-json-editing-for-instant-management-of-msw-request-handlers))
 
 <br />
 
@@ -118,10 +118,36 @@ You can achieve this by using the sequential response feature.
 
 This feature allows you to change the response data for each request sequentially.
 
-## (experimental) Generate MSW Request Handlers Code Automatically
+## Live JSON Editing for Instant Management of MSW Request Handlers
 
-If you need MSW request handlers for your project(for example, testing), you can generate them automatically using vite plugin.
+> (experimental) This feature is experimental and may change in the future.
 
-Check out the plugin documentation for more information.
+<p align="center">
+  <img width="500" src="./README/EN/server.gif">
+</p>
 
-[@custardcream/vite-plugin-msw-devtools](./packages/vite-plugin-msw-devtools/README.md)
+Using `@custardcream/msw-devtools-server`, you can create and update the request handler JSON file in real time through the Devtools UI.
+
+Conversely, you can also directly edit the JSON file to reflect changes in your developing app in real time.
+
+```bash
+npm install -D @custardcream/msw-devtools-server
+```
+
+**Be sure to start the server before you begin developing your project.**
+
+For example, a Vite app can be configured as follows (using `concurrently`):
+
+```json
+{
+  "scripts": {
+    "start": "concurrently \"msw-devtools-server -o ./mock\" \"vite\""
+  }
+}
+```
+
+**Devtools prioritizes the JSON file over the Request Handler information stored in local storage. Please note that the values stored in local storage may be overwritten when connecting to the server.**
+
+### CLI Options
+
+- `-o, --output <path>`: Output file path(or directory) for the generated JSON file. (default: `./mock-list.json`)

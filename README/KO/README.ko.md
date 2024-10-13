@@ -21,8 +21,8 @@
 - **Mock Request Handler를 UI로 편리하게 관리하세요.** 손쉽게 추가, 수정, 삭제하거나 활성화, 비활성화할 수 있습니다.
 - **상황에 따라 다른 응답값을 사용하세요.** 응답값이 순차적으로 바뀌게 할 수 있습니다.
 - **Mock Request Handler를 내보내거나 가져오세요.** JSON 포멧으로 손쉽게 Mock Request Handler를 공유할 수 있습니다.
+- **실시간 JSON 편집으로 MSW 요청 핸들러를 쉽게 관리하세요.** Devtools UI에서 변경한 내용이 즉시 JSON 파일에 반영됩니다. ([🔗](#msw-요청-핸들러를-실시간-json-편집으로-즉시-동기화하기))
 - 한국어를 지원합니다.
-- (실험적) **MSW Request Handler를 자동으로 생성하세요.** Devtools UI로 MSW Request Handler 코드를 자동으로 생성하세요. (Vite 플러그인)
 
 <br />
 
@@ -114,8 +114,36 @@ enableMocking().then(() => {
 
 각 요청에 대한 응답값이 순차적으로 변경되게 됩니다.
 
-## (실험적) MSW Request Handler 코드 자동 생성하기
+## MSW 요청 핸들러를 실시간 JSON 편집으로 즉시 동기화하기
 
-MSW request handler가 필요한 경우(예: 테스트 코드 작성), Devtools UI로 MSW request handler 코드를 자동으로 생성할 수 있습니다.
+> (실험적) 이 기능은 실험적이며 향후 변경될 수 있습니다.
 
-더 자세히 알아보기: [@custardcream/vite-plugin-msw-devtools](./packages/vite-plugin-msw-devtools/README.md)
+<p align="center">
+  <img width="500" src="../EN/server.gif">
+</p>
+
+`@custardcream/msw-devtools-server`를 사용하면 실시간으로 Devtools UI를 통해 요청 핸들러 JSON 파일을 생성, 갱신할 수 있습니다.
+
+반대로, JSON 파일을 직접 편집해 개발중인 앱에 실시간으로 반영할 수도 있습니다.
+
+```bash
+npm install -D @custardcream/msw-devtools-server
+```
+
+**프로젝트 개발을 시작하기 전에 서버를 실행해야 합니다.**
+
+예를 들어, Vite 앱은 이렇게 구성할 수 있습니다. (`concurrently` 사용)
+
+```json
+{
+  "scripts": {
+    "start": "concurrently \"msw-devtools-server -o ./mock\" \"vite\""
+  }
+}
+```
+
+**Devtools는 로컬 스토리지에 저장된 Request Handler 정보보다 JSON 파일을 우선합니다. 서버와 연결될 때 로컬 스토리지에 저장됐던 값이 덮어써질 수 있다는 점에 유의해주세요.**
+
+### CLI Options
+
+- `-o, --output <path>`: Output file path(or directory) for the generated JSON file. (default: `./mock-list.json`)
