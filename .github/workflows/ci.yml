@@ -34,7 +34,17 @@ jobs:
       - name: Check types and format and test
         run: pnpm ci:check
 
-      - name: Report coverage
+      - name: Report coverage (msw-devtools)
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: ./packages/msw-devtools
+
+      - name: Report coverage (msw-devtools-server)
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: ./packages/msw-devtools-server
+
+      - name: Report coverage (core)
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: ./packages/core
