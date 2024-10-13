@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"msw-devtools-server -o ./mock\" \"vite\"",
     "prebuild": "pnpm --filter @custardcream/msw-devtools build",
     "build": "pnpm prebuild && run-p type-check:build \"build-only {@}\" --",
     "preview": "vite preview",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@custardcream/msw-devtools": "workspace:*",
+    "@custardcream/msw-devtools-server": "workspace:*",
     "@rushstack/eslint-patch": "^1.8.0",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.14.5",
@@ -27,6 +28,7 @@
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
+    "concurrently": "^9.0.1",
     "eslint": "^8.57.0",
     "eslint-plugin-vue": "^9.23.0",
     "msw": "^2.4.8",

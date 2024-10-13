@@ -8,8 +8,12 @@ import {
 } from "core"
 import { type RawData, type WebSocket, WebSocketServer } from "ws"
 
+import {
+  readMockListFile,
+  updateMockListFile,
+  watchMockListFile
+} from "~/cli/utils/file"
 import { log } from "~/cli/utils/log"
-import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
 
 let wss: WebSocketServer | null = null
 
@@ -85,18 +89,19 @@ const setupClientListeners = (
   ws: WebSocket,
   clientType: MSWDevtoolsClientType
 ) => {
-  const initialMockList = readMockListFile("mockList.json")
+  const initialMockList = readMockListFile()
 
   const handleACK = (data: RawData) => {
     eventGuard(
       data.toString(),
       MSWDevtoolsWebsocketEventName.ACK,
       (clientSideInitialMockList) => {
+        clearTimeout(timeoutId)
         cleanup(clientType)
         log.info("ACK received. Server connected.")
 
         if (clientSideInitialMockList && !initialMockList) {
-          updateMockListFile("mockList.json")(clientSideInitialMockList)
+          updateMockListFile(clientSideInitialMockList)
         }
 
         let closeFileWatch = setupFileWatcher(ws)
@@ -117,7 +122,7 @@ const setupClientListeners = (
               )
 
               closeFileWatch()
-              updateMockListFile("mockList.json")(payload)
+              updateMockListFile(payload)
               closeFileWatch = setupFileWatcher(ws)
               // doesn't need to push to cleanup because it's already pushed
             }
@@ -140,10 +145,15 @@ const setupClientListeners = (
     })
   )
   log.info("SYN received. ACK sent.")
+
+  const timeoutId = setTimeout(() => {
+    cleanup(clientType)
+    log.error("ACK timeout, connection closed.")
+  }, CONNECTION_TIMEOUT)
 }
 
 const setupFileWatcher = (ws: WebSocket): ListenerCleanup =>
-  watchMockListFile("mockList.json", (mockList) => {
+  watchMockListFile((mockList) => {
     log.info("Mock list updated. Sending the update to the client.")
     sendMockListUpdate(ws, mockList)
   })

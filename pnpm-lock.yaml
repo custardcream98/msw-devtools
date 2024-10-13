@@ -161,6 +161,9 @@ importers:
       '@custardcream/msw-devtools':
         specifier: workspace:*
         version: link:../../packages/msw-devtools
+      '@custardcream/msw-devtools-server':
+        specifier: workspace:*
+        version: link:../../packages/msw-devtools-server
       '@rushstack/eslint-patch':
         specifier: ^1.8.0
         version: 1.10.4
@@ -182,6 +185,9 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.5.1
         version: 0.5.1
+      concurrently:
+        specifier: ^9.0.1
+        version: 9.0.1
       eslint:
         specifier: ^8.57.0
         version: 8.57.1
@@ -469,9 +475,6 @@ importers:
       rollup-plugin-delete:
         specifier: ^2.1.0
         version: 2.1.0(rollup@4.24.0)
-      rollup-plugin-dts:
-        specifier: ^6.1.1
-        version: 6.1.1(rollup@4.24.0)(typescript@5.6.2)
       rollup-plugin-peer-deps-external:
         specifier: ^2.2.4
         version: 2.2.4(rollup@4.24.0)
@@ -3130,6 +3133,7 @@ packages:
   eslint@8.57.1:
     resolution: {integrity: sha512-ypowyDxpVSYpkXr9WPv2PAZCtNip1Mv5KTW0SCurXv/9iOpcrH9PaqUElksqEB6pChqHGDRCFTyrZlGhnLNGiA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@9.10.0:
@@ -10297,14 +10301,6 @@ snapshots:
     dependencies:
       magic-string: 0.30.11
       rollup: 4.21.3
-      typescript: 5.6.2
-    optionalDependencies:
-      '@babel/code-frame': 7.24.7
-
-  rollup-plugin-dts@6.1.1(rollup@4.24.0)(typescript@5.6.2):
-    dependencies:
-      magic-string: 0.30.11
-      rollup: 4.24.0
       typescript: 5.6.2
     optionalDependencies:
       '@babel/code-frame': 7.24.7

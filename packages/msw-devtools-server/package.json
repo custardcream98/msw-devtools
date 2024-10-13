@@ -1,25 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/package",
   "name": "@custardcream/msw-devtools-server",
-  "type": "module",
   "version": "0.7.0",
   "description": "Websocket server for @custardcream/msw-devtools",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
-    }
-  },
-  "types": "dist/index.d.ts",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
   "files": [
-    "dist",
     "bin"
   ],
   "bin": {
-    "msw-devtools-server": "bin/index.cjs"
+    "msw-devtools-server": "bin/index.js"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
@@ -52,7 +40,6 @@
     "msw": "^2.4.8",
     "rollup": "^4.21.3",
     "rollup-plugin-delete": "^2.1.0",
-    "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-tsconfig-paths": "^1.5.2",
     "typescript": "^5.6.2",

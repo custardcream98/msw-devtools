@@ -1,12 +1,17 @@
 import chokidar from "chokidar"
 import fs from "fs"
+import path from "path"
 import type { Mock } from "vitest"
 
+import {
+  readMockListFile,
+  updateMockListFile,
+  watchMockListFile
+} from "~/cli/utils/file"
 import { log } from "~/cli/utils/log"
 import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
-import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
 
-const mockListJsonPath = "path/to/mockList.json"
+const MOCKED_JSON_LIST_PATH = "path/to/mock-list.json"
 const MOCKED_JSON_LIST_STRING = '[{"key": "value"}]'
 const MOCKED_JSON_LIST = [{ key: "value" }]
 
@@ -15,6 +20,11 @@ vi.mock("chokidar")
 vi.mock("~/cli/utils/log", () => ({
   log: {
     error: vi.fn()
+  }
+}))
+vi.mock("~/cli/program", () => ({
+  options: {
+    output: "path/to/mock-list.json"
   }
 }))
 
@@ -26,7 +36,7 @@ describe("readMockListFile", () => {
   it("should read and parse the mock list file successfully", () => {
     ;(parseJsonMockList as Mock).mockReturnValue(MOCKED_JSON_LIST)
 
-    const result = readMockListFile(mockListJsonPath)
+    const result = readMockListFile()
 
     expect(result).toEqual(MOCKED_JSON_LIST)
   })
@@ -36,7 +46,7 @@ describe("readMockListFile", () => {
       throw new Error("File not found")
     })
 
-    const result = readMockListFile(mockListJsonPath)
+    const result = readMockListFile()
 
     expect(result).toBeNull()
   })
@@ -46,7 +56,7 @@ describe("readMockListFile", () => {
       throw new Error("Cannot parse JSON")
     })
 
-    const result = readMockListFile(mockListJsonPath)
+    const result = readMockListFile()
 
     expect(result).toBeNull()
   })
@@ -55,13 +65,27 @@ describe("readMockListFile", () => {
 describe("updateMockListFile", () => {
   it("should write the mock list to the file", async () => {
     const mockList = [{ key: "value" }] as any
-    const updateFile = updateMockListFile(mockListJsonPath)
 
-    updateFile(mockList)
+    updateMockListFile(mockList)
 
     expect(fs.writeFileSync).toHaveBeenCalledWith(
-      mockListJsonPath,
-      JSON.stringify(mockList, null, 2)
+      MOCKED_JSON_LIST_PATH,
+      JSON.stringify(mockList, null, 2),
+      {
+        encoding: "utf-8"
+      }
+    )
+  })
+
+  it("should try to make directory if it does not exists", async () => {
+    const mockList = [{ key: "value" }] as any
+    ;(fs.existsSync as Mock).mockImplementation(() => false)
+
+    updateMockListFile(mockList)
+
+    expect(fs.mkdirSync).toHaveBeenCalledWith(
+      path.dirname(MOCKED_JSON_LIST_PATH),
+      { recursive: true }
     )
   })
 })
@@ -83,9 +107,9 @@ describe("watchMockListFile", () => {
   it("should start watching the mock list file for changes", () => {
     const { watcherMock, callback } = setup()
 
-    watchMockListFile(mockListJsonPath, callback)
+    watchMockListFile(callback)
 
-    expect(chokidar.watch).toHaveBeenCalledWith(mockListJsonPath, {
+    expect(chokidar.watch).toHaveBeenCalledWith(MOCKED_JSON_LIST_PATH, {
       ignored: expect.any(Function)
     })
     expect(watcherMock.on).toHaveBeenCalledWith("change", expect.any(Function))
@@ -96,7 +120,7 @@ describe("watchMockListFile", () => {
     ;(fs.readFileSync as Mock).mockReturnValue(MOCKED_JSON_LIST_STRING)
     ;(parseJsonMockList as Mock).mockReturnValue(MOCKED_JSON_LIST)
 
-    watchMockListFile(mockListJsonPath, callback)
+    watchMockListFile(callback)
 
     const changeHandler = watcherMock.on.mock.calls.find(
       ([event]) => event === "change"
@@ -113,7 +137,7 @@ describe("watchMockListFile", () => {
       throw new Error("Read error")
     })
 
-    watchMockListFile(mockListJsonPath, callback)
+    watchMockListFile(callback)
 
     const changeHandler = watcherMock.on.mock.calls.find(
       ([event]) => event === "change"
@@ -121,7 +145,7 @@ describe("watchMockListFile", () => {
     changeHandler()
 
     expect(log.error).toHaveBeenCalledWith(
-      `Failed to parse the mock list from ${mockListJsonPath}`
+      `Failed to parse the mock list from ${MOCKED_JSON_LIST_PATH}`
     )
     expect(callback).not.toHaveBeenCalledOnce()
   })
@@ -129,7 +153,7 @@ describe("watchMockListFile", () => {
   it("should stop watching when the returned function is called", () => {
     const { watcherMock, callback } = setup()
 
-    const closeWatcher = watchMockListFile(mockListJsonPath, callback)
+    const closeWatcher = watchMockListFile(callback)
     const changeHandler = watcherMock.on.mock.calls.find(
       ([event]) => event === "change"
     )?.[1]
