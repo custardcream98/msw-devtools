@@ -45,3 +45,11 @@ export const MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG = {
   PORT: 8080,
   PATH: "/__msw-devtools"
 }
+
+export const MSWDevtoolsClientType = {
+  CLIENT: "CLIENT",
+  SERVER_CLIENT: "SERVER_CLIENT"
+} as const
+
+export type MSWDevtoolsClientType =
+  (typeof MSWDevtoolsClientType)[keyof typeof MSWDevtoolsClientType]

@@ -1,4 +1,7 @@
-import { MSWDevtoolsWebsocketEventName } from "./constants"
+import {
+  MSWDevtoolsClientType,
+  MSWDevtoolsWebsocketEventName
+} from "./constants"
 import { JsonMock, MSWDevtoolsWebsocketEvent } from "./types"
 
 export const isJsonMock = (data: unknown): data is JsonMock => {
@@ -25,6 +28,10 @@ export const isJsonMock = (data: unknown): data is JsonMock => {
   )
 }
 
+const isMSWDevtoolsClientType = (
+  data: unknown
+): data is MSWDevtoolsClientType =>
+  typeof data === "string" && data in MSWDevtoolsClientType
 export const isMSWDevtoolsWebsocketEvent = (
   event: unknown
 ): event is MSWDevtoolsWebsocketEvent => {
@@ -37,18 +44,21 @@ export const isMSWDevtoolsWebsocketEvent = (
     return false
   }
 
-  if (
-    event.name === MSWDevtoolsWebsocketEventName.SYN ||
-    ((event.name === MSWDevtoolsWebsocketEventName.ACK ||
-      event.name === MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE) &&
-      "payload" in event &&
-      Array.isArray(event.payload) &&
-      event.payload.every(isJsonMock)) ||
-    (event.name === MSWDevtoolsWebsocketEventName.ACK &&
-      "payload" in event &&
-      event.payload === null)
-  ) {
-    return true
+  if ("payload" in event) {
+    switch (event.name) {
+      case MSWDevtoolsWebsocketEventName.SYN: {
+        return isMSWDevtoolsClientType(event.payload)
+      }
+      case MSWDevtoolsWebsocketEventName.ACK: {
+        return (
+          event.payload === null ||
+          (Array.isArray(event.payload) && event.payload.every(isJsonMock))
+        )
+      }
+      case MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE: {
+        return Array.isArray(event.payload) && event.payload.every(isJsonMock)
+      }
+    }
   }
 
   return false
