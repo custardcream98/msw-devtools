@@ -1,4 +1,7 @@
-import { MSWDevtoolsWebsocketEventName } from "../constants"
+import {
+  MSWDevtoolsClientType,
+  MSWDevtoolsWebsocketEventName
+} from "../constants"
 import type { MSWDevtoolsWebsocketEvent } from "../types"
 import {
   deserializeMSWDevtoolsWebsocketEvent,
@@ -59,7 +62,8 @@ describe("serializeMSWDevtoolsWebsocketEvent", () => {
 describe("eventGuard", () => {
   it("should call the callback - syn", () => {
     const syn: MSWDevtoolsWebsocketEvent = {
-      name: "msw-devtools:syn"
+      name: "msw-devtools:syn",
+      payload: MSWDevtoolsClientType.CLIENT
     }
 
     const callback = vi.fn()

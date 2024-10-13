@@ -1,4 +1,6 @@
+import { MSWDevtoolsClientType } from "../constants"
 import { isJsonMock, isMSWDevtoolsWebsocketEvent } from "../guards"
+import type { MSWDevtoolsWebsocketEvent } from "../types"
 
 describe("isJsonMock", () => {
   it("should return true if the data is a JsonMock", () => {
@@ -26,11 +28,14 @@ describe("isJsonMock", () => {
 
 describe("isMSWDevtoolsWebsocketEvent", () => {
   it("should return true if the event is a MSWDevtoolsWebsocketEvent", () => {
-    const event = { name: "msw-devtools:syn" }
+    const syn: MSWDevtoolsWebsocketEvent = {
+      name: "msw-devtools:syn",
+      payload: MSWDevtoolsClientType.CLIENT
+    }
 
-    expect(isMSWDevtoolsWebsocketEvent(event)).toBe(true)
+    expect(isMSWDevtoolsWebsocketEvent(syn)).toBe(true)
 
-    const event2 = {
+    const mockListUpdate: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:mock-list:update",
       payload: [
         {
@@ -47,9 +52,9 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
       ]
     }
 
-    expect(isMSWDevtoolsWebsocketEvent(event2)).toBe(true)
+    expect(isMSWDevtoolsWebsocketEvent(mockListUpdate)).toBe(true)
 
-    const event3 = {
+    const ack: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:ack",
       payload: [
         {
@@ -66,19 +71,44 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
       ]
     }
 
-    expect(isMSWDevtoolsWebsocketEvent(event3)).toBe(true)
+    expect(isMSWDevtoolsWebsocketEvent(ack)).toBe(true)
 
-    const event4 = {
+    const ack2: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:ack",
       payload: null
     }
 
-    expect(isMSWDevtoolsWebsocketEvent(event4)).toBe(true)
+    expect(isMSWDevtoolsWebsocketEvent(ack2)).toBe(true)
   })
 
   it("should return false if the event is not a MSWDevtoolsWebsocketEvent", () => {
     const event = {}
 
     expect(isMSWDevtoolsWebsocketEvent(event)).toBe(false)
+
+    const syn = {
+      name: "msw-devtools:syn"
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(syn)).toBe(false)
+
+    const syn2 = {
+      name: "msw-devtools:syn",
+      payload: "wrong client type"
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(syn2)).toBe(false)
+
+    const ack = {
+      name: "msw-devtools:ack"
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(ack)).toBe(false)
+
+    const mockListUpdate = {
+      name: "msw-devtools:mock-list:update"
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(mockListUpdate)).toBe(false)
   })
 })

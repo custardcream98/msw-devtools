@@ -2,6 +2,7 @@ import {
   eventGuard,
   type JsonMock,
   MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG,
+  MSWDevtoolsClientType,
   MSWDevtoolsWebsocketEventName,
   serializeMSWDevtoolsWebsocketEvent
 } from "core"
@@ -45,7 +46,8 @@ export const server = (initialMockList?: JsonMock[]) => {
 
     ws.send(
       serializeMSWDevtoolsWebsocketEvent({
-        name: MSWDevtoolsWebsocketEventName.SYN
+        name: MSWDevtoolsWebsocketEventName.SYN,
+        payload: MSWDevtoolsClientType.CLIENT
       })
     )
 

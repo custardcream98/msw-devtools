@@ -1,20 +1,38 @@
 import {
   eventGuard,
+  type JsonMock,
   MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG,
+  MSWDevtoolsClientType,
   MSWDevtoolsWebsocketEventName,
   serializeMSWDevtoolsWebsocketEvent
 } from "core"
-import { type RawData, WebSocketServer } from "ws"
+import { type RawData, type WebSocket, WebSocketServer } from "ws"
 
 import { log } from "~/cli/utils/log"
 import { readMockListFile, updateMockListFile, watchMockListFile } from "~/file"
 
 let wss: WebSocketServer | null = null
 
+type ListenerCleanup = () => void
+const _listenerCleanupsMap: Record<MSWDevtoolsClientType, ListenerCleanup[]> = {
+  [MSWDevtoolsClientType.CLIENT]: [],
+  [MSWDevtoolsClientType.SERVER_CLIENT]: []
+}
+
+const cleanup = (clientType: MSWDevtoolsClientType) => {
+  _listenerCleanupsMap[clientType].forEach((fn) => fn())
+  _listenerCleanupsMap[clientType] = []
+}
+
+const pushCleanup = (
+  clientType: MSWDevtoolsClientType,
+  cleanup: ListenerCleanup
+) => {
+  _listenerCleanupsMap[clientType].push(cleanup)
+}
+
 export const startServer = () => {
-  if (wss) {
-    return
-  }
+  if (wss) return
 
   wss = new WebSocketServer({
     path: MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PATH,
@@ -22,77 +40,119 @@ export const startServer = () => {
   })
 
   log.info("Server is running.")
+  wss.on("connection", handleConnection)
+}
 
-  wss.on("connection", (ws) => {
-    log.info(`WebSocket connection established.`)
+const CONNECTION_TIMEOUT = 10_000
 
-    const synListener = (data: RawData) => {
-      eventGuard(data.toString(), MSWDevtoolsWebsocketEventName.SYN, () => {
-        ws.off("message", synListener)
-        ws.on("message", ackListener)
+const handleConnection = (ws: WebSocket) => {
+  log.info("WebSocket connection established.")
 
-        const initialMockList = readMockListFile("mockList.json")
+  const handleSYN = (data: RawData) => {
+    eventGuard(
+      data.toString(),
+      MSWDevtoolsWebsocketEventName.SYN,
+      (clientType) => {
+        cleanup(clientType)
 
-        ws.send(
-          serializeMSWDevtoolsWebsocketEvent({
-            name: MSWDevtoolsWebsocketEventName.ACK,
-            payload: initialMockList
-          })
+        clearTimeout(timeoutId)
+        cleanupSYN()
+        setupClientListeners(ws, clientType)
+
+        const closeHandler = () => {
+          cleanup(clientType)
+          log.info("Client disconnected.")
+
+          ws.off("close", closeHandler)
+        }
+        ws.on("close", closeHandler)
+      }
+    )
+  }
+  const cleanupSYN = () => {
+    ws.off("message", handleSYN)
+  }
+
+  const timeoutId = setTimeout(() => {
+    cleanupSYN()
+    log.error("SYN timeout, connection closed.")
+  }, CONNECTION_TIMEOUT)
+
+  ws.on("message", handleSYN)
+}
+
+const setupClientListeners = (
+  ws: WebSocket,
+  clientType: MSWDevtoolsClientType
+) => {
+  const initialMockList = readMockListFile("mockList.json")
+
+  const handleACK = (data: RawData) => {
+    eventGuard(
+      data.toString(),
+      MSWDevtoolsWebsocketEventName.ACK,
+      (clientSideInitialMockList) => {
+        cleanup(clientType)
+        log.info("ACK received. Server connected.")
+
+        if (clientSideInitialMockList && !initialMockList) {
+          updateMockListFile("mockList.json")(clientSideInitialMockList)
+        }
+
+        let closeFileWatch = setupFileWatcher(ws)
+        pushCleanup(
+          clientType,
+          // should keep reference
+          // by assigning a inline cleanup
+          () => closeFileWatch()
         )
 
-        log.info("SYN received. ACK sent.")
-      })
-    }
-
-    const ackListener = (data: RawData) => {
-      eventGuard(
-        data.toString(),
-        MSWDevtoolsWebsocketEventName.ACK,
-        (clientSideInitialMockList) => {
-          ws.off("message", ackListener)
-
-          log.info("ACK received. Server connected.")
-
-          const initialMockList = readMockListFile("mockList.json")
-
-          if (clientSideInitialMockList && !initialMockList) {
-            updateMockListFile("mockList.json")(clientSideInitialMockList)
-          }
-
-          const openFileWatch = () =>
-            watchMockListFile("mockList.json", (mockList) => {
-              log.info("Mock list updated. Sending the update to the client.")
-
-              log.info(JSON.stringify(mockList))
-
-              ws.send(
-                serializeMSWDevtoolsWebsocketEvent({
-                  name: MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
-                  payload: mockList
-                })
+        const handleMockListUpdate = (data: RawData) => {
+          eventGuard(
+            data.toString(),
+            MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
+            (payload) => {
+              log.info(
+                "Mock list updated on client. Saving the update to the file."
               )
-            })
-          let closeFileWatch = openFileWatch()
 
-          ws.on("message", (message) => {
-            eventGuard(
-              message.toString(),
-              MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
-              (payload) => {
-                log.info(
-                  "Mock list updated on client. Saving the update to the file."
-                )
-
-                closeFileWatch()
-                updateMockListFile("mockList.json")(payload)
-                closeFileWatch = openFileWatch()
-              }
-            )
-          })
+              closeFileWatch()
+              updateMockListFile("mockList.json")(payload)
+              closeFileWatch = setupFileWatcher(ws)
+              // doesn't need to push to cleanup because it's already pushed
+            }
+          )
         }
-      )
-    }
 
-    ws.on("message", synListener)
+        ws.on("message", handleMockListUpdate)
+        pushCleanup(clientType, () => ws.off("message", handleMockListUpdate))
+      }
+    )
+  }
+
+  ws.on("message", handleACK)
+  pushCleanup(clientType, () => ws.off("message", handleACK))
+
+  ws.send(
+    serializeMSWDevtoolsWebsocketEvent({
+      name: MSWDevtoolsWebsocketEventName.ACK,
+      payload: initialMockList
+    })
+  )
+  log.info("SYN received. ACK sent.")
+}
+
+const setupFileWatcher = (ws: WebSocket): ListenerCleanup =>
+  watchMockListFile("mockList.json", (mockList) => {
+    log.info("Mock list updated. Sending the update to the client.")
+    sendMockListUpdate(ws, mockList)
   })
+
+const sendMockListUpdate = (ws: WebSocket, mockList: JsonMock[]) => {
+  ws.send(
+    serializeMSWDevtoolsWebsocketEvent({
+      name: MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
+      payload: mockList
+    })
+  )
 }
