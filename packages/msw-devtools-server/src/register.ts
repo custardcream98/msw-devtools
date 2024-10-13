@@ -16,8 +16,6 @@ export const register = ({ server }: { server: SetupServerApi }) => {
 export const getInitialHandlers = (): HttpHandler[] => {
   const mockList = readMockListFile("mockList.json")
 
-  console.log("mockList initial", mockList)
-
   if (mockList) {
     return jsonMockListToHandlers(mockList)
   }
