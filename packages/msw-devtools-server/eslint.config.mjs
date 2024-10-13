@@ -5,7 +5,7 @@ import { fixupPluginRules } from "@eslint/compat"
 import tseslint from "typescript-eslint"
 
 export default tseslint.config(
-  { ignores: ["**/dist"] },
+  { ignores: ["**/dist", "**/bin"] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ["src/**/*.{ts,tsx}"],
