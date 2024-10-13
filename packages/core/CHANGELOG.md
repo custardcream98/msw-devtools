@@ -1,4 +1,4 @@
-# @custardcream/msw-devtools-core
+# core
 
 ## 0.7.0
 

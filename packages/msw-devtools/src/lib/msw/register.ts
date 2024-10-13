@@ -1,6 +1,5 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import { generateHandler, type JsonMock } from "core"
 
-import { generateHandler } from "~/lib/msw/generateHandler"
 import { getWorker } from "~/lib/msw/worker"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
@@ -25,4 +24,10 @@ export const unregister = (
   worker.resetHandlers(...nextLocalStorageMocks.map(generateHandler))
 
   return nextLocalStorageMocks
+}
+
+export const reset = (mocks?: JsonMock[]) => {
+  const worker = getWorker()
+
+  worker.resetHandlers(...(mocks?.map(generateHandler) || []))
 }

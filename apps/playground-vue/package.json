@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"msw-devtools-server -o ./mock\" \"vite\"",
     "prebuild": "pnpm --filter @custardcream/msw-devtools build",
     "build": "pnpm prebuild && run-p type-check:build \"build-only {@}\" --",
     "preview": "vite preview",
@@ -15,26 +15,28 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@tanstack/vue-query": "^5.56.2",
-    "vue": "^3.4.29"
+    "@tanstack/vue-query": "^5.59.13",
+    "vue": "^3.5.12"
   },
   "devDependencies": {
     "@custardcream/msw-devtools": "workspace:*",
-    "@rushstack/eslint-patch": "^1.8.0",
+    "@custardcream/msw-devtools-server": "workspace:*",
+    "@rushstack/eslint-patch": "^1.10.4",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.14.5",
-    "@vitejs/plugin-vue": "^5.0.5",
+    "@types/node": "^20.16.11",
+    "@vitejs/plugin-vue": "^5.1.4",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-vue": "^9.23.0",
-    "msw": "^2.4.8",
-    "npm-run-all2": "^6.2.0",
-    "prettier": "^3.2.5",
-    "typescript": "~5.4.0",
+    "concurrently": "^9.0.1",
+    "eslint": "^8.57.1",
+    "eslint-plugin-vue": "^9.29.0",
+    "msw": "^2.4.10",
+    "npm-run-all2": "^6.2.3",
+    "prettier": "^3.3.3",
+    "typescript": "~5.4.5",
     "vite": "^5.4.8",
-    "vue-tsc": "^2.0.21"
+    "vue-tsc": "^2.1.6"
   },
   "msw": {
     "workerDirectory": [

@@ -1,4 +1,4 @@
-import type { JsonMock } from "@custardcream/msw-devtools-core"
+import type { JsonMock } from "core"
 
 export const generateHandlerScript = (mock: JsonMock) => {
   const name = urlToName(mock.url)

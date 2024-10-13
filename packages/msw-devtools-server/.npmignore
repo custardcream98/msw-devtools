@@ -1,0 +1,12 @@
+node_modules/
+src/
+coverage/
+
+.eslintcache
+.gitignore
+.npmignore
+
+eslint.config.mjs
+tsconfig.json
+rollup.config.js
+vitest.config.ts

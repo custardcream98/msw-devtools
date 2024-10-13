@@ -31,3 +31,25 @@ export const STATUS_NAME = {
   "404": "Not Found",
   "500": "Server Error"
 } as const satisfies Record<StatusOption, string>
+
+export const MSWDevtoolsWebsocketEventName = {
+  SYN: "msw-devtools:syn",
+  ACK: "msw-devtools:ack",
+  MOCK_LIST_UPDATE: "msw-devtools:mock-list:update"
+} as const
+
+export type MSWDevtoolsWebsocketEventName =
+  (typeof MSWDevtoolsWebsocketEventName)[keyof typeof MSWDevtoolsWebsocketEventName]
+
+export const MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG = {
+  PORT: 8080,
+  PATH: "/__msw-devtools"
+}
+
+export const MSWDevtoolsClientType = {
+  CLIENT: "CLIENT",
+  SERVER_CLIENT: "SERVER_CLIENT"
+} as const
+
+export type MSWDevtoolsClientType =
+  (typeof MSWDevtoolsClientType)[keyof typeof MSWDevtoolsClientType]
