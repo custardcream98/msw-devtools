@@ -1,4 +1,4 @@
-import type { JsonMock } from "core"
+import { type JsonMock, JsonMockResponseType } from "core"
 import type { SharedOptions } from "msw"
 import type { SetupWorker, StartOptions } from "msw/browser"
 import type { setupServer as setupServerNative } from "msw/native"
@@ -65,7 +65,7 @@ const backwardsCompatibleMocks = (mocks?: JsonMock[]) => {
       return {
         ...mock,
         response: {
-          type: "single",
+          type: JsonMockResponseType.single,
           response: mock.response
         }
       } satisfies JsonMock

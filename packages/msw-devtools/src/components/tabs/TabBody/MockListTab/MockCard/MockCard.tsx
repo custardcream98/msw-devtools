@@ -1,5 +1,5 @@
 import { BasicSetupOptions } from "@uiw/react-codemirror"
-import type { JsonMock } from "core"
+import { type JsonMock, JsonMockResponseType } from "core"
 import { useTranslation } from "react-i18next"
 import { FaRegTrashCan } from "react-icons/fa6"
 import { HiMiniPencilSquare } from "react-icons/hi2"
@@ -38,7 +38,7 @@ export const MockCard = ({
   return (
     <MockCardAccordion isInitialOpen={isInitialOpen} {...jsonMock}>
       <div className='flex flex-1 gap-2 overflow-auto'>
-        {response.type === "single" ? (
+        {response.type === JsonMockResponseType.single ? (
           <CodeEditor
             className='mt-4 w-full'
             value={JSON.stringify(response.response, null, 2)}

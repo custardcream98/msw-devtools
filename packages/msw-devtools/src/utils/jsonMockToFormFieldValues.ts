@@ -1,4 +1,8 @@
-import type { JsonMock, JsonMockResponse } from "core"
+import {
+  type JsonMock,
+  type JsonMockResponse,
+  JsonMockResponseType
+} from "core"
 
 import {
   FIELD_NAME,
@@ -21,15 +25,15 @@ export const jsonMockToFormFieldValues = (
 const resolveResponse = (
   response: JsonMockResponse
 ): FormFieldResponseValue => {
-  if (response.type === "single") {
+  if (response.type === JsonMockResponseType.single) {
     return {
-      type: "single",
+      type: response.type,
       response: JSON.stringify(response.response, null, 2)
     }
   }
 
   return {
-    type: "sequential",
+    type: response.type,
     response: response.response.map((r) => JSON.stringify(r, null, 2))
   }
 }

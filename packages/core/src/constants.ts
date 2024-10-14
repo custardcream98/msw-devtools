@@ -1,16 +1,24 @@
-export const METHOD_OPTION = {
-  GET: "get",
-  POST: "post",
-  PUT: "put",
-  PATCH: "patch",
-  DELETE: "delete",
-  OPTIONS: "options",
-  HEAD: "head"
+export const JsonMockResponseType = {
+  single: "single",
+  sequential: "sequential"
 } as const
 
-export type MethodOption = (typeof METHOD_OPTION)[keyof typeof METHOD_OPTION]
+export type JsonMockResponseType =
+  (typeof JsonMockResponseType)[keyof typeof JsonMockResponseType]
 
-export const STATUS_OPTION = {
+export const MethodOption = {
+  get: "get",
+  post: "post",
+  put: "put",
+  patch: "patch",
+  delete: "delete",
+  options: "options",
+  head: "head"
+} as const
+
+export type MethodOption = (typeof MethodOption)[keyof typeof MethodOption]
+
+export const StatusOption = {
   "200": "200",
   "201": "201",
   "400": "400",
@@ -20,7 +28,7 @@ export const STATUS_OPTION = {
   "500": "500"
 } as const
 
-export type StatusOption = (typeof STATUS_OPTION)[keyof typeof STATUS_OPTION]
+export type StatusOption = (typeof StatusOption)[keyof typeof StatusOption]
 
 export const STATUS_NAME = {
   "200": "OK",

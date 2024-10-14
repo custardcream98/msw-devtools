@@ -1,3 +1,4 @@
+import { JsonMockResponseType } from "core"
 import { type Control, Controller } from "react-hook-form"
 import { FaXmark } from "react-icons/fa6"
 
@@ -86,7 +87,9 @@ export const AddMockFormCodeEditor = ({
 
                         field.onChange({
                           type:
-                            newResponses.length > 1 ? "sequential" : "single",
+                            newResponses.length > 1
+                              ? JsonMockResponseType.sequential
+                              : JsonMockResponseType.single,
                           response:
                             newResponses.length > 1
                               ? newResponses
