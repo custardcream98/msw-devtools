@@ -1,30 +1,48 @@
 import {
+  JsonMockResponseType,
+  MethodOption,
   MSWDevtoolsClientType,
-  MSWDevtoolsWebsocketEventName
+  MSWDevtoolsWebsocketEventName,
+  StatusOption
 } from "./constants"
-import { JsonMock, MSWDevtoolsWebsocketEvent } from "./types"
+import type {
+  JsonMock,
+  JsonMockResponse,
+  MSWDevtoolsWebsocketEvent
+} from "./types"
+
+const isJsonMockResponse = (data: object): data is JsonMockResponse => {
+  return (
+    "type" in data &&
+    typeof data["type"] === "string" &&
+    data["type"] in JsonMockResponseType &&
+    "response" in data &&
+    (data["type"] === JsonMockResponseType.single
+      ? true
+      : Array.isArray(data["response"]))
+  )
+}
 
 export const isJsonMock = (data: unknown): data is JsonMock => {
   return (
     typeof data === "object" &&
     data !== null &&
     "url" in data &&
-    "method" in data &&
-    "status" in data &&
-    "response" in data &&
-    "responseDelay" in data &&
     typeof data["url"] === "string" &&
+    "method" in data &&
     typeof data["method"] === "string" &&
+    data["method"] in MethodOption &&
+    "status" in data &&
     typeof data["status"] === "string" &&
-    typeof data["response"] === "object" &&
-    data["response"] !== null &&
-    "type" in data["response"] &&
-    (data["response"]["type"] === "single" ||
-      data["response"]["type"] === "sequential") &&
+    data["status"] in StatusOption &&
     "responseDelay" in data &&
     typeof data["responseDelay"] === "number" &&
     "isActivated" in data &&
-    typeof data["isActivated"] === "boolean"
+    typeof data["isActivated"] === "boolean" &&
+    "response" in data &&
+    typeof data["response"] === "object" &&
+    data["response"] !== null &&
+    isJsonMockResponse(data["response"])
   )
 }
 
