@@ -286,7 +286,7 @@ export const AddMockForm = () => {
           <Controller
             name={FIELD_NAME.RESPONSE_DELAY}
             control={method.control}
-            render={({ field }) => (
+            render={({ field: { value, onChange, ...field } }) => (
               <label className='flex h-full w-full min-w-0 items-center bg-slate-50 text-xs'>
                 <span className='ml-2 min-w-fit'>
                   {t("tabs.addMock.responseDelay.label")}
@@ -296,6 +296,10 @@ export const AddMockForm = () => {
                   type='number'
                   step={0.1}
                   min={0}
+                  value={value}
+                  onChange={(e) => {
+                    onChange(Number(e.target.value))
+                  }}
                   {...field}
                 />
               </label>
