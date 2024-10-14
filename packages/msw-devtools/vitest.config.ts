@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config"
+import { defaultExclude, defineConfig } from "vitest/config"
 import path from "path"
 
 export default defineConfig({
@@ -9,6 +9,7 @@ export default defineConfig({
     coverage: {
       reporter: ["json-summary", "json"],
       exclude: [
+        ...defaultExclude,
         "**/types/**",
         "**/types.ts",
         "**/constants/**",
