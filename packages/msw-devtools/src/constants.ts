@@ -1,7 +1,7 @@
 import {
   type JsonMock,
-  METHOD_OPTION,
-  type MethodOption,
+  type JsonMockResponseType,
+  MethodOption,
   type StatusOption
 } from "core"
 
@@ -16,13 +16,13 @@ export const FIELD_NAME = {
 export type FieldName = (typeof FIELD_NAME)[keyof typeof FIELD_NAME]
 
 export const METHOD_COLOR = {
-  [METHOD_OPTION.GET]: "text-blue-600",
-  [METHOD_OPTION.POST]: "text-green-600",
-  [METHOD_OPTION.PUT]: "text-yellow-600",
-  [METHOD_OPTION.DELETE]: "text-red-600",
-  [METHOD_OPTION.PATCH]: "text-teal-500",
-  [METHOD_OPTION.OPTIONS]: "text-purple-600",
-  [METHOD_OPTION.HEAD]: "text-gray-600"
+  [MethodOption.get]: "text-blue-600",
+  [MethodOption.post]: "text-green-600",
+  [MethodOption.put]: "text-yellow-600",
+  [MethodOption.delete]: "text-red-600",
+  [MethodOption.patch]: "text-teal-500",
+  [MethodOption.options]: "text-purple-600",
+  [MethodOption.head]: "text-gray-600"
 } as const
 
 export const STATUS_NAME = {
@@ -47,11 +47,11 @@ export const STATUS_COLOR = {
 
 export type FormFieldResponseValue =
   | {
-      type: "single"
+      type: typeof JsonMockResponseType.single
       response: string
     }
   | {
-      type: "sequential"
+      type: typeof JsonMockResponseType.sequential
       response: string[]
     }
 

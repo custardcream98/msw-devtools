@@ -1,5 +1,6 @@
 import { http, type HttpHandler, HttpResponse } from "msw"
 
+import { JsonMockResponseType } from "./constants"
 import type { JsonMock } from "./types"
 
 export const generateHandler = (mock: JsonMock): HttpHandler => {
@@ -14,11 +15,11 @@ export const generateHandler = (mock: JsonMock): HttpHandler => {
     const response = mock.response
 
     const resolvedResponse =
-      response.type === "sequential"
+      response.type === JsonMockResponseType.sequential
         ? response.response[currentSequence]
         : response.response
 
-    if (response.type === "sequential") {
+    if (response.type === JsonMockResponseType.sequential) {
       currentSequence =
         currentSequence === response.response.length - 1
           ? 0

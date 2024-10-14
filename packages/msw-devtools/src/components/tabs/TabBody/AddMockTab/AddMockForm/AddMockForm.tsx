@@ -1,5 +1,5 @@
 import { clsx } from "clsx"
-import { METHOD_OPTION, STATUS_OPTION } from "core"
+import { JsonMockResponseType, MethodOption, StatusOption } from "core"
 import { jsonrepair } from "jsonrepair"
 import { useEffect, useMemo } from "react"
 import { Controller, useForm, useWatch } from "react-hook-form"
@@ -34,10 +34,10 @@ import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 
 const DEFAULT_VALUES = {
   [FIELD_NAME.URL]: "",
-  [FIELD_NAME.METHOD]: METHOD_OPTION.GET,
-  [FIELD_NAME.STATUS]: STATUS_OPTION["200"],
+  [FIELD_NAME.METHOD]: MethodOption.get,
+  [FIELD_NAME.STATUS]: StatusOption["200"],
   [FIELD_NAME.RESPONSE]: {
-    type: "single",
+    type: JsonMockResponseType.single,
     response: ""
   },
   [FIELD_NAME.RESPONSE_DELAY]: 0
@@ -125,7 +125,7 @@ export const AddMockForm = () => {
 
   // wanted to use form's error, but it's not working
   const isFixable = useMemo(() => {
-    if (response.type === "sequential") {
+    if (response.type === JsonMockResponseType.sequential) {
       return response.response.some(isJSONFixable)
     }
 
@@ -192,9 +192,9 @@ export const AddMockForm = () => {
 
             method.setValue(
               FIELD_NAME.RESPONSE,
-              response.type === "sequential"
+              response.type === JsonMockResponseType.sequential
                 ? {
-                    type: "sequential",
+                    type: response.type,
                     response: response.response.map((value) =>
                       isJSONFixable(value) ? jsonrepair(value) : value
                     )
@@ -255,7 +255,7 @@ export const AddMockForm = () => {
                 )}
                 {...field}
               >
-                {Object.values(METHOD_OPTION).map((method) => (
+                {Object.values(MethodOption).map((method) => (
                   <option key={method} value={method}>
                     {method}
                   </option>
@@ -275,7 +275,7 @@ export const AddMockForm = () => {
                 )}
                 {...field}
               >
-                {Object.values(STATUS_OPTION).map((status) => (
+                {Object.values(StatusOption).map((status) => (
                   <option key={status} value={status}>
                     {status} {STATUS_NAME[status]}
                   </option>
@@ -286,7 +286,7 @@ export const AddMockForm = () => {
           <Controller
             name={FIELD_NAME.RESPONSE_DELAY}
             control={method.control}
-            render={({ field }) => (
+            render={({ field: { value, onChange, ...field } }) => (
               <label className='flex h-full w-full min-w-0 items-center bg-slate-50 text-xs'>
                 <span className='ml-2 min-w-fit'>
                   {t("tabs.addMock.responseDelay.label")}
@@ -296,6 +296,10 @@ export const AddMockForm = () => {
                   type='number'
                   step={0.1}
                   min={0}
+                  value={value}
+                  onChange={(e) => {
+                    onChange(Number(e.target.value))
+                  }}
                   {...field}
                 />
               </label>
@@ -327,7 +331,7 @@ export const AddMockForm = () => {
       <div className='mt-4 flex flex-1 flex-col'>
         <span className='flex items-center justify-between'>
           Response Body (JSON){" "}
-          {response.type === "sequential" && (
+          {response.type === JsonMockResponseType.sequential && (
             <span className='ml-2 mr-auto rounded-lg border-2 border-solid border-orange-500 px-2 py-1 !font-mono text-[0.65rem] font-semibold text-orange-500'>
               {t("tabs.addMock.sequentialBadge", {
                 count: response.response.length
@@ -347,7 +351,7 @@ export const AddMockForm = () => {
               )
 
               const nextResponse = {
-                type: "sequential",
+                type: JsonMockResponseType.sequential,
                 response: [
                   ...normalizedPrevResponse,
                   ...normalizedDefaultResponse
@@ -376,7 +380,7 @@ const isJSONFixable = (value: string) => {
 }
 
 const normalizeResponse = (response: FormFieldResponseValue) => {
-  return response.type === "sequential"
+  return response.type === JsonMockResponseType.sequential
     ? response.response
     : [response.response]
 }

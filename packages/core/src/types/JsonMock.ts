@@ -1,14 +1,18 @@
-import type { MethodOption, StatusOption } from "../constants"
+import type {
+  JsonMockResponseType,
+  MethodOption,
+  StatusOption
+} from "../constants"
 
 type Json = Record<string, unknown> | string | number | boolean | null | Json[]
 
 export type JsonMockResponse =
   | {
-      type: "single"
+      type: typeof JsonMockResponseType.single
       response: Json
     }
   | {
-      type: "sequential"
+      type: typeof JsonMockResponseType.sequential
       response: Json[]
     }
 

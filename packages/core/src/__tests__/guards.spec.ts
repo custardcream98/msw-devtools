@@ -1,6 +1,6 @@
 import { MSWDevtoolsClientType } from "../constants"
 import { isJsonMock, isMSWDevtoolsWebsocketEvent } from "../guards"
-import type { MSWDevtoolsWebsocketEvent } from "../types"
+import type { JsonMock, MSWDevtoolsWebsocketEvent } from "../types"
 
 describe("isJsonMock", () => {
   it("should return true if the data is a JsonMock", () => {
@@ -14,7 +14,7 @@ describe("isJsonMock", () => {
       },
       isActivated: true,
       responseDelay: 1000
-    }
+    } as const satisfies JsonMock
 
     expect(isJsonMock(data)).toBe(true)
   })

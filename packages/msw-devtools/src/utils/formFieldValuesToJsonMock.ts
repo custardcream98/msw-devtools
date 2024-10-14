@@ -1,17 +1,21 @@
-import type { JsonMock, JsonMockResponse } from "core"
+import {
+  type JsonMock,
+  type JsonMockResponse,
+  JsonMockResponseType
+} from "core"
 
 import { type FormFieldResponseValue, type FormFieldValues } from "~/constants"
 
 const parseResponse = (response: FormFieldResponseValue): JsonMockResponse => {
-  if (response.type === "single") {
+  if (response.type === JsonMockResponseType.single) {
     return {
-      type: "single",
+      type: response.type,
       response: JSON.parse(response.response)
     }
   }
 
   return {
-    type: "sequential",
+    type: response.type,
     response: response.response.map((r) => JSON.parse(r))
   }
 }

@@ -1,3 +1,4 @@
+import type { JsonMock } from "core"
 import { Mock } from "vitest"
 
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
@@ -58,14 +59,26 @@ describe("initialize", () => {
     expect(register).not.toHaveBeenCalled()
   })
 
-  it("should register mocks if there are mocks in the local storage", async () => {
-    const MOCK_LOCAL_STORAGE = [{ isActivated: true, name: "mock1" }]
+  it("should register mocks if there are mocks in the local storage, filtering invalid JsonMock", async () => {
+    const INVALID = { isActivated: true, name: "mock1" }
+    const VALID = {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
+        type: "single",
+        response: null
+      },
+      responseDelay: 1000,
+      isActivated: true
+    } as const satisfies JsonMock
+    const MOCK_LOCAL_STORAGE = [INVALID, VALID]
 
     ;(getLocalStorageItem as Mock).mockReturnValue(MOCK_LOCAL_STORAGE)
     const { initialize } = await import("~/lib/msw/initialize")
 
     await initialize({ setupWorker: { start: () => {} } as any })
 
-    expect(register).toHaveBeenCalledWith(...MOCK_LOCAL_STORAGE)
+    expect(register).toHaveBeenCalledWith(VALID)
   })
 })
