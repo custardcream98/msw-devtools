@@ -4,10 +4,10 @@
   "version": "0.8.0",
   "description": "Websocket server for @custardcream/msw-devtools",
   "files": [
-    "bin"
+    "dist"
   ],
   "bin": {
-    "msw-devtools-server": "bin/index.js"
+    "msw-devtools-server": "dist/index.js"
   },
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
