@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.8.1
+
+### Patch Changes
+
+- 252ca15: fix: save / load json mock correctly
+
 ## 0.8.0
 
 ### Minor Changes
