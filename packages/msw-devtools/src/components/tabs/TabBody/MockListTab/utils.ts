@@ -1,8 +1,10 @@
 import { isJsonMock, type JsonMock } from "core"
 import { jsonrepair } from "jsonrepair"
 
-const isJsonMocks = (data: unknown): data is JsonMock[] => {
-  return Array.isArray(data) && data.every(isJsonMock)
+import { autoFixJsonMock } from "~/utils/autoFixJsonMock"
+
+const isJsonMocks = (data: unknown[]): data is JsonMock[] => {
+  return data.every(isJsonMock)
 }
 
 export const saveJson = (data: object, filename: string) => {
@@ -42,13 +44,19 @@ export const loadJson = ({
       const reader = new FileReader()
       reader.onload = (e) => {
         try {
-          const data = JSON.parse(jsonrepair(e.target?.result as string))
+          const data = JSON.parse(
+            jsonrepair(e.target?.result as string)
+          ) as unknown
 
-          if (!isJsonMocks(data)) {
+          const resolvedData = Array.isArray(data)
+            ? data.map(autoFixJsonMock)
+            : [autoFixJsonMock(data)]
+
+          if (!isJsonMocks(resolvedData)) {
             throw new Error()
           }
 
-          onLoad(data)
+          onLoad(resolvedData)
         } catch (error) {
           alert("[MSW Devtools] Invalid JSON file")
         }

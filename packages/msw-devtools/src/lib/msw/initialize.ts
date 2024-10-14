@@ -1,16 +1,13 @@
-import { type JsonMock, JsonMockResponseType } from "core"
 import type { SharedOptions } from "msw"
 import type { SetupWorker, StartOptions } from "msw/browser"
 import type { setupServer as setupServerNative } from "msw/native"
 import type { SetupServerApi } from "msw/node"
 
 import { StorageKey } from "~/constants"
-import {
-  getLocalStorageItem,
-  setLocalStorageItem
-} from "~/hooks/useLocalStorageState"
-import { register } from "~/lib/msw/register"
+import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
+import { autoFixJsonMock } from "~/utils/autoFixJsonMock"
 
+import { register } from "./register"
 import { getWorkerWithoutThrow, setWorker } from "./worker"
 
 export type InitializeProps =
@@ -41,9 +38,9 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
     setupWorker.listen(options)
   }
 
-  const localStorageMocks = backwardsCompatibleMocks(
-    getLocalStorageItem(StorageKey.MOCK_LIST)
-  )
+  const localStorageMocks = getLocalStorageItem(StorageKey.MOCK_LIST)
+    ?.map(autoFixJsonMock)
+    .filter(isDefined)
 
   if (!localStorageMocks) {
     return
@@ -54,27 +51,6 @@ export const initialize = async ({ setupWorker, options }: InitializeProps) => {
   return localStorageMocks
 }
 
-// TODO: delete on 1.0.0 release
-const backwardsCompatibleMocks = (mocks?: JsonMock[]) => {
-  if (!mocks) {
-    return
-  }
-
-  const newMocks = mocks.map((mock) => {
-    if (typeof mock.response === "string") {
-      return {
-        ...mock,
-        response: {
-          type: JsonMockResponseType.single,
-          response: mock.response
-        }
-      } satisfies JsonMock
-    }
-
-    return mock
-  })
-
-  setLocalStorageItem(StorageKey.MOCK_LIST, newMocks)
-
-  return newMocks
+const isDefined = <T>(value: T | null | undefined): value is NonNullable<T> => {
+  return value !== null && value !== undefined
 }
