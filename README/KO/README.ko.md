@@ -147,3 +147,42 @@ npm install -D @custardcream/msw-devtools-server
 ### CLI Options
 
 - `-o, --output <path>`: Output file path(or directory) for the generated JSON file. (default: `./mock-list.json`)
+
+### 생성되는 JSON 파일의 스키마
+
+`@custardcream/msw-devtools-server`가 생성하는 JSON 파일은 다음과 같은 스키마를 따릅니다. (이해를 돕기 위해 TypeScript로 작성한 코드입니다.)
+
+```typescript
+/**
+ * JSON file scheme for managing MSW request handlers
+ */
+type JsonMock = Array<{
+  url: string
+  method: MethodOption
+  status: StatusOption
+  response: JsonMockResponse
+  responseDelay: number
+  isActivated: boolean
+}>
+
+type MethodOption =
+  | "get"
+  | "post"
+  | "put"
+  | "patch"
+  | "delete"
+  | "options"
+  | "head"
+
+type StatusOption = "200" | "201" | "400" | "401" | "403" | "404" | "500"
+
+type JsonMockResponse =
+  | {
+      type: "single"
+      response: any
+    }
+  | {
+      type: "sequential"
+      response: any[]
+    }
+```
