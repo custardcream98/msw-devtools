@@ -10,11 +10,12 @@
     "lib": ["dom", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": ["src/*"],
+      "core": ["../core/src"]
     },
 
     // Test
-    "types": ["vitest/globals", "core/vite/events"],
+    "types": ["vitest/globals", "../core/vite/events"],
 
     // Linting
     "strict": true,
