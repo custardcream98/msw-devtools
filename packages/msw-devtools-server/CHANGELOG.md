@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools-server
 
+## 0.8.1
+
+### Patch Changes
+
+- 6343d0d: fix: @custardcream/msw-server to be deployed on npm
+
 ## 0.8.0
 
 ### Minor Changes
