@@ -134,6 +134,14 @@ Conversely, you can also directly edit the JSON file to reflect changes in your 
 npm install -D @custardcream/msw-devtools-server
 ```
 
+```js
+// Add isUsingServer option to installMSWDevtools
+installMSWDevtools({
+  setupWorker: setupWorker()
+  isUsingServer: true // Enable server usage
+})
+```
+
 **Be sure to start the server before you begin developing your project.**
 
 For example, a Vite app can be configured as follows (using `concurrently`):

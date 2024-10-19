@@ -1,7 +1,6 @@
 import type { SharedOptions } from "msw"
 import type { SetupWorker, StartOptions } from "msw/browser"
 import type { setupServer as setupServerNative } from "msw/native"
-import type { SetupServerApi } from "msw/node"
 
 import { StorageKey } from "~/constants"
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
@@ -19,7 +18,7 @@ export type InitializeProps =
       options?: StartOptions
     }
   | {
-      setupWorker: SetupServerApi | ReturnType<typeof setupServerNative>
+      setupWorker: ReturnType<typeof setupServerNative>
       /**
        * @link https://mswjs.io/docs/api/setup-server/listen/#options
        */

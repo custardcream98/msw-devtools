@@ -100,9 +100,6 @@ importers:
         specifier: ^4.0.13
         version: 4.0.13(react@18.3.1)
     devDependencies:
-      '@custardcream/vite-plugin-msw-devtools':
-        specifier: workspace:*
-        version: link:../../packages/vite-plugin-msw-devtools
       '@eslint/compat':
         specifier: ^1.2.0
         version: 1.2.0(eslint@9.12.0(jiti@1.21.6))
@@ -490,72 +487,6 @@ importers:
       vitest:
         specifier: ^2.1.2
         version: 2.1.2(@types/node@22.7.5)(@vitest/ui@2.1.2)(happy-dom@15.7.4)(less@4.2.0)(msw@2.4.10(typescript@5.6.3))(sass@1.77.1)(stylus@0.62.0)(terser@5.34.1)
-
-  packages/vite-plugin-msw-devtools:
-    devDependencies:
-      '@eslint/compat':
-        specifier: ^1.2.0
-        version: 1.2.0(eslint@9.12.0(jiti@1.21.6))
-      '@rollup/plugin-commonjs':
-        specifier: ^26.0.3
-        version: 26.0.3(rollup@4.24.0)
-      '@rollup/plugin-json':
-        specifier: ^6.1.0
-        version: 6.1.0(rollup@4.24.0)
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.3.0
-        version: 15.3.0(rollup@4.24.0)
-      '@rollup/plugin-terser':
-        specifier: ^0.4.4
-        version: 0.4.4(rollup@4.24.0)
-      '@rollup/plugin-typescript':
-        specifier: ^11.1.6
-        version: 11.1.6(rollup@4.24.0)(tslib@2.7.0)(typescript@5.6.3)
-      '@types/node':
-        specifier: ^22.7.5
-        version: 22.7.5
-      core:
-        specifier: workspace:*
-        version: link:../core
-      eslint:
-        specifier: ^9.12.0
-        version: 9.12.0(jiti@1.21.6)
-      eslint-plugin-simple-import-sort:
-        specifier: ^12.1.1
-        version: 12.1.1(eslint@9.12.0(jiti@1.21.6))
-      eslint-plugin-testing-library:
-        specifier: ^6.3.0
-        version: 6.3.0(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
-      msw:
-        specifier: ^2.4.10
-        version: 2.4.10(typescript@5.6.3)
-      prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
-      rollup:
-        specifier: ^4.24.0
-        version: 4.24.0
-      rollup-plugin-delete:
-        specifier: ^2.1.0
-        version: 2.1.0(rollup@4.24.0)
-      rollup-plugin-dts:
-        specifier: ^6.1.1
-        version: 6.1.1(rollup@4.24.0)(typescript@5.6.3)
-      rollup-plugin-peer-deps-external:
-        specifier: ^2.2.4
-        version: 2.2.4(rollup@4.24.0)
-      rollup-plugin-tsconfig-paths:
-        specifier: ^1.5.2
-        version: 1.5.2(rollup@4.24.0)(typescript@5.6.3)
-      typescript:
-        specifier: ^5.6.3
-        version: 5.6.3
-      typescript-eslint:
-        specifier: ^8.8.1
-        version: 8.8.1(eslint@9.12.0(jiti@1.21.6))(typescript@5.6.3)
-      vite:
-        specifier: ^5.4.8
-        version: 5.4.8(@types/node@22.7.5)(less@4.2.0)(sass@1.77.1)(stylus@0.62.0)(terser@5.34.1)
 
 packages:
 

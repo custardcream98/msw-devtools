@@ -5,7 +5,6 @@ import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, reset, unregister } from "~/lib/msw"
 import { addMockListUpdateListener, serverSendMockList } from "~/lib/server"
-import { isVitePluginEnabled, viteSendMockList } from "~/lib/vite"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
@@ -41,9 +40,6 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
   const isFirstRender = useRef(true)
   useEffect(() => {
-    if (isVitePluginEnabled()) {
-      viteSendMockList(mockList)
-    }
     if (!isFirstRender.current) {
       serverSendMockList(mockList)
     }

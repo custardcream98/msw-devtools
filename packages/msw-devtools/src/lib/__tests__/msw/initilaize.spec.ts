@@ -37,7 +37,7 @@ describe("initialize", () => {
     expect(start).toHaveBeenCalledWith(OPTIONS)
   })
 
-  it("should set the worker and listen if it's a node worker", async () => {
+  it("should set the worker and listen if it's a native worker", async () => {
     const listen = vi.fn()
     const setupWorker = {
       listen
