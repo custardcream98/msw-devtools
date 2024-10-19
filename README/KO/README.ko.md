@@ -130,6 +130,14 @@ enableMocking().then(() => {
 npm install -D @custardcream/msw-devtools-server
 ```
 
+```js
+// installMSWDevtools에 isUsingServer 옵션을 추가합니다.
+installMSWDevtools({
+  setupWorker: setupWorker()
+  isUsingServer: true // 서버를 사용하도록 설정합니다.
+})
+```
+
 **프로젝트 개발을 시작하기 전에 서버를 실행해야 합니다.**
 
 예를 들어, Vite 앱은 이렇게 구성할 수 있습니다. (`concurrently` 사용)
