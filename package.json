@@ -19,7 +19,7 @@
     "build:playground": "pnpm build:package && pnpm --filter playground build",
     "dev": "concurrently -k -s first -n \"PACKAGE,PLAYGROUND\" -c \"magenta,orange,blue\" \"NODE_ENV=development pnpm build:package:watch\" \"pnpm --filter playground dev\"",
     "ci:version": "pnpm changeset version",
-    "ci:publish": "pnpm sync-readme && pnpm build:package && pnpm build:plugin && pnpm changeset publish",
+    "ci:publish": "pnpm sync-readme && pnpm build:package && pnpm build:plugin && pnpm build:server && pnpm changeset publish",
     "ci:check": "pnpm lint && pnpm type-check && pnpm coverage",
     "sync-readme": "cp ./README.md packages/msw-devtools/README.md && mkdir -p packages/msw-devtools/README/EN && cp -r ./README/EN packages/msw-devtools/README",
     "playground": "pnpm --filter playground dev",
