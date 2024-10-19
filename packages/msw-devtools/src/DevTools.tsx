@@ -12,7 +12,7 @@ import { TabBody } from "~/components/tabs/TabBody"
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
-const DevTools = ({ initialOpen = false }: { initialOpen?: boolean }) => {
+const DevTools = ({ initialOpen = true }: { initialOpen?: boolean }) => {
   const [isOpened, setIsOpened] = useLocalStorageState(
     StorageKey.OPEN,
     initialOpen

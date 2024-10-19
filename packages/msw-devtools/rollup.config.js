@@ -22,7 +22,7 @@ const TYPES_FILE = packageJson.types
 
 export default defineConfig([
   {
-    input: "src/index.tsx",
+    input: "src/index.ts",
     output: [
       {
         dir: COMMON_JS_DIR,
@@ -66,7 +66,7 @@ export default defineConfig([
   },
   // Build Types
   {
-    input: "src/index.tsx",
+    input: "src/index.ts",
     output: {
       file: TYPES_FILE,
       format: "esm"

@@ -13,7 +13,8 @@ const enableMocking = async () => {
     setupWorker: setupWorker(),
     options: {
       onUnhandledRequest: 'bypass'
-    }
+    },
+    isUsingServer: true
   })
   // }
 }

@@ -34,14 +34,31 @@ describe("createDevtool", () => {
     expect(containers.length).toBe(1)
   })
 
-  it("should initialize server connection", async () => {
+  it("should initialize server connection if isUsingServer is true", async () => {
     const { createDevtool } = await import("~/lib/createDevtool")
     const mockServer = vi.fn()
 
     ;(server as Mock).mockImplementation(mockServer)
 
-    await createDevtool({ setupWorker: { start: () => {} } as any })
+    await createDevtool({
+      setupWorker: { start: () => {} } as any,
+      isUsingServer: true
+    })
 
     expect(mockServer).toHaveBeenCalledOnce()
+  })
+
+  it("should not initialize server connection if isUsingServer is false", async () => {
+    const { createDevtool } = await import("~/lib/createDevtool")
+    const mockServer = vi.fn()
+
+    ;(server as Mock).mockImplementation(mockServer)
+
+    await createDevtool({
+      setupWorker: { start: () => {} } as any,
+      isUsingServer: false
+    })
+
+    expect(mockServer).not.toHaveBeenCalled()
   })
 })
