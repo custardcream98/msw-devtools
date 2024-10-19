@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools-server
 
+## 0.9.0
+
+### Minor Changes
+
+- 4f366fe: fix: bundle msw-devtools-server properly
+
 ## 0.8.1
 
 ### Patch Changes
