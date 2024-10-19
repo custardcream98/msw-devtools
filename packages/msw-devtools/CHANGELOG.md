@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.9.0
+
+### Minor Changes
+
+- c864166: feat: remove @custardcream/vite-plugin-msw-devtools as it's replaced with @custardcream/msw-devtools-server
+
 ## 0.8.1
 
 ### Patch Changes
