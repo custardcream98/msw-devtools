@@ -1,6 +1,4 @@
-import type { CreateDevtoolProps } from "~/lib/createDevtool"
-
-export type InstallProps = CreateDevtoolProps
+import type { InstallProps } from "~/types"
 
 let isInitialized = false
 export const installMSWDevtools = async (props: InstallProps) => {
@@ -12,3 +10,5 @@ export const installMSWDevtools = async (props: InstallProps) => {
     await createDevtool(props)
   }
 }
+
+export type { InstallProps }
