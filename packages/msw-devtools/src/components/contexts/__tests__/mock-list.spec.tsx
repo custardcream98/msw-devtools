@@ -23,6 +23,7 @@ vi.mock("~/lib/msw/worker", () => ({
 }))
 
 vi.mock("~/lib/server", () => ({
+  isServerEnabled: () => true,
   addMockListUpdateListener: vi.fn(),
   serverSendMockList: vi.fn()
 }))

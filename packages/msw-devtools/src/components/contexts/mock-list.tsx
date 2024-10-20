@@ -4,7 +4,11 @@ import React, { useCallback, useEffect, useMemo, useRef } from "react"
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, reset, unregister } from "~/lib/msw"
-import { addMockListUpdateListener, serverSendMockList } from "~/lib/server"
+import {
+  addMockListUpdateListener,
+  isServerEnabled,
+  serverSendMockList
+} from "~/lib/server"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
@@ -40,7 +44,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
   const isFirstRender = useRef(true)
   useEffect(() => {
-    if (!isFirstRender.current) {
+    if (!isFirstRender.current && isServerEnabled()) {
       serverSendMockList(mockList)
     }
 
@@ -133,6 +137,10 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   }, [setMockList])
 
   useEffect(() => {
+    if (!isServerEnabled()) {
+      return
+    }
+
     const removeListener = addMockListUpdateListener((mockList) => {
       reset(mockList)
       setMockList(mockList)
