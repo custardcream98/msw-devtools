@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.9.1
+
+### Patch Changes
+
+- a3036d6: fix: initialize websocket connection only if `isUsingServer` is enabled
+
 ## 0.9.0
 
 ### Minor Changes
