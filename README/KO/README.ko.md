@@ -133,7 +133,7 @@ npm install -D @custardcream/msw-devtools-server
 ```js
 // installMSWDevtools에 isUsingServer 옵션을 추가합니다.
 installMSWDevtools({
-  setupWorker: setupWorker()
+  setupWorker: setupWorker(),
   isUsingServer: true // 서버를 사용하도록 설정합니다.
 })
 ```
@@ -154,7 +154,7 @@ installMSWDevtools({
 
 ### CLI Options
 
-- `-o, --output <path>`: Output file path(or directory) for the generated JSON file. (default: `./mock-list.json`)
+- `-o, --output <path>`: JSON을 저장할 path(혹은 directory) (default: `./mock-list.json`)
 
 ### 생성되는 JSON 파일의 스키마
 

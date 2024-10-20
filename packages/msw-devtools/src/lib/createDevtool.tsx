@@ -1,27 +1,13 @@
 import { server } from "~/lib/server"
+import type { InstallProps } from "~/types"
 
-import { initialize, type InitializeProps } from "./msw"
-
-export type CreateDevtoolProps = InitializeProps & {
-  /**
-   * Whether the devtool should be open by default.
-   *
-   * @default true
-   */
-  initialOpen?: boolean
-  /**
-   * Whether should be connected to the @custardcream/msw-devtools-server
-   *
-   * @default false
-   */
-  isUsingServer?: boolean
-}
+import { initialize } from "./msw"
 
 export const createDevtool = async ({
   initialOpen,
   isUsingServer = false,
   ...props
-}: CreateDevtoolProps) => {
+}: InstallProps) => {
   const loadedMocks = await initialize(props)
 
   if (isUsingServer) {

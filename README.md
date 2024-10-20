@@ -137,7 +137,7 @@ npm install -D @custardcream/msw-devtools-server
 ```js
 // Add isUsingServer option to installMSWDevtools
 installMSWDevtools({
-  setupWorker: setupWorker()
+  setupWorker: setupWorker(),
   isUsingServer: true // Enable server usage
 })
 ```

@@ -12,19 +12,21 @@ import { setLocalStorageItem } from "~/hooks/useLocalStorageState"
 import { log } from "~/lib/log"
 
 export const serverSendMockList = (mockList: JsonMock[]) => {
-  if (isServerEnabled()) {
-    ws.send(
-      serializeMSWDevtoolsWebsocketEvent({
-        name: MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
-        payload: mockList
-      })
-    )
-  }
+  const ws = _getWebsocket()
+
+  ws.send(
+    serializeMSWDevtoolsWebsocketEvent({
+      name: MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
+      payload: mockList
+    })
+  )
 }
 
 export const addMockListUpdateListener = (
   callback: (mockList: JsonMock[]) => void
 ) => {
+  const ws = _getWebsocket()
+
   const handleMessage = (event: MessageEvent) => {
     eventGuard(
       event.data,
@@ -41,6 +43,8 @@ export const addMockListUpdateListener = (
 }
 
 export const server = (initialMockList?: JsonMock[]) => {
+  const ws = _getWebsocket()
+
   if (ws.readyState === WebSocket.OPEN) {
     log.info("WebSocket connection established.")
 
@@ -85,8 +89,15 @@ export const server = (initialMockList?: JsonMock[]) => {
 }
 
 let _isServerEnabled = false
-const ws = new WebSocket(
-  `ws://localhost:${MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PORT}${MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PATH}`
-)
+let _ws: WebSocket
+
+const WEB_SOCKET_URL = `ws://localhost:${MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PORT}${MSW_DEVTOOLS_WEBSOCKET_SERVER_CONFIG.PATH}`
+const _getWebsocket = () => {
+  if (!_ws) {
+    _ws = new WebSocket(WEB_SOCKET_URL)
+  }
+
+  return _ws
+}
 
 export const isServerEnabled = () => _isServerEnabled

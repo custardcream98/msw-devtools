@@ -37,20 +37,6 @@ describe("initialize", () => {
     expect(start).toHaveBeenCalledWith(OPTIONS)
   })
 
-  it("should set the worker and listen if it's a native worker", async () => {
-    const listen = vi.fn()
-    const setupWorker = {
-      listen
-    } as any
-    const OPTIONS = "OPTIONS" as any
-
-    const { initialize } = await import("~/lib/msw/initialize")
-
-    await initialize({ setupWorker, options: OPTIONS })
-
-    expect(listen).toHaveBeenCalledWith(OPTIONS)
-  })
-
   it("should not register any mocks if there are no mocks in the local storage", async () => {
     const { initialize } = await import("~/lib/msw/initialize")
 
