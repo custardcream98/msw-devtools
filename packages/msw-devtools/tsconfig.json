@@ -10,8 +10,7 @@
     "lib": ["dom", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "core": ["../core/src"]
+      "~/*": ["src/*"]
     },
 
     // Test

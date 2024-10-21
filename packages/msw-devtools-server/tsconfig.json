@@ -9,8 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"],
-      "package.json": ["package.json"],
-      "core": ["../core/src"]
+      "package.json": ["package.json"]
     },
 
     // Test
