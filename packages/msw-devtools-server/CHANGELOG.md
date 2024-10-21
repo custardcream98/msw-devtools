@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools-server
 
+## 0.9.2
+
+### Patch Changes
+
+- 6d2690b: feat: (internal change) change core package to be devDeps
+
 ## 0.9.0
 
 ### Minor Changes

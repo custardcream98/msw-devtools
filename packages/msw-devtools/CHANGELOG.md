@@ -1,5 +1,12 @@
 # @custardcream/msw-devtools
 
+## 0.9.2
+
+### Patch Changes
+
+- e3da92c: fix: server connection not established bug
+- 6d2690b: feat: (internal change) change core package to be devDeps
+
 ## 0.9.1
 
 ### Patch Changes
