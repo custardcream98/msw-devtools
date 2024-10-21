@@ -14,7 +14,7 @@ const enableMocking = async () => {
     options: {
       onUnhandledRequest: 'bypass'
     },
-    isUsingServer: true
+    isUsingServer: import.meta.env.DEV
   })
   // }
 }
