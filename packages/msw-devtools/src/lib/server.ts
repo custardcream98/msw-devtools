@@ -45,7 +45,7 @@ export const addMockListUpdateListener = (
 export const server = (initialMockList?: JsonMock[]) => {
   const ws = _getWebsocket()
 
-  if (ws.readyState === WebSocket.OPEN) {
+  ws.addEventListener("open", () => {
     log.info("WebSocket connection established.")
 
     ws.send(
@@ -85,7 +85,7 @@ export const server = (initialMockList?: JsonMock[]) => {
     }
 
     ws.addEventListener("message", ackListener)
-  }
+  })
 }
 
 let _isServerEnabled = false

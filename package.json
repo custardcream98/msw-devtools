@@ -11,6 +11,7 @@
     "docs:dev": "pnpm --filter docs dev",
     "prepare": "husky",
     "build": "pnpm build:package && pnpm build:server",
+    "build:development": "NODE_ENV=development pnpm build",
     "build:package": "pnpm --filter @custardcream/msw-devtools build",
     "build:package:watch": "pnpm --filter @custardcream/msw-devtools build:watch",
     "build:server": "pnpm --filter @custardcream/msw-devtools-server build",
