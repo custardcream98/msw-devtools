@@ -130,6 +130,8 @@ Using `@custardcream/msw-devtools-server`, you can create and update the request
 
 Conversely, you can also directly edit the JSON file to reflect changes in your developing app in real time.
 
+<a href="https://www.npmjs.com/package/@custardcream/msw-devtools-server" target="_blank"><img src="https://img.shields.io/npm/v/@custardcream/msw-devtools-server.svg?style=flat-square&label=Latest&color=black" alt="Package version" /></a>
+
 ```bash
 npm install -D @custardcream/msw-devtools-server
 ```
