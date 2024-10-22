@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools-server
 
+## 0.9.3
+
+### Patch Changes
+
+- 5dd8379: fix: Fix default generated mock-list.json's path
+
 ## 0.9.2
 
 ### Patch Changes
