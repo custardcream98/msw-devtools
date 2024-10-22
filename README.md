@@ -68,7 +68,7 @@ const enableMocking = async () => {
   if (import.meta.env.DEV) {
     return await installMSWDevtools({
       initialOpen: true, // Automatically open devtool on start
-      setupWorker: setupWorker() // Initialize MSW worker
+      setupWorker: setupWorker(), // Initialize MSW worker
       options: { // MSW worker options
         onUnhandledRequest: "bypass",
       }

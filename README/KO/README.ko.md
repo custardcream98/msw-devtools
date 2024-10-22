@@ -66,7 +66,7 @@ const enableMocking = async () => {
   if (import.meta.env.DEV) {
     return await installMSWDevtools({
       initialOpen: true, // Devtools 열린 상태로 시작
-      setupWorker: setupWorker() // MSW 워커 초기화
+      setupWorker: setupWorker(), // MSW 워커 초기화
       options: { // MSW 워커 설정
         onUnhandledRequest: "bypass"
       }
