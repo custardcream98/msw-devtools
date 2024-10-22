@@ -38,13 +38,16 @@ jobs:
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: ./packages/msw-devtools
+          name: "@custardcream/msw-devtools"
 
       - name: Report coverage (msw-devtools-server)
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: ./packages/msw-devtools-server
+          name: "@custardcream/msw-devtools-server"
 
       - name: Report coverage (core)
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           working-directory: ./packages/core
+          name: "core"
