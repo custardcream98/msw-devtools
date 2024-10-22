@@ -2,6 +2,7 @@ import fs from "fs"
 import path from "path"
 
 import { resolveOutput, resolveRecursive } from "~/cli/program"
+import { log } from "~/cli/utils/log"
 
 vi.mock("fs")
 
@@ -77,6 +78,7 @@ describe("resolveRecursive", () => {
     const result = resolveRecursive(OUTPUT, RECURSIVE)
 
     expect(result).toEqual(false)
+    expect(log.error).toHaveBeenCalledOnce()
   })
 
   it("should return false if the output is a file path and recursive is false", () => {
