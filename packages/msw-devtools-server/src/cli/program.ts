@@ -14,22 +14,22 @@ program
   .option(
     "-o, --output <string>",
     "The path to the output file where the mock list JSON will be written to",
-    '"./mock-list.json"'
+    "./mock-list.json"
   )
   .parse(process.argv)
 
 const _options = program.opts<MSWDevtoolsServerOptions>()
 
-const resolveOutputPath = (output: string) => {
+export const resolveOutputPath = (output: string) => {
   const stats = fs.statSync(output, {
     throwIfNoEntry: false
   })
 
-  if (!stats || stats.isDirectory()) {
+  if (stats?.isDirectory()) {
     return path.resolve(output, "mock-list.json")
   }
 
-  return output
+  return path.resolve(output)
 }
 
 export const options: MSWDevtoolsServerOptions = {
