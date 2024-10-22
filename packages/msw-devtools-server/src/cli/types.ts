@@ -5,4 +5,11 @@ export type MSWDevtoolsServerOptions = {
    * @default "./mock-list.json"
    */
   output: string
+  /**
+   * Enable recursive watching of the directory.
+   * Ignore this option when the output path is a file.
+   *
+   * @default false
+   */
+  recursive: boolean
 }

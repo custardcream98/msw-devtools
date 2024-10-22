@@ -1,11 +1,11 @@
 import fs from "fs"
 import path from "path"
 
-import { resolveOutputPath } from "~/cli/program"
+import { resolveOutput, resolveRecursive } from "~/cli/program"
 
 vi.mock("fs")
 
-describe("resolveOutputPath", () => {
+describe("resolveOutput", () => {
   describe("if fs.statSync returns something", () => {
     it("should return the output path if it's a file", () => {
       vi.mocked(fs.statSync).mockReturnValue({
@@ -13,7 +13,7 @@ describe("resolveOutputPath", () => {
       } as fs.Stats)
 
       const OUTPUT = "path/to/something/mock-list.json"
-      const result = resolveOutputPath(OUTPUT)
+      const result = resolveOutput(OUTPUT)
 
       expect(result).toEqual(path.resolve(OUTPUT))
     })
@@ -24,7 +24,7 @@ describe("resolveOutputPath", () => {
       } as fs.Stats)
 
       const OUTPUT = "path/to/something"
-      const result = resolveOutputPath(OUTPUT)
+      const result = resolveOutput(OUTPUT)
 
       expect(result).toEqual(path.resolve(OUTPUT, "mock-list.json"))
     })
@@ -35,9 +35,55 @@ describe("resolveOutputPath", () => {
       vi.mocked(fs.statSync).mockReturnValue(undefined)
 
       const OUTPUT = "mock-list.json"
-      const result = resolveOutputPath(OUTPUT)
+      const result = resolveOutput(OUTPUT)
 
       expect(result).toEqual(path.resolve(OUTPUT))
     })
+  })
+})
+
+describe("resolveRecursive", () => {
+  beforeEach(() => {
+    vi.mock("~/cli/utils/log") // disable the log.error calls
+  })
+
+  it('should try to create the directory if "recursive" is true', () => {
+    const OUTPUT = "path/to/something"
+    const RECURSIVE = true
+    resolveRecursive(OUTPUT, RECURSIVE)
+
+    expect(fs.mkdirSync).toHaveBeenCalledWith(OUTPUT, { recursive: true })
+  })
+
+  it("should return true if the output is a directory and recursive is true", () => {
+    const OUTPUT = "path/to/something"
+    const RECURSIVE = true
+    const result = resolveRecursive(OUTPUT, RECURSIVE)
+
+    expect(result).toEqual(true)
+  })
+
+  it("should return false if the output is a directory and recursive is false", () => {
+    const OUTPUT = "path/to/something"
+    const RECURSIVE = false
+    const result = resolveRecursive(OUTPUT, RECURSIVE)
+
+    expect(result).toEqual(false)
+  })
+
+  it("should return false if the output is a file path and recursive is true", () => {
+    const OUTPUT = "path/to/something.json"
+    const RECURSIVE = true
+    const result = resolveRecursive(OUTPUT, RECURSIVE)
+
+    expect(result).toEqual(false)
+  })
+
+  it("should return false if the output is a file path and recursive is false", () => {
+    const OUTPUT = "path/to/something.json"
+    const RECURSIVE = false
+    const result = resolveRecursive(OUTPUT, RECURSIVE)
+
+    expect(result).toEqual(false)
   })
 })
