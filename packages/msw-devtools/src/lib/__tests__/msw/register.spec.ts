@@ -1,13 +1,13 @@
-import { generateHandler } from "core"
-
 import { FIELD_NAME } from "~/constants"
 import { register, reset, unregister } from "~/lib/msw/register"
 import { getWorker, type Worker } from "~/lib/msw/worker"
 
 beforeEach(() => {
   vi.mock("~/lib/msw/worker")
-  vi.mock("core")
-  vi.mocked(generateHandler).mockImplementation((...args) => args as any)
+  vi.mock("core", async (importOriginal) => ({
+    ...(await importOriginal()),
+    generateHandler: vi.fn((...args) => args as any)
+  }))
 })
 
 describe("register", () => {
