@@ -1,4 +1,4 @@
-import type { JsonMock } from "core"
+import { isSameJsonMock, type JsonMock } from "core"
 import React, { useCallback, useEffect, useMemo, useRef } from "react"
 
 import { StorageKey } from "~/constants"
@@ -10,7 +10,6 @@ import {
   serverSendMockList
 } from "~/lib/server"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
-import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 export type MockListContextType = {
   mockList: JsonMock[]
