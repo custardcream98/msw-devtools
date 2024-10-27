@@ -47,7 +47,7 @@ describe("useDragMove", () => {
       )
     })
 
-    expect(target).toHaveTextContent("x: 0 y: 0")
+    expect(target.textContent).toBe("x: 0 y: 0")
   })
 
   it("should call onDrag when dragging", async () => {
@@ -64,7 +64,7 @@ describe("useDragMove", () => {
     })
 
     // TODO: not working
-    // expect(target).toHaveTextContent("x: 100 y: 100")
+    // expect(target.textContent).toBe("x: 100 y: 100")
     expect(true).toBe(true)
   })
 })
