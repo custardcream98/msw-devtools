@@ -5,6 +5,7 @@ import path from "path"
 
 import {
   readMockListFile,
+  readMockListFileRecursive,
   updateMockListFile,
   watchMockListFile
 } from "~/cli/utils/file"
@@ -59,6 +60,38 @@ describe("readMockListFile", () => {
     const result = readMockListFile()
 
     expect(result).toBeNull()
+  })
+})
+
+describe("readMockListFileRecursive", () => {
+  it("should read and parse the mock list file recursively", () => {
+    vi.mocked(fs.readdirSync).mockReturnValue([
+      "file.json"
+    ] as unknown as ReturnType<typeof fs.readdirSync>)
+    vi.mocked(fs.statSync).mockReturnValue({
+      isDirectory: () => false,
+      isFile: () => true
+    } as unknown as ReturnType<typeof fs.statSync>)
+    vi.mocked(fs.readFileSync).mockReturnValue(MOCKED_JSON_LIST_STRING)
+    vi.mocked(parseJsonMockList).mockReturnValue(MOCKED_JSON_LIST)
+
+    const result = readMockListFileRecursive()
+
+    expect(result).toEqual(MOCKED_JSON_LIST)
+  })
+
+  it("should return an empty array if the directory is empty", () => {
+    vi.mocked(fs.readdirSync).mockReturnValue([])
+
+    const result = readMockListFileRecursive()
+
+    expect(result).toEqual([])
+  })
+})
+
+describe("updateMockListFileRecursive", () => {
+  it("should update the mock list file recursively", () => {
+    // TODO: Implement the test
   })
 })
 
@@ -163,5 +196,11 @@ describe("watchMockListFile", () => {
 
     expect(watcherMock.off).toHaveBeenCalledWith("change", changeHandler)
     expect(watcherMock.close).toHaveBeenCalled()
+  })
+})
+
+describe("watchMockListFileRecursive", () => {
+  it("should start watching the mock list file recursively for changes", () => {
+    // TODO: Implement the test
   })
 })
