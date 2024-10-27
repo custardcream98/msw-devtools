@@ -1,11 +1,7 @@
 import type { SetupWorker } from "msw/browser"
 import type { setupServer as setupServerNative } from "msw/native"
-import type { SetupServerApi } from "msw/node"
 
-type Worker =
-  | SetupWorker
-  | SetupServerApi
-  | ReturnType<typeof setupServerNative>
+export type Worker = SetupWorker | ReturnType<typeof setupServerNative>
 
 let _worker: Worker
 

@@ -1,7 +1,7 @@
 import chokidar from "chokidar"
+import { JsonMock } from "core"
 import fs from "fs"
 import path from "path"
-import type { Mock } from "vitest"
 
 import {
   readMockListFile,
@@ -13,7 +13,7 @@ import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
 
 const MOCKED_JSON_LIST_PATH = "path/to/mock-list.json"
 const MOCKED_JSON_LIST_STRING = '[{"key": "value"}]'
-const MOCKED_JSON_LIST = [{ key: "value" }]
+const MOCKED_JSON_LIST = [{ key: "value" }] as unknown as JsonMock[]
 
 vi.mock("fs")
 vi.mock("chokidar")
@@ -34,7 +34,7 @@ vi.mock("~/cli/utils/parseJsonMockList", () => ({
 
 describe("readMockListFile", () => {
   it("should read and parse the mock list file successfully", () => {
-    ;(parseJsonMockList as Mock).mockReturnValue(MOCKED_JSON_LIST)
+    vi.mocked(parseJsonMockList).mockReturnValue(MOCKED_JSON_LIST)
 
     const result = readMockListFile()
 
@@ -42,7 +42,7 @@ describe("readMockListFile", () => {
   })
 
   it("should return null if an readFile error occurs", () => {
-    ;(fs.readFileSync as Mock).mockImplementation(() => {
+    vi.mocked(fs.readFileSync).mockImplementation(() => {
       throw new Error("File not found")
     })
 
@@ -52,7 +52,7 @@ describe("readMockListFile", () => {
   })
 
   it("should return null if an parse error occurs", () => {
-    ;(parseJsonMockList as Mock).mockImplementation(() => {
+    vi.mocked(parseJsonMockList).mockImplementation(() => {
       throw new Error("Cannot parse JSON")
     })
 
@@ -79,7 +79,7 @@ describe("updateMockListFile", () => {
 
   it("should try to make directory if it does not exists", async () => {
     const mockList = [{ key: "value" }] as any
-    ;(fs.existsSync as Mock).mockImplementation(() => false)
+    vi.mocked(fs.existsSync).mockImplementation(() => false)
 
     updateMockListFile(mockList)
 
@@ -99,7 +99,9 @@ describe("watchMockListFile", () => {
     }
     const callback = vi.fn()
 
-    ;(chokidar.watch as Mock).mockReturnValue(watcherMock)
+    vi.mocked(chokidar.watch).mockReturnValue(
+      watcherMock as unknown as ReturnType<typeof chokidar.watch>
+    )
 
     return { watcherMock, callback }
   }
@@ -117,8 +119,8 @@ describe("watchMockListFile", () => {
 
   it("should call the callback with parsed mock list on file change", () => {
     const { watcherMock, callback } = setup()
-    ;(fs.readFileSync as Mock).mockReturnValue(MOCKED_JSON_LIST_STRING)
-    ;(parseJsonMockList as Mock).mockReturnValue(MOCKED_JSON_LIST)
+    vi.mocked(fs.readFileSync).mockReturnValue(MOCKED_JSON_LIST_STRING)
+    vi.mocked(parseJsonMockList).mockReturnValue(MOCKED_JSON_LIST)
 
     watchMockListFile(callback)
 
@@ -133,7 +135,7 @@ describe("watchMockListFile", () => {
 
   it("should log an error if reading or parsing fails", () => {
     const { watcherMock, callback } = setup()
-    ;(fs.readFileSync as Mock).mockImplementation(() => {
+    vi.mocked(fs.readFileSync).mockImplementation(() => {
       throw new Error("Read error")
     })
 

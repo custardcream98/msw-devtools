@@ -1,5 +1,3 @@
-import { Mock } from "vitest"
-
 import { server } from "~/lib/server"
 
 vi.mock("~/lib/server", () => ({
@@ -38,7 +36,7 @@ describe("createDevtool", () => {
     const { createDevtool } = await import("~/lib/createDevtool")
     const mockServer = vi.fn()
 
-    ;(server as Mock).mockImplementation(mockServer)
+    vi.mocked(server).mockImplementation(mockServer)
 
     await createDevtool({
       setupWorker: { start: () => {} } as any,
@@ -52,7 +50,7 @@ describe("createDevtool", () => {
     const { createDevtool } = await import("~/lib/createDevtool")
     const mockServer = vi.fn()
 
-    ;(server as Mock).mockImplementation(mockServer)
+    vi.mocked(server).mockImplementation(mockServer)
 
     await createDevtool({
       setupWorker: { start: () => {} } as any,

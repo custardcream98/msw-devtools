@@ -1,22 +1,21 @@
 import { generateHandler } from "core"
-import { Mock } from "vitest"
 
 import { FIELD_NAME } from "~/constants"
 import { register, reset, unregister } from "~/lib/msw/register"
-import { getWorker } from "~/lib/msw/worker"
+import { getWorker, type Worker } from "~/lib/msw/worker"
 
 beforeEach(() => {
   vi.mock("~/lib/msw/worker")
   vi.mock("core")
-  ;(generateHandler as Mock).mockImplementation((...args) => args)
+  vi.mocked(generateHandler).mockImplementation((...args) => args as any)
 })
 
 describe("register", () => {
   it("should register mocks", () => {
     const worker = {
       use: vi.fn()
-    }
-    ;(getWorker as Mock).mockReturnValue(worker)
+    } as unknown as Worker
+    vi.mocked(getWorker).mockReturnValue(worker)
 
     const MOCK1 = { name: "mock1" } as any
     const MOCK2 = { name: "mock2" } as any
@@ -33,8 +32,8 @@ describe("unregister", () => {
   it("should unregister mocks", () => {
     const worker = {
       resetHandlers: vi.fn()
-    }
-    ;(getWorker as Mock).mockReturnValue(worker)
+    } as unknown as Worker
+    vi.mocked(getWorker).mockReturnValue(worker)
 
     const MOCK1 = {
       [FIELD_NAME.METHOD]: "get",
@@ -70,8 +69,8 @@ describe("reset", () => {
   it("should reset all mocks", () => {
     const worker = {
       resetHandlers: vi.fn()
-    }
-    ;(getWorker as Mock).mockReturnValue(worker)
+    } as unknown as Worker
+    vi.mocked(getWorker).mockReturnValue(worker)
 
     reset()
 
@@ -81,8 +80,8 @@ describe("reset", () => {
   it("should reset to specific mocks", () => {
     const worker = {
       resetHandlers: vi.fn()
-    }
-    ;(getWorker as Mock).mockReturnValue(worker)
+    } as unknown as Worker
+    vi.mocked(getWorker).mockReturnValue(worker)
 
     const MOCK1 = { name: "mock1" } as any
     const MOCK2 = { name: "mock2" } as any
