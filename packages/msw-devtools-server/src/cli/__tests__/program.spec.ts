@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 
-import { resolveOutput, resolveRecursive } from "~/cli/program"
+import { DEFAULT_OUTPUT, resolveOutput, resolveRecursive } from "~/cli/program"
 import { log } from "~/cli/utils/log"
 
 vi.mock("fs")
@@ -51,6 +51,7 @@ describe("resolveRecursive", () => {
   it('should try to create the directory if "recursive" is true', () => {
     const OUTPUT = "path/to/something"
     const RECURSIVE = true
+
     resolveRecursive(OUTPUT, RECURSIVE)
 
     expect(fs.mkdirSync).toHaveBeenCalledWith(OUTPUT, { recursive: true })
@@ -59,9 +60,21 @@ describe("resolveRecursive", () => {
   it("should return true if the output is a directory and recursive is true", () => {
     const OUTPUT = "path/to/something"
     const RECURSIVE = true
+
     const result = resolveRecursive(OUTPUT, RECURSIVE)
 
     expect(result).toEqual(true)
+  })
+
+  it("should return true if the output is default path and recursive is true", () => {
+    const RECURSIVE = true
+
+    const result = resolveRecursive(DEFAULT_OUTPUT, RECURSIVE)
+
+    expect(result).toEqual(true)
+    expect(fs.mkdirSync).toHaveBeenCalledWith("./msw-mocks", {
+      recursive: true
+    })
   })
 
   it("should return false if the output is a directory and recursive is false", () => {
