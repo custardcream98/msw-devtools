@@ -5,10 +5,7 @@
     "status": "200",
     "response": {
       "type": "sequential",
-      "response": [
-        "test2",
-        "test3"
-      ]
+      "response": ["test2", "test3"]
     },
     "isActivated": true,
     "responseDelay": 0.5
