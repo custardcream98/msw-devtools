@@ -158,6 +158,28 @@ installMSWDevtools({
 
 - `-o, --output <path>`: JSON을 저장할 path(혹은 directory) (default: `./mock-list.json`)
 
+### 여러 JSON 파일로 나눠서 관리하기
+
+폴더 구조로 JSON을 나눠서 관리할 수 있습니다.
+
+```
+mocks
+└───folder1
+│   │   mock-list.json
+│   │   any-name.json
+│   │
+│   └───subfolder1
+│       │   mock-list.json
+│       │   ...
+│
+└───folder2
+    │   아무_이름_사용_가능.json
+```
+
+`-o` 옵션에 JSON 파일의 루트 경로를 지정하면 됩니다.
+
+> JSON 파일 스키마를 따르지 않으면 오류가 발생할 수 있습니다.
+
 ### 생성되는 JSON 파일의 스키마
 
 `@custardcream/msw-devtools-server`가 생성하는 JSON 파일은 다음과 같은 스키마를 따릅니다. (이해를 돕기 위해 TypeScript로 작성한 코드입니다.)
