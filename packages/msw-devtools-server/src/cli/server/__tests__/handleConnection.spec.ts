@@ -1,8 +1,4 @@
-import {
-  eventGuard,
-  MSWDevtoolsClientType,
-  MSWDevtoolsWebsocketEventName
-} from "core"
+import { MSWDevtoolsClientType, MSWDevtoolsWebsocketEventName } from "core"
 
 import { CONNECTION_TIMEOUT } from "~/cli/server/constants"
 import { handleConnection } from "~/cli/server/handleConnection"
@@ -17,14 +13,13 @@ vi.mock("~/cli/utils/log", () => ({
 }))
 vi.mock("~/cli/server/listener")
 vi.mock("~/cli/server/setupClientListeners")
-vi.mock("core")
+vi.mock("core", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("core")>()),
+  eventGuard: vi.fn((_, __, callback) => callback(MSWDevtoolsClientType.CLIENT))
+}))
 
 describe("handleConnection", () => {
-  it("should connect with client before CONNECTION_TIMEOUT", () => {
-    const mockedEventGuard = vi.fn((_, __, callback) => {
-      callback(MSWDevtoolsClientType.CLIENT)
-    })
-    vi.mocked(eventGuard).mockImplementation(mockedEventGuard)
+  it("should connect with client before CONNECTION_TIMEOUT", async () => {
     const ws = {
       on: vi.fn(),
       off: vi.fn()
@@ -36,7 +31,7 @@ describe("handleConnection", () => {
 
     const handleSYN = ws.on.mock.calls[0][1]
 
-    handleSYN({
+    await handleSYN({
       toString: () =>
         JSON.stringify({
           type: MSWDevtoolsWebsocketEventName.SYN,
@@ -52,11 +47,7 @@ describe("handleConnection", () => {
     )
   })
 
-  it("should cleanup handlers on close event", () => {
-    const mockedEventGuard = vi.fn((_, __, callback) => {
-      callback(MSWDevtoolsClientType.CLIENT)
-    })
-    vi.mocked(eventGuard).mockImplementation(mockedEventGuard)
+  it("should cleanup handlers on close event", async () => {
     let closeHandler: any
     const ws = {
       on: vi.fn((type, handler) =>
@@ -71,7 +62,7 @@ describe("handleConnection", () => {
 
     const handleSYN = ws.on.mock.calls[0][1]
 
-    handleSYN({
+    await handleSYN({
       toString: () =>
         JSON.stringify({
           type: MSWDevtoolsWebsocketEventName.SYN,
@@ -88,10 +79,6 @@ describe("handleConnection", () => {
       shouldAdvanceTime: true
     })
 
-    const mockedEventGuard = vi.fn((_, __, callback) => {
-      callback(MSWDevtoolsClientType.CLIENT)
-    })
-    vi.mocked(eventGuard).mockImplementation(mockedEventGuard)
     const ws = {
       on: vi.fn(),
       off: vi.fn()

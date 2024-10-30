@@ -18,7 +18,7 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "chokidar": "^4.0.1",
+    "@parcel/watcher": "^2.4.1",
     "commander": "^12.1.0",
     "ws": "^8.18.0"
   },

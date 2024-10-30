@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"msw-devtools-server -o ./mock\" \"vite\"",
+    "dev": "concurrently \"msw-devtools-server -o ./mock -r\" \"vite\"",
     "prebuild": "pnpm --filter @custardcream/msw-devtools build",
     "build": "pnpm prebuild && run-p type-check:build \"build-only {@}\" --",
     "preview": "vite preview",

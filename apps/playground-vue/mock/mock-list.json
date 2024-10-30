@@ -1,22 +1,11 @@
 [
   {
-    "url": "https://api.sampleapis.com/switch/games",
+    "url": "https://jsonplaceholder.typicode.com/comments",
     "method": "get",
     "status": "200",
     "response": {
       "type": "single",
       "response": "test"
-    },
-    "isActivated": true,
-    "responseDelay": 0.5
-  },
-  {
-    "url": "https://api.sampleapis.com/recipes/recipes",
-    "method": "get",
-    "status": "200",
-    "response": {
-      "type": "sequential",
-      "response": ["test2", "test3"]
     },
     "isActivated": true,
     "responseDelay": 0.5

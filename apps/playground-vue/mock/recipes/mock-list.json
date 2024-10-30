@@ -1,0 +1,16 @@
+[
+  {
+    "url": "https://jsonplaceholder.typicode.com/todos",
+    "method": "get",
+    "status": "200",
+    "response": {
+      "type": "sequential",
+      "response": [
+        "test2",
+        "test3"
+      ]
+    },
+    "isActivated": true,
+    "responseDelay": 0.5
+  }
+]

@@ -1,10 +1,8 @@
-import chokidar from "chokidar"
 import { isSameJsonMock, type JsonMock } from "core"
 import fs from "fs"
 import path from "path"
 
 import { options } from "~/cli/program"
-import { log } from "~/cli/utils/log"
 import { parseJsonMockList } from "~/cli/utils/parseJsonMockList"
 
 export const readMockListFile = (path = options.output) => {
@@ -89,8 +87,10 @@ export const getMockFileLookupMap = (
  */
 export const updateMockListFileRecursive = (mockList: JsonMock[]) => {
   const lookupMap = getMockFileLookupMap(options.output)
-
-  const batchedDiff = mockList.reduce(
+  const batchedDiff = mockList.reduce<{
+    added: JsonMock[]
+    updated: Record<string, JsonMock[]>
+  }>(
     (diff, mock) => {
       const lookupKey = getLookupKey(mock)
       const mockFilePath = lookupMap[lookupKey]
@@ -108,8 +108,8 @@ export const updateMockListFileRecursive = (mockList: JsonMock[]) => {
       return diff
     },
     {
-      added: [] as JsonMock[],
-      updated: {} as Record<string, JsonMock[]>
+      added: [],
+      updated: {}
     }
   )
 
@@ -132,49 +132,5 @@ export const updateMockListFileRecursive = (mockList: JsonMock[]) => {
       batchedDiff.added,
       path.resolve(options.output, "mock-list.json")
     )
-  }
-}
-
-export const watchMockListFile = (callback: (mockList: JsonMock[]) => void) => {
-  const watcher = chokidar.watch(options.output, {
-    ignored: (path, stats) => stats?.isDirectory() || !path.endsWith(".json")
-  })
-
-  const handleChange = () => {
-    try {
-      const rawMockList = fs.readFileSync(options.output, "utf-8")
-      const mockList = parseJsonMockList(rawMockList)
-
-      callback(mockList)
-    } catch (error) {
-      log.error(`Failed to parse the mock list from ${options.output}`)
-    }
-  }
-
-  watcher.on("change", handleChange)
-
-  return () => {
-    watcher.off("change", handleChange)
-    watcher.close()
-  }
-}
-
-export const watchMockListFileRecursive = (
-  callback: (mockList: JsonMock[]) => void
-) => {
-  const watcher = chokidar.watch(options.output, {
-    ignored: (path, stats) => stats?.isDirectory() || !path.endsWith(".json")
-  })
-
-  const handleChange = () => {
-    const mockList = readMockListFileRecursive(options.output)
-    callback(mockList)
-  }
-
-  watcher.on("change", handleChange)
-
-  return () => {
-    watcher.off("change", handleChange)
-    watcher.close()
   }
 }

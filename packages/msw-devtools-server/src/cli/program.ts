@@ -33,7 +33,7 @@ export const resolveOutput = (output: string) => {
     throwIfNoEntry: false
   })
 
-  if (stats?.isDirectory()) {
+  if (stats?.isDirectory() && !_options.recursive) {
     return path.resolve(output, "mock-list.json")
   }
 

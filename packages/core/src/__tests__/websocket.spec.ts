@@ -60,7 +60,7 @@ describe("serializeMSWDevtoolsWebsocketEvent", () => {
 })
 
 describe("eventGuard", () => {
-  it("should call the callback - syn", () => {
+  it("should call the callback - syn", async () => {
     const syn: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:syn",
       payload: MSWDevtoolsClientType.CLIENT
@@ -68,12 +68,16 @@ describe("eventGuard", () => {
 
     const callback = vi.fn()
 
-    eventGuard(JSON.stringify(syn), MSWDevtoolsWebsocketEventName.SYN, callback)
+    await eventGuard(
+      JSON.stringify(syn),
+      MSWDevtoolsWebsocketEventName.SYN,
+      callback
+    )
 
     expect(callback).toHaveBeenCalledOnce()
   })
 
-  it("should call the callback - ack", () => {
+  it("should call the callback - ack", async () => {
     const ack: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:ack",
       payload: [
@@ -93,13 +97,17 @@ describe("eventGuard", () => {
 
     const callback = vi.fn()
 
-    eventGuard(JSON.stringify(ack), MSWDevtoolsWebsocketEventName.ACK, callback)
+    await eventGuard(
+      JSON.stringify(ack),
+      MSWDevtoolsWebsocketEventName.ACK,
+      callback
+    )
 
     expect(callback).toHaveBeenCalledWith(ack.payload)
     expect(callback).toHaveBeenCalledOnce()
   })
 
-  it("should call the callback - syn", () => {
+  it("should call the callback - syn", async () => {
     const mockListUpdate: MSWDevtoolsWebsocketEvent = {
       name: "msw-devtools:mock-list:update",
       payload: [
@@ -119,7 +127,7 @@ describe("eventGuard", () => {
 
     const callback = vi.fn()
 
-    eventGuard(
+    await eventGuard(
       JSON.stringify(mockListUpdate),
       MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
       callback
@@ -128,22 +136,22 @@ describe("eventGuard", () => {
     expect(callback).toHaveBeenCalledWith(mockListUpdate.payload)
   })
 
-  it("should not call the callback if the message is not valid", () => {
+  it("should not call the callback if the message is not valid", async () => {
     const message = "invalid message"
     const callback = vi.fn()
 
-    eventGuard(message, MSWDevtoolsWebsocketEventName.ACK, callback)
+    await eventGuard(message, MSWDevtoolsWebsocketEventName.ACK, callback)
 
     expect(callback).not.toHaveBeenCalled()
   })
 
-  it("should not call the callback if the event name is not valid", () => {
+  it("should not call the callback if the event name is not valid", async () => {
     const message = {
       name: "msw-devtools:invalid"
     }
     const callback = vi.fn()
 
-    eventGuard(
+    await eventGuard(
       JSON.stringify(message),
       MSWDevtoolsWebsocketEventName.ACK,
       callback
@@ -152,14 +160,14 @@ describe("eventGuard", () => {
     expect(callback).not.toHaveBeenCalled()
   })
 
-  it("should not call the callback if the event payload is not valid", () => {
+  it("should not call the callback if the event payload is not valid", async () => {
     const message = {
       name: "msw-devtools:mock-list:update",
       payload: "invalid"
     }
     const callback = vi.fn()
 
-    eventGuard(
+    await eventGuard(
       JSON.stringify(message),
       MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
       callback
@@ -168,13 +176,13 @@ describe("eventGuard", () => {
     expect(callback).not.toHaveBeenCalled()
   })
 
-  it("should not call the callback if the event name is not the target", () => {
+  it("should not call the callback if the event name is not the target", async () => {
     const message = {
       name: "msw-devtools:ack"
     }
     const callback = vi.fn()
 
-    eventGuard(
+    await eventGuard(
       JSON.stringify(message),
       MSWDevtoolsWebsocketEventName.SYN,
       callback

@@ -10,19 +10,19 @@ import { setupClientListeners } from "./setupClientListeners"
 export const handleConnection = (ws: WebSocket) => {
   log.info("WebSocket connection established.")
 
-  const handleSYN = (data: RawData) => {
+  const handleSYN = (data: RawData) =>
     eventGuard(
       data.toString(),
       MSWDevtoolsWebsocketEventName.SYN,
-      (clientType) => {
-        cleanup(clientType)
+      async (clientType) => {
+        await cleanup(clientType)
 
         clearTimeout(timeoutId)
         cleanupSYN()
         setupClientListeners(ws, clientType)
 
-        const closeHandler = () => {
-          cleanup(clientType)
+        const closeHandler = async () => {
+          await cleanup(clientType)
           log.info("Client disconnected.")
 
           ws.off("close", closeHandler)
@@ -30,7 +30,7 @@ export const handleConnection = (ws: WebSocket) => {
         ws.on("close", closeHandler)
       }
     )
-  }
+
   const cleanupSYN = () => {
     ws.off("message", handleSYN)
   }
