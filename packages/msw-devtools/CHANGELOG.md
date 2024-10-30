@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.10.0
+
+### Minor Changes
+
+- 39b1cdf: feat: allow use multiple JSON files as mock
+
 ## 0.9.2
 
 ### Patch Changes
