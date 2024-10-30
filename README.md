@@ -180,7 +180,7 @@ mocks
     │   JSON_FILE_NAME.json
 ```
 
-You can specify the root path of the JSON file with the `-o` option.
+You can specify the root path of the JSON file with the `-o` option. (e.g. `msw-devtools-server -o ./mocks`)
 
 > Failure to follow the JSON file schema may result in errors.
 
