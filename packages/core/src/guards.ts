@@ -81,3 +81,7 @@ export const isMSWDevtoolsWebsocketEvent = (
 
   return false
 }
+
+export const isSameJsonMock = (a: JsonMock, b: JsonMock) => {
+  return a.url === b.url && a.method === b.method
+}

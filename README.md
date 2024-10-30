@@ -68,7 +68,7 @@ const enableMocking = async () => {
   if (import.meta.env.DEV) {
     return await installMSWDevtools({
       initialOpen: true, // Automatically open devtool on start
-      setupWorker: setupWorker() // Initialize MSW worker
+      setupWorker: setupWorker(), // Initialize MSW worker
       options: { // MSW worker options
         onUnhandledRequest: "bypass",
       }
@@ -161,6 +161,28 @@ For example, a Vite app can be configured as follows (using `concurrently`):
 ### CLI Options
 
 - `-o, --output <path>`: Output file path(or directory) for the generated JSON file. (default: `./mock-list.json`)
+
+### Managing Multiple JSON Files
+
+You can manage JSON files by dividing them into folders.
+
+```
+mocks
+└───folder1
+│   │   mock-list.json
+│   │   any-name.json
+│   │
+│   └───subfolder1
+│       │   mock-list.json
+│       │   ...
+│
+└───folder2
+    │   JSON_FILE_NAME.json
+```
+
+You can specify the root path of the JSON file with the `-o` option. (e.g. `msw-devtools-server -o ./mocks`)
+
+> Failure to follow the JSON file schema may result in errors.
 
 ### Created JSON File's Scheme
 

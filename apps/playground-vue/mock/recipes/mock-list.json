@@ -1,11 +1,11 @@
 [
   {
-    "url": "https://jsonplaceholder.typicode.com/comments",
+    "url": "https://jsonplaceholder.typicode.com/todos",
     "method": "get",
     "status": "200",
     "response": {
-      "type": "single",
-      "response": "test"
+      "type": "sequential",
+      "response": ["test2", "test3"]
     },
     "isActivated": true,
     "responseDelay": 0.5

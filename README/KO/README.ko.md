@@ -66,7 +66,7 @@ const enableMocking = async () => {
   if (import.meta.env.DEV) {
     return await installMSWDevtools({
       initialOpen: true, // Devtools 열린 상태로 시작
-      setupWorker: setupWorker() // MSW 워커 초기화
+      setupWorker: setupWorker(), // MSW 워커 초기화
       options: { // MSW 워커 설정
         onUnhandledRequest: "bypass"
       }
@@ -157,6 +157,28 @@ installMSWDevtools({
 ### CLI Options
 
 - `-o, --output <path>`: JSON을 저장할 path(혹은 directory) (default: `./mock-list.json`)
+
+### 여러 JSON 파일로 나눠서 관리하기
+
+폴더 구조로 JSON을 나눠서 관리할 수 있습니다.
+
+```
+mocks
+└───folder1
+│   │   mock-list.json
+│   │   any-name.json
+│   │
+│   └───subfolder1
+│       │   mock-list.json
+│       │   ...
+│
+└───folder2
+    │   아무_이름_사용_가능.json
+```
+
+`-o` 옵션에 JSON 파일의 루트 경로를 지정하면 됩니다. (e.g. `msw-devtools-server -o ./mocks`)
+
+> JSON 파일 스키마를 따르지 않으면 오류가 발생할 수 있습니다.
 
 ### 생성되는 JSON 파일의 스키마
 

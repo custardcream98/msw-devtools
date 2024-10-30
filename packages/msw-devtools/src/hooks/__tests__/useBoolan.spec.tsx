@@ -44,13 +44,13 @@ describe("useBoolean", () => {
   it("initial value should be false", async () => {
     setup()
 
-    expect(screen.getByTestId(RESULT_ID)).toHaveTextContent("False")
+    expect(screen.getByTestId(RESULT_ID).textContent).toBe("False")
   })
 
   it("should be able to change initial value", async () => {
     setup({ initial: true })
 
-    expect(screen.getByTestId(RESULT_ID)).toHaveTextContent("True")
+    expect(screen.getByTestId(RESULT_ID).textContent).toBe("True")
   })
 
   it("should be able to set true, false, or toggle", async () => {
@@ -58,18 +58,18 @@ describe("useBoolean", () => {
 
     await user.click(screen.getByTestId(SET_TRUE_ID))
 
-    expect(screen.getByTestId(RESULT_ID)).toHaveTextContent("True")
+    expect(screen.getByTestId(RESULT_ID).textContent).toBe("True")
 
     await user.click(screen.getByTestId(SET_FALSE_ID))
 
-    expect(screen.getByTestId(RESULT_ID)).toHaveTextContent("False")
+    expect(screen.getByTestId(RESULT_ID).textContent).toBe("False")
 
     await user.click(screen.getByTestId(TOGGLE_ID))
 
-    expect(screen.getByTestId(RESULT_ID)).toHaveTextContent("True")
+    expect(screen.getByTestId(RESULT_ID).textContent).toBe("True")
 
     await user.click(screen.getByTestId(TOGGLE_ID))
 
-    expect(screen.getByTestId(RESULT_ID)).toHaveTextContent("False")
+    expect(screen.getByTestId(RESULT_ID).textContent).toBe("False")
   })
 })

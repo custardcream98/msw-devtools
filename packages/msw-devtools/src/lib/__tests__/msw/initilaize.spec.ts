@@ -1,6 +1,6 @@
 import type { JsonMock } from "core"
-import { Mock } from "vitest"
 
+import { StorageKey } from "~/constants"
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
 import { setWorker } from "~/lib/msw"
 import { register } from "~/lib/msw/register"
@@ -46,7 +46,7 @@ describe("initialize", () => {
   })
 
   it("should register mocks if there are mocks in the local storage, filtering invalid JsonMock", async () => {
-    const INVALID = { isActivated: true, name: "mock1" }
+    const INVALID = { isActivated: true, name: "mock1" } as unknown as JsonMock
     const VALID = {
       url: "https://test-url",
       method: "get",
@@ -60,7 +60,9 @@ describe("initialize", () => {
     } as const satisfies JsonMock
     const MOCK_LOCAL_STORAGE = [INVALID, VALID]
 
-    ;(getLocalStorageItem as Mock).mockReturnValue(MOCK_LOCAL_STORAGE)
+    vi.mocked(getLocalStorageItem<typeof StorageKey.MOCK_LIST>).mockReturnValue(
+      MOCK_LOCAL_STORAGE
+    )
     const { initialize } = await import("~/lib/msw/initialize")
 
     await initialize({ setupWorker: { start: () => {} } as any })

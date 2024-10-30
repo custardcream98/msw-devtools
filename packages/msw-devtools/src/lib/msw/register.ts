@@ -1,7 +1,6 @@
-import { generateHandler, type JsonMock } from "core"
+import { generateHandler, isSameJsonMock, type JsonMock } from "core"
 
 import { getWorker } from "~/lib/msw/worker"
-import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 export const register = (...mocks: JsonMock[]) => {
   const worker = getWorker()

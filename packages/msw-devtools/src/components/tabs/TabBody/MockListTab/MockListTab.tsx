@@ -1,10 +1,9 @@
-import type { JsonMock } from "core"
+import { isSameJsonMock, type JsonMock } from "core"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
-import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 import { MockCard } from "./MockCard"
 import { MockListFrame } from "./MockListFrame"

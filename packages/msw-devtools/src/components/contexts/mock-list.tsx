@@ -1,5 +1,5 @@
-import type { JsonMock } from "core"
-import React, { useCallback, useEffect, useMemo, useRef } from "react"
+import { isSameJsonMock, type JsonMock } from "core"
+import React, { useCallback, useEffect, useMemo } from "react"
 
 import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
@@ -10,7 +10,6 @@ import {
   serverSendMockList
 } from "~/lib/server"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
-import { isSameJsonMock } from "~/utils/isSameJsonMock"
 
 export type MockListContextType = {
   mockList: JsonMock[]
@@ -35,6 +34,15 @@ export const useMockList = () => {
   return context
 }
 
+const sendMockListToServerMiddleware =
+  (reducer: (prev: JsonMock[]) => JsonMock[]) => (prev: JsonMock[]) => {
+    const mockList = reducer(prev)
+
+    serverSendMockList(mockList)
+
+    return mockList
+  }
+
 export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   const [mockList, setMockList] = useLocalStorageState(StorageKey.MOCK_LIST, [])
   const [editState, setEditStateLocal] = useLocalStorageState(
@@ -42,38 +50,33 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     null
   )
 
-  const isFirstRender = useRef(true)
-  useEffect(() => {
-    if (!isFirstRender.current && isServerEnabled()) {
-      serverSendMockList(mockList)
-    }
-
-    isFirstRender.current = false
-  }, [mockList])
-
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {
-      setMockList((prev) => {
-        register(...mocks)
+      setMockList(
+        sendMockListToServerMiddleware((prev) => {
+          register(...mocks)
 
-        return [
-          ...prev.filter((active) =>
-            mocks.every((mock) => !isSameJsonMock(active, mock))
-          ),
-          ...mocks
-        ]
-      })
+          return [
+            ...prev.filter((active) =>
+              mocks.every((mock) => !isSameJsonMock(active, mock))
+            ),
+            ...mocks
+          ]
+        })
+      )
     },
     [setMockList]
   )
 
   const removeMock: MockListContextType["removeMock"] = useCallback(
     (...mocksToRemove) => {
-      setMockList((prev) => {
-        const nextMockList = unregister(prev, mocksToRemove)
+      setMockList(
+        sendMockListToServerMiddleware((prev) => {
+          const nextMockList = unregister(prev, mocksToRemove)
 
-        return nextMockList
-      })
+          return nextMockList
+        })
+      )
 
       const currentEditState = editState && formFieldValuesToJsonMock(editState)
       if (
@@ -88,52 +91,58 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
 
   const activateMock: MockListContextType["activateMock"] = useCallback(
     (...mocks) => {
-      setMockList((prev) => {
-        register(...mocks)
+      setMockList(
+        sendMockListToServerMiddleware((prev) => {
+          register(...mocks)
 
-        return prev.map((active) => {
-          const foundMock = mocks.find((mock) => isSameJsonMock(active, mock))
+          return prev.map((active) => {
+            const foundMock = mocks.find((mock) => isSameJsonMock(active, mock))
 
-          const isActivated = foundMock ? true : active.isActivated
+            const isActivated = foundMock ? true : active.isActivated
 
-          return {
-            ...active,
-            isActivated
-          }
+            return {
+              ...active,
+              isActivated
+            }
+          })
         })
-      })
+      )
     },
     [setMockList]
   )
 
   const deactivateMock: MockListContextType["deactivateMock"] = useCallback(
     (...mocksToUnregister) => {
-      setMockList((prev) => {
-        unregister(prev, mocksToUnregister)
+      setMockList(
+        sendMockListToServerMiddleware((prev) => {
+          unregister(prev, mocksToUnregister)
 
-        return prev.map((active) => {
-          const foundMock = mocksToUnregister.find((mockToUnregister) =>
-            isSameJsonMock(active, mockToUnregister)
-          )
+          return prev.map((active) => {
+            const foundMock = mocksToUnregister.find((mockToUnregister) =>
+              isSameJsonMock(active, mockToUnregister)
+            )
 
-          const isActivated = foundMock ? false : active.isActivated
+            const isActivated = foundMock ? false : active.isActivated
 
-          return {
-            ...active,
-            isActivated
-          }
+            return {
+              ...active,
+              isActivated
+            }
+          })
         })
-      })
+      )
     },
     [setMockList]
   )
 
   const clearAllMocks = useCallback(() => {
-    setMockList((prev) => {
-      unregister(prev, prev)
+    setMockList(
+      sendMockListToServerMiddleware((prev) => {
+        unregister(prev, prev)
 
-      return []
-    })
+        return []
+      })
+    )
   }, [setMockList])
 
   useEffect(() => {

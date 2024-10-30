@@ -39,13 +39,13 @@ function App() {
           }}
         >
           <QuerySuspenseBoundary>
-            <FetchTest targetUrl='https://api.sampleapis.com/switch/games' />
+            <FetchTest targetUrl='https://jsonplaceholder.typicode.com/todos' />
           </QuerySuspenseBoundary>
           <QuerySuspenseBoundary>
-            <FetchTest targetUrl='https://api.sampleapis.com/recipes/recipes' />
+            <FetchTest targetUrl='https://jsonplaceholder.typicode.com/comments' />
           </QuerySuspenseBoundary>
           <QuerySuspenseBoundary>
-            <FetchTest targetUrl='https://api.sampleapis.com/wines/reds' />
+            <FetchTest targetUrl='https://jsonplaceholder.typicode.com/albums' />
           </QuerySuspenseBoundary>
         </div>
       </QueryClientProvider>

@@ -32,7 +32,7 @@ import FetchTest from './components/FetchTest.vue'
   <div :class="$style.wrapper">
     <Suspense>
       <template #default>
-        <FetchTest targetUrl="https://api.sampleapis.com/switch/games" />
+        <FetchTest targetUrl="https://jsonplaceholder.typicode.com/todos" />
       </template>
       <template #fallback>
         <div>Loading...</div>
@@ -40,7 +40,7 @@ import FetchTest from './components/FetchTest.vue'
     </Suspense>
     <Suspense>
       <template #default>
-        <FetchTest targetUrl="https://api.sampleapis.com/recipes/recipes" />
+        <FetchTest targetUrl="https://jsonplaceholder.typicode.com/comments" />
       </template>
       <template #fallback>
         <div>Loading...</div>
@@ -48,7 +48,7 @@ import FetchTest from './components/FetchTest.vue'
     </Suspense>
     <Suspense>
       <template #default>
-        <FetchTest targetUrl="https://api.sampleapis.com/wines/reds" />
+        <FetchTest targetUrl="https://jsonplaceholder.typicode.com/albums" />
       </template>
       <template #fallback>
         <div>Loading...</div>
