@@ -157,10 +157,15 @@ installMSWDevtools({
 ### CLI Options
 
 - `-o, --output <path>`: JSON을 저장할 path(혹은 directory) (default: `./mock-list.json`)
+- `-r, --recursive`: 디렉토리 내의 모든 JSON 파일을 읽어들입니다.
 
 ### 여러 JSON 파일로 나눠서 관리하기
 
 폴더 구조로 JSON을 나눠서 관리할 수 있습니다.
+
+```bash
+msw-devtools-server --output ./mocks --recursive
+```
 
 ```
 mocks
@@ -176,7 +181,7 @@ mocks
     │   아무_이름_사용_가능.json
 ```
 
-`-o` 옵션에 JSON 파일의 루트 경로를 지정하면 됩니다. (e.g. `msw-devtools-server -o ./mocks`)
+> `-o, --output` 옵션에 디렉토리를 지정해야 합니다.
 
 > JSON 파일 스키마를 따르지 않으면 오류가 발생할 수 있습니다.
 

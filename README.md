@@ -161,10 +161,15 @@ For example, a Vite app can be configured as follows (using `concurrently`):
 ### CLI Options
 
 - `-o, --output <path>`: Output file path(or directory) for the generated JSON file. (default: `./mock-list.json`)
+- `-r, --recursive`: Read all JSON files in the directory.
 
 ### Managing Multiple JSON Files
 
 You can manage JSON files by dividing them into folders.
+
+```bash
+msw-devtools-server --output ./mocks --recursive
+```
 
 ```
 mocks
@@ -180,7 +185,7 @@ mocks
     │   JSON_FILE_NAME.json
 ```
 
-You can specify the root path of the JSON file with the `-o` option. (e.g. `msw-devtools-server -o ./mocks`)
+> You must specify a directory for the `-o, --output` option.
 
 > Failure to follow the JSON file schema may result in errors.
 
