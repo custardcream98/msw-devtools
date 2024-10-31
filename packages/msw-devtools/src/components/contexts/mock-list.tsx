@@ -38,7 +38,9 @@ const sendMockListToServerMiddleware =
   (reducer: (prev: JsonMock[]) => JsonMock[]) => (prev: JsonMock[]) => {
     const mockList = reducer(prev)
 
-    serverSendMockList(mockList)
+    if (isServerEnabled()) {
+      serverSendMockList(mockList)
+    }
 
     return mockList
   }
@@ -71,11 +73,9 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   const removeMock: MockListContextType["removeMock"] = useCallback(
     (...mocksToRemove) => {
       setMockList(
-        sendMockListToServerMiddleware((prev) => {
-          const nextMockList = unregister(prev, mocksToRemove)
-
-          return nextMockList
-        })
+        sendMockListToServerMiddleware((prev) =>
+          unregister(prev, mocksToRemove)
+        )
       )
 
       const currentEditState = editState && formFieldValuesToJsonMock(editState)
