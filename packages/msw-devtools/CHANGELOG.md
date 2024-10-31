@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.10.1
+
+### Patch Changes
+
+- c9a3e12: fix: do not try to connect to server if no server used
+
 ## 0.10.0
 
 ### Minor Changes
