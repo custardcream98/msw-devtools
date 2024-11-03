@@ -80,7 +80,7 @@ describe("mock-list", () => {
 
     await userEvent.click(screen.getByText("pushMock"))
 
-    expect(mockListWrapper.textContent).toBe(JSON.stringify([mock]))
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
   })
 
   it("should not push a mock if the same mock already exists", async () => {
@@ -100,7 +100,7 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("pushMock"))
     await userEvent.click(screen.getByText("pushMock"))
 
-    expect(mockListWrapper.textContent).toBe(JSON.stringify([mock]))
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
   })
 
   it("should remove a mock", async () => {
@@ -120,7 +120,7 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("pushMock"))
     await userEvent.click(screen.getByText("removeMock"))
 
-    expect(mockListWrapper.textContent).toBe(JSON.stringify([]))
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([]))
   })
 
   it("should activate a mock", async () => {
@@ -141,7 +141,7 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("activateMock"))
 
     mock.isActivated = true
-    expect(mockListWrapper.textContent).toBe(JSON.stringify([mock]))
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
   })
 
   it("should deactivate a mock", async () => {
@@ -162,7 +162,7 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("deactivateMock"))
 
     mock.isActivated = false
-    expect(mockListWrapper.textContent).toBe(JSON.stringify([mock]))
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
   })
 
   it("should clear all mocks", async () => {
@@ -182,7 +182,7 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("pushMock"))
     await userEvent.click(screen.getByText("clearAllMocks"))
 
-    expect(mockListWrapper.textContent).toBe(JSON.stringify([]))
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([]))
   })
 
   it('should send server a "mock-list:update" event on mockList change', async () => {

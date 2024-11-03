@@ -61,6 +61,7 @@
     "@uiw/codemirror-theme-vscode": "^4.23.5",
     "@uiw/react-codemirror": "^4.23.5",
     "@vitest/coverage-v8": "^2.1.3",
+    "@vitest/expect": "^2.1.4",
     "autoprefixer": "^10.4.20",
     "core": "workspace:*",
     "eslint": "^9.13.0",
