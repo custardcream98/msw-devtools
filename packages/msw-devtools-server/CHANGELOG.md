@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools-server
 
+## 0.10.2
+
+### Patch Changes
+
+- c1ea5d8: fix: remove file that has deleted on client
+
 ## 0.10.0
 
 ### Minor Changes

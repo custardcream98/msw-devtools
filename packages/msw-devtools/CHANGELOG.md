@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.10.2
+
+### Patch Changes
+
+- cf67494: fix: reset saved form field values
+
 ## 0.10.1
 
 ### Patch Changes
