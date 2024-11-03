@@ -5,7 +5,7 @@ import { options } from "~/cli/program"
 import { readMockListFileRecursive } from "~/cli/utils/file"
 import { log } from "~/cli/utils/log"
 
-import { sendMockListToClient } from "./handler"
+import { sendMockListToClient } from "./send"
 
 let _unsubscribe: AsyncSubscription["unsubscribe"]
 

@@ -3,13 +3,13 @@ import type { WebSocket } from "ws"
 
 import { readMockListFileRecursive } from "~/cli/utils/file"
 import { log } from "~/cli/utils/log"
-import { sendMockListToClient } from "~/cli/utils/watch/handler"
+import { sendMockListToClient } from "~/cli/utils/watch/send"
 import { resetFileWatcher, startFileWatcher } from "~/cli/utils/watch/start"
 
 vi.mock("@parcel/watcher")
 vi.mock("~/cli/utils/file")
 vi.mock("~/cli/utils/log")
-vi.mock("~/cli/utils/watch/handler")
+vi.mock("~/cli/utils/watch/send")
 
 const MOCKED_WS = {} as WebSocket
 

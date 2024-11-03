@@ -3,7 +3,7 @@ import {
   serializeMSWDevtoolsWebsocketEvent
 } from "core"
 
-import { sendMockListToClient } from "~/cli/utils/watch/handler"
+import { sendMockListToClient } from "~/cli/utils/watch/send"
 
 vi.mock("~/cli/utils/log", () => ({
   log: {
