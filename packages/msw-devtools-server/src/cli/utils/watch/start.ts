@@ -29,7 +29,7 @@ export const startFileWatcher = async (ws: WebSocket) => {
         log.error(`Failed to watch the mock list file: ${error.message}`)
         return
       }
-      console.log("_initialEventOnReSubscribe", _initialEventOnReSubscribe)
+
       if (_initialEventOnReSubscribe) {
         _initialEventOnReSubscribe = false
         return
