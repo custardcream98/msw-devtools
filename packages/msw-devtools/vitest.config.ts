@@ -10,6 +10,10 @@ export default defineConfig({
       reporter: ["json-summary", "json"],
       exclude: [
         ...defaultExclude,
+        "**/__tests__/**",
+        "postcss.config.cjs",
+        "tailwind.config.js",
+        "**/*.d.ts",
         "**/types/**",
         "**/types.ts",
         "**/constants/**",

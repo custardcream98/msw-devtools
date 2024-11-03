@@ -8,6 +8,8 @@ export default defineConfig({
       reporter: ["json-summary", "json"],
       exclude: [
         ...defaultExclude,
+        "**/__tests__/**",
+        "**/*.d.ts",
         "**/types/**",
         "**/types.ts",
         "**/constants/**",
