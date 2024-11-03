@@ -10,8 +10,8 @@ beforeEach(() => {
 
 describe("getWorker", () => {
   it("throws an error if worker is not initialized", () => {
-    expect(() => getWorker()).toThrowError(
-      "[MSW Devtools] Devtool not initialized"
+    expect(() => getWorker()).toThrowErrorMatchingInlineSnapshot(
+      `[Error: [MSW Devtools] Devtool not initialized]`
     )
   })
 

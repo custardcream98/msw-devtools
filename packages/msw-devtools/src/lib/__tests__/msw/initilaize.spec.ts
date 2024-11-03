@@ -19,8 +19,10 @@ describe("initialize", () => {
     setWorker({} as any)
     const { initialize } = await import("~/lib/msw/initialize")
 
-    expect(() => initialize({ setupWorker: {} as any })).rejects.toThrowError(
-      "[MSW Devtools] Devtool already initialized"
+    expect(() =>
+      initialize({ setupWorker: {} as any })
+    ).rejects.toThrowErrorMatchingInlineSnapshot(
+      `[Error: [MSW Devtools] Devtool already initialized]`
     )
   })
 

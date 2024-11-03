@@ -46,6 +46,8 @@ describe("parseJsonMockList", () => {
       responseDelay: 1000
     })
 
-    expect(() => parseJsonMockList(raw)).toThrow("Invalid JSON mock list")
+    expect(() => parseJsonMockList(raw)).toThrowErrorMatchingInlineSnapshot(
+      `[Error: Invalid JSON mock list]`
+    )
   })
 })

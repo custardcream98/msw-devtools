@@ -70,6 +70,8 @@ describe("TabProvider", () => {
 
 describe("useTab", () => {
   it("should throw an error if used outside of TabProvider", () => {
-    expect(() => render(<Test />)).toThrowError()
+    expect(() => render(<Test />)).toThrowErrorMatchingInlineSnapshot(
+      `[Error: [MSW Devtools] useTab must be used within a TabProvider]`
+    )
   })
 })
