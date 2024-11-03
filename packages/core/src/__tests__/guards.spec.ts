@@ -1,6 +1,7 @@
 import { MSWDevtoolsClientType } from "../constants"
 import {
   isJsonMock,
+  isJsonMocks,
   isMSWDevtoolsWebsocketEvent,
   isSameJsonMock
 } from "../guards"
@@ -27,6 +28,41 @@ describe("isJsonMock", () => {
     const data = {}
 
     expect(isJsonMock(data)).toBe(false)
+  })
+})
+
+describe("isJsonMocks", () => {
+  it("should return false if not all items are JsonMock", () => {
+    const mocks = [{ name: "mock1" }, { name: "mock2" }]
+    expect(isJsonMocks(mocks)).toBe(false)
+  })
+
+  it("should return true if all items are JsonMock", () => {
+    const mocks = [
+      {
+        url: "https://test-url",
+        method: "get",
+        status: "200",
+        response: {
+          type: "single",
+          response: { name: "John" }
+        },
+        isActivated: true,
+        responseDelay: 1000
+      } as const satisfies JsonMock,
+      {
+        url: "https://test-url2",
+        method: "post",
+        status: "200",
+        response: {
+          type: "sequential",
+          response: [{ name: "John" }, { name: "Doe" }]
+        },
+        isActivated: true,
+        responseDelay: 1000
+      } as const satisfies JsonMock
+    ]
+    expect(isJsonMocks(mocks)).toBe(true)
   })
 })
 
@@ -108,6 +144,12 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
     }
 
     expect(isMSWDevtoolsWebsocketEvent(ack)).toBe(false)
+    const ack2: MSWDevtoolsWebsocketEvent = {
+      name: "msw-devtools:ack",
+      payload: [{ wrong: "mock" } as any]
+    }
+
+    expect(isMSWDevtoolsWebsocketEvent(ack2)).toBe(false)
 
     const mockListUpdate = {
       name: "msw-devtools:mock-list:update"

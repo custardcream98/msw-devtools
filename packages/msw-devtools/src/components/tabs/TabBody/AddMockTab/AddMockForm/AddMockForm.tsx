@@ -109,6 +109,13 @@ export const AddMockForm = () => {
     // when unmounting
     return () => {
       const currentValues = method.getValues()
+      const isEdit = getLocalStorageItem(StorageKey.EDIT_STATE)
+
+      if (isEdit) {
+        setEditStateLocal(currentValues)
+        return
+      }
+
       if (
         currentValues &&
         !isSameFormFieldValues(currentValues, defaultValues)
@@ -116,7 +123,7 @@ export const AddMockForm = () => {
         setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, currentValues)
       }
     }
-  }, [method, defaultValues])
+  }, [method, defaultValues, setEditStateLocal])
 
   const response = useWatch({
     control: method.control,
@@ -145,6 +152,7 @@ export const AddMockForm = () => {
   }, [isFixable, isEdit, t])
 
   const reset = () => {
+    setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, null)
     setEditStateLocal(null)
     method.reset(defaultValues)
   }

@@ -4,23 +4,8 @@ import { FaXmark } from "react-icons/fa6"
 
 import { CodeEditor } from "~/components/CodeEditor"
 import { FIELD_NAME, type FormFieldValues } from "~/constants"
-import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
 
-export const validate = (value: string) => {
-  if (!value) {
-    return false
-  }
-
-  if (checkJSONParsable(value)) {
-    return true
-  }
-
-  if (checkJSONFixable(value)) {
-    return "FIXABLE"
-  }
-
-  return false
-}
+import { validate } from "./utils"
 
 export const AddMockFormCodeEditor = ({
   control

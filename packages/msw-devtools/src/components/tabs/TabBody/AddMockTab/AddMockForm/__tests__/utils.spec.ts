@@ -1,4 +1,4 @@
-import { validate } from "~/components/tabs/TabBody/AddMockTab/AddMockForm/AddMockFormCodeEditor"
+import { validate } from "~/components/tabs/TabBody/AddMockTab/AddMockForm/utils"
 
 describe("validate", () => {
   it("should return false if value is empty", () => {

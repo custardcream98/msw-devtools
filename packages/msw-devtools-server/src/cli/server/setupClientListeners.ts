@@ -20,21 +20,37 @@ import { resetFileWatcher, startFileWatcher } from "~/cli/utils/watch"
 import { CONNECTION_TIMEOUT } from "./constants"
 import { cleanup, pushCleanup } from "./listener"
 
-const updateMockList = (newMockList: JsonMock[]) => {
-  if (options.recursive) {
-    updateMockListFileRecursive(newMockList)
-  } else {
-    updateMockListFile(newMockList)
+const updateMockList = (newMockList: JsonMock[]) =>
+  options.recursive
+    ? updateMockListFileRecursive(newMockList)
+    : updateMockListFile(newMockList)
+
+const readInitialMockList = () =>
+  options.recursive ? readMockListFileRecursive() : readMockListFile()
+
+const handleMockListUpdate =
+  (ws: WebSocket) =>
+  async (data: RawData): Promise<void> => {
+    eventGuard(
+      data.toString(),
+      MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
+      async (payload) => {
+        await resetFileWatcher()
+
+        updateMockList(payload)
+
+        log.info("Mock list updated on client. Saved the update to the file.")
+
+        await startFileWatcher(ws)
+      }
+    )
   }
-}
 
 export const setupClientListeners = (
   ws: WebSocket,
   clientType: MSWDevtoolsClientType
 ) => {
-  const initialMockList = options.recursive
-    ? readMockListFileRecursive()
-    : readMockListFile()
+  const initialMockList = readInitialMockList()
 
   const handleACK = (data: RawData) => {
     eventGuard(
@@ -53,26 +69,10 @@ export const setupClientListeners = (
         await startFileWatcher(ws)
         pushCleanup(clientType, resetFileWatcher)
 
-        const handleMockListUpdate = (data: RawData) => {
-          eventGuard(
-            data.toString(),
-            MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE,
-            async (payload) => {
-              await resetFileWatcher()
+        const handler = handleMockListUpdate(ws)
 
-              updateMockList(payload)
-
-              log.info(
-                "Mock list updated on client. Saved the update to the file."
-              )
-
-              await startFileWatcher(ws)
-            }
-          )
-        }
-
-        ws.on("message", handleMockListUpdate)
-        pushCleanup(clientType, () => ws.off("message", handleMockListUpdate))
+        ws.on("message", handler)
+        pushCleanup(clientType, () => ws.off("message", handler))
       }
     )
   }

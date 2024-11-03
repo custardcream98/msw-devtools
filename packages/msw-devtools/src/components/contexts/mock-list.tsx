@@ -5,9 +5,8 @@ import { StorageKey } from "~/constants"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { register, reset, unregister } from "~/lib/msw"
 import {
-  addMockListUpdateListener,
-  isServerEnabled,
-  serverSendMockList
+  addServerMockListUpdateListener,
+  sendMockListToServer
 } from "~/lib/server"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 
@@ -38,9 +37,7 @@ const sendMockListToServerMiddleware =
   (reducer: (prev: JsonMock[]) => JsonMock[]) => (prev: JsonMock[]) => {
     const mockList = reducer(prev)
 
-    if (isServerEnabled()) {
-      serverSendMockList(mockList)
-    }
+    sendMockListToServer(mockList)
 
     return mockList
   }
@@ -146,11 +143,7 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   }, [setMockList])
 
   useEffect(() => {
-    if (!isServerEnabled()) {
-      return
-    }
-
-    const removeListener = addMockListUpdateListener((mockList) => {
+    const removeListener = addServerMockListUpdateListener((mockList) => {
       reset(mockList)
       setMockList(mockList)
     })

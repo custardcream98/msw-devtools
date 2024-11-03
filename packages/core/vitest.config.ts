@@ -8,13 +8,16 @@ export default defineConfig({
       reporter: ["json-summary", "json"],
       exclude: [
         ...defaultExclude,
+        "**/__tests__/**",
+        "**/*.d.ts",
         "**/types/**",
         "**/types.ts",
         "**/constants/**",
         "**/constants.ts",
         "**/index.ts"
       ]
-    }
+    },
+    clearMocks: true
   },
   resolve: {
     alias: {
