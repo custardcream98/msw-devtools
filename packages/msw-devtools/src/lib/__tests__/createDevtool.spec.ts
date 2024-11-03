@@ -1,7 +1,7 @@
-import { server } from "~/lib/server"
+import { startServer } from "~/lib/server"
 
 vi.mock("~/lib/server", () => ({
-  server: vi.fn()
+  startServer: vi.fn()
 }))
 
 afterEach(() => {
@@ -36,7 +36,7 @@ describe("createDevtool", () => {
     const { createDevtool } = await import("~/lib/createDevtool")
     const mockServer = vi.fn()
 
-    vi.mocked(server).mockImplementation(mockServer)
+    vi.mocked(startServer).mockImplementation(mockServer)
 
     await createDevtool({
       setupWorker: { start: () => {} } as any,
@@ -50,7 +50,7 @@ describe("createDevtool", () => {
     const { createDevtool } = await import("~/lib/createDevtool")
     const mockServer = vi.fn()
 
-    vi.mocked(server).mockImplementation(mockServer)
+    vi.mocked(startServer).mockImplementation(mockServer)
 
     await createDevtool({
       setupWorker: { start: () => {} } as any,

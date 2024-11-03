@@ -23,9 +23,8 @@ vi.mock("~/lib/msw/worker", () => ({
 }))
 
 vi.mock("~/lib/server", () => ({
-  isServerEnabled: () => true,
-  addMockListUpdateListener: vi.fn(),
-  serverSendMockList: vi.fn()
+  addServerMockListUpdateListener: vi.fn(),
+  sendMockListToServer: vi.fn()
 }))
 
 const setup = ({ mock }: { mock: JsonMock }) => {
@@ -197,12 +196,12 @@ describe("mock-list", () => {
       isActivated: true,
       responseDelay: 1000
     }
-    vi.spyOn(serverLib, "serverSendMockList")
+    vi.spyOn(serverLib, "sendMockListToServer")
     const { userEvent } = setup({ mock })
 
     await userEvent.click(screen.getByText("pushMock"))
 
-    expect(serverLib.serverSendMockList).toHaveBeenCalledOnce()
-    expect(serverLib.serverSendMockList).toHaveBeenCalledWith([mock])
+    expect(serverLib.sendMockListToServer).toHaveBeenCalledOnce()
+    expect(serverLib.sendMockListToServer).toHaveBeenCalledWith([mock])
   })
 })

@@ -1,4 +1,4 @@
-import { server } from "~/lib/server"
+import { startServer } from "~/lib/server"
 import type { InstallProps } from "~/types"
 
 import { initialize } from "./msw"
@@ -11,7 +11,7 @@ export const createDevtool = async ({
   const loadedMocks = await initialize(props)
 
   if (isUsingServer) {
-    server(loadedMocks)
+    startServer(loadedMocks)
   }
 
   const React = (await import("react")).default
