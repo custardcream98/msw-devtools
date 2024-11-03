@@ -1,10 +1,15 @@
-import { isJsonMock, type JsonMock } from "core"
+import { isJsonMocks, type JsonMock } from "core"
 import { jsonrepair } from "jsonrepair"
 
 import { autoFixJsonMock } from "~/utils/autoFixJsonMock"
 
-const isJsonMocks = (data: unknown[]): data is JsonMock[] => {
-  return data.every(isJsonMock)
+export const dispatchClickEvent = (element: HTMLElement) => {
+  const event = new MouseEvent("click", {
+    view: window,
+    bubbles: true,
+    cancelable: true
+  })
+  element.dispatchEvent(event)
 }
 
 export const saveJson = (data: object, filename: string) => {
@@ -17,13 +22,7 @@ export const saveJson = (data: object, filename: string) => {
   a.href = URL.createObjectURL(file)
   a.dataset.downloadurl = ["text/json", a.download, a.href].join(":")
 
-  const event = new MouseEvent("click", {
-    view: window,
-    bubbles: true,
-    cancelable: true
-  })
-
-  a.dispatchEvent(event)
+  dispatchClickEvent(a)
 
   URL.revokeObjectURL(a.href)
   a.remove()
@@ -68,5 +67,5 @@ export const loadJson = ({
     input.remove()
   }
 
-  input.click()
+  dispatchClickEvent(input)
 }

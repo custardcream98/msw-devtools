@@ -46,6 +46,10 @@ export const isJsonMock = (data: unknown): data is JsonMock => {
   )
 }
 
+export const isJsonMocks = (data: unknown[]): data is JsonMock[] => {
+  return data.every(isJsonMock)
+}
+
 const isMSWDevtoolsClientType = (
   data: unknown
 ): data is MSWDevtoolsClientType =>
@@ -70,11 +74,11 @@ export const isMSWDevtoolsWebsocketEvent = (
       case MSWDevtoolsWebsocketEventName.ACK: {
         return (
           event.payload === null ||
-          (Array.isArray(event.payload) && event.payload.every(isJsonMock))
+          (Array.isArray(event.payload) && isJsonMocks(event.payload))
         )
       }
       case MSWDevtoolsWebsocketEventName.MOCK_LIST_UPDATE: {
-        return Array.isArray(event.payload) && event.payload.every(isJsonMock)
+        return Array.isArray(event.payload) && isJsonMocks(event.payload)
       }
     }
   }
