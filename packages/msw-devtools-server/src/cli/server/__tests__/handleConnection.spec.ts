@@ -71,7 +71,7 @@ describe("handleConnection", () => {
     })
     closeHandler()
 
-    expect(cleanup).toHaveBeenCalledTimes(3)
+    expect(cleanup).toHaveBeenCalledTimes(2)
   })
 
   it("should timeout after CONNECTION_TIMEOUT", async () => {

@@ -16,7 +16,8 @@ export default defineConfig({
         "**/constants.ts",
         "**/index.ts"
       ]
-    }
+    },
+    clearMocks: true
   },
   resolve: {
     alias: {
