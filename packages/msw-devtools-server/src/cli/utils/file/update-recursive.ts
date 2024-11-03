@@ -2,6 +2,7 @@ import { isSameJsonMock, type JsonMock } from "core"
 import path from "path"
 
 import { options } from "~/cli/program"
+import { removeMockListFile } from "~/cli/utils/file/remove"
 
 import { getLookupKey, getMockFileLookupMap } from "./lookup"
 import { readMockListFile } from "./read"
@@ -17,6 +18,8 @@ export const updateMockListFileRecursive = (
   targetDirectory = options.output
 ) => {
   const lookupMap = getMockFileLookupMap(options.output)
+  const currentMockFilePaths = new Set(Object.values(lookupMap))
+
   const batchedDiff = mockList.reduce<{
     added: JsonMock[]
     updated: Record<string, JsonMock[]>
@@ -24,6 +27,8 @@ export const updateMockListFileRecursive = (
     (diff, mock) => {
       const lookupKey = getLookupKey(mock)
       const mockFilePath = lookupMap[lookupKey]
+
+      currentMockFilePaths.delete(mockFilePath)
 
       if (!mockFilePath) {
         diff.added.push(mock)
@@ -62,5 +67,9 @@ export const updateMockListFileRecursive = (
       batchedDiff.added,
       path.resolve(targetDirectory, "mock-list.json")
     )
+  }
+
+  for (const deletedMockFilePath of currentMockFilePaths) {
+    removeMockListFile(deletedMockFilePath)
   }
 }
