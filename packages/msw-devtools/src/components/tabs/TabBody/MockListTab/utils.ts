@@ -3,7 +3,7 @@ import { jsonrepair } from "jsonrepair"
 
 import { autoFixJsonMock } from "~/utils/autoFixJsonMock"
 
-export const dispatchClickEvent = (element: HTMLElement) => {
+const dispatchClickEvent = (element: HTMLElement) => {
   const event = new MouseEvent("click", {
     view: window,
     bubbles: true,
@@ -28,6 +28,26 @@ export const saveJson = (data: object, filename: string) => {
   a.remove()
 }
 
+const readFileAsText = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = reject
+
+    reader.readAsText(file)
+  })
+}
+
+const validateMocks = (data: unknown): JsonMock[] => {
+  const resolvedData = Array.isArray(data)
+    ? data.map(autoFixJsonMock)
+    : [autoFixJsonMock(data)]
+
+  if (!isJsonMocks(resolvedData)) throw new Error("Invalid JSON structure")
+
+  return resolvedData
+}
+
 export const loadJson = ({
   onLoad
 }: {
@@ -36,32 +56,19 @@ export const loadJson = ({
   const input = document.createElement("input")
   input.type = "file"
   input.accept = ".json"
-  input.onchange = (e) => {
-    const file = (e.target as HTMLInputElement).files?.[0]
+  input.onchange = async (e) => {
+    const file = (e.currentTarget as HTMLInputElement).files?.[0]
 
     if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        try {
-          const data = JSON.parse(
-            jsonrepair(e.target?.result as string)
-          ) as unknown
+      try {
+        const content = await readFileAsText(file)
 
-          const resolvedData = Array.isArray(data)
-            ? data.map(autoFixJsonMock)
-            : [autoFixJsonMock(data)]
+        const data = JSON.parse(jsonrepair(content)) as unknown
 
-          if (!isJsonMocks(resolvedData)) {
-            throw new Error()
-          }
-
-          onLoad(resolvedData)
-        } catch (error) {
-          alert("[MSW Devtools] Invalid JSON file")
-        }
+        onLoad(validateMocks(data))
+      } catch {
+        alert("[MSW Devtools] Invalid JSON file")
       }
-
-      reader.readAsText(file)
     }
 
     input.remove()
