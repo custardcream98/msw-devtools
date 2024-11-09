@@ -24,7 +24,6 @@ describe("generateHandler", () => {
     } as const satisfies JsonMock
 
     const requestHandler = generateHandler(mock)
-    expect(requestHandler).toBeDefined()
 
     server.use(requestHandler)
 
@@ -94,5 +93,5 @@ describe("generateHandler", () => {
     expect(data).toEqual({ name: "Delayed John" })
 
     vi.useRealTimers()
-  }, 10000)
+  })
 })
