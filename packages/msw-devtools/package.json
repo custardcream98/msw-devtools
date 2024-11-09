@@ -68,7 +68,7 @@
     "eslint-plugin-react-hooks": "5.0.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-testing-library": "^6.4.0",
-    "happy-dom": "^15.7.4",
+    "happy-dom": "^15.11.0",
     "msw": "^2.6.2",
     "postcss": "^8.4.47",
     "postcss-import": "^16.1.0",
