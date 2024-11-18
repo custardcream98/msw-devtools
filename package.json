@@ -24,7 +24,8 @@
     "ci:check": "pnpm lint && pnpm type-check && pnpm coverage",
     "sync-readme": "cp ./README.md packages/msw-devtools/README.md && mkdir -p packages/msw-devtools/README/EN && cp -r ./README/EN packages/msw-devtools/README",
     "playground": "pnpm --filter playground dev",
-    "playground:vue": "pnpm --filter playground-vue dev"
+    "playground:vue": "pnpm --filter playground-vue dev",
+    "e2e:ui": "CI=false pnpm --filter playground exec playwright test --ui"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
