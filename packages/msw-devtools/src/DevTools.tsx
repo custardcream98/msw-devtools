@@ -1,6 +1,6 @@
 import "./index.css"
 
-import { useCallback } from "react"
+import { useCallback, useId } from "react"
 import { useTranslation } from "react-i18next"
 import { FaXmark } from "react-icons/fa6"
 
@@ -22,10 +22,21 @@ const DevTools = ({ initialOpen = true }: { initialOpen?: boolean }) => {
   const toggle = useCallback(() => setIsOpened((prev) => !prev), [setIsOpened])
   const close = useCallback(() => setIsOpened(false), [setIsOpened])
 
+  const layoutId = useId()
+
   return (
     <FloatingButtonSettingsProvider>
-      <FloatingButton onClick={toggle} />
-      <Layout isOpened={isOpened}>
+      <FloatingButton
+        onClick={toggle}
+        aria-expanded={isOpened}
+        aria-controls={layoutId}
+      />
+      <Layout
+        role='region'
+        aria-label='MSW Devtools'
+        id={layoutId}
+        isOpened={isOpened}
+      >
         <TabProvider>
           <TabBar>
             <button

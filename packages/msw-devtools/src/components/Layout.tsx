@@ -4,15 +4,14 @@ import { StorageKey } from "~/constants"
 import { useIsDragging } from "~/hooks/useIsDragging"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
-export const Layout = ({
-  isOpened,
-  children
-}: React.PropsWithChildren<{
+type LayoutProps = React.HTMLAttributes<HTMLDivElement> & {
   isOpened: boolean
-}>) => {
+}
+
+export const Layout = ({ isOpened, children, ...props }: LayoutProps) => {
   const [height, setHeight] = useLocalStorageState(StorageKey.HEIGHT, "50%")
 
-  const { isDragging, props } = useIsDragging({
+  const { isDragging, props: isDraggingProps } = useIsDragging({
     onDrag: (event) => {
       setHeight(`calc(100vh - ${event.clientY}px)`)
     }
@@ -28,6 +27,7 @@ export const Layout = ({
         "h-[var(--height)] max-h-screen min-h-12"
       )}
       style={{ "--height": height }}
+      {...props}
     >
       <button
         type='button'
@@ -35,7 +35,7 @@ export const Layout = ({
           "absolute left-0 right-0 top-0 h-[3px] cursor-row-resize transition-colors hover:bg-slate-700",
           isDragging && "bg-slate-700"
         )}
-        {...props}
+        {...isDraggingProps}
       ></button>
       {children}
     </div>
