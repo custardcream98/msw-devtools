@@ -34,8 +34,27 @@ jobs:
       - name: Build package
         run: pnpm build:package
 
-      - name: Install Playwright Browsers
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: |
+          VERSION=$(pnpm --filter playground list @playwright/test --json | jq -r '.[0].devDependencies["@playwright/test"].version')
+          echo "Playwright version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Cache Playwright Browser binaries
+        uses: actions/cache@v3
+        id: playwright-cache
+        with:
+          path: ~/.cache/playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers and dependencies
         run: pnpm dlx playwright install --with-deps
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+
+      - name: Install Playwright dependencies
+        run: pnpm dlx playwright install-deps
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - name: Run Playwright tests
         run: pnpm e2e:ci
