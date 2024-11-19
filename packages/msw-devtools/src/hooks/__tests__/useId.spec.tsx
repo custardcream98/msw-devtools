@@ -10,8 +10,8 @@ const setup = () => {
 
     return (
       <>
-        <div data-testId={"id1"}>{id1}</div>
-        <div data-testId={"id2"}>{id2}</div>
+        <div data-testid={"id1"}>{id1}</div>
+        <div data-testid={"id2"}>{id2}</div>
       </>
     )
   }
