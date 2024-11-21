@@ -49,11 +49,11 @@ jobs:
           key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
 
       - name: Install Playwright browsers and dependencies
-        run: pnpm dlx playwright install --with-deps
+        run: pnpm dlx playwright@${{ steps.playwright-version.outputs.version }} install --with-deps
         if: steps.playwright-cache.outputs.cache-hit != 'true'
 
       - name: Install Playwright dependencies
-        run: pnpm dlx playwright install-deps
+        run: pnpm dlx playwright@${{ steps.playwright-version.outputs.version }} install-deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - name: Run Playwright tests
