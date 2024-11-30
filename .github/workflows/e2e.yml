@@ -57,4 +57,4 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
 
       - name: Run Playwright tests
-        run: pnpm e2e:ci
+        run: pnpm build:playground && pnpm e2e:ci
