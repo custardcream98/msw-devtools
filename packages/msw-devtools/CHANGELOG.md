@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.10.3
+
+### Patch Changes
+
+- 0d52ef2: feat: improved a11y
+
 ## 0.10.2
 
 ### Patch Changes
