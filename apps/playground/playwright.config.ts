@@ -51,7 +51,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "pnpm --filter playground dev --port 5173",
+    command: process.env.CI ? "vite preview --port 5173" : "vite dev",
     url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI
   }

@@ -25,6 +25,7 @@
     "sync-readme": "cp ./README.md packages/msw-devtools/README.md && mkdir -p packages/msw-devtools/README/EN && cp -r ./README/EN packages/msw-devtools/README",
     "playground": "pnpm --filter playground dev",
     "playground:vue": "pnpm --filter playground-vue dev",
+    "e2e": "pnpm --filter playground exec playwright test",
     "e2e:ui": "pnpm --filter playground exec playwright test --ui",
     "e2e:ci": "pnpm --filter playground exec playwright test"
   },
