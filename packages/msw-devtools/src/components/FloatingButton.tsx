@@ -16,7 +16,14 @@ const DEFAULT_POSITION = {
 
 const FIXED_DIRECTION = ["bottom", "right"] as const
 
-export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
+type FloatingButtonProps = Omit<
+  React.HTMLAttributes<HTMLButtonElement>,
+  "onClick"
+> & {
+  onClick: () => void
+}
+
+export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
   const { isLongClicking: isDragging, props: longClickProps } = useLongClick({
     onClick
   })
@@ -39,6 +46,7 @@ export const FloatingButton = ({ onClick }: { onClick: () => void }) => {
 
   return (
     <button
+      {...props}
       type='button'
       className={clsx(
         "z-msw-devtool fixed left-0 top-0 rounded-full border-4 border-solid border-background-light bg-white p-2 shadow-lg",

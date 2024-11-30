@@ -44,3 +44,10 @@ next-env.d.ts
 dist
 
 coverage
+
+# playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+tests-examples/
