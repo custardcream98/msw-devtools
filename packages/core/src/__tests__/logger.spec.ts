@@ -2,8 +2,8 @@ import { colorLog, logger } from "../logger"
 
 describe("colorLog", () => {
   it("should return a client log format with color", () => {
-    const result = colorLog("client", "blue", "Test message")
-    expect(result).toEqual(["%cTest message", "color: blue"])
+    const result = colorLog("client", "green", "Test message")
+    expect(result).toEqual(["%cTest message", "color: green"])
   })
 
   it("should return a server log format with red color", () => {
@@ -11,8 +11,8 @@ describe("colorLog", () => {
     expect(result).toEqual(["\x1b[31m Test message\x1b[0m"])
   })
 
-  it("should return a server log format with blue color", () => {
-    const result = colorLog("server", "blue", "Test message")
+  it("should return a server log format with green color", () => {
+    const result = colorLog("server", "green", "Test message")
     expect(result).toEqual(["\x1b[34m Test message\x1b[0m"])
   })
 })
@@ -24,7 +24,7 @@ describe("logger", () => {
     log.info("Client info message")
     expect(console.log).toHaveBeenCalledWith(
       "%c[MSW DevTools] Client info message",
-      "color: blue"
+      "color: green"
     )
   })
 

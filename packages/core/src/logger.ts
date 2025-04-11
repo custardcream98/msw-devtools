@@ -2,7 +2,7 @@ type Type = "client" | "server"
 
 export const colorLog = (
   type: Type,
-  color: "red" | "blue",
+  color: "red" | "green",
   message: string
 ) => {
   if (type === "client") {
@@ -17,7 +17,7 @@ export const logger = (type: Type) => {
 
   return {
     info: (message: string) => {
-      console.log(...colorLog(type, "blue", `[${prefix}] ${message}`))
+      console.log(...colorLog(type, "green", `[${prefix}] ${message}`))
     },
     error: (message: string) => {
       console.error(...colorLog(type, "red", `[${prefix}] ${message}`))
