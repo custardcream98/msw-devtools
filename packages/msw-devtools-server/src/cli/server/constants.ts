@@ -1,1 +1,1 @@
-export const CONNECTION_TIMEOUT = 10_000
+export const CONNECTION_TIMEOUT = 5_000
