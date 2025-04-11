@@ -11,7 +11,7 @@ export const createDevtool = async ({
   const loadedMocks = await initialize(props)
 
   if (isUsingServer) {
-    startServer(loadedMocks)
+    await startServer(loadedMocks)
   }
 
   const React = (await import("react")).default
