@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools-server
 
+## 0.11.0
+
+### Minor Changes
+
+- 2a44e8c: Add JsonMock Prompt Mode
+
 ## 0.10.2
 
 ### Patch Changes
