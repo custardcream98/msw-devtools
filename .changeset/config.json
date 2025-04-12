@@ -4,7 +4,12 @@
   "commit": false,
   "fixed": [],
   "linked": [
-    ["@custardcream/msw-devtools", "@custardcream/msw-devtools-server", "core"]
+    [
+      "@custardcream/msw-devtools",
+      "@custardcream/msw-devtools-server",
+      "core",
+      "web-core"
+    ]
   ],
   "access": "public",
   "baseBranch": "main",

@@ -1,7 +1,7 @@
+import { JsonMock } from "core"
 import { setupServer } from "msw/node"
 
 import { generateHandler } from "../generateHandler"
-import type { JsonMock } from "../types"
 
 const server = setupServer()
 
@@ -20,7 +20,8 @@ describe("generateHandler", () => {
         response: { name: "John" }
       },
       status: "200",
-      isActivated: true
+      isActivated: true,
+      shouldPromptResponse: false
     } as const satisfies JsonMock
 
     const requestHandler = generateHandler(mock)
@@ -43,7 +44,8 @@ describe("generateHandler", () => {
         response: [{ name: "John" }, { name: "Doe" }]
       },
       status: "200",
-      isActivated: true
+      isActivated: true,
+      shouldPromptResponse: false
     } as const satisfies JsonMock
 
     const requestHandler = generateHandler(mock)
@@ -78,8 +80,9 @@ describe("generateHandler", () => {
         response: { name: "Delayed John" }
       },
       status: "200",
-      isActivated: true
-    } as const
+      isActivated: true,
+      shouldPromptResponse: false
+    } as const satisfies JsonMock
 
     const requestHandler = generateHandler(mock)
     server.use(requestHandler)
@@ -93,5 +96,30 @@ describe("generateHandler", () => {
     expect(data).toEqual({ name: "Delayed John" })
 
     vi.useRealTimers()
+  })
+
+  it("should prompt user for response", async () => {
+    const mock = {
+      responseDelay: 0,
+      method: "get",
+      url: "https://test-delay.com",
+      response: {
+        type: "single",
+        response: { name: "Delayed John" }
+      },
+      status: "200",
+      isActivated: true,
+      shouldPromptResponse: true
+    } as const satisfies JsonMock
+    const promptResponse = vi.fn(() => Promise.resolve("Delayed John"))
+
+    const requestHandler = generateHandler(mock, promptResponse)
+    server.use(requestHandler)
+
+    const res = await fetch("https://test-delay.com")
+    const data = await res.json()
+    expect(res.status).toBe(200)
+    expect(data).toEqual("Delayed John")
+    expect(promptResponse).toHaveBeenCalledOnce()
   })
 })

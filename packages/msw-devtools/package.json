@@ -84,7 +84,8 @@
     "typescript": "^5.6.3",
     "typescript-eslint": "^8.12.2",
     "vite": "^5.4.10",
-    "vitest": "^2.1.4"
+    "vitest": "^2.1.4",
+    "web-core": "workspace:*"
   },
   "peerDependencies": {
     "msw": ">=2"

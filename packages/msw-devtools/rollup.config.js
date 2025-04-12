@@ -46,7 +46,7 @@ export default defineConfig([
       typescript({
         tsconfig: "./tsconfig.json",
         exclude: [/.css$/, /.(test|spec).(ts|tsx)$/],
-        include: ["src/**/*", "../core/src/**/*"]
+        include: ["src/**/*", "../core/src/**/*", "../web-core/src/**/*"]
       }),
       resolve({
         extensions: [".js", ".jsx", ".ts", ".tsx"]

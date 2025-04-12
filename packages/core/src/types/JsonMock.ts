@@ -23,4 +23,5 @@ export type JsonMock = {
   response: JsonMockResponse
   responseDelay: number
   isActivated: boolean
+  shouldPromptResponse: boolean
 }
