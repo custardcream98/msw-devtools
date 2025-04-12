@@ -31,6 +31,7 @@
   <img width="500" src="./image1.png">
   <img width="500" src="./image2.png">
   <img width="500" src="./image3.png">
+  <img width="500" src="../EN/prompt-mode.gif">
 </p>
 
 <br />
@@ -120,7 +121,7 @@ enableMocking().then(() => {
 때로는 미리 설정하지 않고 즉시 다른 응답을 제공해야 할 때가 있습니다. Prompt Mode를 사용하면 각 요청에 대한 응답 데이터를 실시간으로 직접 입력할 수 있습니다.
 
 <p align="center">
-  <img width="500" src="./prompt-mode.png">
+  <img width="500" src="../EN/prompt-mode.gif">
 </p>
 
 Prompt Mode가 활성화된 상태에서 요청이 발생하면, JSON 응답 데이터를 직접 입력할 수 있는 모달이 나타납니다. 이 기능은 다음과 같은 상황에서 특히 유용합니다:

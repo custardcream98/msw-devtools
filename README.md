@@ -33,6 +33,7 @@
   <img width="500" src="./README/EN/image1.png">
   <img width="500" src="./README/EN/image2.png">
   <img width="500" src="./README/EN/image3.png">
+  <img width="500" src="./README/EN/prompt-mode.gif">
 </p>
 
 <br />
@@ -124,7 +125,7 @@ This feature allows you to change the response data for each request sequentiall
 Sometimes you need to provide different responses on the fly without pre-configuring them. Prompt Mode allows you to manually enter response data for each request in real-time.
 
 <p align="center">
-  <img width="500" src="./README/EN/prompt-mode.png">
+  <img width="500" src="./README/EN/prompt-mode.gif">
 </p>
 
 When a request is made with Prompt Mode enabled, a modal appears where you can directly input the JSON response data. This is particularly useful for:
