@@ -5,6 +5,9 @@ import {
   type StatusOption
 } from "core"
 
+export const DEVTOOLS_ROOT_ID = "msw-devtools"
+export const PROMPT_CONTAINER_ID = "msw-devtools-prompt"
+
 export const FIELD_NAME = {
   URL: "url",
   METHOD: "method",

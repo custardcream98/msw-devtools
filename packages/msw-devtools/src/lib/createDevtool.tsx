@@ -1,3 +1,4 @@
+import { DEVTOOLS_ROOT_ID } from "~/constants"
 import { startServer } from "~/lib/server"
 import type { InstallProps } from "~/types"
 
@@ -22,10 +23,10 @@ export const createDevtool = async ({
   await initializeI18n()
 
   const root =
-    document.getElementById("msw-devtools") ??
+    document.getElementById(DEVTOOLS_ROOT_ID) ??
     (function () {
       const root = document.createElement("div")
-      root.id = "msw-devtools"
+      root.id = DEVTOOLS_ROOT_ID
       root.style.position = "fixed"
       root.style.zIndex = "999999"
       document.body.appendChild(root)

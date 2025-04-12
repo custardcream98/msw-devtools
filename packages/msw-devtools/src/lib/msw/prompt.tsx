@@ -1,88 +1,99 @@
 import { type Json, type JsonMock } from "core"
 import ReactDOMClient from "react-dom/client"
 
-let promptRootElement: HTMLDivElement | null = null
-const promptReactRoots = new Map<string, ReactDOMClient.Root>()
+import { DEVTOOLS_ROOT_ID, PROMPT_CONTAINER_ID } from "~/constants"
 
-const createPromptRootElement = () => {
-  const root = document.createElement("div")
-  root.id = "msw-devtools-prompt"
-  root.style.position = "fixed"
-  root.style.zIndex = "999999"
+type PromptRenderProps = {
+  jsonMock: JsonMock
+  onSubmit: (response: Json) => void
+}
 
-  const devtoolsRoot = document.getElementById("msw-devtools")
-  if (!devtoolsRoot) {
-    throw new Error("[MSW Devtools] Devtools root not found")
+type PromptRenderer = (props: PromptRenderProps) => React.ReactNode
+
+class PromptRegistry {
+  rootElement: HTMLDivElement | null = null
+  reactRoots = new Map<string, ReactDOMClient.Root>()
+
+  getRootElement() {
+    if (!this.rootElement) {
+      this.rootElement = this.createRootElement()
+    }
+    return this.rootElement
   }
 
-  devtoolsRoot.appendChild(root)
+  createRootElement() {
+    const root = document.createElement("div")
+    root.id = PROMPT_CONTAINER_ID
+    root.style.position = "fixed"
+    root.style.zIndex = "999999"
 
-  return root
-}
+    const devtoolsRoot = document.getElementById(DEVTOOLS_ROOT_ID)
+    if (!devtoolsRoot) {
+      throw new Error("[MSW Devtools] Devtools root not found")
+    }
 
-const getPromptRootElement = () => {
-  if (!promptRootElement) {
-    promptRootElement = createPromptRootElement()
+    devtoolsRoot.appendChild(root)
+    return root
   }
 
-  return promptRootElement
-}
+  generatePromptId() {
+    return `${PROMPT_CONTAINER_ID}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+  }
 
-const generatePromptId = () =>
-  `msw-devtools-prompt-${Date.now()}-${Math.random().toString(36)}`
+  createPromptElement(promptId: string) {
+    const element = document.createElement("div")
+    element.id = promptId
+    element.className = "hidden last:block" // Only show the last prompt
 
-const resetPromptElement = (promptId: string) => {
-  const root = promptReactRoots.get(promptId)
-  if (root) {
-    root.unmount()
-    promptReactRoots.delete(promptId)
-    const promptElement = document.getElementById(promptId)
-    promptElement?.remove()
+    this.getRootElement().appendChild(element)
+    return element
+  }
+
+  getReactRoot(promptId: string) {
+    let reactRoot = this.reactRoots.get(promptId)
+
+    if (!reactRoot) {
+      const element =
+        document.getElementById(promptId) || this.createPromptElement(promptId)
+      reactRoot = ReactDOMClient.createRoot(element)
+      this.reactRoots.set(promptId, reactRoot)
+    }
+
+    return reactRoot
+  }
+
+  removePrompt(promptId: string) {
+    const reactRoot = this.reactRoots.get(promptId)
+    if (reactRoot) {
+      reactRoot.unmount()
+      this.reactRoots.delete(promptId)
+
+      const promptElement = document.getElementById(promptId)
+      promptElement?.remove()
+    }
   }
 }
 
-const createPromptElement = (promptId: string) => {
-  const root = document.createElement("div")
-  root.id = promptId
-  root.className = "hidden last:block"
+const promptRegistry = new PromptRegistry()
 
-  const promptRootElement = getPromptRootElement()
-
-  promptRootElement.appendChild(root)
-
-  return root
-}
-
-const getPromptElement = (promptId: string) => {
-  let root = promptReactRoots.get(promptId)
-
-  if (!root) {
-    const element =
-      document.getElementById(promptId) || createPromptElement(promptId)
-    root = ReactDOMClient.createRoot(element)
-    promptReactRoots.set(promptId, root)
-  }
-
-  return root
-}
-
+/**
+ * Creates and renders a prompt with the given mock data
+ */
 export const createPrompt = (
   jsonMock: JsonMock,
-  renderPrompt: (props: {
-    jsonMock: JsonMock
-    onSubmit: (response: Json) => void
-  }) => React.ReactNode
-) => {
-  const promptId = generatePromptId()
+  renderPrompt: PromptRenderer
+): Promise<Json> => {
+  const promptId = promptRegistry.generatePromptId()
 
   return new Promise<Json>((resolve) => {
-    const root = getPromptElement(promptId)
-    root.render(
+    const reactRoot = promptRegistry.getReactRoot(promptId)
+
+    reactRoot.render(
       renderPrompt({
         jsonMock,
         onSubmit: (response) => {
           resolve(response)
-          resetPromptElement(promptId)
+          promptRegistry.removePrompt(promptId)
         }
       })
     )
