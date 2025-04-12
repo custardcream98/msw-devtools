@@ -15,12 +15,15 @@ const setup = async () => {
   const createElementSpy = vi
     .spyOn(document, "createElement")
     .mockReturnValue(DIV_MOCK)
-  vi.spyOn(document, "getElementById").mockReturnValue(DIV_MOCK)
+  const getElementByIdSpy = vi
+    .spyOn(document, "getElementById")
+    .mockReturnValue(DIV_MOCK)
 
   const { createPrompt } = await import("~/lib/msw/prompt")
 
   return {
     createElementSpy,
+    getElementByIdSpy,
     createPrompt
   }
 }
@@ -42,7 +45,13 @@ afterEach(() => {
 
 describe("createPrompt", () => {
   it("should create a root div element if one doesn't exist", async () => {
-    const { createPrompt, createElementSpy } = await setup()
+    const { createPrompt, createElementSpy, getElementByIdSpy } = await setup()
+    getElementByIdSpy.mockImplementation((id) => {
+      if (id === "msw-devtools") {
+        return DIV_MOCK
+      }
+      return null
+    })
 
     await createPrompt(MOCKED_JSON_MOCK, MOCKED_RENDER_PROMPT)
 
@@ -80,8 +89,14 @@ describe("createPrompt", () => {
     expect(response).toBe(expectedResponse)
   })
 
-  it("should reuse the existing root if already created", async () => {
-    const { createPrompt, createElementSpy } = await setup()
+  it("should reuse the existing root element if already created", async () => {
+    const { createPrompt, createElementSpy, getElementByIdSpy } = await setup()
+    getElementByIdSpy.mockImplementation((id) => {
+      if (id === "msw-devtools") {
+        return DIV_MOCK
+      }
+      return null
+    })
 
     await createPrompt(MOCKED_JSON_MOCK, MOCKED_RENDER_PROMPT)
 
@@ -90,11 +105,12 @@ describe("createPrompt", () => {
 
     createElementSpy.mockClear()
     vi.mocked(ReactDOMClient.createRoot).mockClear()
+    getElementByIdSpy.mockResolvedValue(DIV_MOCK)
 
-    // Second call should reuse the root
+    // Second call should reuse the root element
     await createPrompt(MOCKED_JSON_MOCK, MOCKED_RENDER_PROMPT)
 
     expect(createElementSpy).not.toHaveBeenCalled()
-    expect(ReactDOMClient.createRoot).not.toHaveBeenCalled()
+    expect(ReactDOMClient.createRoot).toHaveBeenCalledOnce()
   })
 })
