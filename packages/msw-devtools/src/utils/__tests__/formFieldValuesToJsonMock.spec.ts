@@ -13,7 +13,8 @@ describe("formFieldValuesToJsonMock", () => {
         type: "single",
         response: '{"name":"John"}'
       },
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      [FIELD_NAME.RESPONSE_DELAY]: 1000,
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
     } as const satisfies FormFieldValues
 
     const result = formFieldValuesToJsonMock(formData)
@@ -29,6 +30,7 @@ describe("formFieldValuesToJsonMock", () => {
           "type": "single",
         },
         "responseDelay": 1000,
+        "shouldPromptResponse": true,
         "status": "200",
         "url": "https://test-url",
       }
@@ -44,7 +46,8 @@ describe("formFieldValuesToJsonMock", () => {
         type: "sequential",
         response: ['{"name":"John"}', '{"age":30}']
       },
-      [FIELD_NAME.RESPONSE_DELAY]: 1000
+      [FIELD_NAME.RESPONSE_DELAY]: 1000,
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
     } as const satisfies FormFieldValues
 
     const result = formFieldValuesToJsonMock(formData)
@@ -65,6 +68,7 @@ describe("formFieldValuesToJsonMock", () => {
           "type": "sequential",
         },
         "responseDelay": 1000,
+        "shouldPromptResponse": true,
         "status": "200",
         "url": "https://test-url",
       }

@@ -40,7 +40,8 @@ const DEFAULT_VALUES = {
     type: JsonMockResponseType.single,
     response: ""
   },
-  [FIELD_NAME.RESPONSE_DELAY]: 0
+  [FIELD_NAME.RESPONSE_DELAY]: 0,
+  [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: false
 } as const satisfies FormFieldValues
 
 export const AddMockForm = () => {
@@ -80,7 +81,10 @@ export const AddMockForm = () => {
       [FIELD_NAME.RESPONSE_DELAY]:
         savedFormFieldValues?.[FIELD_NAME.RESPONSE_DELAY] ||
         defaultResponseDelay ||
-        DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY]
+        DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY],
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]:
+        savedFormFieldValues?.[FIELD_NAME.SHOULD_PROMPT_RESPONSE] ||
+        DEFAULT_VALUES[FIELD_NAME.SHOULD_PROMPT_RESPONSE]
     }),
     [savedFormFieldValues, defaultResponse, defaultResponseDelay, defaultUrl]
   )

@@ -29,6 +29,7 @@ export const formFieldValuesToJsonMock = (
     status: formData.status,
     response: parseResponse(formData.response),
     isActivated: true,
-    responseDelay: formData.responseDelay
+    responseDelay: formData.responseDelay,
+    shouldPromptResponse: formData.shouldPromptResponse
   }
 }

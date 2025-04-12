@@ -10,7 +10,8 @@ export const FIELD_NAME = {
   METHOD: "method",
   STATUS: "status",
   RESPONSE: "response",
-  RESPONSE_DELAY: "responseDelay"
+  RESPONSE_DELAY: "responseDelay",
+  SHOULD_PROMPT_RESPONSE: "shouldPromptResponse"
 } as const
 
 export type FieldName = (typeof FIELD_NAME)[keyof typeof FIELD_NAME]
@@ -61,6 +62,7 @@ export type FormFieldValues = {
   [FIELD_NAME.STATUS]: StatusOption
   [FIELD_NAME.RESPONSE]: FormFieldResponseValue
   [FIELD_NAME.RESPONSE_DELAY]: number
+  [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: boolean
 }
 
 /**
