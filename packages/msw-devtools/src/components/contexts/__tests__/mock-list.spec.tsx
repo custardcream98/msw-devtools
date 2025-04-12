@@ -73,7 +73,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -92,7 +93,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -112,7 +114,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -132,7 +135,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: false,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -153,7 +157,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -174,7 +179,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     const { userEvent, mockListWrapper } = setup({ mock })
 
@@ -194,7 +200,8 @@ describe("mock-list", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: false
     }
     vi.spyOn(serverLib, "sendMockListToServer")
     const { userEvent } = setup({ mock })

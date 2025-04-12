@@ -14,7 +14,8 @@ describe("formFieldValuesToJsonMock", () => {
         response: '{"name":"John"}'
       },
       [FIELD_NAME.RESPONSE_DELAY]: 1000,
-      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true,
+      [FIELD_NAME.IS_ACTIVATED]: true
     } as const satisfies FormFieldValues
 
     const result = formFieldValuesToJsonMock(formData)
@@ -47,7 +48,8 @@ describe("formFieldValuesToJsonMock", () => {
         response: ['{"name":"John"}', '{"age":30}']
       },
       [FIELD_NAME.RESPONSE_DELAY]: 1000,
-      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true,
+      [FIELD_NAME.IS_ACTIVATED]: true
     } as const satisfies FormFieldValues
 
     const result = formFieldValuesToJsonMock(formData)

@@ -22,6 +22,7 @@ describe("jsonMockToFormFieldValues", () => {
 
     expect(result).toMatchInlineSnapshot(`
       {
+        "isActivated": true,
         "method": "get",
         "response": {
           "response": "{
@@ -55,6 +56,7 @@ describe("jsonMockToFormFieldValues", () => {
 
     expect(result).toMatchInlineSnapshot(`
       {
+        "isActivated": true,
         "method": "get",
         "response": {
           "response": [
