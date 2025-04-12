@@ -4,7 +4,13 @@ import type {
   StatusOption
 } from "../constants"
 
-type Json = Record<string, unknown> | string | number | boolean | null | Json[]
+export type Json =
+  | Record<string, unknown>
+  | string
+  | number
+  | boolean
+  | null
+  | Json[]
 
 export type JsonMockResponse =
   | {
