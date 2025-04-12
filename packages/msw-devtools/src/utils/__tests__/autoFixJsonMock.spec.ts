@@ -22,7 +22,8 @@ describe("autoFixJsonMock", () => {
         response: null
       },
       responseDelay: 1000,
-      isActivated: true
+      isActivated: true,
+      shouldPromptResponse: false
     } as const satisfies JsonMock)
   })
 })

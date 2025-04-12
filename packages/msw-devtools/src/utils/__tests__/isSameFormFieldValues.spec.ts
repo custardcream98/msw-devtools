@@ -11,7 +11,9 @@ describe("isSameFormFieldValues", () => {
       [FIELD_NAME.RESPONSE]: {
         type: "single",
         response: JSON.stringify({ message: "Hello, world!" })
-      }
+      },
+      [FIELD_NAME.IS_ACTIVATED]: true,
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
     } as const satisfies FormFieldValues
     const b = {
       [FIELD_NAME.URL]: "https://example-url",
@@ -21,7 +23,9 @@ describe("isSameFormFieldValues", () => {
       [FIELD_NAME.RESPONSE]: {
         type: "single",
         response: JSON.stringify({ message: "Hello, world!" })
-      }
+      },
+      [FIELD_NAME.IS_ACTIVATED]: true,
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
     } as const satisfies FormFieldValues
 
     expect(isSameFormFieldValues(a, b)).toBe(true)
@@ -36,7 +40,9 @@ describe("isSameFormFieldValues", () => {
       [FIELD_NAME.RESPONSE]: {
         type: "single",
         response: JSON.stringify({ message: "Hello, world!" })
-      }
+      },
+      [FIELD_NAME.IS_ACTIVATED]: true,
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
     } as const satisfies FormFieldValues
 
     const b = {
@@ -47,7 +53,9 @@ describe("isSameFormFieldValues", () => {
       [FIELD_NAME.RESPONSE]: {
         type: "single",
         response: JSON.stringify({ message: "hello, world!" })
-      }
+      },
+      [FIELD_NAME.IS_ACTIVATED]: true,
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: true
     } as const satisfies FormFieldValues
 
     expect(isSameFormFieldValues(a, b)).toBe(false)

@@ -1,15 +1,27 @@
+import { type Json, type JsonMock, JsonMockResponseType } from "core"
 import { http, type HttpHandler, HttpResponse } from "msw"
 
-import { JsonMockResponseType } from "./constants"
-import type { JsonMock } from "./types"
-
-export const generateHandler = (mock: JsonMock): HttpHandler => {
+export const generateHandler = (
+  mock: JsonMock,
+  /**
+   * Ask user to what response should be returned
+   */
+  promptResponse?: () => Promise<Json>
+): HttpHandler => {
   let currentSequence = 0
   return http[mock.method](mock.url, async () => {
     if (mock.responseDelay > 0) {
       await new Promise((resolve) =>
         setTimeout(resolve, mock.responseDelay * 1000)
       )
+    }
+
+    if (mock.shouldPromptResponse && promptResponse) {
+      const response = await promptResponse()
+
+      return HttpResponse.json(response, {
+        status: Number(mock.status)
+      })
     }
 
     const response = mock.response

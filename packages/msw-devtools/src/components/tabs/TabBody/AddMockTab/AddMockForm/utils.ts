@@ -1,4 +1,8 @@
-import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
+import { JsonMockResponseType } from "core"
+import { jsonrepair } from "jsonrepair"
+
+import { FormFieldResponseValue } from "~/constants"
+import { checkJSONFixable, checkJSONParsable, isJSONFixable } from "~/lib/json"
 
 export const validate = (value: string) => {
   if (!value) {
@@ -14,4 +18,22 @@ export const validate = (value: string) => {
   }
 
   return false
+}
+
+export const fixJson = (
+  responseValue: FormFieldResponseValue
+): FormFieldResponseValue => {
+  if (responseValue.type === JsonMockResponseType.sequential) {
+    return {
+      type: responseValue.type,
+      response: responseValue.response.map((value) =>
+        isJSONFixable(value) ? jsonrepair(value) : value
+      )
+    }
+  }
+
+  return {
+    type: JsonMockResponseType.single,
+    response: jsonrepair(responseValue.response)
+  }
 }

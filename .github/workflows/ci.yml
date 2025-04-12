@@ -49,5 +49,11 @@ jobs:
       - name: Report coverage (core)
         uses: davelosert/vitest-coverage-report-action@v2
         with:
+          working-directory: ./packages/web-core
+          name: "web-core"
+
+      - name: Report coverage (core)
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
           working-directory: ./packages/core
           name: "core"

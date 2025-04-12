@@ -8,6 +8,7 @@
       "response": "test"
     },
     "isActivated": true,
-    "responseDelay": 0.5
+    "responseDelay": 0.5,
+    "shouldPromptResponse": true
   }
 ]

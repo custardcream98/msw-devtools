@@ -22,6 +22,7 @@
 - **상황에 따라 다른 응답값을 사용하세요.** 응답값이 순차적으로 바뀌게 할 수 있습니다.
 - **Mock Request Handler를 내보내거나 가져오세요.** JSON 포멧으로 손쉽게 Mock Request Handler를 공유할 수 있습니다.
 - **실시간 JSON 편집으로 MSW 요청 핸들러를 쉽게 관리하세요.** Devtools UI에서 변경한 내용이 즉시 JSON 파일에 반영됩니다. ([🔗](#msw-요청-핸들러를-실시간-json-편집으로-즉시-동기화하기))
+- **Prompt Mode로 실시간 응답 제어하기.** 요청이 이뤄질 때마다 응답 데이터를 직접 입력할 수 있습니다. ([🔗](#prompt-mode로-실시간-응답-제어하기))
 - 한국어를 지원합니다.
 
 <br />
@@ -30,6 +31,7 @@
   <img width="500" src="./image1.png">
   <img width="500" src="./image2.png">
   <img width="500" src="./image3.png">
+  <img width="500" src="../EN/prompt-mode.gif">
 </p>
 
 <br />
@@ -113,6 +115,29 @@ enableMocking().then(() => {
 <img width="500" src="./image4.png">
 
 각 요청에 대한 응답값이 순차적으로 변경되게 됩니다.
+
+## Prompt Mode로 실시간 응답 제어하기
+
+때로는 미리 설정하지 않고 즉시 다른 응답을 제공해야 할 때가 있습니다. Prompt Mode를 사용하면 각 요청에 대한 응답 데이터를 실시간으로 직접 입력할 수 있습니다.
+
+<p align="center">
+  <img width="500" src="../EN/prompt-mode.gif">
+</p>
+
+Prompt Mode가 활성화된 상태에서 요청이 발생하면, JSON 응답 데이터를 직접 입력할 수 있는 모달이 나타납니다. 이 기능은 다음과 같은 상황에서 특히 유용합니다:
+
+- 목업 핸들러를 수정하지 않고 엣지 케이스 테스트하기
+- 데모나 프레젠테이션 중 다양한 시나리오 시뮬레이션하기
+- 다양한 응답 구조로 빠르게 실험하기
+
+Prompt Mode를 사용하려면 Devtools UI에서 특정 요청 핸들러에 대한 Prompt Mode를 활성화하면 됩니다.
+
+### Prompt Mode와 Sequential Response 비교
+
+- **Prompt Mode**: 요청이 발생할 때마다 실시간으로 응답 데이터를 직접 입력할 수 있습니다. 사전 계획 없이 즉흥적으로 응답을 생성해야 할 때 유용합니다.
+- **Sequential Response**: 여러 응답값을 미리 정의해두고, 요청이 있을 때마다 첫번째 응답값, 두번째 응답값 등 순차적으로 응답을 반환합니다.
+
+테스트나 데모 중 최대한의 유연성이 필요할 때는 Prompt Mode를, 특정 테스트 흐름에 대해 예측 가능한 일련의 응답이 필요할 때는 Sequential Response를 선택하세요.
 
 ## MSW 요청 핸들러를 실시간 JSON 편집으로 즉시 동기화하기
 
@@ -200,6 +225,10 @@ type JsonMock = Array<{
   response: JsonMockResponse
   responseDelay: number
   isActivated: boolean
+  /**
+   * 프롬프트 모드 사용 여부
+   */
+  shouldPromptResponse: boolean
 }>
 
 type MethodOption =

@@ -5,12 +5,17 @@ import {
   type StatusOption
 } from "core"
 
+export const DEVTOOLS_ROOT_ID = "msw-devtools"
+export const PROMPT_CONTAINER_ID = "msw-devtools-prompt"
+
 export const FIELD_NAME = {
   URL: "url",
   METHOD: "method",
   STATUS: "status",
   RESPONSE: "response",
-  RESPONSE_DELAY: "responseDelay"
+  RESPONSE_DELAY: "responseDelay",
+  IS_ACTIVATED: "isActivated",
+  SHOULD_PROMPT_RESPONSE: "shouldPromptResponse"
 } as const
 
 export type FieldName = (typeof FIELD_NAME)[keyof typeof FIELD_NAME]
@@ -61,6 +66,8 @@ export type FormFieldValues = {
   [FIELD_NAME.STATUS]: StatusOption
   [FIELD_NAME.RESPONSE]: FormFieldResponseValue
   [FIELD_NAME.RESPONSE_DELAY]: number
+  [FIELD_NAME.IS_ACTIVATED]: boolean
+  [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: boolean
 }
 
 /**

@@ -10,6 +10,13 @@
       "responseDelay": "딜레이 {{delay}}초"
     }
   },
+  "prompt": {
+    "fix": "JSON 자동 수정",
+    "submit": "제출"
+  },
+  "promptModePill": {
+    "promptMode": "프롬프트 모드"
+  },
   "tab": {
     "addMock": "Mock 추가하기",
     "mockList": "Mock 목록",
@@ -25,10 +32,16 @@
       "duplicateConfirmMessage": "이미 등록된 Request Handler입니다.\n덮어씌울까요?",
       "editModeIndicator": "수정 모드",
       "editSubmit": "수정",
+      "isActivated": {
+        "label": "활성 상태"
+      },
       "responseDelay": {
         "label": "딜레이(초)"
       },
       "sequentialBadge": "sequential {{count}}",
+      "shouldPromptResponse": {
+        "label": "프롬프트 모드"
+      },
       "submit": "추가",
       "url": {
         "placeholder": "URL을 입력해주세요"

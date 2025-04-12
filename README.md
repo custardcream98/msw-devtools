@@ -25,6 +25,7 @@
 - **Use Different Response Data Based on the Situation.** Change response data sequentially.
 - **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
 - **Live JSON Editing for Instant Management of MSW Request Handlers.** Changes made in the Devtools UI are instantly synced with your JSON file. ([🔗](#live-json-editing-for-instant-management-of-msw-request-handlers))
+- **Prompt Mode for Real-time Response Control.** Manually enter response data for each request through an interactive modal. ([🔗](#prompt-mode-for-real-time-response-control))
 
 <br />
 
@@ -32,6 +33,7 @@
   <img width="500" src="./README/EN/image1.png">
   <img width="500" src="./README/EN/image2.png">
   <img width="500" src="./README/EN/image3.png">
+  <img width="500" src="./README/EN/prompt-mode.gif">
 </p>
 
 <br />
@@ -117,6 +119,29 @@ You can achieve this by using the sequential response feature.
 <img width="500" src="./README/EN/image4.png">
 
 This feature allows you to change the response data for each request sequentially.
+
+## Prompt Mode for Real-time Response Control
+
+Sometimes you need to provide different responses on the fly without pre-configuring them. Prompt Mode allows you to manually enter response data for each request in real-time.
+
+<p align="center">
+  <img width="500" src="./README/EN/prompt-mode.gif">
+</p>
+
+When a request is made with Prompt Mode enabled, a modal appears where you can directly input the JSON response data. This is particularly useful for:
+
+- Testing edge cases without modifying your mock handlers
+- Simulating different scenarios during demos or presentations
+- Quickly experimenting with various response structures
+
+To use Prompt Mode, simply toggle it on for a specific request handler in the Devtools UI.
+
+### Prompt Mode vs. Sequential Response
+
+- **Prompt Mode**: Allows you to manually enter response data at the moment a request occurs. Useful when you need to create responses on-the-fly without pre-planning.
+- **Sequential Response**: Lets you pre-define multiple response values that will be returned in sequence (first request gets first response, second request gets second response, etc.).
+
+Choose Prompt Mode when you need maximum flexibility during testing or demos. Use Sequential Response when you have a predictable series of responses needed for a specific test flow.
 
 ## Live JSON Editing for Instant Management of MSW Request Handlers
 
@@ -204,6 +229,10 @@ type JsonMock = Array<{
   response: JsonMockResponse
   responseDelay: number
   isActivated: boolean
+  /**
+   * Whether to use Prompt Mode
+   */
+  shouldPromptResponse: boolean
 }>
 
 type MethodOption =

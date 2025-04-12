@@ -8,6 +8,7 @@
       "response": ["test2", "test3"]
     },
     "isActivated": true,
-    "responseDelay": 0.5
+    "responseDelay": 0.5,
+    "shouldPromptResponse": false
   }
 ]

@@ -21,7 +21,9 @@ export default defineConfig({
         "**/index.ts"
       ]
     },
-    clearMocks: true
+    clearMocks: true,
+    mockReset: true,
+    restoreMocks: true
   },
   resolve: {
     alias: {
