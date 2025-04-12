@@ -135,6 +135,13 @@ When a request is made with Prompt Mode enabled, a modal appears where you can d
 
 To use Prompt Mode, simply toggle it on for a specific request handler in the Devtools UI.
 
+### Prompt Mode vs. Sequential Response
+
+- **Prompt Mode**: Allows you to manually enter response data at the moment a request occurs. Useful when you need to create responses on-the-fly without pre-planning.
+- **Sequential Response**: Lets you pre-define multiple response values that will be returned in sequence (first request gets first response, second request gets second response, etc.).
+
+Choose Prompt Mode when you need maximum flexibility during testing or demos. Use Sequential Response when you have a predictable series of responses needed for a specific test flow.
+
 ## Live JSON Editing for Instant Management of MSW Request Handlers
 
 > (experimental) This feature is experimental and may change in the future.

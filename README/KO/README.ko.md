@@ -131,6 +131,13 @@ Prompt Mode가 활성화된 상태에서 요청이 발생하면, JSON 응답 데
 
 Prompt Mode를 사용하려면 Devtools UI에서 특정 요청 핸들러에 대한 Prompt Mode를 활성화하면 됩니다.
 
+### Prompt Mode와 Sequential Response 비교
+
+- **Prompt Mode**: 요청이 발생할 때마다 실시간으로 응답 데이터를 직접 입력할 수 있습니다. 사전 계획 없이 즉흥적으로 응답을 생성해야 할 때 유용합니다.
+- **Sequential Response**: 여러 응답값을 미리 정의해두고, 요청이 있을 때마다 첫번째 응답값, 두번째 응답값 등 순차적으로 응답을 반환합니다.
+
+테스트나 데모 중 최대한의 유연성이 필요할 때는 Prompt Mode를, 특정 테스트 흐름에 대해 예측 가능한 일련의 응답이 필요할 때는 Sequential Response를 선택하세요.
+
 ## MSW 요청 핸들러를 실시간 JSON 편집으로 즉시 동기화하기
 
 > (실험적) 이 기능은 실험적이며 향후 변경될 수 있습니다.
