@@ -10,6 +10,10 @@
       "responseDelay": "Delay {{delay}}s"
     }
   },
+  "prompt": {
+    "fix": "Auto Fix JSON",
+    "submit": "Submit"
+  },
   "tab": {
     "addMock": "Add Mock",
     "mockList": "Mock List",

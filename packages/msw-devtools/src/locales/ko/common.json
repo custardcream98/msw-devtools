@@ -10,6 +10,10 @@
       "responseDelay": "딜레이 {{delay}}초"
     }
   },
+  "prompt": {
+    "fix": "JSON 자동 수정",
+    "submit": "제출"
+  },
   "tab": {
     "addMock": "Mock 추가하기",
     "mockList": "Mock 목록",
