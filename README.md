@@ -25,6 +25,7 @@
 - **Use Different Response Data Based on the Situation.** Change response data sequentially.
 - **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
 - **Live JSON Editing for Instant Management of MSW Request Handlers.** Changes made in the Devtools UI are instantly synced with your JSON file. ([🔗](#live-json-editing-for-instant-management-of-msw-request-handlers))
+- **Prompt Mode for Real-time Response Control.** Manually enter response data for each request through an interactive modal. ([🔗](#prompt-mode-for-real-time-response-control))
 
 <br />
 
@@ -117,6 +118,22 @@ You can achieve this by using the sequential response feature.
 <img width="500" src="./README/EN/image4.png">
 
 This feature allows you to change the response data for each request sequentially.
+
+## Prompt Mode for Real-time Response Control
+
+Sometimes you need to provide different responses on the fly without pre-configuring them. Prompt Mode allows you to manually enter response data for each request in real-time.
+
+<p align="center">
+  <img width="500" src="./README/EN/prompt-mode.png">
+</p>
+
+When a request is made with Prompt Mode enabled, a modal appears where you can directly input the JSON response data. This is particularly useful for:
+
+- Testing edge cases without modifying your mock handlers
+- Simulating different scenarios during demos or presentations
+- Quickly experimenting with various response structures
+
+To use Prompt Mode, simply toggle it on for a specific request handler in the Devtools UI.
 
 ## Live JSON Editing for Instant Management of MSW Request Handlers
 
