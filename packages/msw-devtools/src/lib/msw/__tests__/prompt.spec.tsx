@@ -2,24 +2,24 @@ import { type JsonMock } from "core"
 import ReactDOMClient from "react-dom/client"
 
 const MOCKED_JSON_MOCK = {} as unknown as JsonMock
-const DIV_MOCK = { style: {} } as unknown as HTMLDivElement
+const DIV_MOCK = {
+  style: {},
+  appendChild: vi.fn()
+} as unknown as HTMLDivElement
 const MOCKED_RENDER_PROMPT = vi.fn(({ onSubmit }) => {
   setTimeout(() => onSubmit("test-response"), 0)
   return <div>Test Prompt</div>
 })
 
 const setup = async () => {
-  const appendChildSpy = vi
-    .spyOn(document.body, "appendChild")
-    .mockImplementation(() => DIV_MOCK)
   const createElementSpy = vi
     .spyOn(document, "createElement")
     .mockReturnValue(DIV_MOCK)
+  vi.spyOn(document, "getElementById").mockReturnValue(DIV_MOCK)
 
   const { createPrompt } = await import("~/lib/msw/prompt")
 
   return {
-    appendChildSpy,
     createElementSpy,
     createPrompt
   }
@@ -42,13 +42,12 @@ afterEach(() => {
 
 describe("createPrompt", () => {
   it("should create a root div element if one doesn't exist", async () => {
-    const { createPrompt, appendChildSpy, createElementSpy } = await setup()
+    const { createPrompt, createElementSpy } = await setup()
 
     await createPrompt(MOCKED_JSON_MOCK, MOCKED_RENDER_PROMPT)
 
     expect(createElementSpy).toHaveBeenCalledWith("div")
     expect(DIV_MOCK.id).toBe("msw-devtools-prompt")
-    expect(appendChildSpy).toHaveBeenCalledWith(DIV_MOCK)
     expect(ReactDOMClient.createRoot).toHaveBeenCalledWith(DIV_MOCK)
   })
 
@@ -82,23 +81,20 @@ describe("createPrompt", () => {
   })
 
   it("should reuse the existing root if already created", async () => {
-    const { createPrompt, appendChildSpy, createElementSpy } = await setup()
+    const { createPrompt, createElementSpy } = await setup()
 
     await createPrompt(MOCKED_JSON_MOCK, MOCKED_RENDER_PROMPT)
 
     expect(createElementSpy).toHaveBeenCalledOnce()
-    expect(appendChildSpy).toHaveBeenCalledOnce()
     expect(ReactDOMClient.createRoot).toHaveBeenCalledOnce()
 
     createElementSpy.mockClear()
-    appendChildSpy.mockClear()
     vi.mocked(ReactDOMClient.createRoot).mockClear()
 
     // Second call should reuse the root
     await createPrompt(MOCKED_JSON_MOCK, MOCKED_RENDER_PROMPT)
 
     expect(createElementSpy).not.toHaveBeenCalled()
-    expect(appendChildSpy).not.toHaveBeenCalled()
     expect(ReactDOMClient.createRoot).not.toHaveBeenCalled()
   })
 })
