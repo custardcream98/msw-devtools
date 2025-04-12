@@ -4,6 +4,7 @@ import { FaChevronRight } from "react-icons/fa6"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { MethodPill } from "~/components/MethodPill"
+import { PromptModePill } from "~/components/PromptModePill"
 import { StatusPill } from "~/components/StatusPill"
 import { Toggle } from "~/components/Toggle"
 import { UrlText } from "~/components/UrlText"
@@ -34,6 +35,10 @@ export const MockCardAccordion = ({
         </button>
         <MethodPill className='mr-2' method={jsonMock.method} />
         <StatusPill className='mr-2' status={jsonMock.status} />
+        <PromptModePill
+          className='mr-2'
+          isPromptModeActivated={jsonMock.shouldPromptResponse}
+        />
         <UrlText className='mr-4'>{jsonMock.url}</UrlText>
         <Toggle
           className='ml-auto'

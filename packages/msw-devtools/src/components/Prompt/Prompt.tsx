@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 
 import { CodeEditor } from "~/components/CodeEditor"
 import { MethodPill } from "~/components/MethodPill"
+import { PromptModePill } from "~/components/PromptModePill"
 import { StatusPill } from "~/components/StatusPill"
 import { UrlText } from "~/components/UrlText"
 import { checkJSONParsable, isJSONFixable } from "~/lib/json"
@@ -34,6 +35,10 @@ export const Prompt = ({
         <div className='flex w-full items-center'>
           <MethodPill className='mr-2' method={jsonMock.method} />
           <StatusPill className='mr-2' status={jsonMock.status} />
+          <PromptModePill
+            className='mr-2'
+            isPromptModeActivated={jsonMock.shouldPromptResponse}
+          />
           <UrlText>{jsonMock.url}</UrlText>
         </div>
         <CodeEditor

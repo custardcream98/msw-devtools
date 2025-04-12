@@ -14,6 +14,9 @@
     "fix": "Auto Fix JSON",
     "submit": "Submit"
   },
+  "promptModePill": {
+    "promptMode": "Prompt Mode"
+  },
   "tab": {
     "addMock": "Add Mock",
     "mockList": "Mock List",
@@ -29,10 +32,16 @@
       "duplicateConfirmMessage": "This Request Handler is already registered.\nWould you like to overwrite it?",
       "editModeIndicator": "Edit Mode",
       "editSubmit": "Edit",
+      "isActivated": {
+        "label": "Activated"
+      },
       "responseDelay": {
         "label": "Delay(s)"
       },
       "sequentialBadge": "sequential {{count}}",
+      "shouldPromptResponse": {
+        "label": "Prompt Mode"
+      },
       "submit": "Add",
       "url": {
         "placeholder": "Type URL Here"
