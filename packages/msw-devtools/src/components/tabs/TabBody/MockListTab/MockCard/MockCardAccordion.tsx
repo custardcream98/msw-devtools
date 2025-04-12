@@ -3,8 +3,10 @@ import type { JsonMock } from "core"
 import { FaChevronRight } from "react-icons/fa6"
 
 import { useMockList } from "~/components/contexts/mock-list"
+import { MethodPill } from "~/components/MethodPill"
+import { StatusPill } from "~/components/StatusPill"
 import { Toggle } from "~/components/Toggle"
-import { METHOD_COLOR, STATUS_COLOR, STATUS_NAME } from "~/constants"
+import { UrlText } from "~/components/UrlText"
 import { useBoolean } from "~/hooks/useBoolean"
 
 export const MockCardAccordion = ({
@@ -30,25 +32,9 @@ export const MockCardAccordion = ({
             )}
           />
         </button>
-        <span
-          className={clsx(
-            "mr-2 !font-mono font-semibold uppercase",
-            METHOD_COLOR[jsonMock.method]
-          )}
-        >
-          {jsonMock.method}
-        </span>
-        <span
-          className={clsx(
-            "mr-2 shrink-0 rounded-lg bg-slate-100 px-[0.3rem] py-[0.125rem] !font-mono text-[0.7rem] font-semibold uppercase",
-            STATUS_COLOR[jsonMock.status]
-          )}
-        >
-          {jsonMock.status} {STATUS_NAME[jsonMock.status]}
-        </span>
-        <code className='mr-4 min-w-0 text-wrap break-all !font-mono'>
-          {jsonMock.url}
-        </code>
+        <MethodPill className='mr-2' method={jsonMock.method} />
+        <StatusPill className='mr-2' status={jsonMock.status} />
+        <UrlText className='mr-4'>{jsonMock.url}</UrlText>
         <Toggle
           className='ml-auto'
           value={jsonMock.isActivated}
