@@ -14,9 +14,9 @@ interface UseResponseManagementProps {
 }
 
 /**
- * 응답 데이터 정규화 함수
- * - 단일 응답을 배열로 변환
- * - 순차 응답은 그대로 반환
+ * Response data normalization function
+ * - Converts single response to array
+ * - Returns sequential responses as-is
  */
 export function normalizeResponse(response: FormFieldResponseValue): string[] {
   return response.type === JsonMockResponseType.sequential
@@ -25,16 +25,16 @@ export function normalizeResponse(response: FormFieldResponseValue): string[] {
 }
 
 /**
- * 응답 데이터 관리를 담당하는 훅
- * - 순차 응답 추가 기능
+ * Hook for response data management
+ * - Provides sequential response addition functionality
  */
 export function useResponseManagement({
   method,
   defaultValues
 }: UseResponseManagementProps) {
   /**
-   * 순차 응답 추가
-   * - 현재 응답에 기본 응답을 추가
+   * Add sequential response
+   * - Adds default response to current response
    */
   const addSequentialResponse = useCallback(() => {
     const normalizedPrevResponse = normalizeResponse(

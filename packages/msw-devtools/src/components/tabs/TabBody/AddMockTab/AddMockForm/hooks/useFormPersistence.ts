@@ -15,22 +15,22 @@ interface UseFormPersistenceProps {
 }
 
 /**
- * 폼 상태의 지속성을 관리하는 훅
- * - 로컬 스토리지에 폼 상태 저장
- * - 언마운트 시 자동 저장
- * - 폼 초기화 지원
+ * Hook to manage form state persistence
+ * - Saves form state to local storage
+ * - Automatically saves on unmount
+ * - Supports form reset
  */
 export function useFormPersistence({
   method,
   defaultValues
 }: UseFormPersistenceProps) {
-  // 편집 상태 관리
+  // Manage edit state
   const [editStateLocal, setEditStateLocal] = useLocalStorageState(
     StorageKey.EDIT_STATE,
     null
   )
 
-  // 폼 상태 저장 (언마운트 시)
+  // Save form state (on unmount)
   useEffect(() => {
     return () => {
       const currentValues = method.getValues()
@@ -41,7 +41,7 @@ export function useFormPersistence({
         return
       }
 
-      // 기본값과 다를 경우에만 저장
+      // Only save if different from default values
       if (
         currentValues &&
         !isSameFormFieldValues(currentValues, defaultValues)
@@ -51,7 +51,7 @@ export function useFormPersistence({
     }
   }, [method, defaultValues, setEditStateLocal])
 
-  // 폼과 저장소 모두 초기화
+  // Reset form and storage
   const resetForm = useCallback(() => {
     setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, null)
     setEditStateLocal(null)

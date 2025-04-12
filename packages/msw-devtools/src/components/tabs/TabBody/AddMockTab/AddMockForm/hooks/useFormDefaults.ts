@@ -8,7 +8,7 @@ import { FIELD_NAME, FormFieldValues, StorageKey } from "~/constants"
 import { getLocalStorageItem } from "~/hooks/useLocalStorageState"
 
 /**
- * 폼 기본값에 대한 상수 정의
+ * Default values for the form
  */
 export const DEFAULT_VALUES: FormFieldValues = {
   [FIELD_NAME.URL]: "",
@@ -24,17 +24,17 @@ export const DEFAULT_VALUES: FormFieldValues = {
 } as const
 
 /**
- * 폼의 기본값을 관리하는 훅
- * - 로컬 스토리지에서 저장된 값 로드
- * - 기본 설정 적용
- * - 편집 모드 감지
+ * Hook to manage form default values
+ * - Loads saved values from local storage
+ * - Applies default settings
+ * - Detects edit mode
  */
 export function useFormDefaults() {
   const { defaultUrl } = useDefaultUrlSettings()
   const { defaultResponse } = useDefaultResponseSettings()
   const { defaultResponseDelay } = useDefaultResponseDelaySettings()
 
-  // 기본값 계산
+  // Calculate default values
   const defaultValues = useMemo<FormFieldValues>(() => {
     const savedFormFieldValues = getLocalStorageItem(
       StorageKey.SAVED_FORM_FIELD_VALUES
@@ -72,7 +72,7 @@ export function useFormDefaults() {
     }
   }, [defaultResponse, defaultResponseDelay, defaultUrl])
 
-  // 폼 초기값 설정
+  // Set initial form values
   const initialValues = useMemo(() => {
     const editStateLocal = getLocalStorageItem(StorageKey.EDIT_STATE)
     return {

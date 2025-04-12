@@ -19,11 +19,11 @@ interface UseFormSubmitProps {
 }
 
 /**
- * 폼 제출 로직을 담당하는 훅
- * - 폼 데이터 처리
- * - 중복 체크
- * - 에러 처리
- * - JSON 자동 수정
+ * Hook for form submission logic
+ * - Processes form data
+ * - Checks for duplicates
+ * - Handles errors
+ * - Auto-fixes JSON
  */
 export function useFormSubmit({
   method,
@@ -35,7 +35,7 @@ export function useFormSubmit({
   const { setTab } = useTab()
 
   /**
-   * 폼 데이터 처리 및 제출
+   * Process and submit form data
    */
   const submit = useCallback(
     (formData: FormFieldValues) => {
@@ -43,7 +43,7 @@ export function useFormSubmit({
       pushMock(jsonMock)
       resetForm()
 
-      // 탭 전환
+      // Switch tab
       setTab(Tab.MockList, {
         prevEdited: jsonMock
       })
@@ -54,7 +54,7 @@ export function useFormSubmit({
   const handleValid = useCallback(
     (formData: FormFieldValues) => {
       try {
-        // 중복 체크
+        // Check for duplicates
         const isDuplicate = mockList.some(
           (mock) =>
             mock[FIELD_NAME.URL] === formData[FIELD_NAME.URL] &&

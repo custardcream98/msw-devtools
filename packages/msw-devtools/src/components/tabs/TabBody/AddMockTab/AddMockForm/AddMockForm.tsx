@@ -1,7 +1,8 @@
 import { JsonMockResponseType } from "core"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from "react-hook-form"
 
 import type { FormFieldValues } from "~/constants"
+import { FIELD_NAME } from "~/constants"
 
 import { AddMockFormCodeEditor } from "./AddMockFormCodeEditor"
 import { EditModeIndicator } from "./EditModeIndicator"
@@ -19,6 +20,12 @@ import { ToggleOptions } from "./ToggleOptions"
 import { URLField } from "./URLField"
 import { fixJson } from "./utils"
 
+/**
+ * MSW Mock Creation Form Component
+ * 1. Basic settings: URL, method, status code
+ * 2. JSON response editing
+ * 3. Form submission and saving
+ */
 export const AddMockForm = () => {
   const { initialValues, defaultValues } = useFormDefaults()
 
@@ -26,8 +33,13 @@ export const AddMockForm = () => {
     defaultValues: initialValues
   })
 
-  const { response, isFixable } = useJsonValidation({
-    control: method.control
+  const response = useWatch({
+    control: method.control,
+    name: FIELD_NAME.RESPONSE
+  })
+
+  const { isFixable } = useJsonValidation({
+    response
   })
 
   const { resetForm, isEdit } = useFormPersistence({
