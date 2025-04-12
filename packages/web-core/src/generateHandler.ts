@@ -1,4 +1,4 @@
-import { JsonMock, JsonMockResponseType } from "core"
+import { type Json, type JsonMock, JsonMockResponseType } from "core"
 import { http, type HttpHandler, HttpResponse } from "msw"
 
 export const generateHandler = (
@@ -6,7 +6,7 @@ export const generateHandler = (
   /**
    * Ask user to what response should be returned
    */
-  promptResponse?: () => Promise<string>
+  promptResponse?: () => Promise<Json>
 ): HttpHandler => {
   let currentSequence = 0
   return http[mock.method](mock.url, async () => {
