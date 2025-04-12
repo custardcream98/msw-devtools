@@ -19,6 +19,7 @@ export const jsonMockToFormFieldValues = (
     [FIELD_NAME.STATUS]: jsonMock.status,
     [FIELD_NAME.RESPONSE]: resolveResponse(jsonMock.response),
     [FIELD_NAME.RESPONSE_DELAY]: jsonMock.responseDelay,
+    [FIELD_NAME.IS_ACTIVATED]: jsonMock.isActivated,
     [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: jsonMock.shouldPromptResponse
   }
 }
