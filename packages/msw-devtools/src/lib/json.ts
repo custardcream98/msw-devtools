@@ -17,3 +17,10 @@ export const checkJSONFixable = (value: string) => {
     return false
   }
 }
+
+export const isJSONFixable = (value: string) => {
+  if (!checkJSONParsable(value) && checkJSONFixable(value)) {
+    return true
+  }
+  return false
+}

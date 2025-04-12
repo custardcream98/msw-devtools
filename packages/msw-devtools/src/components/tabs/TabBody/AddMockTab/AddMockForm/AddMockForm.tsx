@@ -26,7 +26,7 @@ import {
   setLocalStorageItem,
   useLocalStorageState
 } from "~/hooks/useLocalStorageState"
-import { checkJSONFixable, checkJSONParsable } from "~/lib/json"
+import { isJSONFixable } from "~/lib/json"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 import { isSameFormFieldValues } from "~/utils/isSameFormFieldValues"
 
@@ -382,13 +382,6 @@ export const AddMockForm = () => {
       </div>
     </form>
   )
-}
-
-const isJSONFixable = (value: string) => {
-  if (!checkJSONParsable(value) && checkJSONFixable(value)) {
-    return true
-  }
-  return false
 }
 
 const normalizeResponse = (response: FormFieldResponseValue) => {
