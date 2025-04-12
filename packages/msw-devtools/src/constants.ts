@@ -11,6 +11,7 @@ export const FIELD_NAME = {
   STATUS: "status",
   RESPONSE: "response",
   RESPONSE_DELAY: "responseDelay",
+  IS_ACTIVATED: "isActivated",
   SHOULD_PROMPT_RESPONSE: "shouldPromptResponse"
 } as const
 
@@ -62,6 +63,7 @@ export type FormFieldValues = {
   [FIELD_NAME.STATUS]: StatusOption
   [FIELD_NAME.RESPONSE]: FormFieldResponseValue
   [FIELD_NAME.RESPONSE_DELAY]: number
+  [FIELD_NAME.IS_ACTIVATED]: boolean
   [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: boolean
 }
 

@@ -11,6 +11,7 @@ import { useDefaultResponseDelaySettings } from "~/components/contexts/default-r
 import { useDefaultUrlSettings } from "~/components/contexts/default-url"
 import { useMockList } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar"
+import { Toggle } from "~/components/Toggle"
 import {
   FIELD_NAME,
   type FormFieldResponseValue,
@@ -41,6 +42,7 @@ const DEFAULT_VALUES = {
     response: ""
   },
   [FIELD_NAME.RESPONSE_DELAY]: 0,
+  [FIELD_NAME.IS_ACTIVATED]: true,
   [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: false
 } as const satisfies FormFieldValues
 
@@ -82,6 +84,9 @@ export const AddMockForm = () => {
         savedFormFieldValues?.[FIELD_NAME.RESPONSE_DELAY] ||
         defaultResponseDelay ||
         DEFAULT_VALUES[FIELD_NAME.RESPONSE_DELAY],
+      [FIELD_NAME.IS_ACTIVATED]:
+        savedFormFieldValues?.[FIELD_NAME.IS_ACTIVATED] ||
+        DEFAULT_VALUES[FIELD_NAME.IS_ACTIVATED],
       [FIELD_NAME.SHOULD_PROMPT_RESPONSE]:
         savedFormFieldValues?.[FIELD_NAME.SHOULD_PROMPT_RESPONSE] ||
         DEFAULT_VALUES[FIELD_NAME.SHOULD_PROMPT_RESPONSE]
@@ -102,7 +107,13 @@ export const AddMockForm = () => {
         defaultValues[FIELD_NAME.RESPONSE],
       [FIELD_NAME.RESPONSE_DELAY]:
         editStateLocal?.[FIELD_NAME.RESPONSE_DELAY] ||
-        defaultValues[FIELD_NAME.RESPONSE_DELAY]
+        defaultValues[FIELD_NAME.RESPONSE_DELAY],
+      [FIELD_NAME.IS_ACTIVATED]:
+        editStateLocal?.[FIELD_NAME.IS_ACTIVATED] ||
+        defaultValues[FIELD_NAME.IS_ACTIVATED],
+      [FIELD_NAME.SHOULD_PROMPT_RESPONSE]:
+        editStateLocal?.[FIELD_NAME.SHOULD_PROMPT_RESPONSE] ||
+        defaultValues[FIELD_NAME.SHOULD_PROMPT_RESPONSE]
     }
   })
 
@@ -254,7 +265,29 @@ export const AddMockForm = () => {
           />
         )}
       />
-      <div className='mt-4 flex w-full shrink-0 items-center gap-2'>
+      <div className='mt-2 flex w-full shrink-0 items-center justify-end gap-2'>
+        <Controller
+          name={FIELD_NAME.IS_ACTIVATED}
+          control={method.control}
+          render={({ field }) => (
+            <span className='flex items-center'>
+              {t("tabs.addMock.isActivated.label")}
+              <Toggle className='ml-2' {...field} />
+            </span>
+          )}
+        />
+        <Controller
+          name={FIELD_NAME.SHOULD_PROMPT_RESPONSE}
+          control={method.control}
+          render={({ field }) => (
+            <span className='flex items-center'>
+              {t("tabs.addMock.shouldPromptResponse.label")}
+              <Toggle className='ml-2' {...field} />
+            </span>
+          )}
+        />
+      </div>
+      <div className='mt-2 flex w-full shrink-0 items-center gap-2'>
         <div className='flex w-full items-center overflow-hidden !font-mono msw-round-border'>
           <Controller
             name={FIELD_NAME.METHOD}
