@@ -58,7 +58,8 @@ describe("initialize", () => {
         response: null
       },
       responseDelay: 1000,
-      isActivated: true
+      isActivated: true,
+      shouldPromptResponse: false
     } as const satisfies JsonMock
     const MOCK_LOCAL_STORAGE = [INVALID, VALID]
 
