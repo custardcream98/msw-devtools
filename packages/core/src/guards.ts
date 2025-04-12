@@ -39,6 +39,8 @@ export const isJsonMock = (data: unknown): data is JsonMock => {
     typeof data["responseDelay"] === "number" &&
     "isActivated" in data &&
     typeof data["isActivated"] === "boolean" &&
+    "shouldPromptResponse" in data &&
+    typeof data["shouldPromptResponse"] === "boolean" &&
     "response" in data &&
     typeof data["response"] === "object" &&
     data["response"] !== null &&

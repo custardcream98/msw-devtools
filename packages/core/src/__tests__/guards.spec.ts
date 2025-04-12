@@ -18,7 +18,8 @@ describe("isJsonMock", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: true
     } as const satisfies JsonMock
 
     expect(isJsonMock(data)).toBe(true)
@@ -48,7 +49,8 @@ describe("isJsonMocks", () => {
           response: { name: "John" }
         },
         isActivated: true,
-        responseDelay: 1000
+        responseDelay: 1000,
+        shouldPromptResponse: true
       } as const satisfies JsonMock,
       {
         url: "https://test-url2",
@@ -59,7 +61,8 @@ describe("isJsonMocks", () => {
           response: [{ name: "John" }, { name: "Doe" }]
         },
         isActivated: true,
-        responseDelay: 1000
+        responseDelay: 1000,
+        shouldPromptResponse: true
       } as const satisfies JsonMock
     ]
     expect(isJsonMocks(mocks)).toBe(true)
@@ -87,7 +90,8 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
             response: { name: "John" }
           },
           isActivated: true,
-          responseDelay: 1000
+          responseDelay: 1000,
+          shouldPromptResponse: true
         }
       ]
     }
@@ -106,7 +110,8 @@ describe("isMSWDevtoolsWebsocketEvent", () => {
             response: { name: "John" }
           },
           isActivated: true,
-          responseDelay: 1000
+          responseDelay: 1000,
+          shouldPromptResponse: true
         }
       ]
     }
@@ -170,7 +175,8 @@ describe("isSameJsonMock", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: true
     }
     const b: JsonMock = {
       url: "https://test-url",
@@ -181,7 +187,8 @@ describe("isSameJsonMock", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: true
     }
 
     const result = isSameJsonMock(a, b)
@@ -199,7 +206,8 @@ describe("isSameJsonMock", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: true
     }
     const b: JsonMock = {
       url: "https://test-url",
@@ -210,7 +218,8 @@ describe("isSameJsonMock", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: true
     }
 
     const result = isSameJsonMock(a, b)
