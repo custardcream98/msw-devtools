@@ -2,7 +2,7 @@ import {
   MSWDevtoolsClientType,
   MSWDevtoolsWebsocketEventName
 } from "../constants"
-import type { MSWDevtoolsWebsocketEvent } from "../types"
+import type { JsonMock, MSWDevtoolsWebsocketEvent } from "../types"
 import {
   deserializeMSWDevtoolsWebsocketEvent,
   eventGuard,
@@ -23,8 +23,9 @@ describe("deserializeMSWDevtoolsWebsocketEvent", () => {
             response: { name: "John" }
           },
           isActivated: true,
-          responseDelay: 1000
-        }
+          responseDelay: 1000,
+          shouldPromptResponse: true
+        } satisfies JsonMock
       ]
     }
 
@@ -49,12 +50,13 @@ describe("serializeMSWDevtoolsWebsocketEvent", () => {
               response: { name: "John" }
             },
             isActivated: true,
-            responseDelay: 1000
-          }
+            responseDelay: 1000,
+            shouldPromptResponse: true
+          } satisfies JsonMock
         ]
       })
     ).toMatchInlineSnapshot(
-      `"{"name":"msw-devtools:ack","payload":[{"url":"https://test-url","method":"get","status":"200","response":{"type":"single","response":{"name":"John"}},"isActivated":true,"responseDelay":1000}]}"`
+      `"{"name":"msw-devtools:ack","payload":[{"url":"https://test-url","method":"get","status":"200","response":{"type":"single","response":{"name":"John"}},"isActivated":true,"responseDelay":1000,"shouldPromptResponse":true}]}"`
     )
   })
 })
@@ -90,8 +92,9 @@ describe("eventGuard", () => {
             response: { name: "John" }
           },
           isActivated: true,
-          responseDelay: 1000
-        }
+          responseDelay: 1000,
+          shouldPromptResponse: true
+        } satisfies JsonMock
       ]
     }
 
@@ -120,8 +123,9 @@ describe("eventGuard", () => {
             response: { name: "John" }
           },
           isActivated: true,
-          responseDelay: 1000
-        }
+          responseDelay: 1000,
+          shouldPromptResponse: true
+        } satisfies JsonMock
       ]
     }
 

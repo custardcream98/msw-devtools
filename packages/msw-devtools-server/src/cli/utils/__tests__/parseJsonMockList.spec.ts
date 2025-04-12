@@ -14,7 +14,8 @@ describe("parseJsonMockList", () => {
           response: { name: "John" }
         },
         isActivated: true,
-        responseDelay: 1000
+        responseDelay: 1000,
+        shouldPromptResponse: true
       } satisfies JsonMock
     ])
 
@@ -28,7 +29,8 @@ describe("parseJsonMockList", () => {
           response: { name: "John" }
         },
         isActivated: true,
-        responseDelay: 1000
+        responseDelay: 1000,
+        shouldPromptResponse: true
       }
     ])
   })
@@ -43,7 +45,8 @@ describe("parseJsonMockList", () => {
         response: { name: "John" }
       },
       isActivated: true,
-      responseDelay: 1000
+      responseDelay: 1000,
+      shouldPromptResponse: true
     })
 
     expect(() => parseJsonMockList(raw)).toThrowErrorMatchingInlineSnapshot(
