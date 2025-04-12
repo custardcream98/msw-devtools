@@ -33,6 +33,7 @@ const isAutoFixable = (target: unknown): target is JsonMockFixable => {
  * * fixes responseDelay in string
  * * fixes method in lowercase
  * * fixes if response is not JsonMockResponse type
+ * * fixes if shouldPromptResponse is not boolean
  */
 export const autoFixJsonMock = (target: unknown) => {
   if (!isAutoFixable(target)) {
@@ -64,6 +65,10 @@ export const autoFixJsonMock = (target: unknown) => {
       type: "single",
       response: target.response
     }
+  }
+
+  if (typeof target.shouldPromptResponse !== "boolean") {
+    target.shouldPromptResponse = false
   }
 
   return target as JsonMock
