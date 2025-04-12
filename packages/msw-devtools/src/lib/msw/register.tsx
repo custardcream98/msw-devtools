@@ -1,7 +1,7 @@
 import { isSameJsonMock, type JsonMock } from "core"
 import { generateHandler } from "web-core"
 
-import { Prompt } from "~/components/Prompt/Prompt"
+import { Prompt } from "~/components/Prompt"
 import { createPrompt } from "~/lib/msw/prompt"
 import { getWorker } from "~/lib/msw/worker"
 
