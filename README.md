@@ -229,6 +229,10 @@ type JsonMock = Array<{
   response: JsonMockResponse
   responseDelay: number
   isActivated: boolean
+  /**
+   * Whether to use Prompt Mode
+   */
+  shouldPromptResponse: boolean
 }>
 
 type MethodOption =

@@ -225,6 +225,10 @@ type JsonMock = Array<{
   response: JsonMockResponse
   responseDelay: number
   isActivated: boolean
+  /**
+   * 프롬프트 모드 사용 여부
+   */
+  shouldPromptResponse: boolean
 }>
 
 type MethodOption =
