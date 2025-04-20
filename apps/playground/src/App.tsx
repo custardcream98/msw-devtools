@@ -1,55 +1,34 @@
-import "./reset.css"
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryErrorResetBoundary
+} from "@tanstack/react-query"
+import { ErrorBoundary } from "react-error-boundary"
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-
-import FetchTest from "./FetchTest"
-import { QuerySuspenseBoundary } from "./QuerySuspenseBoundary"
+import { ApiEndpointButton } from "./ApiEndpointButton"
+import { ResponseDisplay, ResponseErrorDisplay } from "./ResponseDisplay"
 
 const queryClient = new QueryClient()
 
 function App() {
   return (
-    <>
-      <h3>
-        <a
-          href='https://www.npmjs.com/package/@custardcream/msw-devtools'
-          target='_blank'
-          rel='noreferrer'
-        >
-          @custardcream/msw-devtools
-        </a>{" "}
-        React.js Demo
-      </h3>
-      <p
-        style={{
-          lineHeight: "1.5",
-          width: "100%"
-        }}
-      >
-        Try adding mock request handler of APIs below and click{" "}
-        <code>REFETCH</code> button to see the request gets mocked.
-      </p>
+    <div className='flex h-screen w-screen flex-col items-center justify-center gap-5 px-5 md:px-20'>
+      <ApiEndpointButton />
       <QueryClientProvider client={queryClient}>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            maxWidth: "1200px",
-            margin: "0 auto"
-          }}
-        >
-          <QuerySuspenseBoundary>
-            <FetchTest targetUrl='https://jsonplaceholder.typicode.com/todos' />
-          </QuerySuspenseBoundary>
-          <QuerySuspenseBoundary>
-            <FetchTest targetUrl='https://jsonplaceholder.typicode.com/comments' />
-          </QuerySuspenseBoundary>
-          <QuerySuspenseBoundary>
-            <FetchTest targetUrl='https://jsonplaceholder.typicode.com/albums' />
-          </QuerySuspenseBoundary>
+        <div className='relative w-full max-w-4xl'>
+          <QueryErrorResetBoundary>
+            {({ reset }) => (
+              <ErrorBoundary
+                onReset={reset}
+                FallbackComponent={ResponseErrorDisplay}
+              >
+                <ResponseDisplay />
+              </ErrorBoundary>
+            )}
+          </QueryErrorResetBoundary>
         </div>
       </QueryClientProvider>
-    </>
+    </div>
   )
 }
 
