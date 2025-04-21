@@ -9,9 +9,11 @@ import { useDragMove } from "~/hooks/useDragMove"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { useLongClick } from "~/hooks/useLongClick"
 
+const BUTTON_POSITION_MARGIN = 10
+const BUTTON_WIDTH_HEIGHT = 56
 const DEFAULT_POSITION = {
-  x: document.documentElement.clientWidth - 50,
-  y: document.documentElement.clientHeight - 50
+  x: document.documentElement.clientWidth - BUTTON_POSITION_MARGIN,
+  y: document.documentElement.clientHeight - BUTTON_POSITION_MARGIN
 } as const
 
 const FIXED_DIRECTION = ["bottom", "right"] as const
@@ -54,8 +56,8 @@ export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
         "opacity-[var(--opacity)]"
       )}
       style={{
-        "--x": `calc(${position.x}px - 50%)`,
-        "--y": `calc(${position.y}px - 50%)`,
+        "--x": `min(max(calc(${position.x}px - ${BUTTON_POSITION_MARGIN}px), ${BUTTON_POSITION_MARGIN}px), calc(100vw - ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT}px))`,
+        "--y": `min(max(calc(${position.y}px - ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT}px), ${BUTTON_POSITION_MARGIN}px), calc(100vh - ${BUTTON_POSITION_MARGIN}px))`,
         "--opacity": floatingButtonOpacity
       }}
       title={t("floatingButton.title")}
