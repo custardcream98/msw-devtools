@@ -25,26 +25,27 @@ export const MockCardAccordion = ({
   return (
     <div className='rounded-2xl bg-white p-2 text-xs'>
       <div className='flex w-full items-center'>
-        <button className='mr-4 flex shrink-0 items-center' onClick={toggle}>
+        <button
+          className='mr-4 flex shrink-0 items-center gap-2'
+          onClick={toggle}
+        >
           <FaChevronRight
             className={clsx(
-              "mr-3",
               "transform-gpu text-gray-400 transition-transform duration-300",
               isOpened && "rotate-90"
             )}
           />
 
-          <MethodPill className='mr-2' method={jsonMock.method} />
-          <StatusPill className='mr-2' status={jsonMock.status} />
+          <MethodPill method={jsonMock.method} />
+          <StatusPill status={jsonMock.status} />
           <PromptModePill
-            className='mr-2'
             isPromptModeActivated={jsonMock.shouldPromptResponse}
           />
           <UrlText>{jsonMock.url}</UrlText>
         </button>
         <Toggle
           className='ml-auto'
-          value={jsonMock.isActivated}
+          checked={jsonMock.isActivated}
           onChange={
             jsonMock.isActivated
               ? () => deactivateMock(jsonMock)

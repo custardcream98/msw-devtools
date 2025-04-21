@@ -16,21 +16,31 @@ export const ToggleOptions = ({ control }: ToggleOptionsProps) => {
       <Controller
         name={FIELD_NAME.IS_ACTIVATED}
         control={control}
-        render={({ field }) => (
-          <span className='flex items-center'>
+        render={({ field: { onChange, value, ...field } }) => (
+          <label className='flex items-center'>
             {t("tabs.addMock.isActivated.label")}
-            <Toggle className='ml-2' {...field} />
-          </span>
+            <Toggle
+              className='ml-2'
+              {...field}
+              checked={value}
+              onChange={onChange}
+            />
+          </label>
         )}
       />
       <Controller
         name={FIELD_NAME.SHOULD_PROMPT_RESPONSE}
         control={control}
-        render={({ field }) => (
-          <span className='flex items-center'>
+        render={({ field: { onChange, value, ...field } }) => (
+          <label className='flex items-center'>
             {t("tabs.addMock.shouldPromptResponse.label")}
-            <Toggle className='ml-2' {...field} />
-          </span>
+            <Toggle
+              className='ml-2'
+              {...field}
+              checked={value}
+              onChange={onChange}
+            />
+          </label>
         )}
       />
     </div>
