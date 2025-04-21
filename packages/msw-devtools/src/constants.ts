@@ -101,7 +101,7 @@ export type StorageKey = (typeof StorageKey)[keyof typeof StorageKey]
 export type StorageValueType = {
   [StorageKey.OPEN]: boolean
   [StorageKey.BUTTON_POSITION]: { x: number; y: number }
-  [StorageKey.HEIGHT]: string
+  [StorageKey.HEIGHT]: number | null
   [StorageKey.RESPONSE_DELAY]: number
   [StorageKey.DEFAULT_RESPONSE]: string | null
   [StorageKey.DEFAULT_URL]: string | null

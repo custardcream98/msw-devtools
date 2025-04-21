@@ -9,11 +9,11 @@ type LayoutProps = React.HTMLAttributes<HTMLDivElement> & {
 }
 
 export const Layout = ({ isOpened, children, ...props }: LayoutProps) => {
-  const [height, setHeight] = useLocalStorageState(StorageKey.HEIGHT, "50%")
+  const [height, setHeight] = useLocalStorageState(StorageKey.HEIGHT, null)
 
   const { isDragging, props: isDraggingProps } = useIsDragging({
     onDrag: (event) => {
-      setHeight(`calc(100vh - ${event.clientY}px)`)
+      setHeight(event.clientY)
     }
   })
 
@@ -23,10 +23,14 @@ export const Layout = ({ isOpened, children, ...props }: LayoutProps) => {
         "fixed bottom-0 left-0 right-0 flex flex-col",
         "overflow-hidden rounded-tl-2xl rounded-tr-2xl bg-background-light !font-sans text-gray-700 outline outline-1 outline-slate-200",
         "transition-transform duration-300",
-        !isOpened && "translate-y-full",
+        !isOpened && "translate-y-[calc(100%+5px)]", // intended to translate little bit more
         "h-[var(--height)] max-h-screen min-h-12"
       )}
-      style={{ "--height": height }}
+      style={{
+        "--height": height
+          ? `min(max(calc(100vh - ${height}px), 100px), calc(100vh - 100px))`
+          : "50%"
+      }}
       {...props}
     >
       <button
