@@ -13,6 +13,8 @@ export const useIsDragging = ({
       return
     }
 
+    const abortController = new AbortController()
+
     const handlePointerMove = (event: PointerEvent) => {
       onDragRef.current?.(event)
     }
@@ -21,12 +23,15 @@ export const useIsDragging = ({
       setIsDragging(false)
     }
 
-    document.addEventListener("pointermove", handlePointerMove)
-    document.addEventListener("pointerup", handlePointerUp)
+    document.addEventListener("pointermove", handlePointerMove, {
+      signal: abortController.signal
+    })
+    document.addEventListener("pointerup", handlePointerUp, {
+      signal: abortController.signal
+    })
 
     return () => {
-      document.removeEventListener("pointermove", handlePointerMove)
-      document.removeEventListener("pointerup", handlePointerUp)
+      abortController.abort()
     }
   }, [isDragging])
 
