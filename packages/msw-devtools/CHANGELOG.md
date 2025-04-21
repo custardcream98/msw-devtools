@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.11.1
+
+### Patch Changes
+
+- da362c8: fix: layout related bugs (wrong button position, etc)
+
 ## 0.11.0
 
 ### Minor Changes
