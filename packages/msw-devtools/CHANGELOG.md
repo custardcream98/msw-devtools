@@ -1,5 +1,12 @@
 # @custardcream/msw-devtools
 
+## 0.11.2
+
+### Patch Changes
+
+- 9f9bcc2: feat: Improve UX
+- abf9563: fix: fix buggy behavior of FloatingButton
+
 ## 0.11.1
 
 ### Patch Changes
