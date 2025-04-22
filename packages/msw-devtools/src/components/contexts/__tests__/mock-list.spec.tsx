@@ -36,6 +36,8 @@ const setup = ({ mock }: { mock: JsonMock }) => {
       removeMock,
       activateMock,
       deactivateMock,
+      activatePromptMode,
+      deactivatePromptMode,
       clearAllMocks
     } = useMockList()
 
@@ -46,6 +48,12 @@ const setup = ({ mock }: { mock: JsonMock }) => {
         <button onClick={() => removeMock(mock)}>removeMock</button>
         <button onClick={() => activateMock(mock)}>activateMock</button>
         <button onClick={() => deactivateMock(mock)}>deactivateMock</button>
+        <button onClick={() => activatePromptMode(mock)}>
+          activatePromptMode
+        </button>
+        <button onClick={() => deactivatePromptMode(mock)}>
+          deactivatePromptMode
+        </button>
         <button onClick={() => clearAllMocks()}>clearAllMocks</button>
       </div>
     )
@@ -166,6 +174,50 @@ describe("mock-list", () => {
     await userEvent.click(screen.getByText("deactivateMock"))
 
     mock.isActivated = false
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
+  })
+
+  it("should activate prompt mode", async () => {
+    const mock: JsonMock = {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
+        type: "single",
+        response: { name: "John" }
+      },
+      isActivated: true,
+      responseDelay: 1000,
+      shouldPromptResponse: false
+    }
+    const { userEvent, mockListWrapper } = setup({ mock })
+
+    await userEvent.click(screen.getByText("pushMock"))
+    await userEvent.click(screen.getByText("activatePromptMode"))
+
+    mock.shouldPromptResponse = true
+    expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
+  })
+
+  it("should deactivate prompt mode", async () => {
+    const mock: JsonMock = {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
+        type: "single",
+        response: { name: "John" }
+      },
+      isActivated: true,
+      responseDelay: 1000,
+      shouldPromptResponse: true
+    }
+    const { userEvent, mockListWrapper } = setup({ mock })
+
+    await userEvent.click(screen.getByText("pushMock"))
+    await userEvent.click(screen.getByText("deactivatePromptMode"))
+
+    mock.shouldPromptResponse = false
     expect(mockListWrapper).toHaveTextContent(JSON.stringify([mock]))
   })
 

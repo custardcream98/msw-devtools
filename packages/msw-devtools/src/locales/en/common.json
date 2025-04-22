@@ -58,6 +58,10 @@
       "importButton": {
         "title": "Import Mocks"
       },
+      "mockCardAccordion": {
+        "activate": "Activate",
+        "prompt": "Prompt"
+      },
       "search": {
         "placeholder": "Search by URL, Method, Status, Response"
       },

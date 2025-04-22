@@ -67,11 +67,10 @@ export const AddMockForm = () => {
 
       <URLField control={method.control} isReadOnly={isEdit} />
 
-      <ToggleOptions control={method.control} />
-
       <RequestOptions control={method.control} />
 
-      <div className='mt-2 flex w-full shrink-0 items-center justify-end gap-2'>
+      <div className='mt-2 flex w-full shrink-0 items-center justify-end gap-4'>
+        <ToggleOptions control={method.control} />
         <FormButtons
           isEdit={isEdit}
           isValid={method.formState.isValid}
