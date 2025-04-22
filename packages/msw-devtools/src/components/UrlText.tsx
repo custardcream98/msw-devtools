@@ -7,7 +7,12 @@ export const UrlText = ({
   className?: string
 }>) => {
   return (
-    <code className={clsx(className, "min-w-0 text-wrap break-all !font-mono")}>
+    <code
+      className={clsx(
+        className,
+        "min-w-0 text-wrap break-all !font-mono text-black"
+      )}
+    >
       {children}
     </code>
   )
