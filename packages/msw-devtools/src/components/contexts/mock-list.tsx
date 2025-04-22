@@ -16,6 +16,8 @@ export type MockListContextType = {
   removeMock: (...mocks: JsonMock[]) => void
   activateMock: (...mocks: JsonMock[]) => void
   deactivateMock: (...mocks: JsonMock[]) => void
+  activatePromptMode: (...mocks: JsonMock[]) => void
+  deactivatePromptMode: (...mocks: JsonMock[]) => void
   clearAllMocks: () => void
 }
 
@@ -132,6 +134,60 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
     [setMockList]
   )
 
+  const activatePromptMode: MockListContextType["activatePromptMode"] =
+    useCallback(
+      (...mocks) => {
+        setMockList(
+          sendMockListToServerMiddleware((prev) => {
+            register(...mocks)
+
+            return prev.map((active) => {
+              const foundMock = mocks.find((mock) =>
+                isSameJsonMock(active, mock)
+              )
+
+              const shouldPromptResponse = foundMock
+                ? true
+                : active.shouldPromptResponse
+
+              return {
+                ...active,
+                shouldPromptResponse
+              }
+            })
+          })
+        )
+      },
+      [setMockList]
+    )
+
+  const deactivatePromptMode: MockListContextType["deactivatePromptMode"] =
+    useCallback(
+      (...mocks) => {
+        setMockList(
+          sendMockListToServerMiddleware((prev) => {
+            register(...mocks)
+
+            return prev.map((active) => {
+              const foundMock = mocks.find((mock) =>
+                isSameJsonMock(active, mock)
+              )
+
+              const shouldPromptResponse = foundMock
+                ? false
+                : active.shouldPromptResponse
+
+              return {
+                ...active,
+                shouldPromptResponse
+              }
+            })
+          })
+        )
+      },
+      [setMockList]
+    )
+
   const clearAllMocks = useCallback(() => {
     setMockList(
       sendMockListToServerMiddleware((prev) => {
@@ -158,11 +214,15 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
       removeMock,
       activateMock,
       deactivateMock,
+      activatePromptMode,
+      deactivatePromptMode,
       clearAllMocks
     }),
     [
       activateMock,
       deactivateMock,
+      activatePromptMode,
+      deactivatePromptMode,
       mockList,
       pushMock,
       removeMock,
