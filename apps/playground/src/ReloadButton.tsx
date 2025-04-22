@@ -14,8 +14,7 @@ export const ReloadButton = ({
       className={clsx(
         "cursor-pointer rounded-xl bg-gray-600 px-3 py-1 text-sm",
         "transition-all duration-300",
-        "hover:scale-120 hover:bg-gray-900",
-        "active:scale-95",
+        "hover:[:not(:disabled)]:bg-gray-900",
         "disabled:cursor-progress disabled:opacity-50",
         className
       )}

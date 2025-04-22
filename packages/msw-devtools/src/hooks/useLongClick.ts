@@ -1,13 +1,15 @@
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 
 import { useBoolean } from "~/hooks/useBoolean"
 
-const DEFAULT_THRESHOLD = 100
+const DEFAULT_THRESHOLD = 200
 
 export const useLongClick = ({
+  targetRef,
   onClick,
   threshold = DEFAULT_THRESHOLD
 }: {
+  targetRef: React.RefObject<HTMLElement>
   onClick?: () => void
   /**
    * The duration in milliseconds that the user has to press the button
@@ -37,8 +39,13 @@ export const useLongClick = ({
     window.addEventListener("pointerup", handlePointerUp)
   }, [threshold, longClickStart, longClickEnd, onClick])
 
+  useEffect(() => {
+    if (targetRef.current) {
+      targetRef.current.addEventListener("pointerdown", start)
+    }
+  }, [start, targetRef])
+
   return {
-    isLongClicking,
-    props: { onPointerDown: start }
+    isLongClicking
   }
 }

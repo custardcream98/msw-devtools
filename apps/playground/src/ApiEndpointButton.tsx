@@ -18,8 +18,7 @@ export const ApiEndpointButton = () => {
         "text-sm md:text-base",
         "flex cursor-pointer items-center gap-x-2 rounded-xl bg-gray-800 px-3 py-2 font-mono",
         "transition-all duration-300",
-        "hover:scale-120 hover:bg-gray-900",
-        "active:scale-95"
+        "hover:bg-gray-900"
       )}
       type='button'
       onClick={async () => {
