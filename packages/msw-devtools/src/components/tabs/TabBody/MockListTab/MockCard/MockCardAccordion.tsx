@@ -1,10 +1,10 @@
 import { clsx } from "clsx"
 import type { JsonMock } from "core"
+import { useTranslation } from "react-i18next"
 import { FaChevronRight } from "react-icons/fa6"
 
 import { useMockList } from "~/components/contexts/mock-list"
 import { MethodPill } from "~/components/MethodPill"
-import { PromptModePill } from "~/components/PromptModePill"
 import { StatusPill } from "~/components/StatusPill"
 import { Toggle } from "~/components/Toggle"
 import { UrlText } from "~/components/UrlText"
@@ -19,14 +19,21 @@ export const MockCardAccordion = ({
     isInitialOpen?: boolean
   }
 >) => {
+  const { t } = useTranslation()
+
   const [isOpened, , , toggle] = useBoolean(isInitialOpen)
-  const { activateMock, deactivateMock } = useMockList()
+  const {
+    activateMock,
+    deactivateMock,
+    activatePromptMode,
+    deactivatePromptMode
+  } = useMockList()
 
   return (
     <div className='rounded-2xl bg-white p-2 text-xs'>
-      <div className='flex w-full items-center'>
+      <div className='flex items-center'>
         <button
-          className='mr-4 flex shrink-0 items-center gap-2'
+          className='mr-4 flex flex-wrap items-center gap-2 lg:flex-nowrap'
           onClick={toggle}
         >
           <FaChevronRight
@@ -38,20 +45,36 @@ export const MockCardAccordion = ({
 
           <MethodPill method={jsonMock.method} />
           <StatusPill status={jsonMock.status} />
-          <PromptModePill
-            isPromptModeActivated={jsonMock.shouldPromptResponse}
-          />
-          <UrlText>{jsonMock.url}</UrlText>
+          <UrlText className='text-start'>{jsonMock.url}</UrlText>
         </button>
-        <Toggle
-          className='ml-auto'
-          checked={jsonMock.isActivated}
-          onChange={
-            jsonMock.isActivated
-              ? () => deactivateMock(jsonMock)
-              : () => activateMock(jsonMock)
-          }
-        />
+        <div className='ml-auto flex shrink-0 items-center gap-2'>
+          <label className='flex items-center gap-1'>
+            <span className='text-xs'>
+              {t("tabs.mockList.mockCardAccordion.activate")}
+            </span>
+            <Toggle
+              checked={jsonMock.isActivated}
+              onChange={
+                jsonMock.isActivated
+                  ? () => deactivateMock(jsonMock)
+                  : () => activateMock(jsonMock)
+              }
+            />
+          </label>
+          <label className='flex items-center gap-1'>
+            <span className='text-xs'>
+              {t("tabs.mockList.mockCardAccordion.prompt")}
+            </span>
+            <Toggle
+              checked={jsonMock.shouldPromptResponse}
+              onChange={
+                jsonMock.shouldPromptResponse
+                  ? () => deactivatePromptMode(jsonMock)
+                  : () => activatePromptMode(jsonMock)
+              }
+            />
+          </label>
+        </div>
       </div>
       <div
         className={clsx(

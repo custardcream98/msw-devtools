@@ -58,6 +58,10 @@
       "importButton": {
         "title": "Mock 불러오기"
       },
+      "mockCardAccordion": {
+        "activate": "활성화",
+        "prompt": "프롬프트 모드"
+      },
       "search": {
         "placeholder": "URL, Method, Status, Response로 검색하기"
       },
