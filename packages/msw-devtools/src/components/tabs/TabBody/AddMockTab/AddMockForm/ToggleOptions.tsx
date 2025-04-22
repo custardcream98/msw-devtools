@@ -12,7 +12,7 @@ export const ToggleOptions = ({ control }: ToggleOptionsProps) => {
   const { t } = useTranslation()
 
   return (
-    <div className='mt-2 flex w-full shrink-0 items-center justify-end gap-2'>
+    <div className='flex shrink-0 items-center justify-end gap-2'>
       <Controller
         name={FIELD_NAME.IS_ACTIVATED}
         control={control}
