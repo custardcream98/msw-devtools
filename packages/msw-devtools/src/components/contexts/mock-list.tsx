@@ -139,22 +139,22 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
       (...mocks) => {
         setMockList(
           sendMockListToServerMiddleware((prev) => {
-            register(...mocks)
-
-            return prev.map((active) => {
-              const foundMock = mocks.find((mock) =>
-                isSameJsonMock(active, mock)
-              )
+            const nextMocks = prev.map((item) => {
+              const foundMock = mocks.find((mock) => isSameJsonMock(item, mock))
 
               const shouldPromptResponse = foundMock
                 ? true
-                : active.shouldPromptResponse
+                : item.shouldPromptResponse
 
               return {
-                ...active,
+                ...item,
                 shouldPromptResponse
               }
             })
+
+            register(...nextMocks)
+
+            return nextMocks
           })
         )
       },
@@ -166,22 +166,22 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
       (...mocks) => {
         setMockList(
           sendMockListToServerMiddleware((prev) => {
-            register(...mocks)
-
-            return prev.map((active) => {
-              const foundMock = mocks.find((mock) =>
-                isSameJsonMock(active, mock)
-              )
+            const nextMocks = prev.map((item) => {
+              const foundMock = mocks.find((mock) => isSameJsonMock(item, mock))
 
               const shouldPromptResponse = foundMock
                 ? false
-                : active.shouldPromptResponse
+                : item.shouldPromptResponse
 
               return {
-                ...active,
+                ...item,
                 shouldPromptResponse
               }
             })
+
+            register(...nextMocks)
+
+            return nextMocks
           })
         )
       },
