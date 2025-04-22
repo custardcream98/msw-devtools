@@ -1,5 +1,5 @@
 import { clsx } from "clsx"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next"
 import { FaDev } from "react-icons/fa6"
 
@@ -26,8 +26,10 @@ type FloatingButtonProps = Omit<
 }
 
 export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
-  const { isLongClicking: isDragging, props: longClickProps } = useLongClick({
-    onClick
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const { isLongClicking: isDragging } = useLongClick({
+    onClick,
+    targetRef: buttonRef
   })
 
   const [defaultPosition, saveDefaultPosition] = useLocalStorageState(
@@ -50,10 +52,12 @@ export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
     <button
       {...props}
       type='button'
+      ref={buttonRef}
       className={clsx(
         "fixed left-0 top-0 rounded-full border-4 border-solid border-background-light bg-white p-2 shadow-lg",
         "translate-x-[calc(var(--x)-50%)] translate-y-[calc(var(--y)-50%)] transform-gpu",
-        "opacity-[var(--opacity)]"
+        "opacity-[var(--opacity)]",
+        "transition-transform duration-[30ms] ease-linear"
       )}
       style={{
         "--x": `min(max(${position.x}px, ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT / 2}px), calc(100vw - ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT / 2}px))`,
@@ -61,7 +65,6 @@ export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
         "--opacity": floatingButtonOpacity
       }}
       title={t("floatingButton.title")}
-      {...longClickProps}
     >
       <FaDev className='text-gray-700' size={32} />
     </button>
