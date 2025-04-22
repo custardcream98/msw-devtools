@@ -31,7 +31,20 @@ export const Prompt = ({
 
   return (
     <Backdrop>
-      <div className='w-10/12 rounded-lg bg-white p-5'>
+      <form
+        className='w-10/12 rounded-lg bg-white p-5'
+        onSubmit={(event) => {
+          event.preventDefault()
+
+          if (isFixable) {
+            setResponse(jsonrepair(response))
+            return
+          }
+          if (response) {
+            onSubmit(JSON.parse(response))
+          }
+        }}
+      >
         <div className='flex w-full items-center'>
           <MethodPill className='mr-2' method={jsonMock.method} />
           <StatusPill className='mr-2' status={jsonMock.status} />
@@ -45,26 +58,18 @@ export const Prompt = ({
           className='mt-4 w-full'
           value={response}
           onChange={setResponse}
+          autoFocus
         />
         <button
           type='submit'
           className={
             "button ml-auto mt-4 block w-fit flex-shrink-0 bg-green-600 text-xs text-white hover:bg-green-600 hover:text-white disabled:pointer-events-none disabled:bg-slate-400"
           }
-          onClick={() => {
-            if (isFixable) {
-              setResponse(jsonrepair(response))
-              return
-            }
-            if (response) {
-              onSubmit(JSON.parse(response))
-            }
-          }}
           disabled={!isParsable && !isFixable}
         >
           {isFixable ? t("prompt.fix") : t("prompt.submit")}
         </button>
-      </div>
+      </form>
     </Backdrop>
   )
 }
