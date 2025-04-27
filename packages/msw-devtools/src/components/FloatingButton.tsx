@@ -57,13 +57,15 @@ export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
         "fixed left-0 top-0 rounded-full border-4 border-solid border-background-light bg-white p-2 shadow-lg",
         "translate-x-[calc(var(--x)-50%)] translate-y-[calc(var(--y)-50%)] transform-gpu",
         "opacity-[var(--opacity)]",
-        "transition-transform duration-[30ms] ease-linear"
+        "transition-transform duration-[30ms] ease-linear",
+        "touch-none"
       )}
       style={{
         "--x": `min(max(${position.x}px, ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT / 2}px), calc(100vw - ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT / 2}px))`,
         "--y": `min(max(${position.y}px, ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT / 2}px), calc(100vh - ${BUTTON_POSITION_MARGIN + BUTTON_WIDTH_HEIGHT / 2}px))`,
         "--opacity": floatingButtonOpacity
       }}
+      onTouchStart={(e) => e.preventDefault()} // gonna handle this manually
       title={t("floatingButton.title")}
     >
       <FaDev className='text-gray-700' size={32} />
