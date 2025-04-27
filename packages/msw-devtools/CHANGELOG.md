@@ -1,5 +1,11 @@
 # @custardcream/msw-devtools
 
+## 0.11.3
+
+### Patch Changes
+
+- ac27f71: fix: mobile drag UX bug
+
 ## 0.11.2
 
 ### Patch Changes
