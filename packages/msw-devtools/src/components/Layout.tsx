@@ -1,8 +1,9 @@
 import { clsx } from "clsx"
+import { useRef } from "react"
 
 import { StorageKey } from "~/constants"
-import { useIsDragging } from "~/hooks/useIsDragging"
 import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import { useLongClick } from "~/hooks/useLongClick"
 
 type LayoutProps = React.HTMLAttributes<HTMLDivElement> & {
   isOpened: boolean
@@ -10,8 +11,10 @@ type LayoutProps = React.HTMLAttributes<HTMLDivElement> & {
 
 export const Layout = ({ isOpened, children, ...props }: LayoutProps) => {
   const [height, setHeight] = useLocalStorageState(StorageKey.HEIGHT, null)
-
-  const { isDragging, props: isDraggingProps } = useIsDragging({
+  const ref = useRef<HTMLButtonElement>(null)
+  const { isLongClicking } = useLongClick({
+    targetRef: ref,
+    threshold: 0,
     onDrag: (event) => {
       setHeight(event.clientY)
     }
@@ -24,12 +27,10 @@ export const Layout = ({ isOpened, children, ...props }: LayoutProps) => {
         "overflow-hidden rounded-tl-2xl rounded-tr-2xl bg-background-light !font-sans text-gray-700 outline outline-1 outline-slate-200",
         "transition-transform duration-300",
         !isOpened && "translate-y-[calc(100%+5px)]", // intended to translate little bit more
-        "h-[var(--height)] max-h-screen min-h-12"
+        "h-[min(max(calc(100dvh-var(--height)),100px),calc(100dvh-100px))] max-h-screen min-h-12"
       )}
       style={{
-        "--height": height
-          ? `min(max(calc(100vh - ${height}px), 100px), calc(100vh - 100px))`
-          : "50%"
+        "--height": height ? `${height}px` : "50%"
       }}
       {...props}
     >
@@ -37,9 +38,11 @@ export const Layout = ({ isOpened, children, ...props }: LayoutProps) => {
         type='button'
         className={clsx(
           "absolute left-0 right-0 top-0 h-[3px] cursor-row-resize transition-colors hover:bg-slate-700",
-          isDragging && "bg-slate-700"
+          "touch-none",
+          isLongClicking && "bg-slate-700"
         )}
-        {...isDraggingProps}
+        onTouchStart={(e) => e.preventDefault()}
+        ref={ref}
       ></button>
       {children}
     </div>
