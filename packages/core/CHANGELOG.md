@@ -1,5 +1,11 @@
 # core
 
+## 0.11.4
+
+### Patch Changes
+
+- d04bd22: MSW version upgrade for development
+
 ## 0.11.0
 
 ### Minor Changes
