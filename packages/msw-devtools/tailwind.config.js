@@ -37,7 +37,10 @@ export default {
       },
       colors: {
         background: {
-          light: "#f4f6f9"
+          light: "#f8f9fb"
+        },
+        border: {
+          DEFAULT: "#e2e5ea"
         }
       }
     }
@@ -76,7 +79,7 @@ export default {
         {
           ".msw-border": MSW_BORDER(theme),
           ".msw-round-border": {
-            borderRadius: theme("borderRadius.lg"),
+            borderRadius: theme("borderRadius.md"),
             ...MSW_BORDER(theme)
           }
         },
@@ -95,10 +98,10 @@ const MSW_BORDER = (theme) => ({
 })
 
 const BUTTON = (theme) => ({
-  borderRadius: theme("borderRadius.lg"),
+  borderRadius: theme("borderRadius.md"),
   cursor: "pointer",
   fontSize: theme("fontSize.sm"),
   lineHeight: theme("lineHeight.5"),
   transitionProperty: "background-color, color, font-weight",
-  transitionDuration: "200ms"
+  transitionDuration: "150ms"
 })

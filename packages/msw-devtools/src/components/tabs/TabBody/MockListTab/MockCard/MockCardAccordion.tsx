@@ -30,15 +30,16 @@ export const MockCardAccordion = ({
   } = useMockList()
 
   return (
-    <div className='rounded-2xl bg-white p-2 text-xs'>
+    <div className='rounded-md border border-slate-200 bg-white p-2 text-xs'>
       <div className='flex items-center'>
         <button
-          className='mr-4 flex flex-wrap items-center gap-2 lg:flex-nowrap'
+          className='mr-3 flex min-w-0 flex-wrap items-center gap-1.5 lg:flex-nowrap'
           onClick={toggle}
         >
           <FaChevronRight
+            size={10}
             className={clsx(
-              "transform-gpu text-gray-400 transition-transform duration-300",
+              "shrink-0 transform-gpu text-slate-400 transition-transform duration-200",
               isOpened && "rotate-90"
             )}
           />
@@ -49,7 +50,7 @@ export const MockCardAccordion = ({
         </button>
         <div className='ml-auto flex shrink-0 items-center gap-2'>
           <label className='flex items-center gap-1'>
-            <span className='text-xs'>
+            <span className='text-[0.65rem] text-slate-500'>
               {t("tabs.mockList.mockCardAccordion.activate")}
             </span>
             <Toggle
@@ -62,7 +63,7 @@ export const MockCardAccordion = ({
             />
           </label>
           <label className='flex items-center gap-1'>
-            <span className='text-xs'>
+            <span className='text-[0.65rem] text-slate-500'>
               {t("tabs.mockList.mockCardAccordion.prompt")}
             </span>
             <Toggle

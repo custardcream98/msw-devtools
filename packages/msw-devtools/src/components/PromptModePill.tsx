@@ -18,7 +18,7 @@ export const PromptModePill = ({
     <span
       className={clsx(
         className,
-        "shrink-0 rounded-lg bg-slate-100 px-[0.3rem] py-[0.125rem] !font-mono text-[0.7rem] font-semibold uppercase text-orange-600"
+        "shrink-0 rounded bg-orange-50 px-1.5 py-0.5 !font-mono text-[0.65rem] font-semibold uppercase text-orange-600"
       )}
     >
       {t("promptModePill.promptMode")}

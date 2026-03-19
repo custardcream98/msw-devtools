@@ -12,19 +12,14 @@ export const ToggleOptions = ({ control }: ToggleOptionsProps) => {
   const { t } = useTranslation()
 
   return (
-    <div className='flex shrink-0 items-center justify-end gap-2'>
+    <div className='flex shrink-0 items-center justify-end gap-3'>
       <Controller
         name={FIELD_NAME.IS_ACTIVATED}
         control={control}
         render={({ field: { onChange, value, ...field } }) => (
-          <label className='flex items-center'>
+          <label className='flex items-center gap-1.5 text-xs text-slate-600'>
             {t("tabs.addMock.isActivated.label")}
-            <Toggle
-              className='ml-2'
-              {...field}
-              checked={value}
-              onChange={onChange}
-            />
+            <Toggle {...field} checked={value} onChange={onChange} />
           </label>
         )}
       />
@@ -32,14 +27,9 @@ export const ToggleOptions = ({ control }: ToggleOptionsProps) => {
         name={FIELD_NAME.SHOULD_PROMPT_RESPONSE}
         control={control}
         render={({ field: { onChange, value, ...field } }) => (
-          <label className='flex items-center'>
+          <label className='flex items-center gap-1.5 text-xs text-slate-600'>
             {t("tabs.addMock.shouldPromptResponse.label")}
-            <Toggle
-              className='ml-2'
-              {...field}
-              checked={value}
-              onChange={onChange}
-            />
+            <Toggle {...field} checked={value} onChange={onChange} />
           </label>
         )}
       />

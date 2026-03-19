@@ -30,14 +30,14 @@ export const FormButtons = ({
   }, [isFixable, isEdit, t])
 
   return (
-    <div className='flex shrink-0 items-center gap-2'>
+    <div className='flex shrink-0 items-center gap-1.5'>
       <button
         type='submit'
         className={clsx(
-          "button shrink-0 text-xs text-white hover:text-white disabled:pointer-events-none disabled:bg-slate-400",
+          "button shrink-0 text-xs text-white hover:text-white disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-400",
           isEdit
-            ? "bg-green-600 hover:bg-green-600"
-            : "bg-blue-600 hover:bg-blue-800"
+            ? "bg-green-600 hover:bg-green-700"
+            : "bg-blue-600 hover:bg-blue-700"
         )}
         disabled={!isValid && !isFixable}
       >
@@ -46,7 +46,7 @@ export const FormButtons = ({
       {isEdit && (
         <button
           type='button'
-          className='button shrink-0 bg-red-600 text-xs text-white hover:bg-red-800 hover:text-white'
+          className='button shrink-0 bg-slate-500 text-xs text-white hover:bg-slate-600 hover:text-white'
           onClick={onReset}
         >
           {t("tabs.addMock.cancelEdit")}

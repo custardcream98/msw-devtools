@@ -17,7 +17,7 @@ export const EditModeIndicator = ({ isEdit }: EditModeIndicatorProps) => {
       )}
     >
       <div className='overflow-hidden'>
-        <p className='bg-green-600 py-1 text-center text-xs font-bold uppercase text-white'>
+        <p className='border-b border-green-600 bg-green-50 py-1 text-center text-xs font-semibold uppercase text-green-700'>
           {t("tabs.addMock.editModeIndicator")}
         </p>
       </div>

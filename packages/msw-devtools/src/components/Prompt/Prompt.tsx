@@ -32,7 +32,7 @@ export const Prompt = ({
   return (
     <Backdrop>
       <form
-        className='w-10/12 rounded-lg bg-white p-5'
+        className='w-10/12 max-w-2xl rounded-md border border-slate-200 bg-white p-5 shadow-lg'
         onSubmit={(event) => {
           event.preventDefault()
 
@@ -45,11 +45,10 @@ export const Prompt = ({
           }
         }}
       >
-        <div className='flex w-full items-center'>
-          <MethodPill className='mr-2' method={jsonMock.method} />
-          <StatusPill className='mr-2' status={jsonMock.status} />
+        <div className='flex w-full items-center gap-1.5'>
+          <MethodPill method={jsonMock.method} />
+          <StatusPill status={jsonMock.status} />
           <PromptModePill
-            className='mr-2'
             isPromptModeActivated={jsonMock.shouldPromptResponse}
           />
           <UrlText>{jsonMock.url}</UrlText>
@@ -63,7 +62,7 @@ export const Prompt = ({
         <button
           type='submit'
           className={
-            "button ml-auto mt-4 block w-fit flex-shrink-0 bg-green-600 text-xs text-white hover:bg-green-600 hover:text-white disabled:pointer-events-none disabled:bg-slate-400"
+            "button ml-auto mt-3 block w-fit shrink-0 bg-blue-600 text-xs text-white hover:bg-blue-700 hover:text-white disabled:pointer-events-none disabled:bg-slate-300 disabled:text-slate-400"
           }
           disabled={!isParsable && !isFixable}
         >

@@ -123,7 +123,7 @@ export const CodeEditor = React.forwardRef<
     <div className={clsx(className, "overflow-auto")}>
       <ReactCodeMirror
         ref={innerRef}
-        className='overflow-hidden text-xs msw-round-border'
+        className='overflow-hidden rounded-md border border-slate-200 text-xs'
         extensions={extensions}
         basicSetup={basicSetup}
         theme={vscodeDark}
