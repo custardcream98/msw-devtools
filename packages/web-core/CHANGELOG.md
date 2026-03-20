@@ -1,5 +1,13 @@
 # web-core
 
+## 0.12.0
+
+### Patch Changes
+
+- d04bd22: MSW version upgrade for development
+- Updated dependencies [d04bd22]
+  - core@0.12.0
+
 ## 0.11.0
 
 ### Minor Changes
