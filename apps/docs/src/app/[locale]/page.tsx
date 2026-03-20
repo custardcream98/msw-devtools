@@ -4,8 +4,8 @@ import { Docs } from "@/components/server/Docs"
 export default async function Page({
   params
 }: {
-  params: Promise<{ locale: SubRouteLocales }>
+  params: Promise<{ locale: string }>
 }) {
-  const { locale } = await params
+  const { locale } = (await params) as { locale: SubRouteLocales }
   return <Docs locale={locale} />
 }

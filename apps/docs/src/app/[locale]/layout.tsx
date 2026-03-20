@@ -15,9 +15,9 @@ export async function generateStaticParams(): Promise<
 export const generateMetadata = async ({
   params
 }: {
-  params: Promise<{ locale: SubRouteLocales }>
+  params: Promise<{ locale: string }>
 }): Promise<Metadata> => {
-  const { locale } = await params
+  const { locale } = (await params) as { locale: SubRouteLocales }
   const dictionary = await getDictionary(locale)
 
   return {
@@ -39,9 +39,9 @@ const Layout = async ({
   children,
   params
 }: React.PropsWithChildren<{
-  params: Promise<{ locale: SubRouteLocales }>
+  params: Promise<{ locale: string }>
 }>) => {
-  const { locale } = await params
+  const { locale } = (await params) as { locale: SubRouteLocales }
   state.locale = locale
   return children
 }
