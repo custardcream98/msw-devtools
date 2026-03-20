@@ -3,9 +3,10 @@ import { type Control, Controller } from "react-hook-form"
 import { FaXmark } from "react-icons/fa6"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { ResponseIndexBadge } from "~/components/ResponseIndexBadge"
 import { FIELD_NAME, type FormFieldValues } from "~/constants"
 
-import { validate } from "./utils"
+import { validate, VALIDATION_RESULT } from "./utils"
 
 export const AddMockFormCodeEditor = ({
   control
@@ -21,8 +22,12 @@ export const AddMockFormCodeEditor = ({
           if (value.type === "sequential") {
             const validateResults = value.response.map(validate)
 
-            if (validateResults.some((result) => result === "FIXABLE")) {
-              return "FIXABLE"
+            if (
+              validateResults.some(
+                (result) => result === VALIDATION_RESULT.FIXABLE
+              )
+            ) {
+              return VALIDATION_RESULT.FIXABLE
             }
 
             return validateResults.every((value) => value === true)
@@ -43,11 +48,7 @@ export const AddMockFormCodeEditor = ({
             >
               {currentResponse.response.map((responseValue, index) => (
                 <div key={index} className='mb-2 mt-2 w-full'>
-                  <div className="mb-1.5 flex items-center gap-2 after:h-px after:w-full after:bg-slate-200 after:content-['']">
-                    <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-300 !font-mono text-[0.65rem] text-slate-400'>
-                      {index + 1}
-                    </span>
-                  </div>
+                  <ResponseIndexBadge index={index} />
                   <div className='relative'>
                     <CodeEditor
                       className='min-w-[500px]'

@@ -11,6 +11,40 @@ import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
 import { loadJson, saveJson } from "./utils"
 
+const SidebarButton = ({
+  icon,
+  label,
+  onClick,
+  isSidebarOpen,
+  title
+}: {
+  icon: React.ReactNode
+  label: string
+  onClick: () => void
+  isSidebarOpen: boolean
+  title: string
+}) => (
+  <button
+    title={title}
+    type='button'
+    className='flex items-center rounded p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700'
+    onClick={onClick}
+  >
+    {icon}
+    <span
+      className={clsx(
+        "shrink-0",
+        "grid overflow-hidden transition-[grid-template-columns] duration-300",
+        isSidebarOpen ? "grid-cols-[1fr]" : "grid-cols-[0fr]"
+      )}
+    >
+      <span className='overflow-hidden'>
+        <span className='whitespace-nowrap pl-2 text-xs'>{label}</span>
+      </span>
+    </span>
+  </button>
+)
+
 export const MockListFrame = ({ children }: React.PropsWithChildren) => {
   const { mockList, pushMock, clearAllMocks } = useMockList()
 
@@ -42,33 +76,20 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
             )}
           />
         </button>
-        <button
+        <SidebarButton
           title={t("tabs.mockList.exportButton.title")}
-          type='button'
-          className='flex items-center rounded p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700'
+          icon={<FaFileExport size={16} className='shrink-0' />}
+          label={t("tabs.mockList.exportButton.title")}
+          isSidebarOpen={isSidebarOpen}
           onClick={() => {
             saveJson(mockList, "mocks.json")
           }}
-        >
-          <FaFileExport size={16} className='shrink-0' />
-          <span
-            className={clsx(
-              "shrink-0",
-              "grid overflow-hidden transition-[grid-template-columns] duration-300",
-              isSidebarOpen ? "grid-cols-[1fr]" : "grid-cols-[0fr]"
-            )}
-          >
-            <span className='overflow-hidden'>
-              <span className='whitespace-nowrap pl-2 text-xs'>
-                {t("tabs.mockList.exportButton.title")}
-              </span>
-            </span>
-          </span>
-        </button>
-        <button
+        />
+        <SidebarButton
           title={t("tabs.mockList.importButton.title")}
-          type='button'
-          className='flex items-center rounded p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700'
+          icon={<FaFileImport size={16} className='shrink-0' />}
+          label={t("tabs.mockList.importButton.title")}
+          isSidebarOpen={isSidebarOpen}
           onClick={() => {
             try {
               loadJson({
@@ -80,47 +101,18 @@ export const MockListFrame = ({ children }: React.PropsWithChildren) => {
               alert(error)
             }
           }}
-        >
-          <FaFileImport size={16} className='shrink-0' />
-          <span
-            className={clsx(
-              "shrink-0",
-              "grid overflow-hidden transition-[grid-template-columns] duration-300",
-              isSidebarOpen ? "grid-cols-[1fr]" : "grid-cols-[0fr]"
-            )}
-          >
-            <span className='overflow-hidden'>
-              <span className='whitespace-nowrap pl-2 text-xs'>
-                {t("tabs.mockList.importButton.title")}
-              </span>
-            </span>
-          </span>
-        </button>
-        <button
+        />
+        <SidebarButton
           title={t("tabs.mockList.clearMockButton.title")}
-          type='button'
-          className='flex items-center rounded p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700'
+          icon={<FaFileCircleXmark size={16} className='shrink-0' />}
+          label={t("tabs.mockList.clearMockButton.title")}
+          isSidebarOpen={isSidebarOpen}
           onClick={() => {
             if (window.confirm(t("tabs.mockList.clearMockButton.confirm"))) {
               clearAllMocks()
             }
           }}
-        >
-          <FaFileCircleXmark size={16} className='shrink-0' />
-          <span
-            className={clsx(
-              "shrink-0",
-              "grid overflow-hidden transition-[grid-template-columns] duration-300",
-              isSidebarOpen ? "grid-cols-[1fr]" : "grid-cols-[0fr]"
-            )}
-          >
-            <span className='overflow-hidden'>
-              <span className='whitespace-nowrap pl-2 text-xs'>
-                {t("tabs.mockList.clearMockButton.title")}
-              </span>
-            </span>
-          </span>
-        </button>
+        />
       </div>
       <ScrollList className='w-full'>{children}</ScrollList>
     </div>

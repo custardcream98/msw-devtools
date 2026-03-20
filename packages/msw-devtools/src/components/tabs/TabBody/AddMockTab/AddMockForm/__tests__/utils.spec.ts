@@ -2,7 +2,8 @@ import { JsonMockResponseType } from "core"
 
 import {
   fixJson,
-  validate
+  validate,
+  VALIDATION_RESULT
 } from "~/components/tabs/TabBody/AddMockTab/AddMockForm/utils"
 
 describe("validate", () => {
@@ -15,7 +16,7 @@ describe("validate", () => {
   })
 
   it("should return 'FIXABLE' if value is fixable JSON", () => {
-    expect(validate("{")).toBe("FIXABLE")
+    expect(validate("{")).toBe(VALIDATION_RESULT.FIXABLE)
   })
 })
 

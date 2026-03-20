@@ -44,7 +44,7 @@ export const MockListTab = () => {
       </div>
       <ul className='w-full [&>li+li]:mt-2'>
         {searchedMockList.map((mock) => (
-          <MockListItem key={mock.url} mock={mock} />
+          <MockListItem key={`${mock.url}-${mock.method}`} mock={mock} />
         ))}
       </ul>
     </MockListFrame>

@@ -12,6 +12,8 @@ import {
 } from "~/constants"
 import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 
+import { VALIDATION_RESULT } from "../utils"
+
 interface UseFormSubmitProps {
   method: UseFormReturn<FormFieldValues>
   fixJson: (response: FormFieldResponseValue) => FormFieldResponseValue
@@ -78,7 +80,7 @@ export function useFormSubmit({
 
   const handleInvalid = useCallback(
     (error: FieldErrors<FormFieldValues>) => {
-      if (error[FIELD_NAME.RESPONSE]?.message === "FIXABLE") {
+      if (error[FIELD_NAME.RESPONSE]?.message === VALIDATION_RESULT.FIXABLE) {
         const response = method.getValues(FIELD_NAME.RESPONSE)
         const fixedResponse = fixJson(response)
 

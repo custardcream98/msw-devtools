@@ -5,10 +5,11 @@ import { FaRegTrashCan } from "react-icons/fa6"
 import { HiMiniPencilSquare } from "react-icons/hi2"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { useEditState } from "~/components/contexts/edit-state"
 import { useMockList } from "~/components/contexts/mock-list"
+import { ResponseIndexBadge } from "~/components/ResponseIndexBadge"
 import { useTab } from "~/components/tabs/TabBar"
-import { StorageKey, Tab } from "~/constants"
-import { useLocalStorageState } from "~/hooks/useLocalStorageState"
+import { Tab } from "~/constants"
 import { jsonMockToFormFieldValues } from "~/utils/jsonMockToFormFieldValues"
 
 import { MockCardAccordion } from "./MockCardAccordion"
@@ -24,14 +25,10 @@ export const MockCard = ({
   isInitialOpen?: boolean
 }) => {
   const { setTab } = useTab()
-  const [, setEditStateLocal] = useLocalStorageState(
-    StorageKey.EDIT_STATE,
-    null
-  )
+  const { removeMock } = useMockList()
+  const { setEditState } = useEditState()
 
   const { t } = useTranslation()
-
-  const { removeMock } = useMockList()
 
   const { response } = jsonMock
 
@@ -49,11 +46,7 @@ export const MockCard = ({
         ) : (
           response.response.map((response, index) => (
             <div key={index} className='mt-3 w-full'>
-              <div className="mb-1.5 flex items-center gap-2 after:h-px after:w-full after:bg-slate-200 after:content-['']">
-                <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-slate-300 !font-mono text-[0.65rem] text-slate-400'>
-                  {index + 1}
-                </span>
-              </div>
+              <ResponseIndexBadge index={index} />
               <CodeEditor
                 className='min-w-[400px]'
                 value={JSON.stringify(response, null, 2)}
@@ -77,7 +70,7 @@ export const MockCard = ({
           className='ml-auto rounded p-1 transition-colors hover:bg-slate-100'
           type='button'
           onClick={() => {
-            setEditStateLocal(jsonMockToFormFieldValues(jsonMock))
+            setEditState(jsonMockToFormFieldValues(jsonMock))
             setTab(Tab.AddMock)
           }}
         >

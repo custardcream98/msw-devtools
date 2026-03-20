@@ -3,13 +3,9 @@ import { MethodOption, StatusOption } from "core"
 import { Control, Controller } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import {
-  FIELD_NAME,
-  FormFieldValues,
-  METHOD_COLOR,
-  STATUS_COLOR,
-  STATUS_NAME
-} from "~/constants"
+import { METHOD_COLOR } from "~/components/MethodPill"
+import { STATUS_COLOR } from "~/components/StatusPill"
+import { FIELD_NAME, FormFieldValues, STATUS_NAME } from "~/constants"
 
 interface RequestOptionsProps {
   control: Control<FormFieldValues>

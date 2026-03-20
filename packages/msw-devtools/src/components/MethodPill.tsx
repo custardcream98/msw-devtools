@@ -1,16 +1,24 @@
 import { clsx } from "clsx"
-import type { MethodOption } from "core"
+import { MethodOption } from "core"
 
-import { METHOD_COLOR } from "~/constants"
+export const METHOD_COLOR = {
+  [MethodOption.get]: "text-blue-600",
+  [MethodOption.post]: "text-green-600",
+  [MethodOption.put]: "text-yellow-600",
+  [MethodOption.delete]: "text-red-600",
+  [MethodOption.patch]: "text-teal-500",
+  [MethodOption.options]: "text-purple-600",
+  [MethodOption.head]: "text-gray-600"
+} as const
 
-const METHOD_BG: Record<string, string> = {
-  get: "bg-blue-50",
-  post: "bg-green-50",
-  put: "bg-yellow-50",
-  delete: "bg-red-50",
-  patch: "bg-teal-50",
-  options: "bg-purple-50",
-  head: "bg-gray-50"
+const METHOD_BG: Record<MethodOption, string> = {
+  [MethodOption.get]: "bg-blue-50",
+  [MethodOption.post]: "bg-green-50",
+  [MethodOption.put]: "bg-yellow-50",
+  [MethodOption.delete]: "bg-red-50",
+  [MethodOption.patch]: "bg-teal-50",
+  [MethodOption.options]: "bg-purple-50",
+  [MethodOption.head]: "bg-gray-50"
 }
 
 export const MethodPill = ({

@@ -4,7 +4,15 @@ import { jsonrepair } from "jsonrepair"
 import { FormFieldResponseValue } from "~/constants"
 import { checkJSONFixable, checkJSONParsable, isJSONFixable } from "~/lib/json"
 
-export const validate = (value: string) => {
+export const VALIDATION_RESULT = {
+  VALID: true,
+  INVALID: false,
+  FIXABLE: "FIXABLE"
+} as const
+
+export type ValidationResult = boolean | typeof VALIDATION_RESULT.FIXABLE
+
+export const validate = (value: string): ValidationResult => {
   if (!value) {
     return false
   }
@@ -14,7 +22,7 @@ export const validate = (value: string) => {
   }
 
   if (checkJSONFixable(value)) {
-    return "FIXABLE"
+    return VALIDATION_RESULT.FIXABLE
   }
 
   return false
