@@ -69,7 +69,7 @@ export const AddMockForm = () => {
 
       <RequestOptions control={method.control} />
 
-      <div className='mt-2 flex w-full shrink-0 items-center justify-end gap-4'>
+      <div className='mt-2 flex w-full shrink-0 items-center justify-end gap-3'>
         <ToggleOptions control={method.control} />
         <FormButtons
           isEdit={isEdit}
@@ -79,7 +79,7 @@ export const AddMockForm = () => {
         />
       </div>
 
-      <div className='mt-4 flex flex-1 flex-col'>
+      <div className='mt-3 flex flex-1 flex-col'>
         <ResponseBodyHeader
           onAddResponse={addSequentialResponse}
           {...(response.type === JsonMockResponseType.sequential

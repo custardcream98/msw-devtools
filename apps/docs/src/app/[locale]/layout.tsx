@@ -15,31 +15,33 @@ export async function generateStaticParams(): Promise<
 export const generateMetadata = async ({
   params
 }: {
-  params: { locale: SubRouteLocales }
+  params: Promise<{ locale: SubRouteLocales }>
 }): Promise<Metadata> => {
-  const dictionary = await getDictionary(params.locale)
+  const { locale } = await params
+  const dictionary = await getDictionary(locale)
 
   return {
     title: dictionary.title,
     description: dictionary.description,
     alternates: {
-      canonical: `https://msw-devtools.shiwoo.dev/${params.locale}`,
+      canonical: `https://msw-devtools.shiwoo.dev/${locale}`,
       languages: Object.fromEntries(
-        Locales.filter((locale) => locale !== params.locale).map((locale) => [
-          locale,
-          `https://msw-devtools.shiwoo.dev${locale === "en" ? "" : `/${locale}`}`
+        Locales.filter((l) => l !== locale).map((l) => [
+          l,
+          `https://msw-devtools.shiwoo.dev${l === "en" ? "" : `/${l}`}`
         ])
       )
     }
   }
 }
 
-const Layout = ({
+const Layout = async ({
   children,
-  params: { locale }
+  params
 }: React.PropsWithChildren<{
-  params: { locale: SubRouteLocales }
+  params: Promise<{ locale: SubRouteLocales }>
 }>) => {
+  const { locale } = await params
   state.locale = locale
   return children
 }

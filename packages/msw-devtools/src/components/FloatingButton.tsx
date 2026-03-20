@@ -10,7 +10,7 @@ import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 import { useLongClick } from "~/hooks/useLongClick"
 
 const BUTTON_POSITION_MARGIN = 10
-const BUTTON_WIDTH_HEIGHT = 56
+const BUTTON_WIDTH_HEIGHT = 48
 const DEFAULT_POSITION = {
   x: document.documentElement.clientWidth - BUTTON_POSITION_MARGIN,
   y: document.documentElement.clientHeight - BUTTON_POSITION_MARGIN
@@ -54,7 +54,7 @@ export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
       type='button'
       ref={buttonRef}
       className={clsx(
-        "fixed left-0 top-0 rounded-full border-4 border-solid border-background-light bg-white p-2 shadow-lg",
+        "fixed left-0 top-0 rounded-full border border-slate-200 bg-white p-2 shadow-md",
         "translate-x-[calc(var(--x)-50%)] translate-y-[calc(var(--y)-50%)] transform-gpu",
         "opacity-[var(--opacity)]",
         "transition-transform duration-[30ms] ease-linear",
@@ -68,7 +68,7 @@ export const FloatingButton = ({ onClick, ...props }: FloatingButtonProps) => {
       onTouchStart={(e) => e.preventDefault()} // gonna handle this manually
       title={t("floatingButton.title")}
     >
-      <FaDev className='text-gray-700' size={32} />
+      <FaDev className='text-slate-600' size={26} />
     </button>
   )
 }

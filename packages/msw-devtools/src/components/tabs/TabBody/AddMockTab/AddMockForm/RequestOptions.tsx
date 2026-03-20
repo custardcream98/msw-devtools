@@ -3,13 +3,9 @@ import { MethodOption, StatusOption } from "core"
 import { Control, Controller } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 
-import {
-  FIELD_NAME,
-  FormFieldValues,
-  METHOD_COLOR,
-  STATUS_COLOR,
-  STATUS_NAME
-} from "~/constants"
+import { METHOD_COLOR } from "~/components/MethodPill"
+import { STATUS_COLOR } from "~/components/StatusPill"
+import { FIELD_NAME, FormFieldValues, STATUS_NAME } from "~/constants"
 
 interface RequestOptionsProps {
   control: Control<FormFieldValues>
@@ -27,7 +23,7 @@ export const RequestOptions = ({ control }: RequestOptionsProps) => {
           render={({ field }) => (
             <select
               className={clsx(
-                "h-full w-full border-r bg-slate-50 p-2 text-xs font-semibold uppercase",
+                "h-full w-full border-r border-slate-200 bg-slate-50 p-2 text-xs font-semibold uppercase focus:outline-none focus:ring-1 focus:ring-inset focus:ring-slate-300",
                 METHOD_COLOR[field.value]
               )}
               {...field}
@@ -47,7 +43,7 @@ export const RequestOptions = ({ control }: RequestOptionsProps) => {
           render={({ field }) => (
             <select
               className={clsx(
-                "h-full w-full border-r bg-slate-50 p-2 text-xs font-semibold",
+                "h-full w-full border-r border-slate-200 bg-slate-50 p-2 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-inset focus:ring-slate-300",
                 STATUS_COLOR[field.value]
               )}
               {...field}
@@ -65,11 +61,11 @@ export const RequestOptions = ({ control }: RequestOptionsProps) => {
           control={control}
           render={({ field: { value, onChange, ...field } }) => (
             <label className='flex h-full w-full min-w-0 items-center bg-slate-50 text-xs'>
-              <span className='ml-2 min-w-fit'>
+              <span className='ml-2 min-w-fit text-slate-500'>
                 {t("tabs.addMock.responseDelay.label")}
               </span>
               <input
-                className='min-w-2 flex-1 bg-transparent p-2 text-right !font-mono'
+                className='min-w-2 flex-1 bg-transparent p-2 text-right !font-mono focus:outline-none'
                 type='number'
                 step={0.1}
                 min={0}

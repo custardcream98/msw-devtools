@@ -33,18 +33,18 @@ export const MockListTab = () => {
 
   return (
     <MockListFrame>
-      <div className='sticky -top-3 left-0 right-0 z-10 -mx-3 -mt-3 bg-background-light px-2 pb-3 pt-2'>
+      <div className='sticky -top-3 left-0 right-0 z-10 -mx-3 -mt-3 bg-background-light px-2 pb-2 pt-2'>
         <input
-          className='w-full p-2 !font-mono text-xs msw-round-border'
+          className='w-full bg-white p-2 !font-mono text-xs msw-round-border focus:outline-none focus:ring-1 focus:ring-slate-300'
           placeholder={t("tabs.mockList.search.placeholder")}
           type='text'
           value={searchString}
           onChange={(e) => setSearchString(e.currentTarget.value)}
         />
       </div>
-      <ul className='w-full [&>li+li]:mt-4'>
+      <ul className='w-full [&>li+li]:mt-2'>
         {searchedMockList.map((mock) => (
-          <MockListItem key={mock.url} mock={mock} />
+          <MockListItem key={`${mock.url}-${mock.method}`} mock={mock} />
         ))}
       </ul>
     </MockListFrame>

@@ -51,3 +51,8 @@ playwright-report/
 blob-report/
 playwright/.cache/
 tests-examples/
+# storybook
+storybook-static
+
+# Relay
+.relay/

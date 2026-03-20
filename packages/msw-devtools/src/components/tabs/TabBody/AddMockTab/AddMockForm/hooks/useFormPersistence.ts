@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from "react"
 import { UseFormReturn } from "react-hook-form"
 
+import { useEditState } from "~/components/contexts/edit-state"
 import { FormFieldValues, StorageKey } from "~/constants"
 import {
   getLocalStorageItem,
-  setLocalStorageItem,
-  useLocalStorageState
+  setLocalStorageItem
 } from "~/hooks/useLocalStorageState"
 import { isSameFormFieldValues } from "~/utils/isSameFormFieldValues"
 
@@ -24,11 +24,8 @@ export function useFormPersistence({
   method,
   defaultValues
 }: UseFormPersistenceProps) {
-  // Manage edit state
-  const [editStateLocal, setEditStateLocal] = useLocalStorageState(
-    StorageKey.EDIT_STATE,
-    null
-  )
+  // editState는 EditStateContext의 Single Source of Truth에서 관리
+  const { editState, setEditState } = useEditState()
 
   // Save form state (on unmount)
   useEffect(() => {
@@ -37,7 +34,7 @@ export function useFormPersistence({
       const isEdit = getLocalStorageItem(StorageKey.EDIT_STATE)
 
       if (isEdit) {
-        setEditStateLocal(currentValues)
+        setEditState(currentValues)
         return
       }
 
@@ -49,18 +46,18 @@ export function useFormPersistence({
         setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, currentValues)
       }
     }
-  }, [method, defaultValues, setEditStateLocal])
+  }, [method, defaultValues, setEditState])
 
   // Reset form and storage
   const resetForm = useCallback(() => {
     setLocalStorageItem(StorageKey.SAVED_FORM_FIELD_VALUES, null)
-    setEditStateLocal(null)
+    setEditState(null)
 
     method.reset(defaultValues)
-  }, [setEditStateLocal, method, defaultValues])
+  }, [setEditState, method, defaultValues])
 
   return {
-    isEdit: !!editStateLocal,
+    isEdit: !!editState,
     resetForm
   }
 }

@@ -8,10 +8,7 @@ export const UrlText = ({
 }>) => {
   return (
     <code
-      className={clsx(
-        className,
-        "min-w-0 text-wrap break-all !font-mono text-black"
-      )}
+      className={clsx(className, "min-w-0 truncate !font-mono text-slate-700")}
     >
       {children}
     </code>

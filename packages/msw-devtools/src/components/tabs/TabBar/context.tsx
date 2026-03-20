@@ -33,7 +33,7 @@ export const TabProvider = ({ children }: React.PropsWithChildren) => {
     [tab, tabState, setTab]
   )
 
-  return <TabContext.Provider value={value}>{children}</TabContext.Provider>
+  return <TabContext value={value}>{children}</TabContext>
 }
 
 export const useTab = () => {

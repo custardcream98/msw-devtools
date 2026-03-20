@@ -20,7 +20,7 @@ export const URLField = ({ control, isReadOnly = false }: URLFieldProps) => {
       }}
       render={({ field }) => (
         <input
-          className='w-full bg-slate-50 p-2 !font-mono msw-round-border [&[readonly]]:opacity-40'
+          className='w-full bg-slate-50 p-2 !font-mono text-sm msw-round-border focus:outline-none focus:ring-1 focus:ring-slate-300 [&[readonly]]:opacity-40'
           type='text'
           placeholder={t("tabs.addMock.url.placeholder")}
           readOnly={isReadOnly}

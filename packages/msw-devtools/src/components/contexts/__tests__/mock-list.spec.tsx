@@ -3,8 +3,13 @@ import userEvent from "@testing-library/user-event"
 import type { JsonMock } from "core"
 import { setupServer } from "msw/node"
 
+import {
+  EditStateProvider,
+  useEditState
+} from "~/components/contexts/edit-state"
 import { MockListProvider, useMockList } from "~/components/contexts/mock-list"
 import * as serverLib from "~/lib/server"
+import { jsonMockToFormFieldValues } from "~/utils/jsonMockToFormFieldValues"
 
 const server = setupServer()
 
@@ -262,5 +267,58 @@ describe("mock-list", () => {
 
     expect(serverLib.sendMockListToServer).toHaveBeenCalledOnce()
     expect(serverLib.sendMockListToServer).toHaveBeenCalledWith([mock])
+  })
+
+  it("should clear editState when the edited mock is removed", async () => {
+    const EDIT_STATE_ID = "edit-state"
+    const mock: JsonMock = {
+      url: "https://test-url",
+      method: "get",
+      status: "200",
+      response: {
+        type: "single",
+        response: { name: "John" }
+      },
+      isActivated: true,
+      responseDelay: 1000,
+      shouldPromptResponse: false
+    }
+
+    const TestWithEditState = () => {
+      const { mockList, pushMock, removeMock } = useMockList()
+      const { editState, setEditState } = useEditState()
+
+      return (
+        <div>
+          <div data-testid='mock-list'>{JSON.stringify(mockList)}</div>
+          <div data-testid={EDIT_STATE_ID}>{JSON.stringify(editState)}</div>
+          <button onClick={() => pushMock(mock)}>pushMock</button>
+          <button onClick={() => setEditState(jsonMockToFormFieldValues(mock))}>
+            setEditState
+          </button>
+          <button onClick={() => removeMock(mock)}>removeMock</button>
+        </div>
+      )
+    }
+
+    const user = userEvent.setup()
+    render(
+      <MockListProvider>
+        <EditStateProvider>
+          <TestWithEditState />
+        </EditStateProvider>
+      </MockListProvider>
+    )
+
+    // mock 추가 후 편집 상태로 전환
+    await user.click(screen.getByText("pushMock"))
+    await user.click(screen.getByText("setEditState"))
+
+    expect(screen.getByTestId(EDIT_STATE_ID)).not.toHaveTextContent("null")
+
+    // mock 삭제 시 editState가 null로 초기화되는지 확인
+    await user.click(screen.getByText("removeMock"))
+
+    expect(screen.getByTestId(EDIT_STATE_ID)).toHaveTextContent("null")
   })
 })

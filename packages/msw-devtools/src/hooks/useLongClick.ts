@@ -18,7 +18,7 @@ export const useLongClick = ({
   onDrag,
   threshold = DEFAULT_THRESHOLD
 }: {
-  targetRef: React.RefObject<HTMLElement>
+  targetRef: React.RefObject<HTMLElement | null>
   onClick?: () => void
   onDrag?: (event: PointerEvent) => void
   /**

@@ -41,11 +41,11 @@ const DevTools = ({ initialOpen = true }: { initialOpen?: boolean }) => {
           <TabBar>
             <button
               type='button'
-              className='rounded-lg bg-red-400 p-1 shadow-lg transition-colors hover:bg-red-700'
+              className='rounded p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600'
               onClick={close}
               title={t("closeButton.title")}
             >
-              <FaXmark size={12} className='text-background-light' />
+              <FaXmark size={14} />
             </button>
           </TabBar>
           <TabBody />

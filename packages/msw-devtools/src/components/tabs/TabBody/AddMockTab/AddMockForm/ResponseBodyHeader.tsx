@@ -21,22 +21,22 @@ export const ResponseBodyHeader = ({
   const { t } = useTranslation()
 
   return (
-    <span className='flex items-center justify-between'>
+    <span className='flex items-center justify-between text-sm'>
       Response Body (JSON){" "}
       {props.responseType === JsonMockResponseType.sequential && (
-        <span className='ml-2 mr-auto rounded-lg border-2 border-solid border-orange-500 px-2 py-1 !font-mono text-[0.65rem] font-semibold text-orange-500'>
+        <span className='ml-2 mr-auto rounded border border-orange-400 bg-orange-50 px-1.5 py-0.5 !font-mono text-[0.65rem] font-semibold text-orange-600'>
           {t("tabs.addMock.sequentialBadge", {
             count: props.responseCount
           })}
         </span>
       )}
       <button
-        className='button hover:bg-slate-300 hover:text-slate-600'
+        className='rounded p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600'
         type='button'
         title={t("tabs.addMock.addResponseButton.title")}
         onClick={onAddResponse}
       >
-        <FaPlus size={16} />
+        <FaPlus size={14} />
       </button>
     </span>
   )

@@ -1,7 +1,7 @@
 import type { Locales } from "@/locales/constants"
 
 export type RoutePageProps = {
-  params: {
+  params: Promise<{
     locale?: Locales
-  }
+  }>
 }

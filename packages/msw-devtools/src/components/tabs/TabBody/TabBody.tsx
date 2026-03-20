@@ -1,6 +1,7 @@
 import { DefaultResponseSettingsProvider } from "~/components/contexts/default-response"
 import { DefaultResponseDelaySettingsProvider } from "~/components/contexts/default-response-delay"
 import { DefaultUrlSettingsProvider } from "~/components/contexts/default-url"
+import { EditStateProvider } from "~/components/contexts/edit-state"
 import { MockListProvider } from "~/components/contexts/mock-list"
 import { useTab } from "~/components/tabs/TabBar/context"
 import { Tab } from "~/constants"
@@ -18,9 +19,11 @@ export const TabBody = () => {
         <DefaultResponseSettingsProvider>
           <DefaultResponseDelaySettingsProvider>
             <MockListProvider>
-              {tab === Tab.AddMock && <AddMockTab />}
-              {tab === Tab.MockList && <MockListTab />}
-              {tab === Tab.Settings && <SettingsTab />}
+              <EditStateProvider>
+                {tab === Tab.AddMock && <AddMockTab />}
+                {tab === Tab.MockList && <MockListTab />}
+                {tab === Tab.Settings && <SettingsTab />}
+              </EditStateProvider>
             </MockListProvider>
           </DefaultResponseDelaySettingsProvider>
         </DefaultResponseSettingsProvider>

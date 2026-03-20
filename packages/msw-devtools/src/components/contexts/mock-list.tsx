@@ -8,7 +8,6 @@ import {
   addServerMockListUpdateListener,
   sendMockListToServer
 } from "~/lib/server"
-import { formFieldValuesToJsonMock } from "~/utils/formFieldValuesToJsonMock"
 
 export type MockListContextType = {
   mockList: JsonMock[]
@@ -25,189 +24,110 @@ const MockListContext = React.createContext<MockListContextType | null>(null)
 
 export const useMockList = () => {
   const context = React.useContext(MockListContext)
-
   if (!context) {
     throw new Error(
       "[MSW Devtools] useMockList must be used within a MockListProvider"
     )
   }
-
   return context
 }
 
-const sendMockListToServerMiddleware =
-  (reducer: (prev: JsonMock[]) => JsonMock[]) => (prev: JsonMock[]) => {
-    const mockList = reducer(prev)
-
-    sendMockListToServer(mockList)
-
-    return mockList
-  }
+/** boolean 프로퍼티 토글 시 사용할 side-effect 타입 */
+type SideEffect = "register-matched" | "unregister-matched" | "register-all"
 
 export const MockListProvider = ({ children }: React.PropsWithChildren) => {
   const [mockList, setMockList] = useLocalStorageState(StorageKey.MOCK_LIST, [])
-  const [editState, setEditStateLocal] = useLocalStorageState(
-    StorageKey.EDIT_STATE,
-    null
+
+  /** setMockList + sendMockListToServer를 한 번에 처리하는 래퍼 */
+  const setMockListWithSync = useCallback(
+    (reducer: (prev: JsonMock[]) => JsonMock[]) => {
+      setMockList((prev) => {
+        const next = reducer(prev)
+        sendMockListToServer(next)
+        return next
+      })
+    },
+    [setMockList]
+  )
+
+  /** boolean 프로퍼티를 토글하는 범용 함수 */
+  const toggleMockProperty = useCallback(
+    (
+      property: "isActivated" | "shouldPromptResponse",
+      value: boolean,
+      sideEffect: SideEffect,
+      ...mocks: JsonMock[]
+    ) => {
+      setMockListWithSync((prev) => {
+        const nextMocks = prev.map((item) => {
+          const found = mocks.find((mock) => isSameJsonMock(item, mock))
+          return found ? { ...item, [property]: value } : item
+        })
+        switch (sideEffect) {
+          case "register-matched":
+            register(...mocks)
+            break
+          case "unregister-matched":
+            unregister(prev, mocks)
+            break
+          case "register-all":
+            register(...nextMocks)
+            break
+        }
+        return nextMocks
+      })
+    },
+    [setMockListWithSync]
   )
 
   const pushMock: MockListContextType["pushMock"] = useCallback(
     (...mocks) => {
-      setMockList(
-        sendMockListToServerMiddleware((prev) => {
-          register(...mocks)
-
-          return [
-            ...prev.filter((active) =>
-              mocks.every((mock) => !isSameJsonMock(active, mock))
-            ),
-            ...mocks
-          ]
-        })
-      )
+      setMockListWithSync((prev) => {
+        register(...mocks)
+        return [
+          ...prev.filter((active) =>
+            mocks.every((mock) => !isSameJsonMock(active, mock))
+          ),
+          ...mocks
+        ]
+      })
     },
-    [setMockList]
+    [setMockListWithSync]
   )
 
   const removeMock: MockListContextType["removeMock"] = useCallback(
     (...mocksToRemove) => {
-      setMockList(
-        sendMockListToServerMiddleware((prev) =>
-          unregister(prev, mocksToRemove)
-        )
-      )
-
-      const currentEditState = editState && formFieldValuesToJsonMock(editState)
-      if (
-        currentEditState &&
-        mocksToRemove.some((mock) => isSameJsonMock(mock, currentEditState))
-      ) {
-        setEditStateLocal(null)
-      }
+      setMockListWithSync((prev) => unregister(prev, mocksToRemove))
     },
-    [setMockList, editState, setEditStateLocal]
+    [setMockListWithSync]
   )
 
-  const activateMock: MockListContextType["activateMock"] = useCallback(
-    (...mocks) => {
-      setMockList(
-        sendMockListToServerMiddleware((prev) => {
-          register(...mocks)
-
-          return prev.map((active) => {
-            const foundMock = mocks.find((mock) => isSameJsonMock(active, mock))
-
-            const isActivated = foundMock ? true : active.isActivated
-
-            return {
-              ...active,
-              isActivated
-            }
-          })
-        })
-      )
-    },
-    [setMockList]
-  )
-
-  const deactivateMock: MockListContextType["deactivateMock"] = useCallback(
-    (...mocksToUnregister) => {
-      setMockList(
-        sendMockListToServerMiddleware((prev) => {
-          unregister(prev, mocksToUnregister)
-
-          return prev.map((active) => {
-            const foundMock = mocksToUnregister.find((mockToUnregister) =>
-              isSameJsonMock(active, mockToUnregister)
-            )
-
-            const isActivated = foundMock ? false : active.isActivated
-
-            return {
-              ...active,
-              isActivated
-            }
-          })
-        })
-      )
-    },
-    [setMockList]
-  )
-
-  const activatePromptMode: MockListContextType["activatePromptMode"] =
-    useCallback(
-      (...mocks) => {
-        setMockList(
-          sendMockListToServerMiddleware((prev) => {
-            const nextMocks = prev.map((item) => {
-              const foundMock = mocks.find((mock) => isSameJsonMock(item, mock))
-
-              const shouldPromptResponse = foundMock
-                ? true
-                : item.shouldPromptResponse
-
-              return {
-                ...item,
-                shouldPromptResponse
-              }
-            })
-
-            register(...nextMocks)
-
-            return nextMocks
-          })
-        )
-      },
-      [setMockList]
-    )
-
-  const deactivatePromptMode: MockListContextType["deactivatePromptMode"] =
-    useCallback(
-      (...mocks) => {
-        setMockList(
-          sendMockListToServerMiddleware((prev) => {
-            const nextMocks = prev.map((item) => {
-              const foundMock = mocks.find((mock) => isSameJsonMock(item, mock))
-
-              const shouldPromptResponse = foundMock
-                ? false
-                : item.shouldPromptResponse
-
-              return {
-                ...item,
-                shouldPromptResponse
-              }
-            })
-
-            register(...nextMocks)
-
-            return nextMocks
-          })
-        )
-      },
-      [setMockList]
-    )
+  // toggleMockProperty를 호출하는 경량 래퍼 (useCallback 불필요)
+  const activateMock = (...mocks: JsonMock[]) =>
+    toggleMockProperty("isActivated", true, "register-matched", ...mocks)
+  const deactivateMock = (...mocks: JsonMock[]) =>
+    toggleMockProperty("isActivated", false, "unregister-matched", ...mocks)
+  const activatePromptMode = (...mocks: JsonMock[]) =>
+    toggleMockProperty("shouldPromptResponse", true, "register-all", ...mocks)
+  const deactivatePromptMode = (...mocks: JsonMock[]) =>
+    toggleMockProperty("shouldPromptResponse", false, "register-all", ...mocks)
 
   const clearAllMocks = useCallback(() => {
-    setMockList(
-      sendMockListToServerMiddleware((prev) => {
-        unregister(prev, prev)
-
-        return []
-      })
-    )
-  }, [setMockList])
+    setMockListWithSync((prev) => {
+      unregister(prev, prev)
+      return []
+    })
+  }, [setMockListWithSync])
 
   useEffect(() => {
     const removeListener = addServerMockListUpdateListener((mockList) => {
       reset(mockList)
       setMockList(mockList)
     })
-
     return removeListener
   }, [setMockList])
 
-  const value = useMemo(
+  const mockListValue = useMemo(
     () => ({
       mockList,
       pushMock,
@@ -218,21 +138,9 @@ export const MockListProvider = ({ children }: React.PropsWithChildren) => {
       deactivatePromptMode,
       clearAllMocks
     }),
-    [
-      activateMock,
-      deactivateMock,
-      activatePromptMode,
-      deactivatePromptMode,
-      mockList,
-      pushMock,
-      removeMock,
-      clearAllMocks
-    ]
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- 경량 래퍼는 toggleMockProperty에 의존
+    [mockList, pushMock, removeMock, toggleMockProperty, clearAllMocks]
   )
 
-  return (
-    <MockListContext.Provider value={value}>
-      {children}
-    </MockListContext.Provider>
-  )
+  return <MockListContext value={mockListValue}>{children}</MockListContext>
 }

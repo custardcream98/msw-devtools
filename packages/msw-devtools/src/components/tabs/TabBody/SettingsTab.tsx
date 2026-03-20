@@ -29,87 +29,116 @@ export const SettingsTab = () => {
 
   return (
     <ScrollList>
-      <label htmlFor={urlInputId}>{t("tabs.settings.defaultURL.label")}</label>
-      <input
-        id={urlInputId}
-        type='text'
-        className='mt-2 w-full p-2 !font-mono msw-round-border'
-        placeholder={t("tabs.settings.defaultURL.placeholder")}
-        value={defaultUrl ?? ""}
-        onChange={(event) => {
-          event.preventDefault()
+      <div className='space-y-4'>
+        <div>
+          <label
+            htmlFor={urlInputId}
+            className='text-xs font-medium text-slate-600'
+          >
+            {t("tabs.settings.defaultURL.label")}
+          </label>
+          <input
+            id={urlInputId}
+            type='text'
+            className='mt-1.5 w-full bg-white p-2 !font-mono text-sm msw-round-border focus:outline-none focus:ring-1 focus:ring-slate-300'
+            placeholder={t("tabs.settings.defaultURL.placeholder")}
+            value={defaultUrl ?? ""}
+            onChange={(event) => {
+              event.preventDefault()
+              const value = event.currentTarget.value
+              setDefaultUrl(value)
+            }}
+          />
+        </div>
 
-          const value = event.currentTarget.value
+        <div>
+          <label
+            htmlFor={defaultResponseDelayId}
+            className='text-xs font-medium text-slate-600'
+          >
+            {t("tabs.settings.defaultResponseDelay.label")}
+          </label>
+          <input
+            id={defaultResponseDelayId}
+            type='number'
+            step={0.1}
+            min={0}
+            className='mt-1.5 w-full bg-white p-2 !font-mono text-sm msw-round-border focus:outline-none focus:ring-1 focus:ring-slate-300'
+            value={defaultResponseDelay}
+            onChange={(event) => {
+              event.preventDefault()
+              const value = Number(event.currentTarget.value)
+              setDefaultResponseDelay(Math.max(value, 0))
+            }}
+          />
+        </div>
 
-          setDefaultUrl(value)
-        }}
-      />
-      <label htmlFor={defaultResponseDelayId} className='mt-4 block'>
-        {t("tabs.settings.defaultResponseDelay.label")}
-      </label>
-      <input
-        id={defaultResponseDelayId}
-        type='number'
-        step={0.1}
-        min={0}
-        className='mt-2 w-full p-2 !font-mono msw-round-border'
-        value={defaultResponseDelay}
-        onChange={(event) => {
-          event.preventDefault()
+        <div>
+          <label
+            htmlFor={defaultResponseEditorId}
+            className='text-xs font-medium text-slate-600'
+          >
+            <span className='block'>
+              {t("tabs.settings.responseBody.label")}
+            </span>
+            <blockquote className='blockquote mt-1 text-xs text-slate-400'>
+              {t("tabs.settings.responseBody.description")}
+            </blockquote>
+          </label>
+          <CodeEditor
+            id={defaultResponseEditorId}
+            className='mt-1.5 max-h-80 w-full'
+            value={defaultResponse ?? ""}
+            onChange={setDefaultResponse}
+          />
+        </div>
 
-          const value = Number(event.currentTarget.value)
+        <div>
+          <label
+            htmlFor={floatingButtonOpacityId}
+            className='text-xs font-medium text-slate-600'
+          >
+            {t("tabs.settings.floatingButtonOpacity.label")}
+          </label>
+          <input
+            id={floatingButtonOpacityId}
+            className='mt-1.5 w-1/2'
+            type='range'
+            min={0}
+            max={1}
+            step={0.01}
+            value={floatingButtonOpacity}
+            onChange={(event) => {
+              const value = Number(event.currentTarget.value)
+              setFloatingButtonOpacity(value)
+            }}
+          />
+        </div>
 
-          setDefaultResponseDelay(Math.max(value, 0))
-        }}
-      />
-      <label htmlFor={defaultResponseEditorId} className='mt-4 block'>
-        <span className='block'>{t("tabs.settings.responseBody.label")}</span>
-        <blockquote className='blockquote mt-1 text-sm'>
-          {t("tabs.settings.responseBody.description")}
-        </blockquote>
-      </label>
-      <CodeEditor
-        id={defaultResponseEditorId}
-        className='mt-2 max-h-80 w-full'
-        value={defaultResponse ?? ""}
-        onChange={setDefaultResponse}
-      />
-      <label htmlFor={floatingButtonOpacityId} className='mt-4 block'>
-        {t("tabs.settings.floatingButtonOpacity.label")}
-      </label>
-      <input
-        id={floatingButtonOpacityId}
-        className='mt-2 w-1/2'
-        type='range'
-        min={0}
-        max={1}
-        step={0.01}
-        value={floatingButtonOpacity}
-        onChange={(event) => {
-          const value = Number(event.currentTarget.value)
-
-          setFloatingButtonOpacity(value)
-        }}
-      />
-      <label htmlFor={languageId} className='mt-4 block'>
-        {t("tabs.settings.language.label")}
-      </label>
-      <select
-        id={languageId}
-        className='mt-2 p-2 msw-round-border'
-        value={language}
-        onChange={(event) => {
-          const value = event.currentTarget.value as Language
-
-          setLanguage(value)
-        }}
-      >
-        {Object.entries(LANGUAGE_NAMES).map(([lang, name]) => (
-          <option key={lang} value={lang}>
-            {name}
-          </option>
-        ))}
-      </select>
+        <div>
+          <label
+            htmlFor={languageId}
+            className='text-xs font-medium text-slate-600'
+          >
+            {t("tabs.settings.language.label")}
+          </label>
+          <select
+            id={languageId}
+            className='mt-1.5 bg-white p-2 text-sm msw-round-border focus:outline-none focus:ring-1 focus:ring-slate-300'
+            value={language}
+            onChange={(event) => {
+              const value = event.currentTarget.value as Language
+              setLanguage(value)
+            }}
+          >
+            {Object.entries(LANGUAGE_NAMES).map(([lang, name]) => (
+              <option key={lang} value={lang}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </ScrollList>
   )
 }

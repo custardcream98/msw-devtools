@@ -3,9 +3,10 @@ import { type Control, Controller } from "react-hook-form"
 import { FaXmark } from "react-icons/fa6"
 
 import { CodeEditor } from "~/components/CodeEditor"
+import { ResponseIndexBadge } from "~/components/ResponseIndexBadge"
 import { FIELD_NAME, type FormFieldValues } from "~/constants"
 
-import { validate } from "./utils"
+import { validate, VALIDATION_RESULT } from "./utils"
 
 export const AddMockFormCodeEditor = ({
   control
@@ -21,8 +22,12 @@ export const AddMockFormCodeEditor = ({
           if (value.type === "sequential") {
             const validateResults = value.response.map(validate)
 
-            if (validateResults.some((result) => result === "FIXABLE")) {
-              return "FIXABLE"
+            if (
+              validateResults.some(
+                (result) => result === VALIDATION_RESULT.FIXABLE
+              )
+            ) {
+              return VALIDATION_RESULT.FIXABLE
             }
 
             return validateResults.every((value) => value === true)
@@ -43,11 +48,7 @@ export const AddMockFormCodeEditor = ({
             >
               {currentResponse.response.map((responseValue, index) => (
                 <div key={index} className='mb-2 mt-2 w-full'>
-                  <div className="mb-2 flex items-center gap-2 after:h-[2px] after:w-full after:bg-slate-300 after:content-['']">
-                    <span className='flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-solid border-slate-400 text-xs text-slate-400'>
-                      {index + 1}
-                    </span>
-                  </div>
+                  <ResponseIndexBadge index={index} />
                   <div className='relative'>
                     <CodeEditor
                       className='min-w-[500px]'
@@ -62,7 +63,7 @@ export const AddMockFormCodeEditor = ({
                       }}
                     />
                     <button
-                      className='absolute right-2 top-2 cursor-pointer rounded-md p-1 transition-colors duration-200 hover:bg-slate-300 hover:text-slate-600'
+                      className='absolute right-2 top-2 cursor-pointer rounded p-1 text-slate-400 transition-colors duration-150 hover:bg-slate-200 hover:text-slate-600'
                       type='button'
                       onClick={() => {
                         const newResponses = currentResponse.response.toSpliced(
@@ -82,7 +83,7 @@ export const AddMockFormCodeEditor = ({
                         })
                       }}
                     >
-                      <FaXmark size={10} className='text-background-light' />
+                      <FaXmark size={10} />
                     </button>
                   </div>
                 </div>

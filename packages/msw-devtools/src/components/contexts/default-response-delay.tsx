@@ -1,47 +1,17 @@
-import React, { useContext, useMemo } from "react"
-
 import { StorageKey } from "~/constants"
-import { useLocalStorageState } from "~/hooks/useLocalStorageState"
 
-type DefaultResponseDelaySettingsContextType = {
-  defaultResponseDelay: number
-  setDefaultResponseDelay: (delay: number) => void
-}
+import { createStorageContext } from "./createStorageContext"
 
-const DefaultResponseDelaySettingsContext =
-  React.createContext<DefaultResponseDelaySettingsContextType | null>(null)
-
-export const useDefaultResponseDelaySettings = () => {
-  const context = useContext(DefaultResponseDelaySettingsContext)
-
-  if (!context) {
-    throw new Error(
-      "[MSW Devtools] useDefaultResponseDelaySettings must be used within a DefaultResponseDelaySettingsProvider"
-    )
-  }
-
-  return context
-}
-
-export const DefaultResponseDelaySettingsProvider = ({
-  children
-}: React.PropsWithChildren) => {
-  const [defaultResponseDelay, setDefaultResponseDelay] = useLocalStorageState(
+const { Provider: DefaultResponseDelaySettingsProvider, useValue } =
+  createStorageContext(
     StorageKey.RESPONSE_DELAY,
-    0.5
+    0.5,
+    "DefaultResponseDelaySettings"
   )
 
-  const value = useMemo(
-    () => ({
-      defaultResponseDelay,
-      setDefaultResponseDelay
-    }),
-    [defaultResponseDelay, setDefaultResponseDelay]
-  )
-
-  return (
-    <DefaultResponseDelaySettingsContext.Provider value={value}>
-      {children}
-    </DefaultResponseDelaySettingsContext.Provider>
-  )
+const useDefaultResponseDelaySettings = () => {
+  const [defaultResponseDelay, setDefaultResponseDelay] = useValue()
+  return { defaultResponseDelay, setDefaultResponseDelay }
 }
+
+export { DefaultResponseDelaySettingsProvider, useDefaultResponseDelaySettings }

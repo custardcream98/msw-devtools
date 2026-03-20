@@ -1,9 +1,8 @@
-import {
-  type JsonMock,
-  type JsonMockResponseType,
-  MethodOption,
-  type StatusOption
-} from "core"
+import { type JsonMock, type StatusOption } from "core"
+
+import type { FormFieldValues } from "~/types/form"
+
+export type { FormFieldResponseValue, FormFieldValues } from "~/types/form"
 
 export const DEVTOOLS_ROOT_ID = "msw-devtools"
 export const PROMPT_CONTAINER_ID = "msw-devtools-prompt"
@@ -20,16 +19,6 @@ export const FIELD_NAME = {
 
 export type FieldName = (typeof FIELD_NAME)[keyof typeof FIELD_NAME]
 
-export const METHOD_COLOR = {
-  [MethodOption.get]: "text-blue-600",
-  [MethodOption.post]: "text-green-600",
-  [MethodOption.put]: "text-yellow-600",
-  [MethodOption.delete]: "text-red-600",
-  [MethodOption.patch]: "text-teal-500",
-  [MethodOption.options]: "text-purple-600",
-  [MethodOption.head]: "text-gray-600"
-} as const
-
 export const STATUS_NAME = {
   "200": "OK",
   "201": "Created",
@@ -39,36 +28,6 @@ export const STATUS_NAME = {
   "404": "Not Found",
   "500": "Server Error" // make it shorter
 } as const satisfies Record<StatusOption, string>
-
-export const STATUS_COLOR = {
-  "200": "text-green-700",
-  "201": "text-green-700",
-  "400": "text-red-700",
-  "401": "text-red-700",
-  "403": "text-red-700",
-  "404": "text-red-700",
-  "500": "text-red-700"
-} as const
-
-export type FormFieldResponseValue =
-  | {
-      type: typeof JsonMockResponseType.single
-      response: string
-    }
-  | {
-      type: typeof JsonMockResponseType.sequential
-      response: string[]
-    }
-
-export type FormFieldValues = {
-  [FIELD_NAME.URL]: string
-  [FIELD_NAME.METHOD]: MethodOption
-  [FIELD_NAME.STATUS]: StatusOption
-  [FIELD_NAME.RESPONSE]: FormFieldResponseValue
-  [FIELD_NAME.RESPONSE_DELAY]: number
-  [FIELD_NAME.IS_ACTIVATED]: boolean
-  [FIELD_NAME.SHOULD_PROMPT_RESPONSE]: boolean
-}
 
 /**
  * localStorage keys
