@@ -5,6 +5,7 @@ import React from "react"
 import { DefaultResponseSettingsProvider } from "~/components/contexts/default-response"
 import { DefaultResponseDelaySettingsProvider } from "~/components/contexts/default-response-delay"
 import { DefaultUrlSettingsProvider } from "~/components/contexts/default-url"
+import { EditStateProvider } from "~/components/contexts/edit-state"
 import { FloatingButtonSettingsProvider } from "~/components/contexts/floating-button"
 import { MockListProvider } from "~/components/contexts/mock-list"
 import { TabProvider } from "~/components/tabs/TabBar"
@@ -17,7 +18,9 @@ const AllProviders = ({ children }: React.PropsWithChildren) => (
       <DefaultUrlSettingsProvider>
         <DefaultResponseSettingsProvider>
           <DefaultResponseDelaySettingsProvider>
-            <MockListProvider>{children}</MockListProvider>
+            <MockListProvider>
+              <EditStateProvider>{children}</EditStateProvider>
+            </MockListProvider>
           </DefaultResponseDelaySettingsProvider>
         </DefaultResponseSettingsProvider>
       </DefaultUrlSettingsProvider>

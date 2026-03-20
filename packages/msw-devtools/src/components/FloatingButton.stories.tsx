@@ -9,16 +9,11 @@ const meta = {
   component: FloatingButton,
   decorators: [
     (Story) => (
-      <FloatingButtonSettingsContext.Provider
-        value={{
-          floatingButtonOpacity: 1,
-          setFloatingButtonOpacity: () => {}
-        }}
-      >
+      <FloatingButtonSettingsContext value={[1, () => {}]}>
         <div style={{ width: "100%", height: 400, position: "relative" }}>
           <Story />
         </div>
-      </FloatingButtonSettingsContext.Provider>
+      </FloatingButtonSettingsContext>
     )
   ],
   tags: ["autodocs"]
@@ -38,16 +33,11 @@ export const Default: Story = {
 export const HalfOpacity: Story = {
   decorators: [
     (Story) => (
-      <FloatingButtonSettingsContext.Provider
-        value={{
-          floatingButtonOpacity: 0.5,
-          setFloatingButtonOpacity: () => {}
-        }}
-      >
+      <FloatingButtonSettingsContext value={[0.5, () => {}]}>
         <div style={{ width: "100%", height: 400, position: "relative" }}>
           <Story />
         </div>
-      </FloatingButtonSettingsContext.Provider>
+      </FloatingButtonSettingsContext>
     )
   ],
   args: {
