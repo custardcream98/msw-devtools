@@ -2,9 +2,10 @@ import type { SubRouteLocales } from "@/app/[locale]/layout"
 import { Docs } from "@/components/server/Docs"
 
 export default async function Page({
-  params: { locale }
+  params
 }: {
-  params: { locale: SubRouteLocales }
+  params: Promise<{ locale: SubRouteLocales }>
 }) {
+  const { locale } = await params
   return <Docs locale={locale} />
 }

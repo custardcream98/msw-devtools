@@ -1,10 +1,13 @@
 import { clsx } from "clsx"
 import React from "react"
 
-export const Toggle = React.forwardRef<
-  HTMLInputElement,
-  React.InputHTMLAttributes<HTMLInputElement>
->(({ className, ...props }, ref) => {
+export const Toggle = ({
+  ref,
+  className,
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement> & {
+  ref?: React.Ref<HTMLInputElement>
+}) => {
   return (
     <span
       className={clsx(
@@ -21,4 +24,4 @@ export const Toggle = React.forwardRef<
       <span className='absolute left-0.5 top-1/2 h-3 w-3 -translate-y-1/2 transform-gpu rounded-full bg-white shadow-sm transition-[transform,background-color] ease-in-out [input[type=checkbox]:checked+&]:translate-x-4'></span>
     </span>
   )
-})
+}

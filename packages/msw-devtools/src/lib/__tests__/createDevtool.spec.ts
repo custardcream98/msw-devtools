@@ -1,10 +1,35 @@
+import type { Root } from "react-dom/client"
+
 import { startServer } from "~/lib/server"
 
 vi.mock("~/lib/server", () => ({
   startServer: vi.fn()
 }))
 
-afterEach(() => {
+// React 19의 스케줄러가 환경 teardown 후 window에 접근하지 않도록 root를 추적해서 unmount
+let reactRoot: Root | null = null
+vi.mock("react-dom/client", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("react-dom/client")>()
+  return {
+    ...actual,
+    default: {
+      ...actual,
+      createRoot: (...args: Parameters<typeof actual.createRoot>) => {
+        const root = actual.createRoot(...args)
+        reactRoot = root
+        return root
+      }
+    }
+  }
+})
+
+afterEach(async () => {
+  if (reactRoot) {
+    reactRoot.unmount()
+    reactRoot = null
+    // flush microtasks
+    await new Promise((r) => setTimeout(r, 0))
+  }
   vi.resetModules()
   document.body.innerHTML = ""
 })

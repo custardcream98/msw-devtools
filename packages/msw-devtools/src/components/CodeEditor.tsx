@@ -79,13 +79,17 @@ const BASIC_SETUP_OPTIONS: BasicSetupOptions = {
   lintKeymap: true
 }
 
-export const CodeEditor = React.forwardRef<
-  ReactCodeMirrorRef,
-  Omit<
-    ReactCodeMirrorProps,
-    "onFocus" | "extensions" | "theme" | "onFocus" | "indentWithTab"
-  >
->(({ className, basicSetup: basicSetupProp, ...props }, ref) => {
+export const CodeEditor = ({
+  ref,
+  className,
+  basicSetup: basicSetupProp,
+  ...props
+}: Omit<
+  ReactCodeMirrorProps,
+  "onFocus" | "extensions" | "theme" | "onFocus" | "indentWithTab"
+> & {
+  ref?: React.Ref<ReactCodeMirrorRef>
+}) => {
   const innerRef = useRef<ReactCodeMirrorRef>(null)
 
   useImperativeHandle(ref, () => {
@@ -153,4 +157,4 @@ export const CodeEditor = React.forwardRef<
       />
     </div>
   )
-})
+}
