@@ -1,5 +1,14 @@
 # @custardcream/msw-devtools
 
+## 0.12.1
+
+### Patch Changes
+
+- b752492: fix: update rollup and vite to patch security vulnerabilities
+
+  - Update rollup from 4.24.3 to ^4.59.0 (high: arbitrary file write via path traversal)
+  - Update vite from 5.4.10 to ^5.4.21 (medium: server.fs.deny bypass on Windows)
+
 ## 0.12.0
 
 ### Minor Changes
