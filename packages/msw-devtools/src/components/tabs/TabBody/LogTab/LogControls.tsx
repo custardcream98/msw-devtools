@@ -23,7 +23,7 @@ export const LogControls = ({
 
   return (
     <div className='flex items-center gap-3 border-b border-slate-200 px-3 py-2'>
-      {/* Recording 토글 */}
+      {/* Recording toggle */}
       <label className='flex items-center gap-1.5'>
         <span
           className={clsx(
@@ -31,15 +31,14 @@ export const LogControls = ({
             isRecording ? "text-red-500" : "text-slate-400"
           )}
         >
-          {isRecording ? `● ${t("tabs.log.recording")}` : `⏸ ${t("tabs.log.paused")}`}
+          {isRecording
+            ? `● ${t("tabs.log.recording")}`
+            : `⏸ ${t("tabs.log.paused")}`}
         </span>
-        <Toggle
-          checked={isRecording}
-          onChange={onToggleRecording}
-        />
+        <Toggle checked={isRecording} onChange={onToggleRecording} />
       </label>
 
-      {/* Filter 버튼 */}
+      {/* Filter buttons */}
       <div className='flex items-center gap-1'>
         {(["all", "matched", "unmatched"] as const).map((f) => (
           <button
@@ -58,7 +57,7 @@ export const LogControls = ({
         ))}
       </div>
 
-      {/* Clear 버튼 */}
+      {/* Clear button */}
       <button
         type='button'
         title={t("tabs.log.clearButton.title")}

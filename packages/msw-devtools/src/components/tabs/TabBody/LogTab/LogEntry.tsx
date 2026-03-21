@@ -10,7 +10,7 @@ import { useBoolean } from "~/hooks/useBoolean"
 
 import { LogDetail } from "./LogDetail"
 
-/** timestamp를 HH:MM:SS 형식으로 변환 */
+/** Format timestamp as HH:MM:SS */
 const formatTime = (timestamp: number): string => {
   const date = new Date(timestamp)
   return [date.getHours(), date.getMinutes(), date.getSeconds()]
@@ -18,7 +18,7 @@ const formatTime = (timestamp: number): string => {
     .join(":")
 }
 
-/** status에 따른 색상 */
+/** Status code text color */
 const getStatusColor = (status?: number): string => {
   if (!status) return "text-slate-400"
   if (status >= 200 && status < 300) return "text-green-700"
@@ -46,13 +46,13 @@ export const LogEntry = ({ entry }: { entry: RequestLogEntry }) => {
         !entry.matched && "border-l-2 border-l-yellow-400"
       )}
     >
-      {/* 행 헤더 (클릭 가능) */}
+      {/* Row header (clickable) */}
       <button
         type='button'
         className='flex w-full items-center gap-1.5 px-2 py-1.5 text-left'
         onClick={toggle}
       >
-        {/* 아코디언 화살표 */}
+        {/* Accordion arrow */}
         <FaChevronRight
           size={8}
           className={clsx(
@@ -61,7 +61,7 @@ export const LogEntry = ({ entry }: { entry: RequestLogEntry }) => {
           )}
         />
 
-        {/* 시간 */}
+        {/* Time */}
         <span className='shrink-0 font-mono text-[0.6rem] text-slate-400'>
           {formatTime(entry.timestamp)}
         </span>
@@ -85,22 +85,25 @@ export const LogEntry = ({ entry }: { entry: RequestLogEntry }) => {
         {/* URL */}
         <UrlText className='flex-1'>{entry.url}</UrlText>
 
-        {/* 응답시간 */}
+        {/* Duration */}
         {entry.duration != null && (
           <span className='shrink-0 font-mono text-[0.6rem] text-slate-400'>
             {t("tabs.log.duration", { ms: Math.round(entry.duration) })}
           </span>
         )}
 
-        {/* Matched/Unmatched 아이콘 */}
+        {/* Matched/Unmatched icon */}
         {entry.matched ? (
           <FaBolt size={10} className='shrink-0 text-green-500' />
         ) : (
-          <FaTriangleExclamation size={10} className='shrink-0 text-yellow-500' />
+          <FaTriangleExclamation
+            size={10}
+            className='shrink-0 text-yellow-500'
+          />
         )}
       </button>
 
-      {/* 아코디언 상세 */}
+      {/* Accordion detail */}
       <div
         className={clsx(
           "grid overflow-hidden transition-[grid-template-rows] duration-300",

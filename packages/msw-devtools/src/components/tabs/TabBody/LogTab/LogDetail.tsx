@@ -62,7 +62,7 @@ export const LogDetail = ({ entry }: { entry: RequestLogEntry }) => {
         </div>
       )}
 
-      {/* Unmatched 요청: Add Mock 버튼 */}
+      {/* Unmatched request: Add Mock button */}
       {!entry.matched && (
         <button
           type='button'
@@ -74,10 +74,10 @@ export const LogDetail = ({ entry }: { entry: RequestLogEntry }) => {
         </button>
       )}
 
-      {/* body가 전부 없는 경우 */}
+      {/* No body data available */}
       {!hasRequestBody && !hasResponseBody && entry.matched && (
         <p className='text-[0.65rem] text-slate-400'>
-          No body data available.
+          {t("tabs.log.noBodyData")}
         </p>
       )}
     </div>

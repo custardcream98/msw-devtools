@@ -85,7 +85,8 @@
       "noLogs": "No requests captured yet",
       "requestBody": "Request Body",
       "responseBody": "Response Body",
-      "duration": "{{ms}}ms"
+      "duration": "{{ms}}ms",
+      "noBodyData": "No body data available."
     },
     "settings": {
       "defaultResponseDelay": {

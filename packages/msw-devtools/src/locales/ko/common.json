@@ -85,7 +85,8 @@
       "noLogs": "아직 캡처된 요청이 없습니다",
       "requestBody": "요청 본문",
       "responseBody": "응답 본문",
-      "duration": "{{ms}}ms"
+      "duration": "{{ms}}ms",
+      "noBodyData": "본문 데이터가 없습니다."
     },
     "settings": {
       "defaultResponseDelay": {

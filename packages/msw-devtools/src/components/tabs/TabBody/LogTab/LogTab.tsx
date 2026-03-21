@@ -14,19 +14,19 @@ export const LogTab = () => {
   const [filter, setFilter] = useState<LogFilter>("all")
   const listRef = useRef<HTMLDivElement>(null)
 
-  // Log 탭 진입 시 unreadCount 리셋
+  // Reset unreadCount when entering Log tab
   useEffect(() => {
     resetUnreadCount()
   }, [resetUnreadCount])
 
-  // 필터링된 로그
+  // Filtered logs
   const filteredLogs = useMemo(() => {
     if (filter === "all") return logs
     if (filter === "matched") return logs.filter((l) => l.matched)
     return logs.filter((l) => !l.matched)
   }, [logs, filter])
 
-  // 새 로그 추가 시 자동 스크롤
+  // Auto-scroll on new log entries
   const prevLengthRef = useRef(filteredLogs.length)
   useEffect(() => {
     if (filteredLogs.length > prevLengthRef.current) {
