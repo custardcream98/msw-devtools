@@ -34,6 +34,7 @@ export const TabBar = ({ children }: React.PropsWithChildren) => {
     <div className='flex h-10 items-center gap-0.5 border-b border-slate-200 px-2'>
       <TabButton tab={Tab.AddMock} />
       <TabButton tab={Tab.MockList} />
+      <TabButton tab={Tab.Log} />
       <TabButton tab={Tab.Settings} />
       <div className='mx-auto'></div>
       {children}

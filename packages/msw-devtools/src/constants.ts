@@ -50,6 +50,7 @@ export const StorageKey = {
 export const Tab = {
   AddMock: "tab.addMock",
   MockList: "tab.mockList",
+  Log: "tab.log",
   Settings: "tab.settings"
 } as const
 

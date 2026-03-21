@@ -20,6 +20,7 @@
   "tab": {
     "addMock": "Add Mock",
     "mockList": "Mock List",
+    "log": "Log",
     "settings": "Settings"
   },
   "tabs": {
@@ -68,6 +69,23 @@
       "toggleSidebarButton": {
         "title": "Toggle Sidebar"
       }
+    },
+    "log": {
+      "recording": "Recording",
+      "paused": "Paused",
+      "clearButton": {
+        "title": "Clear Logs"
+      },
+      "filter": {
+        "all": "All",
+        "matched": "Matched",
+        "unmatched": "Unmatched"
+      },
+      "addMockButton": "Add Mock for this URL",
+      "noLogs": "No requests captured yet",
+      "requestBody": "Request Body",
+      "responseBody": "Response Body",
+      "duration": "{{ms}}ms"
     },
     "settings": {
       "defaultResponseDelay": {
