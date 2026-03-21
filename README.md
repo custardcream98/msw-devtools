@@ -26,6 +26,7 @@
 - **Export and Import Mock Request Handlers.** Easily share mock request handlers in JSON format.
 - **Live JSON Editing for Instant Management of MSW Request Handlers.** Changes made in the Devtools UI are instantly synced with your JSON file. ([🔗](#live-json-editing-for-instant-management-of-msw-request-handlers))
 - **Prompt Mode for Real-time Response Control.** Manually enter response data for each request through an interactive modal. ([🔗](#prompt-mode-for-real-time-response-control))
+- **Request Log for Real-time Monitoring.** View all intercepted requests in real-time, inspect request/response bodies, and create mocks from unmatched requests with one click. ([🔗](#request-log-for-real-time-monitoring))
 
 <br />
 
@@ -33,6 +34,7 @@
   <img width="500" src="./README/EN/image1.png">
   <img width="500" src="./README/EN/image2.png">
   <img width="500" src="./README/EN/image3.png">
+  <img width="500" src="./README/EN/image5.png">
   <img width="500" src="./README/EN/prompt-mode.gif">
 </p>
 
@@ -142,6 +144,21 @@ To use Prompt Mode, simply toggle it on for a specific request handler in the De
 - **Sequential Response**: Lets you pre-define multiple response values that will be returned in sequence (first request gets first response, second request gets second response, etc.).
 
 Choose Prompt Mode when you need maximum flexibility during testing or demos. Use Sequential Response when you have a predictable series of responses needed for a specific test flow.
+
+## Request Log for Real-time Monitoring
+
+The Log tab shows all intercepted requests in real-time, helping you understand how your mocks are being used.
+
+<p align="center">
+  <img width="500" src="./README/EN/image5.png">
+</p>
+
+- **Real-time request logging** with timestamps, methods, status codes, and response duration
+- **Matched vs. Unmatched** requests are visually distinguished
+- **Expandable detail view** for inspecting request/response bodies
+- **One-click mock creation** from unmatched requests — click "Add Mock for this URL" to jump to the Add Mock tab with the URL pre-filled
+- **Recording toggle** to pause/resume capture
+- **Filter** by All, Matched, or Unmatched requests
 
 ## Live JSON Editing for Instant Management of MSW Request Handlers
 
