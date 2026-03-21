@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import { useRequestLog } from "~/components/contexts/request-log"
 
-import { type LogFilter, LogControls } from "./LogControls"
+import { LogControls, type LogFilter } from "./LogControls"
 import { LogEntry } from "./LogEntry"
 
 export const LogTab = () => {
