@@ -48,6 +48,7 @@ let _earlyBuffer: EarlyEvent[] = []
 let _cleanupEarlyCapture: (() => void) | null = null
 
 function startEarlyCapture(worker: Worker) {
+  if (!worker?.events) return
   _earlyBuffer = []
 
   const onStart = ({ requestId }: { request: Request; requestId: string }) => {
