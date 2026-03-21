@@ -7,6 +7,7 @@ import { useTab } from "~/components/tabs/TabBar/context"
 import { Tab } from "~/constants"
 
 import { AddMockTab } from "./AddMockTab"
+import { LogTab } from "./LogTab"
 import { MockListTab } from "./MockListTab"
 import { SettingsTab } from "./SettingsTab"
 
@@ -22,6 +23,7 @@ export const TabBody = () => {
               <EditStateProvider>
                 {tab === Tab.AddMock && <AddMockTab />}
                 {tab === Tab.MockList && <MockListTab />}
+                {tab === Tab.Log && <LogTab />}
                 {tab === Tab.Settings && <SettingsTab />}
               </EditStateProvider>
             </MockListProvider>

@@ -20,6 +20,7 @@
   "tab": {
     "addMock": "Mock 추가하기",
     "mockList": "Mock 목록",
+    "log": "로그",
     "settings": "설정"
   },
   "tabs": {
@@ -68,6 +69,24 @@
       "toggleSidebarButton": {
         "title": "사이드 바 토글"
       }
+    },
+    "log": {
+      "recording": "기록 중",
+      "paused": "일시 정지",
+      "clearButton": {
+        "title": "로그 전체 삭제"
+      },
+      "filter": {
+        "all": "전체",
+        "matched": "매치됨",
+        "unmatched": "미매치"
+      },
+      "addMockButton": "이 URL로 Mock 추가",
+      "noLogs": "아직 캡처된 요청이 없습니다",
+      "requestBody": "요청 본문",
+      "responseBody": "응답 본문",
+      "duration": "{{ms}}ms",
+      "noBodyData": "본문 데이터가 없습니다."
     },
     "settings": {
       "defaultResponseDelay": {
