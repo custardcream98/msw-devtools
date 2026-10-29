@@ -14,7 +14,7 @@
     },
 
     // Test
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "node"],
 
     // Linting
     "strict": true,
